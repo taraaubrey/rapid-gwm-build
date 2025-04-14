@@ -1,0 +1,80 @@
+# TODO
+# - how does Simulation know that it needs a discretization module?
+# - how does Simulation know what a tdis module is?
+
+sim:
+    dependencies: None
+    cmd: 'flopy.mf6.MFSimulation'
+    duplicates_allowed: False
+
+
+tdis: 
+    dependencies: ['sim'] # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+    # parameters:
+    #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
+    cmd: 'flopy.mf6.ModflowTdis'
+    duplicates_allowed: False
+
+ic: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfic'
+    duplicates_allowed: False
+
+sto: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfsto'
+    duplicates_allowed: False
+
+ims: 
+    dependencies: ['sim']
+    cmd: 'flopy.mf6.ModflowIms'
+    duplicates_allowed: False
+
+
+gwf: 
+    dependencies: ['sim']
+    cmd: 'flopy.mf6.ModflowGwf'
+    duplicates_allowed: True
+
+npf: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfnpf'
+    duplicates_allowed: True
+
+sfr: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfsfr'
+    duplicates_allowed: True
+
+wel:
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfwel'
+    special_kwargs: []
+    duplicates_allowed: True
+
+dis: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfdis'
+    special_kwargs: ['resolution', 'botm', 'idomain'] #TODO these input keys have special functions & update cfg
+    duplicates_allowed: False
+
+
+drn: 
+    dependencies: ['gwf', 'dis']
+    special_kwargs: ['conductivity', 'elevation'] #TODO: this is a special list of adjustable parameters which are not explicitly called
+    cmd: 'flopy.mf6.ModflowGwfdrn'
+    # special_methods:
+    #     stress_period_data: 'get_stress_period_data function'
+    duplicates_allowed: True
+
+ghb: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfghb'
+    special_kwargs: []
+    duplicates_allowed: True
+
+rcha: 
+    dependencies: ['gwf']
+    cmd: 'flopy.mf6.ModflowGwfrcha'
+    special_kwargs: []
+    duplicates_allowed: True

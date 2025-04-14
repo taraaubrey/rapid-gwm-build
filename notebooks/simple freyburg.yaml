@@ -1,0 +1,137 @@
+vars:
+  data_dir: examples/models/mf6_monthly_model_files_1lyr_newstress_input/freyberg6. # path to the data files
+
+simulations:
+  test_sim_v1: # user specified simulation name
+    
+    ws:
+      path: examples/
+      mode: overwrite # overwrite OR update
+    name: simple_freyburg
+    model_type: mf6
+    
+    
+    modules:
+      tdis: # if you want to name the package {type_name}.{user_name} use the name key
+        time_units: days
+        nper: 25
+        perioddata: # TODO some easy way to specify loops
+            - [3652.5, 1, 1.] # perlen, nstp, tsmult
+            - [31, 1, 1.]
+            - [29, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [31, 1, 1.]
+            - [28, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+            - [30, 1, 1.]
+            - [31, 1, 1.]
+      
+      dis:
+        length_units: meters
+        nlay: 1
+        delc: ${data_dir}dis_delc.txt
+        delr: ${data_dir}dis_delr.txt
+        idomain:
+          - ${data_dir}dis_idomain_layer1.txt
+        top: ${data_dir}dis_top.txt
+        botm: 
+          - ${data_dir}dis_botm_layer1.txt
+
+      ic:
+        strt: ${data_dir}ic_strt_layer1.txt
+
+      sto:
+        iconvert: ${data_dir}sto_iconvert_layer1.txt
+        ss: ${data_dir}sto_ss_layer1.txt
+        sy: ${data_dir}sto_sy_layer1.txt
+        transient: True #TODO is there another way of specifying this?
+      
+      ghb.myghb:
+        stress_period_data:
+          - ${data_dir}ghb_stress_period_data_1.txt
+      
+      npf:
+        icelltype:
+          - ${data_dir}npf_icelltype_layer1.txt
+        k:
+          - ${data_dir}npf_k_layer1.txt
+        k33:
+          - ${data_dir}npf_k33_layer1.txt
+
+      sfr:
+        connectiondata: ${data_dir}sfr_connectiondata.txt
+        packagedata: ${data_dir}sfr_packagedata.txt
+        perioddata:
+          - ${data_dir}sfr_perioddata_1.txt
+
+      rcha:
+        recharge:
+          - ${data_dir}rch_recharge_layer1_1.txt
+          - ${data_dir}rch_recharge_layer1_2.txt
+          - ${data_dir}rch_recharge_layer1_3.txt
+          - ${data_dir}rch_recharge_layer1_4.txt
+          - ${data_dir}rch_recharge_layer1_5.txt
+          - ${data_dir}rch_recharge_layer1_6.txt
+          - ${data_dir}rch_recharge_layer1_7.txt
+          - ${data_dir}rch_recharge_layer1_8.txt
+          - ${data_dir}rch_recharge_layer1_9.txt
+          - ${data_dir}rch_recharge_layer1_10.txt
+          - ${data_dir}rch_recharge_layer1_11.txt
+          - ${data_dir}rch_recharge_layer1_12.txt
+          - ${data_dir}rch_recharge_layer1_13.txt
+          - ${data_dir}rch_recharge_layer1_14.txt
+          - ${data_dir}rch_recharge_layer1_15.txt
+          - ${data_dir}rch_recharge_layer1_16.txt
+          - ${data_dir}rch_recharge_layer1_17.txt
+          - ${data_dir}rch_recharge_layer1_18.txt
+          - ${data_dir}rch_recharge_layer1_19.txt
+          - ${data_dir}rch_recharge_layer1_20.txt
+          - ${data_dir}rch_recharge_layer1_21.txt
+          - ${data_dir}rch_recharge_layer1_22.txt
+          - ${data_dir}rch_recharge_layer1_23.txt
+          - ${data_dir}rch_recharge_layer1_24.txt
+          - ${data_dir}rch_recharge_layer1_25.txt
+      
+      wel:
+        stress_period_data:
+          - ${data_dir}wel_stress_period_data_1.txt
+          - ${data_dir}wel_stress_period_data_2.txt
+          - ${data_dir}wel_stress_period_data_3.txt
+          - ${data_dir}wel_stress_period_data_4.txt
+          - ${data_dir}wel_stress_period_data_5.txt
+          - ${data_dir}wel_stress_period_data_6.txt
+          - ${data_dir}wel_stress_period_data_7.txt
+          - ${data_dir}wel_stress_period_data_8.txt
+          - ${data_dir}wel_stress_period_data_9.txt
+          - ${data_dir}wel_stress_period_data_10.txt
+          - ${data_dir}wel_stress_period_data_11.txt
+          - ${data_dir}wel_stress_period_data_12.txt
+          - ${data_dir}wel_stress_period_data_13.txt
+          - ${data_dir}wel_stress_period_data_14.txt
+          - ${data_dir}wel_stress_period_data_15.txt
+          - ${data_dir}wel_stress_period_data_16.txt
+          - ${data_dir}wel_stress_period_data_17.txt
+          - ${data_dir}wel_stress_period_data_18.txt
+          - ${data_dir}wel_stress_period_data_19.txt
+          - ${data_dir}wel_stress_period_data_20.txt
+          - ${data_dir}wel_stress_period_data_21.txt
+          - ${data_dir}wel_stress_period_data_22.txt
+          - ${data_dir}wel_stress_period_data_23.txt
+          - ${data_dir}wel_stress_period_data_24.txt
+          - ${data_dir}wel_stress_period_data_25.txt
