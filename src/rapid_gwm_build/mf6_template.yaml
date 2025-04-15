@@ -7,7 +7,6 @@ sim:
     cmd: 'flopy.mf6.MFSimulation'
     duplicates_allowed: False
 
-
 tdis: 
     dependencies: ['sim'] # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
     # parameters:

@@ -81,10 +81,8 @@ class Module:
                     # set the parameter value
                     print(f'{key}:{value} is not a valid adjustable parameter for {self.name}')
     
-    def run(self):
-        # first run dependancies
-        if self.sim_dependencies:
-            self.run_dependancies()
+    def build(self):
+        self._build_dependencies()
 
         # run the command with the parameters
         print(f'Running {self.name}')
@@ -94,22 +92,23 @@ class Module:
         result = self.call_cmd()
         self._set_output(self.cmd, self.cmd_kwargs, result) #TODO
 
-    def run_dependancies(self):
-        # run the dependancies first
-        for cmd_kwarg, dep_module in self.sim_dependencies.items():
-            # first check if previously ran; also check if any of the cmd_kwargs have been changed
-            if dep_module.output is not None:
-                print(f'{dep_module.name} already ran')
-                self.sim_dependencies[cmd_kwarg] = dep_module.output # update the cmd_kwargs with the dependancy values
-            else:
-                # run the dependancy module
-                dep_module.run()
-            self.sim_dependencies[cmd_kwarg] = dep_module.output # update the cmd_kwargs with the dependancy values
+    def _build_dependancies(self):
+        if self.dependencies:
+            print(f'Building "{self.kind}": "{self.name}" dependencies...')
 
-            if cmd_kwarg in self.cmd_defaults.keys():
-                # update the cmd_kwargs with the dependancy values
-                self.cmd_kwargs[cmd_kwarg] = dep_module.output
+            # run the dependancies first
+            for cmd_kwarg, dep_module in self.dependencies.items():
+                # first check if previously ran; also check if any of the cmd_kwargs have been changed
+                if dep_module.output is not None:
+                    self.sim_dependencies[cmd_kwarg] = dep_module.output # update the cmd_kwargs with the dependancy values
+                else:
+                    # run the dependancy module
+                    dep_module.build()
+                self.dependencies[cmd_kwarg] = dep_module.output # update the cmd_kwargs with the dependancy values
 
+                if cmd_kwarg in self.cmd_defaults.keys():
+                    # update the cmd_kwargs with the dependancy values
+                    self.cmd_kwargs[cmd_kwarg] = dep_module.output
 
     def call_cmd(self):
         import importlib
