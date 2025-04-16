@@ -89,5 +89,4 @@ sfr:
 oc: 
     dependencies: ['gwf']
     cmd: 'flopy.mf6.ModflowGwfoc'
-    special_kwargs: []
     duplicates_allowed: True

@@ -52,8 +52,13 @@ simulations:
         recharge: 0.00025
       
       oc:
-        period_options:
-          0: ['save head last','save budget last'] #TODO: this is a mf-setup specific setting
+        extended_funcs:
+          'mfsetup.oc.parse_oc_period_input':
+            period_input:
+              saverecord:
+                0:
+                  head: last
+                  budget: last #TODO: this is a mf-setup specific setting
 
       ims:
         print_option: 'all'

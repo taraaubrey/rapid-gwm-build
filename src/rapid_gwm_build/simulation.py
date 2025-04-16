@@ -107,7 +107,7 @@ class Simulation:
             template = safe_load(f)
         return template
 
-
+    # FIXME: old method
     def to_pickle(self, pickle_dir:str):
         import os
         import pickle
@@ -116,7 +116,7 @@ class Simulation:
             pickle.dump(self, f)
         print(f'Pickled {self.name} to {pickle_dir}')
 
-
+    # FIXME: old method
     def write(
             self,
             run_modules: str = 'all', # flag to run all the modules or a specific module

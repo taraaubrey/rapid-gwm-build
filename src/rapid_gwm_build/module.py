@@ -13,6 +13,7 @@ class Module:
             # ModuleTemplate class which we can inherit from
             dependencies:dict=None, # dict of other module required (ie. dis) -> Module type
             special_kwargs=None, # special keys that can also be specified in the config file (ie. conductivity, elevation, etc)
+            extended_funcs:dict=None,
             cfg:dict=None, # config file for the module (ie. yaml file)
             **kwargs):
         self.kind = kind
@@ -24,6 +25,11 @@ class Module:
         self._dependencies = dependencies
         self._cfg = cfg # config file for the module (ie. yaml file)
 
+        if extended_funcs:
+            for ext_func, ext_func_kwargs in extended_funcs.items():
+                # check if the extended function is in the cmd_kwargs
+                self._call_extended_func(ext_func, ext_func_kwargs)
+
         self.output = None #TODO this will need to have some sort of setter method
 
     def __repr__(self):
@@ -31,16 +37,22 @@ class Module:
         return f'{self.__class__.__name__}({self.kind})'
 
     @classmethod
-    def from_cfg(cls, kind: str, cfg:dict, usr_modname: str, template_cfg:dict):
+    def from_cfg(
+        cls, 
+        kind: str, 
+        cfg:dict, 
+        usr_modname: str, 
+        template_cfg:dict):
         cmd = template_cfg.get('cmd') # get the command from the config file
-        cmd_kwargs = inspect_class_defaults(cmd) # this will be set to the defaults of the cmd
-
         dependancies = template_cfg.get('dependancies', None)
-        special_kwargs = template_cfg.get('special_kwargs', [])
+        special_kwargs = template_cfg.get('special_kwargs', {})
+        extended_funcs = cfg.pop('extended_funcs', None)
+        
+        cmd_kwargs = inspect_class_defaults(cmd) # this will be set to the defaults of the cmd
 
         # check that keys in the cfg are in either the cmd_kwargs or special_kwargs
         for key in cfg.keys():
-            if key not in cmd_kwargs['defaults'] and \
+            if key not in cmd_kwargs['defaults'].keys() and \
                 key not in cmd_kwargs['required'] and \
                     key not in special_kwargs:
                 raise ValueError(f'Invalid key {key} in {usr_modname} config file.')
@@ -51,21 +63,21 @@ class Module:
             cmd=cmd,
             cmd_kwargs=cmd_kwargs,
             dependancies=dependancies,
-            special_kwargs=special_kwargs,
+            special_kwargs=special_kwargs, #TODO: maybe remove in place of extended_funcs
+            extended_funcs=extended_funcs, #HACK: maybe remove in place of extended_funcs
             cfg = cfg,
         )
         return module
 
+    def _call_extended_func(self, cmd:str, kwargs):
+        output = self.call_cmd(cmd, kwargs)
+        if output is not None:
+            # update the cmd_kwargs with the output
+            self._cmd_kwargs['defaults'].update(output) #TODO: cmd_kwarsgs 
+        else:
+            raise ValueError(f'Invalid extended function {cmd}')
 
-    # def validate_cmd_kwargs(self, cmd_kwargs: dict):
-    #     # check if cmd_kwargs are in the cmd_defaults
-    #     for key in cmd_kwargs.keys():
-    #         if key in self.cmd_defaults.keys():
-    #             # check if the key is in the special methods dict
-    #             pass
-    #         else:
-    #             print(f'{key} is not a input for {self.cmd}')
-
+    # FIXME: old method
     def add_params(self, params: dict):
         # check if the key is in the cmd defaults
         # check if the key is in the special methods dict
@@ -81,6 +93,7 @@ class Module:
                     # set the parameter value
                     print(f'{key}:{value} is not a valid adjustable parameter for {self.name}')
     
+    # FIXME: old method
     def build(self):
         self._build_dependencies()
 
@@ -110,20 +123,21 @@ class Module:
                     # update the cmd_kwargs with the dependancy values
                     self.cmd_kwargs[cmd_kwarg] = dep_module.output
 
-    def call_cmd(self):
+    def call_cmd(self, cmd:str, cmd_kwargs:dict=None): #TODO move out to utils or something
         import importlib
 
         try:
-            module, class_name = self.cmd.rsplit(".", 1)
+            module, class_name = cmd.rsplit(".", 1)
             module = importlib.import_module(module)
-            cls = getattr(module, class_name)
-            return cls(**self.cmd_kwargs)
+            func = getattr(module, class_name)
+            return func(**cmd_kwargs)
         except ImportError as e:
-            raise ImportError(f"Could not import {self.cmd}: {e}")
+            raise ImportError(f"Could not import {cmd}: {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
     
 
+    # FIXME: old method
     def _set_output(self, cmd, cmd_kwargs, result):
         output = {
             'cmd': cmd,
