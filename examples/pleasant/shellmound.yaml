@@ -1,0 +1,67 @@
+vars:
+  model_dir: examples/models/mf6_monthly_model_files_1lyr_newstress # path to the data files
+  data_dir: examples\shellmound\data\shellmound\ # path to the data files
+
+simulations:
+  test_sim_v1: # user specified simulation name
+    
+    ws:
+      path: examples/
+      mode: overwrite # overwrite OR update
+    name: simple_freyburg
+    model_type: mf6
+    # load_existing: ${model_dir}
+
+    modules:
+      tdis: # if you want to name the package {type_name}.{user_name} use the name key
+        time_units: days
+        start_date_time: '2020-01-01'
+        nper: 1
+        perioddata:
+            - [1., 1, 1.] # perlen, nstp, tsmult
+      
+      dis:
+        # model: modules.gwf.shellmounda
+        length_units: meters
+        nlay: 1
+        resolution: 1000 # meters
+        idomain:
+          0: ${data_dir}tmr_parent/gis/irregular_boundary.shp
+        top: ${data_dir}rasters/meras_100m_dem.tif
+        botm: 
+          0: ${data_dir}rasters/mdwy_surf.tif
+
+      sto:
+        iconvert: 1
+        ss: 0.2
+        sy: 1.e-6
+        transient: False #TODO is there another way of specifying this?
+      
+      npf:
+        icelltype: 1
+        k: 30
+        k33: 0.3
+
+      # sfr: #TODO config sfs settings
+      #   connectiondata: ${data_dir}sfr_connectiondata.txt
+      #   packagedata: ${data_dir}sfr_packagedata.txt
+      #   perioddata:
+      #     - ${data_dir}sfr_perioddata_1.txt
+
+      rcha:
+        recharge: 0.00025
+      
+      oc:
+        period_options:
+          0: ['save head last','save budget last'] #TODO: this is a mf-setup specific setting
+
+      ims:
+        print_option: 'all'
+        complexity: 'complex'
+        csv_output_filerecord: 'solver_out.csv'
+        outer_dvclose: 1.  # m3/d in SFR package
+        outer_maximum: 50
+        inner_maximum: 100
+        inner_dvclose: 0.01
+        rcloserecord: [0.001, 'relative_rclose']
+      

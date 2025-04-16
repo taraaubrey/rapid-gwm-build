@@ -12,7 +12,7 @@ simulations:
     model_type: mf6
     load_existing: ${model_dir}
     
-    update_modules:
+    modules:
       freyberg6.wel: #needs to match model and package name in format {model}.{package_name}
         rmb.action: 'ireplace' #specific keys for rmb functions (rmb.{action})
         stress_period_data:
