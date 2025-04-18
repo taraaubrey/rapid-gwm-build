@@ -3,64 +3,75 @@
 # - how does Simulation know what a tdis module is?
 
 sim:
-    dependencies: None
+    composite: True
+    composite_modules: ['tdis', 'ims', 'gwf', 'gwt'] #TODO: add these composite modules
+    runtime_dependancies: ['gwf', 'tdis', 'ims'] #TODO: this is a special list of required minimum packages if this module is built
     cmd: 'flopy.mf6.MFSimulation'
     duplicates_allowed: False
-    required_sub_modules: ['tdis', 'ims'] #TODO: this is a special list of required minimum packages if this module is built
 
 tdis: 
-    dependencies: ['sim'] # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+    parent_module: 'sim'
+    build_dependancies: {'simulation': 'sim'} # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
     # parameters:
     #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
     cmd: 'flopy.mf6.ModflowTdis'
     duplicates_allowed: False
 
-ims: 
-    dependencies: ['sim']
+ims:
+    parent_module: 'sim'
+    build_dependancies: {'simulation': 'sim'}
     cmd: 'flopy.mf6.ModflowIms'
     duplicates_allowed: False
 
 
 ## GWF packages ----------------------
-gwf: 
-    dependencies: ['sim']
+gwf:
+    composite: True
+    composite_modules: ['dis', 'ic', 'npf', 'sto', 'wel', 'drn', 'ghb', 'rcha'] #TODO: add these composite modules
+    build_dependancies: {'simulation': 'sim'}
     cmd: 'flopy.mf6.ModflowGwf'
     duplicates_allowed: True
-    required_sub_modules: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built
+    runtime_dependancies: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built
 
 npf: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfnpf'
     duplicates_allowed: True
 
-dis: 
-    dependencies: ['gwf']
+dis:
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfdis'
     special_kwargs: ['model', 'resolution', 'botm', 'idomain'] #TODO these input keys have special functions & update cfg (these have special checks asssociated with them) otherwise just passed to cmd as is
     duplicates_allowed: False
 
 ic: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfic'
     special_kwargs: ['model']
     duplicates_allowed: False
 
 sto: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfsto'
     special_kwargs: ['model']
     duplicates_allowed: False
 ## Simple stress packages ----------------------
 
 wel:
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfwel'
     special_kwargs: ['model']
     duplicates_allowed: True
 
 
 drn: 
-    dependencies: ['gwf', 'dis']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     special_kwargs: ['model', 'conductivity', 'elevation'] #TODO: this is a special list of adjustable parameters which are not explicitly called
     cmd: 'flopy.mf6.ModflowGwfdrn'
     # special_methods:
@@ -68,13 +79,15 @@ drn:
     duplicates_allowed: True
 
 ghb: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfghb'
     special_kwargs: []
     duplicates_allowed: True
 
 rcha: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfrcha'
     special_kwargs: []
     duplicates_allowed: True
@@ -82,11 +95,13 @@ rcha:
 
 # ??
 sfr: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfsfr'
     duplicates_allowed: True
 
 oc: 
-    dependencies: ['gwf']
+    parent_module: 'gwf'
+    build_dependancies: {'model': 'gwf'}
     cmd: 'flopy.mf6.ModflowGwfoc'
     duplicates_allowed: True

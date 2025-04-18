@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from rapid-gwm-build!"
+from .factory import create_simulation

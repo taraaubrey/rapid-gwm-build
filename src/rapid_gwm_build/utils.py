@@ -52,3 +52,12 @@ def set_up_ws(ws_cfg:dict, name:str) -> str:
         ws_path = os.path.join(os.getcwd(), name) #TODO this is the default
     
     return ws_path
+
+def _parse_module_key(key:str):
+    if '.' in key:
+        kind = key.split('.')[0]
+        usr_modname = key.split('.')[1]
+    else:
+        kind = key
+        usr_modname = key
+    return kind, usr_modname

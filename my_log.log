@@ -1,0 +1,97 @@
+2025-04-18 15:39:40,230 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-18 15:39:40,304 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:39:40,306 - DEBUG - interactive is False
+2025-04-18 15:39:40,307 - DEBUG - platform is win32
+2025-04-18 15:39:40,716 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:39:40,731 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-18 15:39:42,467 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:39:42,469 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-18 15:39:42,470 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-18 15:39:43,587 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:39:43,591 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:39:43,592 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:39:43,663 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:39:43,665 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:39:46,306 - INFO - Builing default gwf package.
+2025-04-18 15:39:46,404 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-18 15:41:27,182 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-18 15:41:27,233 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:41:27,235 - DEBUG - interactive is False
+2025-04-18 15:41:27,235 - DEBUG - platform is win32
+2025-04-18 15:41:27,685 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:41:27,688 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-18 15:41:28,893 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:41:28,895 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-18 15:41:28,895 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-18 15:41:29,065 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:41:29,070 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:41:29,072 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:41:29,104 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:41:29,106 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:41:32,242 - INFO - Builing default gwf package.
+2025-04-18 15:41:32,449 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-18 15:45:21,781 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-18 15:45:21,874 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:45:21,877 - DEBUG - interactive is False
+2025-04-18 15:45:21,878 - DEBUG - platform is win32
+2025-04-18 15:45:22,419 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:45:22,440 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-18 15:45:24,479 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:45:24,479 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-18 15:45:24,479 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-18 15:45:26,134 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:45:26,138 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:45:26,140 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:45:26,221 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:45:26,222 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:45:31,099 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-18 15:45:31,152 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:45:31,155 - DEBUG - interactive is False
+2025-04-18 15:45:31,155 - DEBUG - platform is win32
+2025-04-18 15:45:31,571 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:45:31,574 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-18 15:45:32,737 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:45:32,739 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-18 15:45:32,741 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-18 15:45:32,914 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:45:32,917 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:45:32,918 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:45:32,944 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:45:32,946 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:45:36,400 - INFO - Builing default gwf package.
+2025-04-18 15:45:36,401 - DEBUG - No dependencies for sim
+2025-04-18 15:45:36,645 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-18 15:47:40,333 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-18 15:47:40,385 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:47:40,387 - DEBUG - interactive is False
+2025-04-18 15:47:40,387 - DEBUG - platform is win32
+2025-04-18 15:47:40,900 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:47:40,905 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-18 15:47:42,087 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:47:42,091 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-18 15:47:42,092 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-18 15:47:42,263 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:47:42,266 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:47:42,267 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:47:42,299 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:47:42,300 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:47:45,481 - INFO - Builing default gwf package.
+2025-04-18 15:47:45,481 - DEBUG - No dependencies for sim
+2025-04-18 15:47:45,692 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-18 15:50:26,343 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-18 15:50:26,399 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:50:26,402 - DEBUG - interactive is False
+2025-04-18 15:50:26,402 - DEBUG - platform is win32
+2025-04-18 15:50:26,795 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-18 15:50:26,797 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-18 15:50:27,635 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:50:27,638 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-18 15:50:27,640 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-18 15:50:27,774 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-18 15:50:27,777 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:50:27,778 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:50:27,804 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-18 15:50:27,806 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-18 15:50:30,024 - INFO - Builing default gwf package.
+2025-04-18 15:50:30,025 - DEBUG - No dependencies for sim
+2025-04-18 15:50:30,179 - DEBUG - Loaded backend tkagg version 8.6.

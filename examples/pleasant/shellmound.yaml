@@ -4,15 +4,18 @@ vars:
 
 simulations:
   test_sim_v1: # user specified simulation name
-    
+    sim_type: mf6 #required
+    name: simple_freyburg
     ws:
       path: examples/
       mode: overwrite # overwrite OR update
-    name: simple_freyburg
-    model_type: mf6
     # load_existing: ${model_dir}
 
     modules:
+      gwf:
+        modelname: shellmound
+      # gwf.changed_dis:
+      #   modelname: shellmound
       tdis: # if you want to name the package {type_name}.{user_name} use the name key
         time_units: days
         start_date_time: '2020-01-01'
@@ -21,6 +24,7 @@ simulations:
             - [1., 1, 1.] # perlen, nstp, tsmult
       
       dis:
+        parent_module: gwf # this is the name of the module that this package is associated with
         # model: modules.gwf.shellmounda
         length_units: meters
         nlay: 1
