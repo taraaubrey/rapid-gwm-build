@@ -9,7 +9,7 @@ from rapid_gwm_build.utils import set_up_ws, _parse_module_key
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,  # Set the minimum logging level
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),  # Handler for console output
         logging.FileHandler('my_log.log')  # Handler for file output
@@ -49,8 +49,11 @@ for sim_name, sim_cfg in sim_kwargs.items():
     ws_path = set_up_ws(ws_cfg, name) #TODO some kind of print statement to say where the workspace is
 
     #create the simulation object
-    sim = create_simulation(name=name, model_type=sim_type, cfg=cfg, ws=ws_path)
+    sim = create_simulation(name=name, model_type=sim_type, cfg=sim_cfg, ws=ws_path)
 
+    # build module graph
+    sim.build_module_graph()
+    # build the simulation
     #print(here)
     sim.build()
 

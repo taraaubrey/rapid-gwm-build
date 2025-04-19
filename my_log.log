@@ -95,3 +95,510 @@
 2025-04-18 15:50:30,024 - INFO - Builing default gwf package.
 2025-04-18 15:50:30,025 - DEBUG - No dependencies for sim
 2025-04-18 15:50:30,179 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:03:54,882 - DEBUG - Building modules from config file.
+2025-04-20 09:05:01,730 - DEBUG - Building modules from config file.
+2025-04-20 09:06:02,420 - DEBUG - Building modules from config file.
+2025-04-20 09:06:20,016 - DEBUG - Building modules from config file.
+2025-04-20 09:06:42,545 - DEBUG - Building modules from config file.
+2025-04-20 09:08:02,833 - DEBUG - Building modules from config file.
+2025-04-20 09:08:07,312 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:08:07,418 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:08:07,419 - DEBUG - interactive is False
+2025-04-20 09:08:07,420 - DEBUG - platform is win32
+2025-04-20 09:08:08,107 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:08:08,131 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:08:09,885 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:10:45,995 - DEBUG - Building modules from config file.
+2025-04-20 09:11:05,197 - DEBUG - Building modules from config file.
+2025-04-20 09:11:07,014 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:11:07,067 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:11:07,069 - DEBUG - interactive is False
+2025-04-20 09:11:07,069 - DEBUG - platform is win32
+2025-04-20 09:11:07,457 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:11:07,460 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:11:08,359 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:12:18,386 - DEBUG - Building modules from config file.
+2025-04-20 09:12:22,738 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:12:22,831 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:12:22,833 - DEBUG - interactive is False
+2025-04-20 09:12:22,834 - DEBUG - platform is win32
+2025-04-20 09:12:23,415 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:12:23,438 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:12:25,671 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 09:12:25,674 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 09:12:25,676 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 09:12:26,951 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 09:12:26,953 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 09:12:26,954 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 09:12:27,006 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 09:12:27,008 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 09:12:30,880 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:13:05,369 - DEBUG - Building modules from config file.
+2025-04-20 09:13:07,197 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:13:07,252 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:13:07,254 - DEBUG - interactive is False
+2025-04-20 09:13:07,255 - DEBUG - platform is win32
+2025-04-20 09:13:07,656 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:13:07,660 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:13:08,583 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:14:05,249 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 09:14:05,304 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 09:14:05,307 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 09:14:05,429 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 09:14:05,431 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 09:14:05,431 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 09:14:05,466 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 09:14:05,467 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 09:18:53,300 - DEBUG - Building modules from config file.
+2025-04-20 09:19:43,155 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:19:43,200 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:19:43,203 - DEBUG - interactive is False
+2025-04-20 09:19:43,204 - DEBUG - platform is win32
+2025-04-20 09:19:43,756 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:19:43,759 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:19:44,675 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:21:23,110 - DEBUG - Building modules from config file.
+2025-04-20 09:21:26,850 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:21:26,926 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:21:26,930 - DEBUG - interactive is False
+2025-04-20 09:21:26,930 - DEBUG - platform is win32
+2025-04-20 09:21:27,469 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:21:27,474 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:21:28,388 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:25:11,682 - DEBUG - Building modules from config file.
+2025-04-20 09:25:16,668 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:25:16,709 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:25:16,711 - DEBUG - interactive is False
+2025-04-20 09:25:16,712 - DEBUG - platform is win32
+2025-04-20 09:25:17,329 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:25:17,332 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:25:18,195 - DEBUG - Creating composite module gwf for dis.
+2025-04-20 09:25:18,242 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:25:38,016 - DEBUG - Creating composite module sim for ims.
+2025-04-20 09:38:08,443 - DEBUG - Building modules from config file.
+2025-04-20 09:38:27,406 - DEBUG - Building modules from config file.
+2025-04-20 09:38:37,288 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:38:37,386 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:38:37,388 - DEBUG - interactive is False
+2025-04-20 09:38:37,389 - DEBUG - platform is win32
+2025-04-20 09:38:37,910 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:38:37,928 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:38:39,310 - DEBUG - Creating composite module gwf for dis.
+2025-04-20 09:38:39,459 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:39:20,908 - DEBUG - Building modules from config file.
+2025-04-20 09:40:24,247 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 09:40:24,315 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:40:24,320 - DEBUG - interactive is False
+2025-04-20 09:40:24,321 - DEBUG - platform is win32
+2025-04-20 09:40:24,899 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 09:40:24,903 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 09:40:25,849 - DEBUG - Creating composite module gwf for dis.
+2025-04-20 09:40:25,896 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 09:41:12,547 - DEBUG - Creating composite module sim for ims.
+2025-04-20 10:10:02,330 - DEBUG - Building modules from config file.
+2025-04-20 10:11:34,245 - DEBUG - Building modules from config file.
+2025-04-20 10:11:40,678 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:11:40,747 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:11:40,749 - DEBUG - interactive is False
+2025-04-20 10:11:40,750 - DEBUG - platform is win32
+2025-04-20 10:11:41,104 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:11:41,122 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:11:42,310 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:11:58,454 - DEBUG - Building modules from config file.
+2025-04-20 10:12:01,842 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:12:01,898 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:12:01,900 - DEBUG - interactive is False
+2025-04-20 10:12:01,901 - DEBUG - platform is win32
+2025-04-20 10:12:02,241 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:12:02,244 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:12:02,954 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:15:38,540 - DEBUG - Building modules from config file.
+2025-04-20 10:16:07,265 - DEBUG - Building modules from config file.
+2025-04-20 10:16:07,267 - DEBUG - Building module dis from config file.
+2025-04-20 10:16:10,781 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:16:10,846 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:16:10,849 - DEBUG - interactive is False
+2025-04-20 10:16:10,849 - DEBUG - platform is win32
+2025-04-20 10:16:11,210 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:16:11,228 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:16:12,372 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:17:43,507 - DEBUG - Building modules from config file.
+2025-04-20 10:17:43,509 - DEBUG - Building module dis from config file.
+2025-04-20 10:17:45,282 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:17:45,338 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:17:45,340 - DEBUG - interactive is False
+2025-04-20 10:17:45,341 - DEBUG - platform is win32
+2025-04-20 10:17:45,744 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:17:45,747 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:17:46,368 - DEBUG - Building gwf for dis.
+2025-04-20 10:17:46,403 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:18:17,528 - DEBUG - Finished building modules from config file.
+2025-04-20 10:18:17,528 - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:18:25,042 - DEBUG - Finished building modules from config file.
+2025-04-20 10:18:25,042 - DEBUG - Building module ims from config file.
+2025-04-20 10:18:25,043 - DEBUG - Building sim for ims.
+2025-04-20 10:18:33,614 - DEBUG - Finished building modules from config file.
+2025-04-20 10:18:33,615 - DEBUG - Building module npf from config file.
+2025-04-20 10:18:33,615 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:05,856 - DEBUG - Building modules from config file.
+2025-04-20 10:19:05,891 - DEBUG - Building module dis from config file.
+2025-04-20 10:19:07,687 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:19:07,739 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:19:07,741 - DEBUG - interactive is False
+2025-04-20 10:19:07,742 - DEBUG - platform is win32
+2025-04-20 10:19:08,122 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:19:08,125 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:19:08,751 - DEBUG - Building gwf for dis.
+2025-04-20 10:19:08,786 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:19:19,875 - DEBUG - Building modules from config file.
+2025-04-20 10:19:19,877 - DEBUG - Building module dis from config file.
+2025-04-20 10:19:21,648 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:19:21,702 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:19:21,704 - DEBUG - interactive is False
+2025-04-20 10:19:21,704 - DEBUG - platform is win32
+2025-04-20 10:19:22,101 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:19:22,104 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:19:22,760 - DEBUG - Building gwf for dis.
+2025-04-20 10:19:22,761 - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:19:22,761 - DEBUG - Building module ims from config file.
+2025-04-20 10:19:22,761 - DEBUG - Building sim for ims.
+2025-04-20 10:19:22,762 - DEBUG - Building module npf from config file.
+2025-04-20 10:19:22,762 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:22,762 - DEBUG - Building module oc from config file.
+2025-04-20 10:19:23,543 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:19:23,545 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:19:23,546 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:19:24,896 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:19:24,899 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:19:24,900 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:19:24,952 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:19:24,953 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:19:27,369 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:27,369 - DEBUG - Building module rcha from config file.
+2025-04-20 10:19:27,369 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:27,370 - DEBUG - Building module sto from config file.
+2025-04-20 10:19:27,370 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:27,370 - DEBUG - Building module tdis from config file.
+2025-04-20 10:19:27,370 - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:19:27,371 - DEBUG - Finished building modules from config file.
+2025-04-20 10:19:27,413 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:19:51,013 - DEBUG - Building modules from config file.
+2025-04-20 10:19:51,014 - DEBUG - Building module dis from config file.
+2025-04-20 10:19:52,715 - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:19:52,766 - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:19:52,767 - DEBUG - interactive is False
+2025-04-20 10:19:52,768 - DEBUG - platform is win32
+2025-04-20 10:19:53,165 - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:19:53,168 - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:19:53,850 - DEBUG - Building gwf for dis.
+2025-04-20 10:19:53,851 - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:19:53,851 - DEBUG - Building module ims from config file.
+2025-04-20 10:19:53,851 - DEBUG - Building sim for ims.
+2025-04-20 10:19:53,851 - DEBUG - Building module npf from config file.
+2025-04-20 10:19:53,852 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:53,852 - DEBUG - Building module oc from config file.
+2025-04-20 10:19:54,104 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:19:54,106 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:19:54,107 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:19:54,273 - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:19:54,276 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:19:54,277 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:19:54,304 - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:19:54,305 - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:19:56,678 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:56,679 - DEBUG - Building module rcha from config file.
+2025-04-20 10:19:56,679 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:56,679 - DEBUG - Building module sto from config file.
+2025-04-20 10:19:56,680 - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:19:56,680 - DEBUG - Building module tdis from config file.
+2025-04-20 10:19:56,681 - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:19:56,724 - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:26:25,511 - root - DEBUG - Building modules from config file.
+2025-04-20 10:26:25,513 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:26:27,221 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:26:27,269 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:26:27,271 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:26:27,272 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:26:27,647 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:26:27,650 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:26:28,269 - root - DEBUG - Building gwf for dis.
+2025-04-20 10:26:28,269 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:26:28,270 - root - DEBUG - Building module ims from config file.
+2025-04-20 10:26:28,270 - root - DEBUG - Building sim for ims.
+2025-04-20 10:26:28,271 - root - DEBUG - Building module npf from config file.
+2025-04-20 10:26:28,271 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:26:28,271 - root - DEBUG - Building module oc from config file.
+2025-04-20 10:26:28,524 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:26:28,526 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:26:28,527 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:26:28,667 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:26:28,669 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:26:28,671 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:26:28,695 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:26:28,696 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:26:31,069 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:26:31,069 - root - DEBUG - Building module rcha from config file.
+2025-04-20 10:26:31,069 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:26:31,070 - root - DEBUG - Building module sto from config file.
+2025-04-20 10:26:31,070 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:26:31,070 - root - DEBUG - Building module tdis from config file.
+2025-04-20 10:26:31,071 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:26:31,105 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:26:41,821 - root - DEBUG - Finished building modules from config file.
+2025-04-20 10:27:02,187 - root - DEBUG - Building modules from config file.
+2025-04-20 10:27:02,188 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:27:03,920 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:27:03,969 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:27:03,971 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:27:03,972 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:27:04,399 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:27:04,402 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:27:05,009 - root - DEBUG - Building gwf for dis.
+2025-04-20 10:27:05,010 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:27:05,012 - root - DEBUG - Building module ims from config file.
+2025-04-20 10:27:05,012 - root - DEBUG - Building sim for ims.
+2025-04-20 10:27:05,012 - root - DEBUG - Building module npf from config file.
+2025-04-20 10:27:05,013 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:05,013 - root - DEBUG - Building module oc from config file.
+2025-04-20 10:27:05,235 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:27:05,238 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:27:05,239 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:27:05,369 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:27:05,371 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:27:05,372 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:27:05,395 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:27:05,397 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:27:07,624 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:07,625 - root - DEBUG - Building module rcha from config file.
+2025-04-20 10:27:07,625 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:07,626 - root - DEBUG - Building module sto from config file.
+2025-04-20 10:27:07,626 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:07,627 - root - DEBUG - Building module tdis from config file.
+2025-04-20 10:27:07,627 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:27:07,665 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:27:10,785 - root - DEBUG - Finished building modules from config file.
+2025-04-20 10:27:10,786 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 10:27:10,786 - root - DEBUG - MF6Simulation: Created simulation test_sim_v1 with 9 modules.
+2025-04-20 10:27:38,439 - root - DEBUG - Building modules from config file.
+2025-04-20 10:27:38,441 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:27:42,637 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:27:42,743 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:27:42,746 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:27:42,747 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:27:43,340 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:27:43,357 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:27:44,764 - root - DEBUG - Building gwf for dis.
+2025-04-20 10:27:44,765 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:27:44,765 - root - DEBUG - Building module ims from config file.
+2025-04-20 10:27:44,766 - root - DEBUG - Building sim for ims.
+2025-04-20 10:27:44,766 - root - DEBUG - Building module npf from config file.
+2025-04-20 10:27:44,767 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:44,767 - root - DEBUG - Building module oc from config file.
+2025-04-20 10:27:45,700 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:27:45,703 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:27:45,706 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:27:47,004 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:27:47,009 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:27:47,012 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:27:47,078 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:27:47,078 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:27:49,413 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:49,413 - root - DEBUG - Building module rcha from config file.
+2025-04-20 10:27:49,413 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:49,413 - root - DEBUG - Building module sto from config file.
+2025-04-20 10:27:49,414 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:27:49,414 - root - DEBUG - Building module tdis from config file.
+2025-04-20 10:27:49,414 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:27:49,505 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:27:53,230 - root - DEBUG - Finished building modules from config file.
+2025-04-20 10:27:53,230 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 10:27:53,230 - root - DEBUG - MF6Simulation: Created simulation test_sim_v1 with 9 modules.
+2025-04-20 10:34:14,390 - root - DEBUG - Building modules from config file.
+2025-04-20 10:34:14,392 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:34:16,107 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:34:16,157 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:34:16,159 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:34:16,160 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:34:16,515 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:34:16,518 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:34:17,097 - root - DEBUG - Building gwf for dis.
+2025-04-20 10:34:17,098 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:34:17,098 - root - DEBUG - Building module ims from config file.
+2025-04-20 10:34:17,099 - root - DEBUG - Building sim for ims.
+2025-04-20 10:34:17,099 - root - DEBUG - Building module npf from config file.
+2025-04-20 10:34:17,099 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:34:17,099 - root - DEBUG - Building module oc from config file.
+2025-04-20 10:34:17,300 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:34:17,302 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:34:17,303 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:34:17,425 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:34:17,428 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:34:17,429 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:34:17,451 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:34:17,452 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:34:19,534 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:34:19,535 - root - DEBUG - Building module rcha from config file.
+2025-04-20 10:34:19,536 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:34:19,536 - root - DEBUG - Building module sto from config file.
+2025-04-20 10:34:19,536 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:34:19,536 - root - DEBUG - Building module tdis from config file.
+2025-04-20 10:34:19,537 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:34:19,537 - root - DEBUG - Finished building modules from config file.
+2025-04-20 10:34:19,537 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 10:34:19,598 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:35:28,053 - root - DEBUG - Building modules from config file.
+2025-04-20 10:35:28,055 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:35:29,844 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:35:29,917 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:35:29,920 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:35:29,920 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:35:30,306 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:35:30,310 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:35:30,932 - root - DEBUG - Building gwf for dis.
+2025-04-20 10:35:30,933 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:35:30,933 - root - DEBUG - Building module ims from config file.
+2025-04-20 10:35:30,933 - root - DEBUG - Building sim for ims.
+2025-04-20 10:35:30,933 - root - DEBUG - Building module npf from config file.
+2025-04-20 10:35:30,934 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:35:30,934 - root - DEBUG - Building module oc from config file.
+2025-04-20 10:35:31,217 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:35:31,220 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:35:31,222 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:35:31,401 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:35:31,404 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:35:31,405 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:35:31,430 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:35:31,431 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:35:34,742 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:35:34,742 - root - DEBUG - Building module rcha from config file.
+2025-04-20 10:35:34,743 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:35:34,743 - root - DEBUG - Building module sto from config file.
+2025-04-20 10:35:34,743 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:35:34,744 - root - DEBUG - Building module tdis from config file.
+2025-04-20 10:35:34,744 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:35:34,745 - root - DEBUG - Finished building modules from config file.
+2025-04-20 10:35:34,745 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 10:35:34,793 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:45:15,455 - root - DEBUG - Building modules from config file.
+2025-04-20 10:45:15,456 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:45:19,697 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:45:19,792 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:45:19,794 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:45:19,795 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:45:20,312 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:45:20,342 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:45:22,207 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:47:02,431 - root - DEBUG - Building modules from config file.
+2025-04-20 10:47:02,432 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:47:04,208 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:47:04,263 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:47:04,264 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:47:04,266 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:47:04,811 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:47:04,815 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:47:05,722 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:50:30,332 - root - DEBUG - Building modules from config file.
+2025-04-20 10:50:30,333 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:50:32,032 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:50:32,085 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:50:32,087 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:50:32,088 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:50:32,465 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:50:32,468 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:50:33,121 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:52:05,469 - root - DEBUG - Building modules from config file.
+2025-04-20 10:52:05,470 - root - DEBUG - Building module dis from config file.
+2025-04-20 10:52:07,140 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 10:52:07,197 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:52:07,200 - matplotlib - DEBUG - interactive is False
+2025-04-20 10:52:07,201 - matplotlib - DEBUG - platform is win32
+2025-04-20 10:52:07,595 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 10:52:07,599 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 10:52:08,307 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 10:52:12,125 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 10:52:12,126 - root - DEBUG - Building module ims from config file.
+2025-04-20 10:52:12,127 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:52:12,127 - root - DEBUG - Building module npf from config file.
+2025-04-20 10:52:12,128 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:52:12,128 - root - DEBUG - Building module oc from config file.
+2025-04-20 10:52:12,896 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:52:12,898 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 10:52:12,899 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 10:52:14,111 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 10:52:14,114 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:52:14,115 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:52:14,167 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 10:52:14,169 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 10:52:16,507 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:52:16,508 - root - DEBUG - Building module rcha from config file.
+2025-04-20 10:52:16,508 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:52:16,509 - root - DEBUG - Building module sto from config file.
+2025-04-20 10:52:16,509 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 10:52:16,509 - root - DEBUG - Building module tdis from config file.
+2025-04-20 10:52:16,511 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 10:52:16,511 - root - DEBUG - Finished building modules from config file.
+2025-04-20 10:52:16,511 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 11:03:38,341 - root - DEBUG - Building modules from config file.
+2025-04-20 11:03:38,343 - root - DEBUG - Building module dis from config file.
+2025-04-20 11:03:42,553 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 11:03:42,640 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 11:03:42,646 - matplotlib - DEBUG - interactive is False
+2025-04-20 11:03:42,647 - matplotlib - DEBUG - platform is win32
+2025-04-20 11:03:43,171 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 11:03:43,192 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 11:03:44,722 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-20 11:03:47,999 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 11:03:48,000 - root - DEBUG - Building module ims from config file.
+2025-04-20 11:03:48,000 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 11:03:48,001 - root - DEBUG - Building module npf from config file.
+2025-04-20 11:03:48,001 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:03:48,001 - root - DEBUG - Building module oc from config file.
+2025-04-20 11:03:48,995 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 11:03:48,999 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 11:03:49,001 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 11:03:50,606 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 11:03:50,609 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 11:03:50,610 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 11:03:50,699 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 11:03:50,700 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 11:03:54,069 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:03:54,070 - root - DEBUG - Building module rcha from config file.
+2025-04-20 11:03:54,070 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:03:54,071 - root - DEBUG - Building module sto from config file.
+2025-04-20 11:03:54,071 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:03:54,071 - root - DEBUG - Building module tdis from config file.
+2025-04-20 11:03:54,072 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 11:03:54,072 - root - DEBUG - Finished building modules from config file.
+2025-04-20 11:03:54,072 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 11:07:38,127 - root - DEBUG - Building modules from config file.
+2025-04-20 11:07:38,128 - root - DEBUG - Building module dis from config file.
+2025-04-20 11:07:39,933 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-20 11:07:39,990 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 11:07:39,992 - matplotlib - DEBUG - interactive is False
+2025-04-20 11:07:39,993 - matplotlib - DEBUG - platform is win32
+2025-04-20 11:07:40,411 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-20 11:07:40,415 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-20 11:07:41,086 - root - DEBUG - Module gwf already exists in the simulation. Skipping.
+2025-04-20 11:07:41,086 - root - DEBUG - Building module ims from config file.
+2025-04-20 11:07:41,086 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 11:07:41,087 - root - DEBUG - Building module npf from config file.
+2025-04-20 11:07:41,087 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:07:41,087 - root - DEBUG - Building module oc from config file.
+2025-04-20 11:07:41,323 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 11:07:41,325 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-20 11:07:41,326 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-20 11:07:41,463 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-20 11:07:41,465 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 11:07:41,466 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 11:07:41,490 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-20 11:07:41,491 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-20 11:07:43,999 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:07:44,000 - root - DEBUG - Building module rcha from config file.
+2025-04-20 11:07:44,000 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:07:44,001 - root - DEBUG - Building module sto from config file.
+2025-04-20 11:07:44,001 - root - DEBUG - Getting parent module gwf from module registry.
+2025-04-20 11:07:44,001 - root - DEBUG - Building module tdis from config file.
+2025-04-20 11:07:44,001 - root - DEBUG - Getting parent module sim from module registry.
+2025-04-20 11:07:44,002 - root - DEBUG - Finished building modules from config file.
+2025-04-20 11:07:44,002 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-20 11:07:44,511 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.

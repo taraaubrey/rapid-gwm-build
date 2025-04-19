@@ -19,6 +19,7 @@ class Module:
         self._special_kwargs = template_cfg.get('special_kwargs', {})
         self._dependencies = template_cfg.get('build_dependancies', None)
         self._cfg = cfg # config file for the module (ie. yaml file)
+        self._template_cfg = template_cfg # template config file (ie. yaml file)
 
         kwargs = inspect_class_defaults(self._cmd) # this will be set to the defaults of the cmd
         self._cmd_kwargs = kwargs['defaults'] #TODO: this should be a setter method for the cmd_kwargs

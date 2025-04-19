@@ -20,13 +20,14 @@ class Simulation:
         self.cfg = cfg
         self.name = name
         self.model_type = model_type # type of the simulation (ie. modflow, mt3d, etc)
+        self.modules = {}
         
         self._template = self._set_template(_defaults) # this is the specific model type template (ie. specific templated modules)
 
         if cfg:
-            self.modules = self._build_modules_from_cfg()
-        else:
-            self.modules = None
+            self._create_modules_from_cfg()
+        
+        logging.debug(f'Created simulation {self.name} with {len(self.modules)} modules.')
 
     def _set_template(self, _default_file:str):
         from yaml import safe_load
@@ -53,7 +54,7 @@ class Simulation:
             if duplicates_allowed==False:
                 raise ValueError(f'Only one "{kind}" allowed. Remove this module or set duplicates_allowed to True in the template file.')
     
-    def _check_module_kwargs(self, kind, cfg, usr_modname, module): #TODO move out of class
+    def _check_module_kwargs(self, kind, cfg, usr_modname, module=None): #TODO move out of class; positionals etc need to adjust
         if module:
             if not isinstance(module, Module):
                 raise ValueError(f'Module must be of type Module.')
@@ -67,54 +68,125 @@ class Simulation:
             pass
   
     def module_meta_from_cfg(self, module_registry_cfg:dict):
-        modules = []
+        modules = {}
         for module_key, module_cfg in module_registry_cfg.items():
-            kind, usr_modname = _parse_module_key(module_key)
-            usr_modname = usr_modname if usr_modname else kind # name of the module (ie. modflow, mt3d, etc)
-        
-            #checks
-            self._check_unique_module_name(usr_modname)
-            self._check_duplicated_allowed(kind)
-            self._check_module_kwargs(kind, module_cfg, usr_modname)
-            # TODO add check that required in template if model type is set.
-            # # check if the module is in the template
-            # if kind not in self._template.keys():
-            #     raise ValueError(f'Module {kind} not in template.')
-            meta = {
-                'usr_modname': usr_modname,
-                'kind': kind,
-                'cfg': module_cfg,
-                'template_cfg': self._template[kind],
-                'composite': self._template[kind].get('composite', False),
-                'parent_module': self._template[kind].get('parent_module', None),
-            }
-            modules.append(meta)
+            meta = self.get_module_meta(module_key)
+            meta['cfg'] = module_cfg # update the cfg with the user config
+            usr_modname = meta['usr_modname']
+            modules[usr_modname] = meta
         return modules
     
-    def _build_modules_from_cfg(self):
+    def get_module_meta(self, module_key:str):
+        kind, usr_modname = _parse_module_key(module_key)
+        usr_modname = usr_modname if usr_modname else kind # name of the module (ie. modflow, mt3d, etc)
+    
+        #checks
+        self._check_unique_module_name(usr_modname)
+        self._check_duplicated_allowed(kind)
+        # TODO add check that required in template if model type is set.
+        # # check if the module is in the template
+        # if kind not in self._template.keys():
+        #     raise ValueError(f'Module {kind} not in template.')
+        meta = {
+            'usr_modname': usr_modname,
+            'kind': kind,
+            'template_cfg': self._template[kind],
+            'composite': self._template[kind].get('composite', False),
+            'parent_module': self._template[kind].get('parent_module', None),
+        }
+        return meta
+
+    
+    def _create_modules_from_cfg(self):
         logging.debug('Building modules from config file.')
 
-        modules = self.module_meta_from_cfg(self.cfg['modules']) #TODO: this should be moved out of class maybe?
-        
-        for module_kwargs in modules: 
-            # check if the module is a composite module
-            if module_kwargs['composite']:
-                # create the composite module object
-                composite_module = CompositeModule(**module_kwargs)
-                self._add_module(composite_module)
-            else:
-                # create the module object
-                module_obj = Module(**module_kwargs)
-                self._add_module(module_obj)
+        for module_key, module_cfg in self.cfg['modules'].items():
+            if module_key not in self.modules.keys():
+                logging.debug(f'Building module {module_key} from config file.')
 
-                # create composite module if it exists
-                parent_module_meta = modules.get(module_kwargs['parent_module'], None)
-                if parent_module_meta:
+                module_meta = self.get_module_meta(module_key)
+                module_meta['cfg'] = module_cfg # update the cfg with the user config
+
+                # check if the module is a composite module
+                if module_meta['composite']:
                     # create the composite module object
-                    parent_module = CompositeModule(**module_kwargs)
-                    parent_module.add_child_module(module_obj)
-                    self._add_module(parent_module)
+                    module = self._create_module(module_meta, composite=True)
 
+                else:
+                    module = self._create_module(module_meta)
+                    self._build_parent_module(module)
+
+
+            else:
+                logging.debug(f'Module {module_key} already exists in the simulation. Skipping.')
+
+        logging.debug('Finished building modules from config file.')
+
+    def _build_parent_module(self, child_module:Module):
+        parent_module_key = child_module._template_cfg['parent_module']
+
+        if parent_module_key:
+            # if module object has a parent module, get it from the registry and if not there build it
+            if parent_module_key in self.modules.keys():
+                logging.debug(f'Getting parent module {parent_module_key} from module registry.')
+                parent_module = self.modules[parent_module_key]
+            else:
+                # create module from defaults
+                parent_module_meta = self.get_module_meta(parent_module_key)
+                parent_module = self._create_module(parent_module_meta, composite=True)
+                # recursive to build parent module if it has a parent module
+                self._build_parent_module(parent_module)
+            
+            # add the module to the parent module
+            parent_module.add_child(child_module)
+
+    def build_module_graph(self):
+        import networkx as nx
+        graph = nx.DiGraph()
+        all_items = list(self.modules.values())
+
+        # Add all nodes to the graph
+        for item in all_items:
+            graph.add_node(item)
+
+        # Add edges based on containment
+        for item in all_items:
+            if isinstance(item, CompositeModule):
+                for contained_item in item.children:
+                    graph.add_edge(item, contained_item)
+
+        return graph
+    
+    def get_node_levels(graph):
+        """
+        Calculates the level of each node in the graph, where level 0
+        consists of nodes with no incoming edges.
+        """
+        top_level_nodes = [node for node, in_degree in graph.in_degree() if in_degree == 0]
+        levels = {}
+        queue = [(node, 0) for node in top_level_nodes]
+        visited = set(top_level_nodes)
+
+        while queue:
+            current_node, level = queue.pop(0)
+            levels[current_node] = level
+            for successor in graph.successors(current_node):
+                if successor not in visited:
+                    visited.add(successor)
+                    queue.append((successor, level + 1))
+        return levels
+    
+    def _create_module(self, module_meta: dict, composite:bool=False):
+        # check if the module is a composite module
+        if composite:
+            # create the composite module object
+            module = CompositeModule(**module_meta)
+        else:
+            # create the module object
+            module = Module(**module_meta)
+        self._add_module(module)
+        return module
+    
     
     def add_module(self, kind:str=None, cfg:dict=None, usr_modname:str=None, module:Module=None): #TODO API to add module manually
         usr_modname = usr_modname if usr_modname else kind # name of the module (ie. modflow, mt3d, etc)

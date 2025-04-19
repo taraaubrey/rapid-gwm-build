@@ -3,6 +3,7 @@
 # - how does Simulation know what a tdis module is?
 
 sim:
+    parent_module: null
     composite: True
     composite_modules: ['tdis', 'ims', 'gwf', 'gwt'] #TODO: add these composite modules
     runtime_dependancies: ['gwf', 'tdis', 'ims'] #TODO: this is a special list of required minimum packages if this module is built
@@ -26,6 +27,7 @@ ims:
 
 ## GWF packages ----------------------
 gwf:
+    parent_module: 'sim'
     composite: True
     composite_modules: ['dis', 'ic', 'npf', 'sto', 'wel', 'drn', 'ghb', 'rcha'] #TODO: add these composite modules
     build_dependancies: {'simulation': 'sim'}

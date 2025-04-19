@@ -10,6 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "flopy==3.9.2",
     "modflow-setup>=0.6.1", #HACK: hardcoded for now (remove)
+    "networkx>=3.4.2", #TODO: maybe remove if not using
     "pyyaml>=6.0.2",
     "setuptools>=78.1.0", #HACK remove when remov modflow-setup
 ]
