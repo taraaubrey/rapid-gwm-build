@@ -3,6 +3,7 @@
 # Schema for each module
 module_schema = {
     'build_dependancies': {
+        'nullable': True,
         'type': 'dict',
         'keysrules': {
             'type': 'string',
@@ -10,25 +11,31 @@ module_schema = {
         'valuesrules': {
             'type': 'string'
             },
-        'required': False
+        'required': False,
+        'default': None
     },
     'runtime_dependancies': {
+        'nullable': True,
         'type': 'list',
         'schema': {'type': 'string'},
-        'required': False
+        'required': False,
+        'default': None
     },
     'cmd': {
         'type': 'string',
         'required': True
     },
     'special_kwargs': {
+        'nullable': True,
         'type': 'list',
         'schema': {'type': 'string'},
-        'required': False
+        'required': False,
+        'default': None
     },
     'duplicates_allowed': {
         'type': 'boolean',
-        'required': False
+        'required': False,
+        'default': False
     }
 }
 
@@ -43,11 +50,4 @@ top_level_schema = {
             'schema': module_schema
         },
     }
-}
-
-default_keys = {
-    'build_dependancies': None,
-    'runtime_dependancies': None,
-    'special_kwargs': None,
-    'duplicates_allowed': None
 }

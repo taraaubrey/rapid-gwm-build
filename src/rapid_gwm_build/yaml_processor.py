@@ -4,16 +4,14 @@ from cerberus import Validator
 import yaml
 import logging
 
-from rapid_gwm_build.template_schema import top_level_schema, default_keys
+from rapid_gwm_build.template_schema import top_level_schema
 
 class YamlProcessor:
     def __init__(
             self,
-            module_schema: dict,
-            default_keys: dict,
+            schema: dict,
             ):
-        self.schema = module_schema
-        self.default_keys = default_keys
+        self.schema = schema
 
         logging.debug(f'Initializing YamlProcessor with schema: {self.schema}')
 
@@ -33,7 +31,7 @@ class YamlProcessor:
             logging.error(f"Template validation failed: {self.get_errors()}")
             raise ValueError(f"Template validation failed: {self.get_errors()}")
         
-        return template
+        return self.validator.normalized(template)
 
 
-template_processor = YamlProcessor(module_schema=top_level_schema, default_keys=default_keys)
+template_processor = YamlProcessor(schema=top_level_schema)
