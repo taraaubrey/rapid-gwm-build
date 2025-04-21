@@ -29,16 +29,16 @@ class Simulation:
         
         logging.debug(f'Created simulation {self.name} with {len(self.modules)} modules.')
 
+
     def _set_template(self, _default_file:str):
-        from yaml import safe_load
+        from rapid_gwm_build.yaml_processor import template_processor
 
         if _default_file:
-            with open(_default_file, 'r') as f:
-                template = safe_load(f)
-            return template
+            return template_processor.load_and_validate(_default_file) # load the template file and validate it
         else:
             logging.debug('No sim template file.')
             return None
+        
 
     def _add_module(self, module:Module):
 
