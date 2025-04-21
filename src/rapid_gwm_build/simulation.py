@@ -77,6 +77,7 @@ class Simulation:
         return modules
     
     def get_module_meta(self, module_key:str):
+        module_temaplates = self._template['module_templates']
         kind, usr_modname = _parse_module_key(module_key)
         usr_modname = usr_modname if usr_modname else kind # name of the module (ie. modflow, mt3d, etc)
     
@@ -90,9 +91,9 @@ class Simulation:
         meta = {
             'usr_modname': usr_modname,
             'kind': kind,
-            'template_cfg': self._template[kind],
-            'composite': self._template[kind].get('composite', False),
-            'parent_module': self._template[kind].get('parent_module', None),
+            'template_cfg': module_temaplates[kind],
+            'composite': module_temaplates[kind].get('composite', False),
+            'parent_module': module_temaplates[kind].get('parent_module', None),
         }
         return meta
 

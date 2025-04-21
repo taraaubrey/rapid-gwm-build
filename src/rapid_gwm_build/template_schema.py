@@ -33,13 +33,16 @@ module_schema = {
 }
 
 top_level_schema = {
-    'type': 'dict',
-    'keysrules': {
+    'module_templates': {
+        'type': 'dict',
+        'keysrules': {
         'type': 'string',
-    },
-    'valuesrules': {
-        'type': module_schema
-    },
+        },
+        'valuesrules': {
+            'type': 'dict',
+            'schema': module_schema
+        },
+    }
 }
 
 default_keys = {
