@@ -124,7 +124,7 @@ class Simulation:
         logging.debug('Finished building modules from config file.')
 
     def _build_parent_module(self, child_module:Module):
-        parent_module_key = child_module._template_cfg['parent_module']
+        parent_module_key = child_module._template_cfg['module_templates']['parent_module']
 
         if parent_module_key:
             # if module object has a parent module, get it from the registry and if not there build it
