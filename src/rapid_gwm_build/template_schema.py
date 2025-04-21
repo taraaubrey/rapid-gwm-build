@@ -14,6 +14,11 @@ module_schema = {
         'required': False,
         'default': None
     },
+    'allowed_to_build_default': {
+        'type': 'boolean',
+        'required': False,
+        'default': True
+    },
     'runtime_dependancies': {
         'nullable': True,
         'type': 'list',

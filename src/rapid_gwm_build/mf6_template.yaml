@@ -28,7 +28,8 @@ module_templates:
     ## GWF packages ----------------------
     gwf:
         build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: sim 
+            simulation: sim
+        allowed_to_build_default: True
         cmd: 'flopy.mf6.ModflowGwf'
         duplicates_allowed: True
         runtime_dependancies: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built

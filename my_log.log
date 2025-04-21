@@ -1511,3 +1511,161 @@
 2025-04-22 10:07:21,468 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'runtime_dependancies': {'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': []}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
 2025-04-22 10:07:21,493 - root - ERROR - Template validation failed: {'module_templates': [{'gwf': [{'special_kwargs': ['null value not allowed']}], 'ims': [{'special_kwargs': ['null value not allowed']}], 'npf': [{'special_kwargs': ['null value not allowed']}], 'oc': [{'special_kwargs': ['null value not allowed']}], 'sfr': [{'special_kwargs': ['null value not allowed']}], 'sim': [{'build_dependancies': ['null value not allowed'], 'special_kwargs': ['null value not allowed']}], 'tdis': [{'special_kwargs': ['null value not allowed']}]}]}
 2025-04-22 10:09:10,580 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 10:10:21,971 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 10:10:21,991 - root - DEBUG - Building modules from config file.
+2025-04-22 10:10:21,992 - root - DEBUG - Building module dis from config file.
+2025-04-22 10:10:23,534 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 10:10:23,560 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:10:23,562 - matplotlib - DEBUG - interactive is False
+2025-04-22 10:10:23,563 - matplotlib - DEBUG - platform is win32
+2025-04-22 10:10:23,946 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:10:23,949 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 10:10:24,803 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 10:37:26,447 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 10:37:26,488 - root - DEBUG - Building modules from config file.
+2025-04-22 10:37:30,518 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 10:37:30,585 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:37:30,590 - matplotlib - DEBUG - interactive is False
+2025-04-22 10:37:30,591 - matplotlib - DEBUG - platform is win32
+2025-04-22 10:37:31,103 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:37:31,120 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 10:37:32,621 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 10:48:06,619 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 10:48:06,659 - root - DEBUG - Building modules from config file.
+2025-04-22 10:48:10,491 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 10:48:10,563 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:48:10,567 - matplotlib - DEBUG - interactive is False
+2025-04-22 10:48:10,568 - matplotlib - DEBUG - platform is win32
+2025-04-22 10:48:11,160 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:48:11,176 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 10:48:12,670 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 10:49:31,967 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 10:49:31,988 - root - DEBUG - Building modules from config file.
+2025-04-22 10:49:33,649 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 10:49:33,673 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:49:33,675 - matplotlib - DEBUG - interactive is False
+2025-04-22 10:49:33,676 - matplotlib - DEBUG - platform is win32
+2025-04-22 10:49:34,097 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:49:34,101 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 10:49:35,060 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 10:50:34,479 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 10:50:34,500 - root - DEBUG - Building modules from config file.
+2025-04-22 10:50:36,059 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 10:50:36,089 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:50:36,092 - matplotlib - DEBUG - interactive is False
+2025-04-22 10:50:36,092 - matplotlib - DEBUG - platform is win32
+2025-04-22 10:50:36,575 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 10:50:36,580 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 10:50:37,840 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 10:52:22,465 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-22 11:00:29,452 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 11:00:29,474 - root - DEBUG - Building modules from config file.
+2025-04-22 11:00:30,994 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 11:00:31,020 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:00:31,023 - matplotlib - DEBUG - interactive is False
+2025-04-22 11:00:31,023 - matplotlib - DEBUG - platform is win32
+2025-04-22 11:00:31,411 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:00:31,414 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 11:00:32,356 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 11:00:37,385 - root - DEBUG - Building default gwf for dis.
+2025-04-22 11:01:15,053 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 11:01:15,074 - root - DEBUG - Building modules from config file.
+2025-04-22 11:01:16,799 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 11:01:16,833 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:01:16,835 - matplotlib - DEBUG - interactive is False
+2025-04-22 11:01:16,835 - matplotlib - DEBUG - platform is win32
+2025-04-22 11:01:17,452 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:01:17,457 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 11:01:18,368 - root - DEBUG - Building parent module for dis.
+2025-04-22 11:01:18,369 - root - DEBUG - Building default gwf for dis.
+2025-04-22 11:01:18,422 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 11:01:43,761 - root - DEBUG - Building parent module for gwf.
+2025-04-22 11:01:43,763 - root - DEBUG - Building default sim for gwf.
+2025-04-22 11:01:48,718 - root - DEBUG - Building parent module for sim.
+2025-04-22 11:02:51,305 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-22 11:02:51,306 - root - DEBUG - Building parent module for ims.
+2025-04-22 11:02:51,307 - root - DEBUG - Automatically finding dependancy module sim for ims.
+2025-04-22 11:03:52,990 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 11:03:53,010 - root - DEBUG - Building modules from config file.
+2025-04-22 11:03:54,523 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 11:03:54,550 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:03:54,552 - matplotlib - DEBUG - interactive is False
+2025-04-22 11:03:54,552 - matplotlib - DEBUG - platform is win32
+2025-04-22 11:03:54,934 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:03:54,940 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 11:03:55,826 - root - DEBUG - Building default gwf for dis.
+2025-04-22 11:03:55,872 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 11:04:18,014 - root - DEBUG - Building default sim for gwf.
+2025-04-22 11:04:27,051 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-22 11:04:27,053 - root - DEBUG - Automatically finding dependancy module sim for ims.
+2025-04-22 11:04:27,053 - root - DEBUG - Automatically finding dependancy module gwf for npf.
+2025-04-22 11:04:27,934 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-22 11:04:27,938 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-22 11:04:27,941 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-22 11:04:29,144 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-22 11:04:29,147 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-22 11:04:29,148 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-22 11:04:29,222 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-22 11:04:29,223 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-22 11:04:33,759 - root - DEBUG - Automatically finding dependancy module gwf for oc.
+2025-04-22 11:04:33,760 - root - DEBUG - Automatically finding dependancy module gwf for rcha.
+2025-04-22 11:04:33,760 - root - DEBUG - Automatically finding dependancy module gwf for sto.
+2025-04-22 11:04:33,760 - root - DEBUG - Automatically finding dependancy module sim for tdis.
+2025-04-22 11:04:33,760 - root - DEBUG - Finished building modules from config file.
+2025-04-22 11:04:33,761 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-22 11:18:04,771 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 11:18:04,814 - root - DEBUG - Building modules from config file.
+2025-04-22 11:18:08,115 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 11:18:08,161 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:18:08,162 - matplotlib - DEBUG - interactive is False
+2025-04-22 11:18:08,163 - matplotlib - DEBUG - platform is win32
+2025-04-22 11:18:08,539 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:18:08,552 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 11:18:09,654 - root - DEBUG - Building default gwf for dis.
+2025-04-22 11:18:09,654 - root - DEBUG - Building default sim for gwf.
+2025-04-22 11:18:09,655 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-22 11:18:09,655 - root - DEBUG - Automatically finding dependancy module sim for ims.
+2025-04-22 11:18:09,656 - root - DEBUG - Automatically finding dependancy module gwf for npf.
+2025-04-22 11:18:10,377 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-22 11:18:10,379 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-22 11:18:10,380 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-22 11:18:11,508 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-22 11:18:11,510 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-22 11:18:11,511 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-22 11:18:11,568 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-22 11:18:11,569 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-22 11:18:13,997 - root - DEBUG - Automatically finding dependancy module gwf for oc.
+2025-04-22 11:18:13,997 - root - DEBUG - Automatically finding dependancy module gwf for rcha.
+2025-04-22 11:18:13,998 - root - DEBUG - Automatically finding dependancy module gwf for sto.
+2025-04-22 11:18:13,998 - root - DEBUG - Automatically finding dependancy module sim for tdis.
+2025-04-22 11:18:13,999 - root - DEBUG - Finished building modules from config file.
+2025-04-22 11:18:13,999 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-22 11:18:14,089 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-22 11:18:42,810 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'build_dependancies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependancies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'special_kwargs': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}}}}}
+2025-04-22 11:18:42,833 - root - DEBUG - Building modules from config file.
+2025-04-22 11:18:44,353 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-22 11:18:44,383 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:18:44,385 - matplotlib - DEBUG - interactive is False
+2025-04-22 11:18:44,386 - matplotlib - DEBUG - platform is win32
+2025-04-22 11:18:44,776 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-22 11:18:44,779 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-22 11:18:45,447 - root - DEBUG - Building default gwf for dis.
+2025-04-22 11:18:45,447 - root - DEBUG - Building default sim for gwf.
+2025-04-22 11:18:45,448 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-22 11:18:45,448 - root - DEBUG - Automatically finding dependancy module sim for ims.
+2025-04-22 11:18:45,449 - root - DEBUG - Automatically finding dependancy module gwf for npf.
+2025-04-22 11:18:45,676 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-22 11:18:45,678 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-22 11:18:45,679 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-22 11:18:45,760 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-22 11:18:45,762 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-22 11:18:45,763 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-22 11:18:45,787 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-22 11:18:45,789 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-22 11:18:48,044 - root - DEBUG - Automatically finding dependancy module gwf for oc.
+2025-04-22 11:18:48,045 - root - DEBUG - Automatically finding dependancy module gwf for rcha.
+2025-04-22 11:18:48,045 - root - DEBUG - Automatically finding dependancy module gwf for sto.
+2025-04-22 11:18:48,046 - root - DEBUG - Automatically finding dependancy module sim for tdis.
+2025-04-22 11:18:48,046 - root - DEBUG - Finished building modules from config file.
+2025-04-22 11:18:48,046 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-22 11:18:48,082 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.

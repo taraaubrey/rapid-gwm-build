@@ -1,5 +1,6 @@
 # import pathlike
 from os import PathLike
+import networkx as nx
 import logging
 
 from rapid_gwm_build.module import Module, CompositeModule
@@ -21,6 +22,7 @@ class Simulation:
         self.name = name
         self.model_type = model_type # type of the simulation (ie. modflow, mt3d, etc)
         self.modules = {}
+        self._graph = nx.DiGraph() #TODO: this should be a property of the simulation object
         
         self._template = self._set_template(_defaults) # this is the specific model type template (ie. specific templated modules)
 
@@ -102,45 +104,42 @@ class Simulation:
         logging.debug('Building modules from config file.')
 
         for module_key, module_cfg in self.cfg['modules'].items():
-            if module_key not in self.modules.keys():
-                logging.debug(f'Building module {module_key} from config file.')
-
+            if module_key in self._graph.nodes():
+                logging.debug(f'Module {module_key} already exists in the graph. Skipping.')
+                continue
+            else:
                 module_meta = self.get_module_meta(module_key)
                 module_meta['cfg'] = module_cfg # update the cfg with the user config
+                module = self._create_module(module_meta)
 
-                # check if the module is a composite module
-                if module_meta['composite']:
-                    # create the composite module object
-                    module = self._create_module(module_meta, composite=True)
-
-                else:
-                    module = self._create_module(module_meta)
-                    self._build_parent_module(module)
-
-
-            else:
-                logging.debug(f'Module {module_key} already exists in the simulation. Skipping.')
+                self._build_parent_module(module)
 
         logging.debug('Finished building modules from config file.')
 
     def _build_parent_module(self, child_module:Module):
-        parent_module_key = child_module._template_cfg['module_templates']['parent_module']
+        dependancies = child_module._template_cfg['build_dependancies']
 
-        if parent_module_key:
-            # if module object has a parent module, get it from the registry and if not there build it
-            if parent_module_key in self.modules.keys():
-                logging.debug(f'Getting parent module {parent_module_key} from module registry.')
-                parent_module = self.modules[parent_module_key]
-            else:
-                # create module from defaults
-                parent_module_meta = self.get_module_meta(parent_module_key)
-                parent_module = self._create_module(parent_module_meta, composite=True)
-                # recursive to build parent module if it has a parent module
-                self._build_parent_module(parent_module)
+        if dependancies: #TODO what if the user specified a dependancy in the cfg (ie. model is this dependancy)
+            for dep_kind in dependancies.values():
+                module_registry = self.modules
+                dep_modules = [m for m in module_registry.values() if m.kind == dep_kind]
+                if len(dep_modules) > 1:
+                    raise ValueError(f'{child_module.name} cannot be linked to a required dependancy module "{dep_kind}" because there is more than one.')
+                elif len(dep_modules) == 1:
+                        logging.debug (f'Automatically finding dependancy module {dep_kind} for {child_module.name}.')
+                        dep_module = [m for m in module_registry.values() if m.kind == dep_kind][0]
+                elif len(dep_modules) == 0:
+                    logging.debug (f'Building default {dep_kind} for {child_module.name}.')
+                    # create the module from the template
+                    dep_module_meta = self.get_module_meta(dep_kind)
+                    dep_module = self._create_module(dep_module_meta)
+                    # recursive to build parent module if it has a parent module
+                    self._build_parent_module(dep_module)
             
-            # add the module to the parent module
-            parent_module.add_child(child_module)
+                # add
+                self._graph.add_edge(dep_module.name, child_module.name) # add the module to the graph
 
+    
     def build_module_graph(self):
         import networkx as nx
         graph = nx.DiGraph()
@@ -158,12 +157,12 @@ class Simulation:
 
         return graph
     
-    def get_node_levels(graph):
+    def get_node_levels(self): #TODO remove maybe? maybe more a util
         """
         Calculates the level of each node in the graph, where level 0
         consists of nodes with no incoming edges.
         """
-        top_level_nodes = [node for node, in_degree in graph.in_degree() if in_degree == 0]
+        top_level_nodes = [node for node, in_degree in self._graph.in_degree() if in_degree == 0]
         levels = {}
         queue = [(node, 0) for node in top_level_nodes]
         visited = set(top_level_nodes)
@@ -171,21 +170,17 @@ class Simulation:
         while queue:
             current_node, level = queue.pop(0)
             levels[current_node] = level
-            for successor in graph.successors(current_node):
+            for successor in self._graph.successors(current_node):
                 if successor not in visited:
                     visited.add(successor)
                     queue.append((successor, level + 1))
         return levels
     
-    def _create_module(self, module_meta: dict, composite:bool=False):
+    def _create_module(self, module_meta: dict):
         # check if the module is a composite module
-        if composite:
-            # create the composite module object
-            module = CompositeModule(**module_meta)
-        else:
-            # create the module object
-            module = Module(**module_meta)
+        module = Module(**module_meta)
         self._add_module(module)
+        self._graph.add_node(module.name, module=module) # add the module to the graph
         return module
     
     

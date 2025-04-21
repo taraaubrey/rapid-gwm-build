@@ -51,8 +51,6 @@ for sim_name, sim_cfg in sim_kwargs.items():
     #create the simulation object
     sim = create_simulation(name=name, model_type=sim_type, cfg=sim_cfg, ws=ws_path)
 
-    # build module graph
-    sim.build_module_graph()
     # build the simulation
     #print(here)
     sim.build()
