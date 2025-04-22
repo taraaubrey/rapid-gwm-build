@@ -3,6 +3,7 @@ from os import PathLike
 import networkx as nx
 import logging
 
+from rapid_gwm_build.network_registry import NetworkRegistry
 from rapid_gwm_build.registry import Registry
 from rapid_gwm_build.module_builder import ModuleBuilder
 
@@ -21,20 +22,15 @@ class Simulation:
         self.cfg = cfg
         self.name = name
         self.model_type = model_type  # type of the simulation (ie. modflow, mt3d, etc)
-        self.module_registry = Registry()
-        self.parameter_registry = Registry()
         
-        self._graph = ( # TODO: GraphClass
-            nx.DiGraph()
-        )  
+        self._graph = NetworkRegistry()  
         self._template = self._set_template( # this is the specific model type template (ie. specific templated modules)
             _defaults
         )  
         
         self.module_builder = ModuleBuilder(
-            _templates=self._template["module_templates"],
-            _graph=self._graph,
-            module_registry=self.module_registry,
+            templates=self._template["module_templates"],
+            graph=self._graph,
         )  # TODO: this should be a property of the simulation object
 
         self._template = self._set_template(
@@ -44,10 +40,6 @@ class Simulation:
         if cfg:
             # create modules
             self._create_modules_from_cfg()
-
-        logging.debug(
-            f"Created simulation {self.name} with {len(self.module_registry)} modules."
-        )
 
     def _set_template(self, _default_file: str):
         from rapid_gwm_build.yaml_processor import template_processor

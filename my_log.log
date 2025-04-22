@@ -2540,3 +2540,73 @@
 2025-04-23 10:26:59,112 - root - DEBUG - Automatically finding dependancy module sim for tdis-mytdis.
 2025-04-23 10:26:59,112 - root - DEBUG - Finished building modules from config file.
 2025-04-23 10:26:59,112 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
+2025-04-23 11:01:36,100 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 11:02:41,508 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 11:02:41,585 - root - DEBUG - Building modules from config file.
+2025-04-23 11:03:06,179 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 11:03:06,256 - root - DEBUG - Building modules from config file.
+2025-04-23 11:03:13,129 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 11:03:13,213 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 11:03:13,216 - matplotlib - DEBUG - interactive is False
+2025-04-23 11:03:13,216 - matplotlib - DEBUG - platform is win32
+2025-04-23 11:03:13,878 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 11:03:13,907 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 11:03:15,859 - root - DEBUG - Building default gwf for None.
+2025-04-23 11:03:15,867 - root - DEBUG - Building default sim for None.
+2025-04-23 11:03:15,867 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:15,867 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-23 11:03:15,867 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:15,867 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 11:03:15,867 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:15,867 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:03:15,867 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:17,787 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-23 11:03:17,795 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-23 11:03:17,795 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-23 11:03:21,136 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-23 11:03:21,136 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-23 11:03:21,136 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-23 11:03:21,296 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-23 11:03:21,296 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-23 11:03:26,200 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:03:26,200 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:26,200 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:03:26,200 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:26,200 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:03:26,207 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:26,207 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 11:03:26,208 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:03:26,617 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 11:05:32,187 - root - DEBUG - Building modules from config file.
+2025-04-23 11:05:38,341 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 11:05:38,393 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 11:05:38,396 - matplotlib - DEBUG - interactive is False
+2025-04-23 11:05:38,396 - matplotlib - DEBUG - platform is win32
+2025-04-23 11:05:39,048 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 11:05:39,059 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 11:05:40,117 - root - DEBUG - Building default gwf for None.
+2025-04-23 11:05:40,117 - root - DEBUG - Building default sim for None.
+2025-04-23 11:05:40,120 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:40,121 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-23 11:05:40,121 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:40,122 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 11:05:40,122 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:40,124 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:05:40,125 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:40,518 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-23 11:05:40,518 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-23 11:05:40,518 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-23 11:05:40,668 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-23 11:05:40,668 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-23 11:05:40,677 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-23 11:05:40,718 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-23 11:05:40,718 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-23 11:05:44,427 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:05:44,429 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:44,429 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:05:44,429 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:44,429 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 11:05:44,429 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:44,429 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 11:05:44,429 - root - DEBUG - Finished building modules from config file.
+2025-04-23 11:05:44,497 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.

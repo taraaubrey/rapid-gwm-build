@@ -11,9 +11,6 @@ class YamlProcessor:
         schema: dict,
     ):
         self.schema = schema
-
-        logging.debug(f"Initializing YamlProcessor with schema: {self.schema}")
-
         self.validator = Validator(self.schema)
 
     def validate(self, template: dict) -> bool:

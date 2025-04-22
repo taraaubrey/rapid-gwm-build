@@ -17,9 +17,7 @@ class Module:
     ):
         self.gkey = gkey
         self.kind = kind
-        self.name = (
-            gkey if gkey else kind
-        )  # name of the module (ie. modflow, mt3d, etc)
+        self.name = None #TODO add parse logic here probably
         self.parameters = template_cfg.get("parameters")
 
         self._cmd = template_cfg.get("cmd")  # get the command from the config file

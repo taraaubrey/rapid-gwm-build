@@ -1,5 +1,6 @@
 import networkx as nx
 
+from rapid_gwm_build.network_registry import NetworkRegistry
 from rapid_gwm_build.utils import _parse_module_usrkey
 from rapid_gwm_build.module import (
     Module,
@@ -19,9 +20,8 @@ class ModuleBuilder:
     """
     def __init__(
         self,
-        _graph: nx.DiGraph = None,
-        _templates: dict = None,  # template config file (ie. yaml file)
-        module_registry: dict = None,
+        graph: NetworkRegistry,
+        templates: dict = None,  # template config file (ie. yaml file)
     ):
         self.module_types = {
             "simple": Module,
@@ -29,14 +29,13 @@ class ModuleBuilder:
             "SpatialDiscretizationModule": SpatialDiscretizationModule,
             "TemporalDiscretizationModule": TemporalDiscretizationModule,
         }
-        self._graph = _graph  # TODO create a Graph class
-        self._templates = _templates  # this is already validated
-        self.module_registry = (
-            module_registry  # TODO: this should be a property of the simulation object
-        )
+        self.graph = graph  # TODO create a Graph class
+        self._templates = templates  # this is already validated
 
     def _check_duplicated_allowed(self, kind: str):  # TODO move to Template class
-        if kind in [m.kind for m in self.module_registry.values()]:
+        module_registry = self.graph.module_registry()
+        
+        if kind in [m.kind for m in module_registry]:
             duplicates_allowed = self._templates.get(kind).get("duplicates_allowed")
             if not duplicates_allowed:
                 raise ValueError(
@@ -59,21 +58,19 @@ class ModuleBuilder:
 
     def _create_module(self, module_type: str, module_meta: dict) -> Module:
         builder = self.module_types.get(module_type)
-        module = builder(**module_meta, _graph=self._graph)
+        module = builder(**module_meta, graph=self.graph)
         
         # add the module to the graph
-        self._graph.add_node(
-            module.gkey, type="module", module=module
+        self.graph.add_node(
+            module.gkey, ntype="module", module=module
         )  
-        # add to module registry
-        self.module_registry.add(module.gkey, module)  # add the module to the registry
         
         return module
 
     def from_cfg(
         self, module_key: str, module_cfg: dict
     ):  # TODO: test schema against a module template
-        if module_key in self._graph.nodes():
+        if module_key in self.graph.list_nodes('module'):
             logging.debug(f"Module {module_key} already exists in the graph. Skipping.")
         else:
             module_meta = self._get_module_meta(module_key)
@@ -87,11 +84,12 @@ class ModuleBuilder:
 
     def _build_parent_module(self, child_module: Module):
         dependencies = child_module._template_cfg["build_dependencies"]
+        module_registry = self.graph.module_registry()
 
         if dependencies:  # TODO what if the user specified a dependancy in the cfg (ie. model is this dependancy)
             for dep_kind in dependencies.keys():
                 dep_modules = [
-                    m for m in self.module_registry.values() if m.kind == dep_kind
+                    m for m in module_registry if m.kind == dep_kind
                 ]
                 if len(dep_modules) > 1:
                     raise ValueError(
@@ -102,7 +100,7 @@ class ModuleBuilder:
                         f"Automatically finding dependancy module {dep_kind} for {child_module.name}."
                     )
                     dep_module = [
-                        m for m in self.module_registry.values() if m.kind == dep_kind
+                        m for m in module_registry if m.kind == dep_kind
                     ][0]
                 elif len(dep_modules) == 0:
                     logging.debug(
@@ -117,10 +115,9 @@ class ModuleBuilder:
                     # recursive to build parent module if it has a parent module
                     self._build_parent_module(dep_module)
 
-                # add
                 cmd_key = child_module._dependencies.get(dep_kind)
                 
                 # add edge
-                self._graph.add_edge(
+                self.graph.add_edge(
                     dep_module.gkey, child_module.gkey, module_dependency=cmd_key
                 )  # add the module to the graph
