@@ -4,9 +4,8 @@ import networkx as nx
 import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
-from rapid_gwm_build.registry import Registry
 from rapid_gwm_build.module_builder import ModuleBuilder
-
+from rapid_gwm_build.mesh import Mesh
 
 class Simulation:
     def __init__(
@@ -22,22 +21,25 @@ class Simulation:
         self.cfg = cfg
         self.name = name
         self.model_type = model_type  # type of the simulation (ie. modflow, mt3d, etc)
+        self.mesh = None
         
-        self._graph = NetworkRegistry()  
-        self._template = self._set_template( # this is the specific model type template (ie. specific templated modules)
+        self._graph = NetworkRegistry()
+        
+        self._template = self._set_template( 
             _defaults
         )  
-        
+
         self.module_builder = ModuleBuilder(
             templates=self._template["module_templates"],
             graph=self._graph,
-        )  # TODO: this should be a property of the simulation object
-
-        self._template = self._set_template(
-            _defaults
-        )  # this is the specific model type template (ie. specific templated modules)
+        )  
 
         if cfg:
+            if cfg.get("mesh", None):
+                # create mesh
+                self.mesh = Mesh.from_cfg(cfg.get("mesh", None))
+                self._graph.add_node(
+                    'core.2Dmesh', ntype='core', mesh=self.mesh)
             # create modules
             self._create_modules_from_cfg()
 
@@ -58,6 +60,11 @@ class Simulation:
         for module_key, module_cfg in self.cfg["modules"].items():
             self.module_builder.from_cfg(module_key, module_cfg)
 
+    def _build_mesh_from_cfg(self):
+        logging.debug("Building mesh from config file.")
+
+        mesh_cfg = self.cfg.get("mesh", None)
+    
     def build(self, mode="all"): #TODO move to GraphClass
         for node in nx.topological_sort(self._graph):
             module = self._graph.nodes[node]["module"]
