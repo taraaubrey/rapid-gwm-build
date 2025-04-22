@@ -2,7 +2,7 @@
 
 # Schema for each module
 module_schema = {
-    'build_dependancies': {
+    'build_dependencies': {
         'nullable': True,
         'type': 'dict',
         'keysrules': {
@@ -19,7 +19,7 @@ module_schema = {
         'required': False,
         'default': True
     },
-    'runtime_dependancies': {
+    'runtime_dependencies': {
         'nullable': True,
         'type': 'list',
         'schema': {'type': 'string'},

@@ -17,7 +17,8 @@ class Module:
         self.name = usr_modname if usr_modname else kind # name of the module (ie. modflow, mt3d, etc)
         self._cmd = template_cfg.get('cmd') # get the command from the config file
         self._special_kwargs = template_cfg.get('special_kwargs', {})
-        self._dependencies = template_cfg.get('build_dependancies', None)
+        
+        self._dependencies = template_cfg.get('build_dependencies', None)
         self._cfg = cfg # config file for the module (ie. yaml file)
         self._template_cfg = template_cfg # template config file (ie. yaml file)
 
@@ -34,11 +35,17 @@ class Module:
                         # update the cmd_kwargs with the output
                         self.update_cmd_kwargs(output) #TODO: cmd_kwarsgs
 
-        self.output = None #TODO this will need to have some sort of setter method
+        self._output = None #TODO this will need to have some sort of setter method
 
     def __repr__(self):
         # format of Module(name)
         return f'{self.__class__.__name__}({self.kind})'
+
+    @property
+    def output(self):
+        if self._output is None:
+            self.build()
+        return self._output
 
     def update_cmd_kwargs(self, kwargs):
         if isinstance(kwargs, dict):
@@ -82,44 +89,44 @@ class Module:
     
 
     def _set_output(self, result):
-        self.output = result
+        self._output = result
 
     
-    def _validate_dependencies(self, module_registry):
-        for dep_name, dep_module in self._dependencies.items():
-             # check if the dependency is in the list of modules
-            if dep_module not in module_registry:
-                raise ValueError(f"Dependency '{dep_name}' for module '{self.name}' not found in the simulation.")
+    # def _validate_dependencies(self, module_registry):
+    #     for dep_name, dep_module in self._dependencies.items():
+    #          # check if the dependency is in the list of modules
+    #         if dep_module not in module_registry:
+    #             raise ValueError(f"Dependency '{dep_name}' for module '{self.name}' not found in the simulation.")
                 
     
     
-    def _build_dependencies(self, module_registry): #TODO add more error handeling here
-        if self._dependencies: 
-            dep_kwargs = {}
-            self._validate_dependencies(module_registry)
+    # def _build_dependencies(self, module_registry): #TODO add more error handeling here
+    #     if self._dependencies: 
+    #         dep_kwargs = {}
+    #         self._validate_dependencies(module_registry)
             
-            # build the dependancies first
-            for kwarg, module_type in self._dependencies.items():
-                module = module_registry[module_type]
+    #         # build the dependancies first
+    #         for kwarg, module_type in self._dependencies.items():
+    #             module = module_registry[module_type]
 
-                if module.output is None:
-                    # run the dependancy module
-                    module.build(module_registry=module_registry)
-                    dep_kwargs[kwarg] = module.output
-                else:
-                    dep_kwargs[kwarg] = module.output
-            # update the cmd_kwargs with the dep_kwargs
-            self.update_cmd_kwargs(dep_kwargs) #update the cmd_kwargs with the dep_kwargs
-        else:
-           logging.debug(f'No dependencies for {self.name}')
+    #             if module.output is None:
+    #                 # run the dependancy module
+    #                 module.build(module_registry=module_registry)
+    #                 dep_kwargs[kwarg] = module.output
+    #             else:
+    #                 dep_kwargs[kwarg] = module.output
+    #         # update the cmd_kwargs with the dep_kwargs
+    #         self.update_cmd_kwargs(dep_kwargs) #update the cmd_kwargs with the dep_kwargs
+    #     else:
+    #        logging.debug(f'No dependencies for {self.name}')
 
 
     def build(self, module_registry=[]):
-        self._build_dependencies(module_registry)
+        # self._build_dependencies(module_registry)
             
         # run the command with the parameters
         output = self.call_cmd(self._cmd, self._cmd_kwargs) #TODO: this should be a setter method for the output
-        self._set_output(output)
+        self._set_output(output) #TODO make a setter method for the output
 
 
 

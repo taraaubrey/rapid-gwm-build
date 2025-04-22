@@ -55,3 +55,5 @@ for sim_name, sim_cfg in sim_kwargs.items():
     #print(here)
     sim.build()
 
+    sim.write() #TODO: this should be a method of the simulation object
+

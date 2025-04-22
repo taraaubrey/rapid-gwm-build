@@ -3,7 +3,7 @@
 # - how does Simulation know what a tdis module is?
 module_templates:
     sim:
-        # runtime_dependancies: #TODO: this is a special list of required minimum packages if this module is built
+        # runtime_dependencies: #TODO: this is a special list of required minimum packages if this module is built
         #     - gwf
         #     - tdis
         #     - ims
@@ -11,38 +11,38 @@ module_templates:
         duplicates_allowed: False
 
     tdis: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: sim 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            sim: simulation
         # parameters:
         #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
         cmd: 'flopy.mf6.ModflowTdis'
         duplicates_allowed: False
 
     ims:
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: sim 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            sim: simulation
         cmd: 'flopy.mf6.ModflowIms'
         duplicates_allowed: False
 
 
     ## GWF packages ----------------------
     gwf:
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: sim
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            sim: simulation
         allowed_to_build_default: True
         cmd: 'flopy.mf6.ModflowGwf'
         duplicates_allowed: True
-        runtime_dependancies: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built
+        runtime_dependencies: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built
 
     npf: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model 
         cmd: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
 
     dis:
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model 
         cmd: 'flopy.mf6.ModflowGwfdis'
         special_kwargs: #TODO these input keys have special functions & update cfg (these have special checks asssociated with them) otherwise just passed to cmd as is
             - model
@@ -52,16 +52,16 @@ module_templates:
         duplicates_allowed: False
 
     ic: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfic'
         special_kwargs:
             - model
         duplicates_allowed: False
 
     sto: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfsto'
         special_kwargs:
             - model
@@ -69,8 +69,8 @@ module_templates:
     ## Simple stress packages ----------------------
 
     wel:
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfwel'
         special_kwargs:
             - model
@@ -78,8 +78,8 @@ module_templates:
 
 
     drn: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
             - model
             - conductivity
@@ -90,15 +90,15 @@ module_templates:
         duplicates_allowed: True
 
     ghb: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfghb'
         special_kwargs: []
         duplicates_allowed: True
 
     rcha: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf 
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfrcha'
         special_kwargs: []
         duplicates_allowed: True
@@ -106,13 +106,13 @@ module_templates:
 
     # ??
     sfr: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
     oc: 
-        build_dependancies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: gwf
+        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
+            gwf: model
         cmd: 'flopy.mf6.ModflowGwfoc'
         duplicates_allowed: True

@@ -1,6 +1,6 @@
 
 from rapid_gwm_build.runners import (
-    MF6Simulation,
+    Simulation,
     # MODFLOWRunner,
     # MT3DMSRunner,
     # SUTRA5Runner,
@@ -10,7 +10,7 @@ from rapid_gwm_build.runners import (
 class SimManager:
     def __init__(self):
         self.runners = {
-            'mf6': [MF6Simulation, r'src\rapid_gwm_build\mf6_template.yaml'],
+            'mf6': [Simulation, r'src\rapid_gwm_build\mf6_template.yaml'],
             # 'modflow': MODFLOWRunner,
             # 'mt3dms': MT3DMSRunner,
             # 'sutra5': SUTRA5Runner,
