@@ -7,10 +7,12 @@ module_templates:
         #     - gwf
         #     - tdis
         #     - ims
+        type: BasicModule
         cmd: 'flopy.mf6.MFSimulation'
         duplicates_allowed: False
 
-    tdis: 
+    tdis:
+        type: TimeDiscretizationModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             sim: simulation
         # parameters:
@@ -19,6 +21,7 @@ module_templates:
         duplicates_allowed: False
 
     ims:
+        type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             sim: simulation
         cmd: 'flopy.mf6.ModflowIms'
@@ -27,6 +30,7 @@ module_templates:
 
     ## GWF packages ----------------------
     gwf:
+        type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             sim: simulation
         allowed_to_build_default: True
@@ -35,12 +39,14 @@ module_templates:
         runtime_dependencies: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built
 
     npf: 
+        type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model 
         cmd: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
 
     dis:
+        type: SpatialDiscretizationModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model 
         cmd: 'flopy.mf6.ModflowGwfdis'
@@ -52,6 +58,7 @@ module_templates:
         duplicates_allowed: False
 
     ic: 
+        type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfic'
@@ -60,6 +67,8 @@ module_templates:
         duplicates_allowed: False
 
     sto: 
+        
+        type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfsto'
@@ -69,6 +78,7 @@ module_templates:
     ## Simple stress packages ----------------------
 
     wel:
+        type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfwel'
@@ -78,40 +88,82 @@ module_templates:
 
 
     drn: 
+        type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
             - model
-            - conductivity
-            - elevation 
-        cmd: 'flopy.mf6.ModflowGwfdrn'
-        # special_methods:
-        #     stress_period_data: 'get_stress_period_data function'
+            - conductance
+            - elevation
+        discretized_data:
+            - elevation
+            - conductance
+        pipes:
+            mf6utils.stressdata2external: #this is a function to call
+                input:
+                    - $discetized_data.elevation
+                    - $discetized_data.conductance
+                cmd_key: stress_period_data
+        cmd: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
 
-    ghb: 
+    ghb:
+        type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
+        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            - model
+            - conductance
+        discretized_data:
+            - conductance
+        pipes:
+            mf6utils.stressdata2external: #this is a function to call
+                input:
+                    - $discetized_data.conductance
+                cmd_key: stress_period_data            
         cmd: 'flopy.mf6.ModflowGwfghb'
-        special_kwargs: []
         duplicates_allowed: True
 
-    rcha: 
+    rcha:
+        type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
+        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            - model
+            - recharge
+        discretized_data:
+            - recharge
+        pipes:
+            mf6utils.stressdata2external: #this is a function to call
+                input:
+                    - $discetized_data.recharge
+                cmd_key: stress_period_data
         cmd: 'flopy.mf6.ModflowGwfrcha'
-        special_kwargs: []
         duplicates_allowed: True
 
 
     # ??
-    sfr: 
+    sfr:
+        type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
+        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            - model
+            - rivbotm
+        discretized_data:
+            - rivbotm
+            - conductance
+        pipes:
+            mf6utils.stressdata2external: #this is a function to call
+                input:
+                    - $discetized_data.rivbotm
+                    - $discetized_data.conductance
+                cmd_key: stress_period_data
         cmd: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
-    oc: 
+    oc:
+        type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfoc'

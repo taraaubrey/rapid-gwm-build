@@ -1,0 +1,113 @@
+examples\pleasant\client_code.py:6:46: F401 [*] `rapid_gwm_build.utils._parse_module_key` imported but unused
+  |
+5 | from rapid_gwm_build import create_simulation
+6 | from rapid_gwm_build.utils import set_up_ws, _parse_module_key
+  |                                              ^^^^^^^^^^^^^^^^^ F401
+7 |
+8 | # start logging
+  |
+  = help: Remove unused import: `rapid_gwm_build.utils._parse_module_key`
+
+examples\pleasant\client_code.py:23:1: E402 Module level import not at top of file
+   |
+22 | # open yaml
+23 | import yaml
+   | ^^^^^^^^^^^ E402
+   |
+
+notebooks\example.ipynb:cell 3:19:5: F841 Local variable `expected_types` is assigned to but never used
+   |
+18 |     defaults = {}
+19 |     expected_types = {}
+   |     ^^^^^^^^^^^^^^ F841
+20 |     for name, param in signature.parameters.items():
+21 |         if name != 'self':
+   |
+   = help: Remove assignment to unused variable `expected_types`
+
+notebooks\example.py:45:1: E402 Module level import not at top of file
+   |
+44 | # open yaml
+45 | import yaml
+   | ^^^^^^^^^^^ E402
+46 | with open(simple_freyburg, 'r') as f:
+47 |     cfg = yaml.safe_load(f)
+   |
+
+src\rapid_gwm_build\__init__.py:1:22: F401 `.factory.create_simulation` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+  |
+1 | from .factory import create_simulation
+  |                      ^^^^^^^^^^^^^^^^^ F401
+  |
+  = help: Use an explicit re-export: `create_simulation as create_simulation`
+
+src\rapid_gwm_build\module.py:65:30: F541 [*] f-string without any placeholders
+   |
+63 |             self._cmd_kwargs.update(kwargs)
+64 |         else:   
+65 |             raise ValueError(f'kwargs must be a dictionary.')
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ F541
+   |
+   = help: Remove extraneous `f` prefix
+
+src\rapid_gwm_build\module_builder.py:32:16: E712 Avoid equality comparisons to `False`; use `if not duplicates_allowed:` for false checks
+   |
+30 | …     if kind in [m.kind for m in self.module_registry.values()]:
+31 | …         duplicates_allowed = self._template.get(kind).get('duplicates_allowed')
+32 | …         if duplicates_allowed==False:
+   |              ^^^^^^^^^^^^^^^^^^^^^^^^^ E712
+33 | …             raise ValueError(f'Only one "{kind}" allowed. Remove this module or set duplicates_allowed to True in the template file.…
+   |
+   = help: Replace with `not duplicates_allowed`
+
+src\rapid_gwm_build\runners.py:58:17: F841 Local variable `gwf_modules` is assigned to but never used
+   |
+57 |                 # build the rest of the packages
+58 |                 gwf_modules = [m for m in module_registry.values() if m.kind=='gwf']
+   |                 ^^^^^^^^^^^ F841
+   |
+   = help: Remove assignment to unused variable `gwf_modules`
+
+src\rapid_gwm_build\runners.py:62:9: F841 Local variable `other_packages` is assigned to but never used
+   |
+61 |         # the rest of the module that are not sim or gwf
+62 |         other_packages = [m for m in module_registry.keys() if m not in ['sim'] + gwf_packages]
+   |         ^^^^^^^^^^^^^^ F841
+63 |         for gwf_pkg in gwf_packages:
+64 |             gwf = self.modules[gwf_pkg]
+   |
+   = help: Remove assignment to unused variable `other_packages`
+
+src\rapid_gwm_build\simulation.py:8:36: F401 [*] `rapid_gwm_build.module.Module` imported but unused
+  |
+6 | from rapid_gwm_build.module_registry import ModuleRegistry
+7 | from rapid_gwm_build.module_builder import ModuleBuilder
+8 | from rapid_gwm_build.module import Module
+  |                                    ^^^^^^ F401
+9 | from rapid_gwm_build.utils import _parse_module_key
+  |
+  = help: Remove unused import: `rapid_gwm_build.module.Module`
+
+src\rapid_gwm_build\simulation.py:9:35: F401 [*] `rapid_gwm_build.utils._parse_module_key` imported but unused
+   |
+ 7 | from rapid_gwm_build.module_builder import ModuleBuilder
+ 8 | from rapid_gwm_build.module import Module
+ 9 | from rapid_gwm_build.utils import _parse_module_key
+   |                                   ^^^^^^^^^^^^^^^^^ F401
+10 |
+11 | class Simulation:
+   |
+   = help: Remove unused import: `rapid_gwm_build.utils._parse_module_key`
+
+src\rapid_gwm_build\utils.py:47:35: F821 Undefined name `wws_path`
+   |
+45 |             os.makedirs(ws_path)
+46 |         elif ws_cfg['mode']=='append':
+47 |             if not os.path.exists(wws_path):
+   |                                   ^^^^^^^^ F821
+48 |                 os.makedirs(ws_path)
+49 |         else:
+   |
+
+Found 12 errors.
+[*] 4 fixable with the `--fix` option (4 hidden fixes can be enabled with the `--unsafe-fixes` option).

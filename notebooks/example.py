@@ -3,7 +3,7 @@
 #     - simulations:
 #         sim_a:
 #             filename: sim_a.pkl
-# 
+#
 # stages:
 #     build_modules:
 #         foreach:
@@ -28,32 +28,30 @@
 # %% [markdown]
 # # dis_a_params.yaml
 # # sample parameters file generated for dis_a
-# 
+#
 # stress_period_data:
 #     elevation: dem.tif # timeseries input {0: dem.tif}
 #     conductivity: 1.0 # timeseries input {0: 1.0, 1: 2.0}
 
 
-
 # %% create a template modules (this would normally be done based on a template file)
-
+import yaml
 from rapid_gwm_build.simulation import Simulation
 
-simple_freyburg = r'notebooks\simple_freyburg\simple freyburg.yaml'
+simple_freyburg = r"notebooks\simple_freyburg\simple freyburg.yaml"
 
 # open yaml
-import yaml
-with open(simple_freyburg, 'r') as f:
+with open(simple_freyburg, "r") as f:
     cfg = yaml.safe_load(f)
 
 
 # first do replace of cfg with vars
-var_kwargs = cfg.get('vars', None)
+var_kwargs = cfg.get("vars", None)
 for vkey, vvalue in var_kwargs.items():
     # replace all ${key} with the value in the config file
-    cfg = yaml.safe_load(yaml.dump(cfg).replace(f'${{{vkey}}}', str(vvalue)))
+    cfg = yaml.safe_load(yaml.dump(cfg).replace(f"${{{vkey}}}", str(vvalue)))
 
-sim_kwargs = cfg.get('simulations', None)
+sim_kwargs = cfg.get("simulations", None)
 for sim_name, sim_cfg in sim_kwargs.items():
     sim = Simulation.from_cfg(name=sim_name, cfg=sim_cfg)
 
