@@ -1,6 +1,6 @@
 import networkx as nx
 
-from rapid_gwm_build.utils import _parse_module_key
+from rapid_gwm_build.utils import _parse_module_usrkey
 from rapid_gwm_build.module import (
     Module,
     StressModule,
@@ -11,6 +11,12 @@ import logging
 
 
 class ModuleBuilder:
+    """
+    Tasks:
+    - Creates module objects which are model specific with default input kwargs
+    - Adds inter-module dependencies to the graph
+    - Interacts with the module_registry
+    """
     def __init__(
         self,
         _graph: nx.DiGraph = None,
@@ -31,25 +37,20 @@ class ModuleBuilder:
 
     def _check_duplicated_allowed(self, kind: str):  # TODO move to Template class
         if kind in [m.kind for m in self.module_registry.values()]:
-            duplicates_allowed = self._template.get(kind).get("duplicates_allowed")
+            duplicates_allowed = self._templates.get(kind).get("duplicates_allowed")
             if not duplicates_allowed:
                 raise ValueError(
                     f'Only one "{kind}" allowed. Remove this module or set duplicates_allowed to True in the template file.'
                 )
 
-    def _get_module_meta(self, module_key: str):
-        module_registry = self.module_registry
-        kind, usr_modname = _parse_module_key(module_key)
-        usr_modname = (
-            usr_modname if usr_modname else kind
-        )  # name of the module (ie. modflow, mt3d, etc)
+    def _get_module_meta(self, gkey: str):
+        kind, usr_name = _parse_module_usrkey(gkey)
 
         # checks
-        module_registry._check_unique_module_name(usr_modname)
         self._check_duplicated_allowed(kind)
 
         meta = {
-            "usr_modname": usr_modname,
+            "gkey": gkey,
             "kind": kind,
             "template_cfg": self._templates[kind],
             "parent_module": self._templates[kind].get("parent_module", None),
@@ -59,10 +60,14 @@ class ModuleBuilder:
     def _create_module(self, module_type: str, module_meta: dict) -> Module:
         builder = self.module_types.get(module_type)
         module = builder(**module_meta, _graph=self._graph)
+        
+        # add the module to the graph
         self._graph.add_node(
-            module.name, type="module", module=module
-        )  # add the module to the graph
-        self.module_registry.add(module.name, module)  # add the module to the registry
+            module.gkey, type="module", module=module
+        )  
+        # add to module registry
+        self.module_registry.add(module.gkey, module)  # add the module to the registry
+        
         return module
 
     def from_cfg(
@@ -103,6 +108,9 @@ class ModuleBuilder:
                     logging.debug(
                         f"Building default {dep_kind} for {child_module.name}."
                     )
+                    
+                    #BUG when gwf has a name this logic doesn't work; creates 2 gwfs
+                    
                     # create the module from the template
                     dep_module_meta = self._get_module_meta(dep_kind)
                     dep_module = self._create_module("simple", dep_module_meta)
@@ -111,6 +119,8 @@ class ModuleBuilder:
 
                 # add
                 cmd_key = child_module._dependencies.get(dep_kind)
+                
+                # add edge
                 self._graph.add_edge(
-                    dep_module.name, child_module.name, module_dependency=cmd_key
+                    dep_module.gkey, child_module.gkey, module_dependency=cmd_key
                 )  # add the module to the graph

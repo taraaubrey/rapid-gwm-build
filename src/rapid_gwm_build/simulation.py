@@ -3,7 +3,7 @@ from os import PathLike
 import networkx as nx
 import logging
 
-from rapid_gwm_build.module_registry import ModuleRegistry
+from rapid_gwm_build.registry import Registry
 from rapid_gwm_build.module_builder import ModuleBuilder
 
 
@@ -21,14 +21,16 @@ class Simulation:
         self.cfg = cfg
         self.name = name
         self.model_type = model_type  # type of the simulation (ie. modflow, mt3d, etc)
-        self._graph = (
+        self.module_registry = Registry()
+        self.parameter_registry = Registry()
+        
+        self._graph = ( # TODO: GraphClass
             nx.DiGraph()
-        )  # TODO: this should be a property of the simulation object
-        self._template = self._set_template(
+        )  
+        self._template = self._set_template( # this is the specific model type template (ie. specific templated modules)
             _defaults
-        )  # this is the specific model type template (ie. specific templated modules)
-
-        self.module_registry = ModuleRegistry()
+        )  
+        
         self.module_builder = ModuleBuilder(
             _templates=self._template["module_templates"],
             _graph=self._graph,
@@ -64,7 +66,7 @@ class Simulation:
         for module_key, module_cfg in self.cfg["modules"].items():
             self.module_builder.from_cfg(module_key, module_cfg)
 
-    def build(self, mode="all"):
+    def build(self, mode="all"): #TODO move to GraphClass
         for node in nx.topological_sort(self._graph):
             module = self._graph.nodes[node]["module"]
 
@@ -84,7 +86,7 @@ class Simulation:
             if mode == "update":  # this would only build modules that have been changed
                 pass
 
-    def _resolve_intermodule_dependencies(
+    def _resolve_intermodule_dependencies( #TODO move to GraphClass
         self, pred_node, node
     ):  # TODO GraphManagerClass
         module = self._graph.nodes[node]["module"]

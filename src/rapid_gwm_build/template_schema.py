@@ -25,10 +25,11 @@ module_schema = {
         "default": None,
     },
     "cmd": {"type": "string", "required": True},
-    "special_kwargs": {
+    "pipe_kwargs": {
         "nullable": True,
-        "type": "list",
-        "schema": {"type": "string"},
+        "type": "dict",
+        "keysrules": {"type": "string",},
+        "valuesrules": {"type": "string"},
         "required": False,
         "default": None,
     },

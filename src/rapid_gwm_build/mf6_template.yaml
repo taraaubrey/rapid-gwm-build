@@ -50,11 +50,6 @@ module_templates:
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model 
         cmd: 'flopy.mf6.ModflowGwfdis'
-        special_kwargs: #TODO these input keys have special functions & update cfg (these have special checks asssociated with them) otherwise just passed to cmd as is
-            - model
-            - resolution
-            - botm
-            - idomain 
         duplicates_allowed: False
 
     ic: 
@@ -62,8 +57,6 @@ module_templates:
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfic'
-        special_kwargs:
-            - model
         duplicates_allowed: False
 
     sto: 
@@ -72,8 +65,6 @@ module_templates:
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfsto'
-        special_kwargs:
-            - model
         duplicates_allowed: False
     ## Simple stress packages ----------------------
 
@@ -82,8 +73,6 @@ module_templates:
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
         cmd: 'flopy.mf6.ModflowGwfwel'
-        special_kwargs:
-            - model
         duplicates_allowed: True
 
 
@@ -91,10 +80,9 @@ module_templates:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - conductance
-            - elevation
+        pipe_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            conductance: from_input
+            stress_period_data: stress_period_data
         discretized_data:
             - elevation
             - conductance
@@ -111,9 +99,9 @@ module_templates:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - conductance
+        pipe_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            conductance: from_input
+            stress_period_data: stress_period_data
         discretized_data:
             - conductance
         pipes:
@@ -128,9 +116,8 @@ module_templates:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - recharge
+        pipe_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            recharge: from_input
         discretized_data:
             - recharge
         pipes:
@@ -147,9 +134,8 @@ module_templates:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
             gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - rivbotm
+        pipe_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
+            rivbotm: from_input
         discretized_data:
             - rivbotm
             - conductance

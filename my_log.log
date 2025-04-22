@@ -2375,3 +2375,168 @@
 2025-04-22 16:58:58,772 - root - DEBUG - Finished building modules from config file.
 2025-04-22 16:58:58,772 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.
 2025-04-22 16:58:58,852 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 09:53:43,308 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 09:53:43,430 - root - ERROR - Template validation failed: {'module_templates': [{'dis': [{'pipe_kwargs': ['must be of dict type']}], 'drn': [{'pipe_kwargs': ['must be of dict type']}], 'ic': [{'pipe_kwargs': ['must be of dict type']}], 'sto': [{'pipe_kwargs': ['must be of dict type']}], 'wel': [{'pipe_kwargs': ['must be of dict type']}]}]}
+2025-04-23 09:54:47,993 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 09:54:48,042 - root - ERROR - Template validation failed: {'module_templates': [{'dis': [{'pipe_kwargs': ['must be of dict type']}], 'drn': [{'pipe_kwargs': ['must be of dict type']}], 'ic': [{'pipe_kwargs': ['must be of dict type']}], 'sto': [{'pipe_kwargs': ['must be of dict type']}], 'wel': [{'pipe_kwargs': ['must be of dict type']}]}]}
+2025-04-23 09:56:16,711 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 09:56:16,761 - root - ERROR - Template validation failed: {'module_templates': [{'ic': [{'pipe_kwargs': ['must be of dict type']}]}]}
+2025-04-23 09:56:37,013 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 09:56:37,083 - root - DEBUG - Building modules from config file.
+2025-04-23 09:57:49,012 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 09:57:49,093 - root - DEBUG - Building modules from config file.
+2025-04-23 09:57:56,202 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 09:57:56,292 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 09:57:56,302 - matplotlib - DEBUG - interactive is False
+2025-04-23 09:57:56,302 - matplotlib - DEBUG - platform is win32
+2025-04-23 09:57:57,253 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 09:57:57,304 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 09:57:59,739 - root - DEBUG - Building default gwf for mydis.
+2025-04-23 09:57:59,742 - root - DEBUG - Building default sim for gwf.
+2025-04-23 09:57:59,743 - root - DEBUG - Finished building modules from config file.
+2025-04-23 09:58:00,076 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 09:58:32,374 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 09:58:32,453 - root - DEBUG - Building modules from config file.
+2025-04-23 09:58:35,301 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 09:58:35,344 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 09:58:35,344 - matplotlib - DEBUG - interactive is False
+2025-04-23 09:58:35,344 - matplotlib - DEBUG - platform is win32
+2025-04-23 09:58:36,063 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 09:58:36,069 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 09:58:37,193 - root - DEBUG - Building default gwf for mydis.
+2025-04-23 09:58:37,193 - root - DEBUG - Building default sim for gwf.
+2025-04-23 09:58:37,193 - root - DEBUG - Finished building modules from config file.
+2025-04-23 09:58:37,193 - root - DEBUG - Automatically finding dependancy module sim for mygwf.
+2025-04-23 09:58:37,193 - root - DEBUG - Finished building modules from config file.
+2025-04-23 09:58:37,193 - root - DEBUG - Automatically finding dependancy module sim for myims.
+2025-04-23 09:58:37,193 - root - DEBUG - Finished building modules from config file.
+2025-04-23 09:58:37,280 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:11:02,440 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:11:02,553 - root - DEBUG - Building modules from config file.
+2025-04-23 10:11:16,772 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:11:16,842 - root - DEBUG - Building modules from config file.
+2025-04-23 10:11:27,708 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:11:27,791 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:11:27,793 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:11:27,793 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:11:28,444 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:11:28,482 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:11:30,283 - root - DEBUG - Building default gwf for mydis.
+2025-04-23 10:11:30,283 - root - DEBUG - Building default sim for gwf.
+2025-04-23 10:11:30,283 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:11:30,288 - root - DEBUG - Automatically finding dependancy module sim for mygwf.
+2025-04-23 10:11:30,288 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:11:30,288 - root - DEBUG - Automatically finding dependancy module sim for myims.
+2025-04-23 10:11:30,288 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:11:30,573 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:12:25,601 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:12:25,685 - root - DEBUG - Building modules from config file.
+2025-04-23 10:12:28,526 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:12:28,582 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:12:28,582 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:12:28,582 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:12:29,273 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:12:29,281 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:12:30,449 - root - DEBUG - Building default gwf for mydis.
+2025-04-23 10:12:30,449 - root - DEBUG - Building default sim for gwf.
+2025-04-23 10:12:30,450 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:12:30,451 - root - DEBUG - Automatically finding dependancy module sim for mygwf.
+2025-04-23 10:12:30,451 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:12:30,452 - root - DEBUG - Automatically finding dependancy module sim for myims.
+2025-04-23 10:12:30,452 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:12:30,552 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:13:51,583 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:13:51,659 - root - DEBUG - Building modules from config file.
+2025-04-23 10:13:54,670 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:13:54,736 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:13:54,742 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:13:54,742 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:13:55,512 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:13:55,526 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:13:56,712 - root - DEBUG - Building default gwf for mydis.
+2025-04-23 10:13:56,712 - root - DEBUG - Building default sim for gwf.
+2025-04-23 10:13:56,712 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:13:56,712 - root - DEBUG - Automatically finding dependancy module sim for mygwf.
+2025-04-23 10:13:56,712 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:13:56,712 - root - DEBUG - Automatically finding dependancy module sim for myims.
+2025-04-23 10:13:56,712 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:13:56,812 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:14:11,414 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:14:11,544 - root - DEBUG - Building modules from config file.
+2025-04-23 10:14:14,562 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:14:14,621 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:14:14,629 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:14:14,629 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:14:15,211 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:14:15,219 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:14:16,352 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:14:38,522 - root - DEBUG - Building default gwf for mydis.
+2025-04-23 10:14:38,528 - root - DEBUG - Building default sim for gwf.
+2025-04-23 10:14:38,530 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:14:38,530 - root - DEBUG - Automatically finding dependancy module sim for mygwf.
+2025-04-23 10:14:38,531 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:14:38,532 - root - DEBUG - Automatically finding dependancy module sim for myims.
+2025-04-23 10:14:38,532 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:15:20,039 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:15:20,103 - root - DEBUG - Building modules from config file.
+2025-04-23 10:15:23,032 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:15:23,083 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:15:23,091 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:15:23,092 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:15:23,770 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:15:23,773 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:15:24,943 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:17:19,612 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:17:19,682 - root - DEBUG - Building modules from config file.
+2025-04-23 10:17:22,692 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:17:22,758 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:17:22,761 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:17:22,761 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:17:23,403 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:17:23,411 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:17:24,613 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:17:44,772 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:17:44,852 - root - DEBUG - Building modules from config file.
+2025-04-23 10:17:53,723 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:17:53,884 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:17:53,893 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:17:53,899 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:17:55,836 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:17:55,852 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:18:00,676 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:18:23,823 - root - DEBUG - Building default gwf for dis-mydis.
+2025-04-23 10:26:32,534 - root - DEBUG - Initializing YamlProcessor with schema: {'module_templates': {'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'dict', 'schema': {'type': {'type': 'string', 'required': True}, 'build_dependencies': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'allowed_to_build_default': {'type': 'boolean', 'required': False, 'default': True}, 'runtime_dependencies': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'cmd': {'type': 'string', 'required': True}, 'pipe_kwargs': {'nullable': True, 'type': 'dict', 'keysrules': {'type': 'string'}, 'valuesrules': {'type': 'string'}, 'required': False, 'default': None}, 'duplicates_allowed': {'type': 'boolean', 'required': False, 'default': False}, 'discretized_data': {'nullable': True, 'type': 'list', 'schema': {'type': 'string'}, 'required': False, 'default': None}, 'pipes': {'nullable': True, 'type': 'dict', 'valuesrules': {'type': 'dict', 'schema': {'input': {'type': 'list', 'required': True}, 'cmd_key': {'type': 'string', 'required': True}}}, 'required': False, 'default': None}}}}}
+2025-04-23 10:26:32,649 - root - DEBUG - Building modules from config file.
+2025-04-23 10:26:39,933 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 10:26:40,015 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:26:40,021 - matplotlib - DEBUG - interactive is False
+2025-04-23 10:26:40,025 - matplotlib - DEBUG - platform is win32
+2025-04-23 10:26:41,090 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 10:26:41,132 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 10:26:42,742 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 10:26:47,663 - root - DEBUG - Building default gwf for dis-mydis.
+2025-04-23 10:26:47,673 - root - DEBUG - Building default sim for gwf.
+2025-04-23 10:26:47,675 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:47,675 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-23 10:26:47,675 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:47,678 - root - DEBUG - Automatically finding dependancy module sim for ims-myims.
+2025-04-23 10:26:47,678 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:47,678 - root - DEBUG - Automatically finding dependancy module gwf for npf-mynpf.
+2025-04-23 10:26:47,678 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:49,544 - rasterio.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-23 10:26:49,551 - rasterio.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\gdal_data'.
+2025-04-23 10:26:49,554 - rasterio.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\rasterio\\proj_data'.
+2025-04-23 10:26:52,082 - fiona.session - DEBUG - Could not import boto3, continuing with reduced functionality.
+2025-04-23 10:26:52,082 - fiona.env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-23 10:26:52,091 - fiona.env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-23 10:26:52,222 - fiona._env - DEBUG - GDAL data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\gdal_data'.
+2025-04-23 10:26:52,222 - fiona._env - DEBUG - PROJ data found in package: path='c:\\Users\\tfo46\\e_Python\\a_rbm\\rapid-gwm-build\\.venv\\Lib\\site-packages\\fiona\\proj_data'.
+2025-04-23 10:26:59,108 - root - DEBUG - Automatically finding dependancy module gwf for oc-myoc.
+2025-04-23 10:26:59,108 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:59,109 - root - DEBUG - Automatically finding dependancy module gwf for rcha-myrcha.
+2025-04-23 10:26:59,109 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:59,109 - root - DEBUG - Automatically finding dependancy module gwf for sto-mysto.
+2025-04-23 10:26:59,111 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:59,112 - root - DEBUG - Automatically finding dependancy module sim for tdis-mytdis.
+2025-04-23 10:26:59,112 - root - DEBUG - Finished building modules from config file.
+2025-04-23 10:26:59,112 - root - DEBUG - Created simulation test_sim_v1 with 9 modules.

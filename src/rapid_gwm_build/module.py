@@ -11,13 +11,14 @@ class Module:
         kind: str,
         template_cfg: dict,  ## template config file (ie. yaml file)
         cfg: dict = None,  ## user cfg file (ie. yaml file)
-        usr_modname: str = None,
+        gkey: str = None,
         _graph: nx.DiGraph = None,
         **kwargs,  # TODO these are not used
     ):
+        self.gkey = gkey
         self.kind = kind
         self.name = (
-            usr_modname if usr_modname else kind
+            gkey if gkey else kind
         )  # name of the module (ie. modflow, mt3d, etc)
         self.parameters = template_cfg.get("parameters")
 
