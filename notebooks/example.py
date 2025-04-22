@@ -36,13 +36,12 @@
 
 
 # %% create a template modules (this would normally be done based on a template file)
-
+import yaml
 from rapid_gwm_build.simulation import Simulation
 
 simple_freyburg = r'notebooks\simple_freyburg\simple freyburg.yaml'
 
 # open yaml
-import yaml
 with open(simple_freyburg, 'r') as f:
     cfg = yaml.safe_load(f)
 

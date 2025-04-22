@@ -1,9 +1,10 @@
 
 # %% create a template modules (this would normally be done based on a template file)
 import logging
+import yaml
 
 from rapid_gwm_build import create_simulation
-from rapid_gwm_build.utils import set_up_ws, _parse_module_key
+from rapid_gwm_build.utils import set_up_ws
 
 # start logging
 # Configure logging
@@ -18,9 +19,6 @@ logging.basicConfig(
 
 
 input_yaml = r'examples\pleasant\shellmound.yaml'
-
-# open yaml
-import yaml
 
 
 with open(input_yaml, 'r') as f:

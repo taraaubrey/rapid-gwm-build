@@ -44,7 +44,7 @@ def set_up_ws(ws_cfg:dict, name:str) -> str:
                 shutil.rmtree(ws_path)
             os.makedirs(ws_path)
         elif ws_cfg['mode']=='append':
-            if not os.path.exists(wws_path):
+            if not os.path.exists(ws_path):
                 os.makedirs(ws_path)
         else:
             raise ValueError(f'Invalid workspace mode {ws_cfg["mode"]}')

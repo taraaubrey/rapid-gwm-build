@@ -5,8 +5,6 @@ import logging
 
 from rapid_gwm_build.module_registry import ModuleRegistry
 from rapid_gwm_build.module_builder import ModuleBuilder
-from rapid_gwm_build.module import Module
-from rapid_gwm_build.utils import _parse_module_key
 
 class Simulation:
 

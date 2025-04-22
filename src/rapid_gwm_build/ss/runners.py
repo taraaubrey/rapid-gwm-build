@@ -54,12 +54,8 @@ class MF6Simulation(Simulation, SimulationType):
                 pkg.build(module_registry)
                 gwfs[pkg.name] = pkg.output
 
-                # build the rest of the packages
-                gwf_modules = [m for m in module_registry.values() if m.kind=='gwf']
-
 
         # the rest of the module that are not sim or gwf
-        other_packages = [m for m in module_registry.keys() if m not in ['sim'] + gwf_packages]
         for gwf_pkg in gwf_packages:
             gwf = self.modules[gwf_pkg]
             # build the gwf package

@@ -22,15 +22,14 @@ class ModuleBuilder:
             'SpatialDiscretizationModule': SpatialDiscretizationModule,
             'TemporalDiscretizationModule': TemporalDiscretizationModule,
         }
-        self._graph = _graph
-        self._templates = _templates
+        self._graph = _graph #TODO create a Graph class
+        self._templates = _templates # this is already validated
         self.module_registry = module_registry #TODO: this should be a property of the simulation object
     
-
     def _check_duplicated_allowed(self, kind:str): #TODO move to Template class
         if kind in [m.kind for m in self.module_registry.values()]:
             duplicates_allowed = self._template.get(kind).get('duplicates_allowed')
-            if duplicates_allowed==False:
+            if not duplicates_allowed:
                 raise ValueError(f'Only one "{kind}" allowed. Remove this module or set duplicates_allowed to True in the template file.')
     
     def _get_module_meta(self, module_key:str):
@@ -56,9 +55,8 @@ class ModuleBuilder:
         self._graph.add_node(module.name, type='module', module=module) # add the module to the graph
         self.module_registry.add(module.name, module) # add the module to the registry
         return module
-    
-    
-    def from_cfg(self, module_key: str, module_cfg: dict):
+      
+    def from_cfg(self, module_key: str, module_cfg: dict): #TODO: test schema against a module template
         if module_key in self._graph.nodes():
             logging.debug(f'Module {module_key} already exists in the graph. Skipping.')
         else:

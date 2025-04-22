@@ -62,7 +62,7 @@ class Module:
         if isinstance(kwargs, dict):
             self._cmd_kwargs.update(kwargs)
         else:   
-            raise ValueError(f'kwargs must be a dictionary.')
+            raise ValueError('kwargs must be a dictionary.')
 
 
     def add_params(self, params: dict): # FIXME: old method
