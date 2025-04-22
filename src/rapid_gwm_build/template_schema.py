@@ -1,7 +1,21 @@
 
+pipe_schema = {
+    'input': {
+        'type': 'list',
+        'required': True
+    },
+    'cmd_key': {
+        'type': 'string',
+        'required': True
+    },
+}
 
 # Schema for each module
 module_schema = {
+    'type': {
+        'type': 'string',
+        'required': True
+    },
     'build_dependencies': {
         'nullable': True,
         'type': 'dict',
@@ -41,14 +55,39 @@ module_schema = {
         'type': 'boolean',
         'required': False,
         'default': False
-    }
+    },
+    'discretized_data': {
+        'nullable': True,
+        'type': 'list',
+        'schema': {'type': 'string'},
+        'required': False,
+        'default': None
+    },
+    'pipes': {
+        'nullable': True,
+        'type': 'dict',
+        'valuesrules': {
+            'type': 'dict',
+            'schema': pipe_schema,
+            # 'keysrules': {
+            #     'type': 'string',
+            # },
+            # 'valuesrules': {
+            #     'type': 'dict',
+            #     'schema': pipe_schema
+            # },
+        },
+        'required': False,
+        'default': None
+    },
 }
+
 
 top_level_schema = {
     'module_templates': {
         'type': 'dict',
         'keysrules': {
-        'type': 'string',
+            'type': 'string',
         },
         'valuesrules': {
             'type': 'dict',
