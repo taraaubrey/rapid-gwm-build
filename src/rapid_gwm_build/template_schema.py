@@ -29,7 +29,7 @@ module_schema = {
         "nullable": True,
         "type": "dict",
         "keysrules": {"type": "string",},
-        "valuesrules": {"type": "string"},
+        "valuesrules": {"type": "list", "schema": {"type": "string"}},
         "required": False,
         "default": None,
     },

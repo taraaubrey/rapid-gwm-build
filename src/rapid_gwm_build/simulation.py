@@ -33,8 +33,9 @@ class Simulation:
             templates=self._template["module_templates"],
             graph=self._graph,
         )  
-
+        
         if cfg:
+
             if cfg.get("mesh", None):
                 # create mesh
                 self.mesh = Mesh.from_cfg(cfg.get("mesh", None))
@@ -60,10 +61,6 @@ class Simulation:
         for module_key, module_cfg in self.cfg["modules"].items():
             self.module_builder.from_cfg(module_key, module_cfg)
 
-    def _build_mesh_from_cfg(self):
-        logging.debug("Building mesh from config file.")
-
-        mesh_cfg = self.cfg.get("mesh", None)
     
     def build(self, mode="all"): #TODO move to GraphClass
         for node in nx.topological_sort(self._graph):

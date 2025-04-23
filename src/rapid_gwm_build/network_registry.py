@@ -1,7 +1,7 @@
 
 import networkx as nx
 
-from rapid_gwm_build.pipeline import PipelineNode
+from rapid_gwm_build.pipeline_node import PipelineNode
 
 class NetworkRegistry:
     def __init__(self):
@@ -9,9 +9,9 @@ class NetworkRegistry:
         self._graph = nx.DiGraph()
 
         self._allowed_types = [
+            "core",
             "module",
-            "parameter",
-            "pipe"
+            "pipeline",
         ]
 
     def add_node(self, node, ntype: str, **attributes):
@@ -71,7 +71,7 @@ class NetworkRegistry:
         else:
             return list(self._graph.nodes)
 
-    def get_node_attributes(self, node):
+    def get(self, node):
         """
         Get all attributes of a specific node.
         :param node: The node identifier.
@@ -94,6 +94,6 @@ class NetworkRegistry:
     
     def add_pipeline_node(self, pnode: PipelineNode):
         # assume input nodes are already in the graph
-        self.add_node(pnode.name, ntype="operation", data=pnode)
+        self.add_node(pnode.name, ntype="pipeline", data=pnode)
         self._graph.add_edges_from([(pnode.name, ikey) for ikey in pnode.inkeys])
         self._graph.add_edges_from([(pnode.name, ikey) for ikey in pnode.outkeys])

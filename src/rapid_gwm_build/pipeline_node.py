@@ -31,7 +31,7 @@ class GraphPipeline:
 
     def add_pipeline_node(self, pnode: PipelineNode, graph):
         # assume input nodes are already in the graph
-        graph.add_node(pnode.name, ntype="operation", data=pnode)
+        graph.add_node(pnode.name, ntype="pipeline", data=pnode)
         graph.add_edges_from([(pnode.name, ikey) for ikey in pnode.inkeys])
         graph.add_edges_from([(pnode.name, ikey) for ikey in pnode.outkeys])
             

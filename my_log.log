@@ -2610,3 +2610,99 @@
 2025-04-23 11:05:44,429 - root - DEBUG - Automatically finding dependancy module sim for None.
 2025-04-23 11:05:44,429 - root - DEBUG - Finished building modules from config file.
 2025-04-23 11:05:44,497 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:08:41,500 - root - ERROR - Template validation failed: {'module_templates': [{'dis': [{'pipe_kwargs': [{'top': ['must be of string type']}]}], 'drn': [{'pipe_kwargs': [{'stress_period_data': ['must be of string type']}]}]}]}
+2025-04-23 16:09:23,573 - root - ERROR - Template validation failed: {'module_templates': [{'ghb': [{'pipe_kwargs': [{'conductance': ['must be of list type'], 'stress_period_data': ['must be of list type']}]}], 'rcha': [{'pipe_kwargs': [{'recharge': ['must be of list type']}]}], 'sfr': [{'pipe_kwargs': [{'rivbotm': ['must be of list type']}]}]}]}
+2025-04-23 16:10:51,123 - root - DEBUG - Building modules from config file.
+2025-04-23 16:10:55,540 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:10:55,606 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:10:55,610 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:10:55,611 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:10:56,304 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:10:56,328 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:10:58,023 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:17:55,884 - root - DEBUG - Building modules from config file.
+2025-04-23 16:17:57,321 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:17:57,348 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:17:57,350 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:17:57,351 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:17:58,369 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:17:58,373 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:17:59,115 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:23:32,398 - root - DEBUG - Building modules from config file.
+2025-04-23 16:23:40,337 - root - DEBUG - Building modules from config file.
+2025-04-23 16:23:43,990 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:23:44,031 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:23:44,034 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:23:44,035 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:23:44,450 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:23:44,469 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:23:45,858 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:28:28,933 - root - DEBUG - Building modules from config file.
+2025-04-23 16:28:30,406 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:28:30,435 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:28:30,437 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:28:30,437 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:28:30,860 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:28:30,863 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:28:31,647 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:29:00,555 - root - DEBUG - Building modules from config file.
+2025-04-23 16:29:02,091 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:29:02,141 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:29:02,145 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:29:02,145 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:29:02,698 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:29:02,701 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:29:03,709 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:29:37,189 - root - DEBUG - Building modules from config file.
+2025-04-23 16:29:38,660 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:29:38,689 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:29:38,693 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:29:38,693 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:29:39,097 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:29:39,101 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:29:39,849 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:29:46,672 - root - DEBUG - Building default gwf for None.
+2025-04-23 16:30:34,367 - root - DEBUG - Building modules from config file.
+2025-04-23 16:30:35,838 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:30:35,867 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:30:35,869 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:30:35,869 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:30:36,277 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:30:36,280 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:30:36,984 - root - DEBUG - Building default gwf for None.
+2025-04-23 16:30:36,984 - root - DEBUG - Building default sim for None.
+2025-04-23 16:30:36,984 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:30:36,984 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-23 16:30:36,985 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:30:36,985 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 16:30:36,985 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:30:36,985 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 16:30:36,985 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:30:36,985 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 16:30:36,985 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:30:37,021 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-23 16:31:12,955 - root - DEBUG - Building modules from config file.
+2025-04-23 16:31:14,427 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-04-23 16:31:14,456 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:31:14,458 - matplotlib - DEBUG - interactive is False
+2025-04-23 16:31:14,459 - matplotlib - DEBUG - platform is win32
+2025-04-23 16:31:14,849 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-04-23 16:31:14,853 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-04-23 16:31:15,550 - root - DEBUG - Building default gwf for None.
+2025-04-23 16:31:15,551 - root - DEBUG - Building default sim for None.
+2025-04-23 16:31:15,551 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,551 - root - DEBUG - Module gwf already exists in the graph. Skipping.
+2025-04-23 16:31:15,552 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,552 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 16:31:15,553 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,553 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 16:31:15,554 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,554 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 16:31:15,555 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,555 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 16:31:15,556 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,556 - root - DEBUG - Automatically finding dependancy module gwf for None.
+2025-04-23 16:31:15,556 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,558 - root - DEBUG - Automatically finding dependancy module sim for None.
+2025-04-23 16:31:15,558 - root - DEBUG - Finished building modules from config file.
+2025-04-23 16:31:15,602 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
