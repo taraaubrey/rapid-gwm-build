@@ -1,3 +1,4 @@
+import numpy as np
 import gridit as gi
 
 
@@ -8,8 +9,8 @@ class Mesh:
             ncol = 10,
             nrow = 10,
             resolution = 10,
-            top = 100,
-            botms = [0],
+            top:np.array = None,
+            botms: np.array = None,
             xorigin = 0.0, # based on xorigin of the upper-left corner of the upper-left pixel
             yorigin = 0.0, # based on yorigin of the upper-left corner of the upper-left pixel
             active_domain = None,

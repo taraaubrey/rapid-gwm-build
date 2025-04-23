@@ -1,6 +1,7 @@
 
 import networkx as nx
 
+from rapid_gwm_build.pipeline import PipelineNode
 
 class NetworkRegistry:
     def __init__(self):
@@ -57,10 +58,7 @@ class NetworkRegistry:
 
     def module_registry(self):
         return [data['module'] for node, data in self._graph.nodes(data=True) if data.get('ntype') == 'module' and 'module' in data]
-
-
-        
-
+   
     def list_nodes(self, ntype:str=None):
         """
         Get a list of nodes that have a specific label with a given value.
@@ -93,3 +91,9 @@ class NetworkRegistry:
 
     def __repr__(self):
         return f"NetworkRegistry({len(self._graph.nodes)} nodes, {len(self._graph.edges)} edges)"
+    
+    def add_pipeline_node(self, pnode: PipelineNode):
+        # assume input nodes are already in the graph
+        self.add_node(pnode.name, ntype="operation", data=pnode)
+        self._graph.add_edges_from([(pnode.name, ikey) for ikey in pnode.inkeys])
+        self._graph.add_edges_from([(pnode.name, ikey) for ikey in pnode.outkeys])
