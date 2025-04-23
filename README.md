@@ -12,7 +12,7 @@
 
 **Enables modular edits**: if a node is changed (e.g. a boundary condition or array), only downstream dependent nodes are recomputed.
 
-![image.png](attachment:image.png)
+![image.png](https://networkx.org/nx-guides/_images/0075f6bdb07afa1c22357228ac072f1c218a5fca1fb91dca3610dae9188959b4.png)
 
 # Nodes
 ## Types of nodes/Edges
