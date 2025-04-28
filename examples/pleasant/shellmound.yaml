@@ -48,7 +48,7 @@ simulations:
       
       npf-mynpf:
         icelltype: 1
-        k: 30
+        k: ${data_dir}rasters/mdwy_surf.tif
         k33: 0.3
 
       # sfr: #TODO config sfs settings

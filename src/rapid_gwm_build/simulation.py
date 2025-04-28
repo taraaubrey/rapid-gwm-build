@@ -35,12 +35,15 @@ class Simulation:
         )  
         
         if cfg:
+            # load input nodes
+
 
             if cfg.get("mesh", None):
                 # create mesh
                 self.mesh = Mesh.from_cfg(cfg.get("mesh", None))
                 self._graph.add_node(
                     'core.2Dmesh', ntype='core', mesh=self.mesh)
+
             # create modules
             self._create_modules_from_cfg()
 
@@ -91,3 +94,31 @@ class Simulation:
         module.update_cmd_kwargs(
             {cmd_key: dep_output}
         )  # update the command kwargs with the output of the parent module
+
+
+# ## class Simulation:
+#     def __init__(self, config=None):
+#         self.graph = nx.DiGraph()
+#         self.config = config or {}
+#         if config:
+#             self._build_initial_nodes()
+
+#     def _build_initial_nodes(self):
+#         for node_cfg in self.config.get("nodes", []):
+#             self.add_node(node_cfg)
+
+#     def add_node(self, node_cfg):
+#         node = NodeBuilder.build(node_cfg)
+#         self.graph.add_node(node.name, data=node)
+
+#     def modify_node(self, name, new_cfg):
+#         # Optionally update config/state
+#         self.graph.remove_node(name)
+#         self.add_node(new_cfg)
+
+#     def to_config(self):
+#         # Export current state to config dict
+#         return {
+#             "model_type": self.config.get("model_type"),
+#             "nodes": [data["data"].to_dict() for _, data in self.graph.nodes(data=True)]
+#         }
