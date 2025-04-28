@@ -4,96 +4,120 @@ import networkx as nx
 import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
-from rapid_gwm_build.module_builder import ModuleBuilder
-from rapid_gwm_build.mesh import Mesh
+from rapid_gwm_build.node_builder import NodeBuilder
+# from rapid_gwm_build.module_builder import ModuleBuilder
+# from rapid_gwm_build.mesh import Mesh
 
 class Simulation:
     def __init__(
         self,
-        ws: str | PathLike,
+        # ws: str | PathLike,
         name: str = None,  # name of the simulation
-        model_type: str = "generic",  # type of the simulation (ie. modflow, mt3d, etc)
-        cfg: dict = None,  # config file for the simulation (ie. yaml file)
-        _defaults: str = None,  # defaults for the simulation (ie. yaml file)
-        # TODO: add path to model executables
+        sim_type: str = "generic",  # type of the simulation (ie. modflow, mt3d, etc)
+        # cfg: dict = None,  # config file for the simulation (ie. yaml file)
+        # _defaults: str = None,  # defaults for the simulation (ie. yaml file)
+        # # TODO: add path to model executables
     ):
-        self.ws = ws
-        self.cfg = cfg
         self.name = name
-        self.model_type = model_type  # type of the simulation (ie. modflow, mt3d, etc)
-        self.mesh = None
+        self.sim_type = sim_type  # type of the simulation (ie. modflow, mt3d, etc)
+        self.template = None # backend template based on sim_type
+        self.graph = NetworkRegistry()
+        self.name_registry = {}
+        self.node_builder = NodeBuilder(self.name_registry{})
         
-        self._graph = NetworkRegistry()
+        # self.ws = ws
+        # self.cfg = cfg
+        # self.mesh = None
         
-        self._template = self._set_template( 
-            _defaults
-        )  
-
-        self.module_builder = ModuleBuilder(
-            templates=self._template["module_templates"],
-            graph=self._graph,
-        )  
         
-        if cfg:
-            # load input nodes
+        # self.module_builder = ModuleBuilder(
+        #     templates=self._template["module_templates"],
+        #     graph=self.graph,
+        # )  
+        
+        # if cfg:
+        #     # load input nodes
 
 
-            if cfg.get("mesh", None):
-                # create mesh
-                self.mesh = Mesh.from_cfg(cfg.get("mesh", None))
-                self._graph.add_node(
-                    'core.2Dmesh', ntype='core', mesh=self.mesh)
+        #     if cfg.get("mesh", None):
+        #         # create mesh
+        #         self.mesh = Mesh.from_cfg(cfg.get("mesh", None))
+        #         self.graph.add_node(
+        #             'core.2Dmesh', ntype='core', mesh=self.mesh)
 
-            # create modules
-            self._create_modules_from_cfg()
+        #     # create modules
+        #     self._create_modules_from_cfg()
 
-    def _set_template(self, _default_file: str):
-        from rapid_gwm_build.yaml_processor import template_processor
+    def set_template(self, sim_type: str):
+        from rapid_gwm_build.template_loader import TemplateLoader
+        self.template = TemplateLoader.load_template(sim_type)
+    
+    @classmethod
+    def from_config(cls, sim_cfg):
+        sim = cls(
+            name=sim_cfg["name"],
+            sim_type=sim_cfg["sim_type"]
+        )
+        sim.set_template(sim.sim_type)
 
-        if _default_file:
-            return template_processor.load_and_validate(
-                _default_file
-            )  # load the template file and validate it
+        # 1. Build inputs
+        for input_name, input_cfg in sim_cfg.get("inputs", {}).items():
+            sim.add_node(input_name, type="input", **input_cfg)
+
+        # 2. Build modules
+        for mod_id, mod_cfg in sim_cfg.get("modules", {}).items():
+            package, user_name = mod_id.split("-")
+            sim.add_node(user_name, type="module", package=package, parameters=mod_cfg)
+
+        return sim
+    
+    def add_node(self, name: str, ntype: str, **kwargs):
+        if ntype:
+            node_id, node = self.node_builder.build_node(name, ntype, **kwargs)
         else:
-            logging.debug("No sim template file.")
-            return None
+            raise ValueError(f"Unknown node type: {ntype}")
 
-    def _create_modules_from_cfg(self):
-        logging.debug("Building modules from config file.")
+        self.graph.add_node(node_id, data=node)
 
-        for module_key, module_cfg in self.cfg["modules"].items():
-            self.module_builder.from_cfg(module_key, module_cfg)
+
+    # def _create_modules_from_cfg(self):
+    #     logging.debug("Building modules from config file.")
+
+    #     for module_key, module_cfg in self.cfg["modules"].items():
+    #         self.module_builder.from_cfg(module_key, module_cfg)
 
     
-    def build(self, mode="all"): #TODO move to GraphClass
-        for node in nx.topological_sort(self._graph):
-            module = self._graph.nodes[node]["module"]
+    # def build(self, mode="all"): #TODO move to GraphClass
+    #     for node in nx.topological_sort(self.graph):
+    #         module = self.graph.nodes[node]["module"]
 
-            for dep_node in self._graph.predecessors(node):
-                if dep_node not in self.module_registry.keys():
-                    raise ValueError(f"Module {dep_node} not found in the simulation.")
+    #         for dep_node in self.graph.predecessors(node):
+    #             if dep_node not in self.module_registry.keys():
+    #                 raise ValueError(f"Module {dep_node} not found in the simulation.")
 
-                if "module_dependency" in self._graph.edges[(dep_node, node)].keys():
-                    self._resolve_intermodule_dependencies(
-                        dep_node, node
-                    )  # TODO: type of dependency (ie. cmd kwarg/build)
-                if "parameter_dependency" in self._graph.edges[(dep_node, node)].keys():
-                    pass
+    #             if "module_dependency" in self.graph.edges[(dep_node, node)].keys():
+    #                 self._resolve_intermodule_dependencies(
+    #                     dep_node, node
+    #                 )  # TODO: type of dependency (ie. cmd kwarg/build)
+    #             if "parameter_dependency" in self.graph.edges[(dep_node, node)].keys():
+    #                 pass
 
-            if mode == "all":
-                module.build()
-            if mode == "update":  # this would only build modules that have been changed
-                pass
+    #         if mode == "all":
+    #             module.build()
+    #         if mode == "update":  # this would only build modules that have been changed
+    #             pass
 
-    def _resolve_intermodule_dependencies( #TODO move to GraphClass
-        self, pred_node, node
-    ):  # TODO GraphManagerClass
-        module = self._graph.nodes[node]["module"]
-        dep_output = self.modules[pred_node].output
-        cmd_key = self._graph.edges[(pred_node, node)]["module_dependency"]
-        module.update_cmd_kwargs(
-            {cmd_key: dep_output}
-        )  # update the command kwargs with the output of the parent module
+    # def _resolve_intermodule_dependencies( #TODO move to GraphClass
+    #     self, pred_node, node
+    # ):  # TODO GraphManagerClass
+    #     module = self.graph.nodes[node]["module"]
+    #     dep_output = self.modules[pred_node].output
+    #     cmd_key = self.graph.edges[(pred_node, node)]["module_dependency"]
+    #     module.update_cmd_kwargs(
+    #         {cmd_key: dep_output}
+    #     )  # update the command kwargs with the output of the parent module
+
+
 
 
 # ## class Simulation:
@@ -119,6 +143,6 @@ class Simulation:
 #     def to_config(self):
 #         # Export current state to config dict
 #         return {
-#             "model_type": self.config.get("model_type"),
+#             "sim_type": self.config.get("sim_type"),
 #             "nodes": [data["data"].to_dict() for _, data in self.graph.nodes(data=True)]
 #         }

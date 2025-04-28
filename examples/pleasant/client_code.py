@@ -23,7 +23,7 @@ input_yaml = r"examples\pleasant\shellmound.yaml"
 
 cfg_sim = ConfigParser.parse(input_yaml)
 
-
+sim = create_simulation(input_yaml)
 
 
 #####
