@@ -51,8 +51,6 @@ module_templates:
             model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
-        pipe_kwargs:
-            top: [from_mesh_top, top_output]
 
     ic: 
         type: BasicModule

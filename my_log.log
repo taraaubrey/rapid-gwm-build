@@ -2707,3 +2707,13 @@
 2025-04-23 16:31:15,558 - root - DEBUG - Finished building modules from config file.
 2025-04-23 16:31:15,602 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
 2025-04-29 18:33:08,209 - root - ERROR - Template validation failed: {'module_templates': [{'ghb': [{'discretized_data': ['unknown field'], 'pipes': ['unknown field']}], 'rcha': [{'discretized_data': ['unknown field'], 'pipes': ['unknown field']}]}]}
+2025-04-30 12:47:19,913 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['must be of list type'], 'elev': ['must be of list type']}]}]}]}
+2025-04-30 13:49:13,556 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['must be of list type'], 'elev': ['must be of list type']}]}]}]}
+2025-04-30 13:52:58,600 - root - ERROR - Template validation failed: {'module_templates': [{'dis': [{'pipe_kwargs': ['unknown field']}], 'drn': [{'data': [{'cond': ['must be of dict type'], 'elev': ['must be of dict type']}]}]}]}
+2025-04-30 13:54:00,551 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['must be of dict type'], 'elev': ['must be of dict type']}]}]}]}
+2025-04-30 13:55:25,665 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['must be of dict type'], 'elev': ['must be of dict type']}]}]}]}
+2025-04-30 13:56:10,865 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['must be of dict type'], 'elev': ['must be of dict type']}]}]}]}
+2025-04-30 13:56:23,888 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['must be of dict type'], 'elev': ['must be of dict type']}]}]}]}
+2025-04-30 13:57:58,470 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['unknown field'], 'elev': ['unknown field']}]}]}]}
+2025-04-30 13:58:41,025 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['unknown field', 'must be of string type'], 'elev': ['unknown field', 'must be of string type']}]}]}]}
+2025-04-30 14:00:33,025 - root - ERROR - Template validation failed: {'module_templates': [{'drn': [{'data': [{'cond': ['unknown field', 'must be of string type'], 'elev': ['unknown field', 'must be of string type']}]}]}]}

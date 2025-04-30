@@ -1,3 +1,20 @@
+pipeline_schema = {
+    "pipes": {
+        "type": "dict",
+        "keysrules": {
+            "type": "string",
+        },
+        "valuesrules": {
+            "type": "dict",
+            "schema": {
+                "type": "list",
+                "keysrules": {"type": "dict"},
+                "valuesrules": {"type": "dict"},
+            },
+        },
+    },
+}
+
 # Schema for each module
 module_schema = {
     "type": {"type": "string", "required": True},
@@ -20,44 +37,16 @@ module_schema = {
         "default": None,
     },
     "cmd": {"type": "string", "required": True},
-    "pipe_kwargs": {
-        "nullable": True,
-        "type": "dict",
-        "keysrules": {"type": "string",},
-        "valuesrules": {"type": "list", "schema": {"type": "string"}},
-        "required": False,
-        "default": None,
-    },
     "duplicates_allowed": {"type": "boolean", "required": False, "default": False},
     "data": {
         "nullable": True,
         "type": "dict",
-        "keysrules": {"type": "string",}, #ex. cond, elev, etc
-        "valuesrules": { #TODO not sure this is working
-            "type": "list",
-            "keysrules": {"type": "string",}, #name of pipeline
-            "valuesrules": {"type": "list", "schema": {"type": "string"}, "required": False}, #inputs
+        # "keysrules": {"type": "string",}, #ex. cond, elev, etc
+        # "valuesrules": {"type": "string",}, #ex. cond, elev, etc
+        # "schema": pipeline_schema,
         "required": False,
         "default": None,
     },
-    },
-    # "pipes": {
-    #     "nullable": True,
-    #     "type": "dict",
-    #     "valuesrules": {
-    #         "type": "dict",
-    #         "schema": pipe_schema,
-    #         # 'keysrules': {
-    #         #     'type': 'string',
-    #         # },
-    #         # 'valuesrules': {
-    #         #     'type': 'dict',
-    #         #     'schema': pipe_schema
-    #         # },
-    #     },
-    #     "required": False,
-    #     "default": None,
-    # },
 }
 
 
@@ -68,20 +57,5 @@ top_level_schema = {
             "type": "string",
         },
         "valuesrules": {"type": "dict", "schema": module_schema},
-    }
-}
-
-pipeline_schema = {
-    "type": "dict",
-    "keysrules": {
-        "type": "string",
-    },
-    "valuesrules": {
-        "type": "list",
-        "schema": {
-            "type": "dict",
-            "keysrules": {"type": "string"},
-            "valuesrules": { "type": "list"},
-        },
     }
 }

@@ -22,6 +22,7 @@ class Simulation:
         self.sim_type = sim_type  # type of the simulation (ie. modflow, mt3d, etc)
         self.template = None # backend template based on sim_type
         self.graph = NetworkRegistry()
+        self.nodes = self.graph._graph.nodes
         self.name_registry = {}
         self.node_builder = NodeBuilder(self.name_registry)
         
@@ -60,27 +61,27 @@ class Simulation:
         )
         sim.set_template(sim.sim_type)
 
-        # 1. Build nodes
+        # 1. Build nodes (need to first create all the nodes before adding edges)
         for node_type in sim_cfg['nodes'].keys():
 
-            inputs = sim_cfg['nodes'].get(node_type, None)
-            if input:
-                for input_name, input_cfg in inputs.items():
+            node_type_cfg = sim_cfg['nodes'].get(node_type, None)
+            if node_type_cfg:
+                for node_key, node_cfg in node_type_cfg.items():
                     if node_type == 'modules':
-                        module_type = input_cfg.get("module_type", None)
-                        module_template = sim.template['module_templates'][module_type]
-                    else:
-                        module_template = None
+                        kind = node_cfg.get("kind", None)
+                        module_template = sim.template['module_templates'][kind]
+                        node_cfg['template'] = module_template
 
-                    sim.add_node(input_name, template=module_template, **input_cfg)
+                    sim.add_node(id=node_key, **node_cfg)
 
         # 2. Add the edges -> recursive from modules
+        
 
         return sim
     
     
-    def add_node(self, name: str, **kwargs):
-        id, node = self.node_builder.build_node(name, **kwargs)
+    def add_node(self, id, **kwargs):
+        node = self.node_builder.build_node(id, **kwargs)
         self.graph.add_node(id, node=node)
 
 

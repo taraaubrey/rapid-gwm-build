@@ -1,21 +1,22 @@
 # base node class
 
 class NodeBase:
-    def __init__(self, gkey: str, ntype: str, **kwargs):
-        self.gkey = gkey  # unique key for the node
-        self.ntype = ntype  # type of the node (ie. module, core, etc)
-        self._attributes = kwargs  # attributes of the node (ie. module, core, etc)
-        # self._dependencies = []  # dependencies of the node (ie. module, core, etc)
+    def __init__(self, id: str):
+        self.id = id  # unique key for the node
 
+    @property
+    def type(self):
+        return self.id.split(".")[0]
 
 class InputNode(NodeBase):
-    def __init__(self, gkey: str, loader_type="default", **kwargs):
-        super().__init__(gkey=gkey, ntype="input", **kwargs)
+    def __init__(self, id: str, loader_type="default", **kwargs):
+        super().__init__(id=id)
         self.value = kwargs.get("value", None)  # value of the input node (ie. file path)
         # self.path = path
         self.loader_type = loader_type
         self.kwargs = kwargs
         self._data = None  # will be loaded during execution
+    
 
     # def load(self):
     #     if self._data is None:
@@ -25,17 +26,14 @@ class InputNode(NodeBase):
 
 
 class ModuleNode(NodeBase):
-    def __init__(self, gkey: str, module_type, module_name=None, parameters=None, template=None, **kwargs):
-        super().__init__(gkey=gkey, ntype="modules", **kwargs)
+    def __init__(self, id: str, kind=None, template=None, attr=None, **kwargs):
+        super().__init__(id=id)
 
-        self.module_type = module_type  # Extract package name (e.g., 'npf' from 'npf-mynpf')
-        self.name = module_name
-        self.parameters = parameters # parameters for the module (ie. npf, ssm, etc)
+        self.kind = kind  # Extract package name (e.g., 'npf' from 'npf-mynpf')
+        self.name = id.split('.')[2]
         self.template = template  # template for the module (ie. modflow, mt3d, etc)
-
-        if self.template:
-            self.resolve_dependencies()
-        
+        self.attr = attr
+    
     
     def resolve_dependencies(self):
         dependencies = self.template.get("build_dependencies", None)
@@ -47,3 +45,13 @@ class ModuleNode(NodeBase):
 
     def get_edge_data(self):
         return {k: v for k, v in self.parameters.items() if k.startswith("@")}
+
+
+
+class PipeNode(NodeBase):
+    def __init__(self, id: str, **kwargs):
+        super().__init__(id=id)
+
+        self.name = id.split('.')[1]
+        self.input = input  # template for the module (ie. modflow, mt3d, etc)
+        self.kwargs = kwargs if kwargs else None

@@ -2,7 +2,7 @@
 import logging
 import yaml
 
-from rapid_gwm_build.config_parser import ConfigParser
+from rapid_gwm_build.templates.config_parser import ConfigParser
 
 from rapid_gwm_build import create_simulation
 from rapid_gwm_build.utils import set_up_ws

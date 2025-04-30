@@ -44,88 +44,71 @@ class ConfigParser:
         nodes = {}
         nodes['modules'] = {} # Track extracted module nodes
         nodes["inputs"] = {} # Track extracted input nodes
+        nodes['pipes'] = {} # Track extracted pipe nodes
 
         # Process each module under 'modules'
         for section in sections:
-            nodes[section] = {}
             if section == 'modules':
-                module_nodes, input_nodes = cls.parse_modules(sim_cfg, section)
-                nodes['modules'].update(module_nodes)
+                nodes = cls.parse_modules(nodes, sim_cfg, section)
             else:
                 section_cfg = sim_cfg.get(section, {})
                 if section_cfg:
-                    section_cfg, input_nodes = cls.parse_input(section, section_cfg)
-            nodes['inputs'].update(input_nodes)
-
+                    section_cfg, nodes = cls.parse_input(nodes, section, section_cfg)
         return nodes
     
     @classmethod
-    def parse_modules(cls, sim_cfg, section='modules'):
-        nodes = {}
-        all_input_nodes = {}
+    def parse_modules(cls, nodes, sim_cfg, section='modules'):
         for module_name, module_cfg in sim_cfg.get(section, {}).items():
             mtype  = module_name.split("-")[0]
             mname = module_name.split("-")[1] if "-" in module_name else mtype  # Extract module name (e.g., 'mynpf' from 'npf-mynpf')
             
             key_path = f"modules.{mtype}.{mname}"
             
-            module_cfg, input_nodes = cls.parse_input(key_path, module_cfg)
+            module_cfg, nodes = cls.parse_input(nodes, key_path, module_cfg)
 
-
-            module_node = NodeBuilder.parse_module_cfg(key_path, module_cfg)
-            nodes.update(module_node)
-            all_input_nodes.update(input_nodes)
-        return nodes, input_nodes
+            module_node = NodeBuilder.parse_module_cfg(key_path, module_cfg, mtype, mname)
+            nodes['modules'].update(module_node)
+        return nodes
     
+
     @classmethod
-    def parse_input(cls, section_path, section_cfg):
-        input_nodes = {}
+    def parse_input(cls, nodes, section_path, section_cfg):
         for input_key, val in section_cfg.items():
+            update_input = True
+            kwargs = None
+            key_path = f"{section_path}.{input_key}"
+
             if isinstance(val, dict):
                 if 'pipes' in val.keys():
                     pipes_cfg = val['pipes']
                     pipe_key = f"{section_path}.{input_key}"
-                    pipe_id = cls.parse_pipes(pipe_key, pipes_cfg)
-
-                    ref_id, input_node = NodeBuilder.parse_input_cfg(key_path, value=pipe_id, kwargs=None)
-                    input_nodes.update(input_node)
-
-                    section_cfg[input_key] = f"{pipe_id}"
+                    ref_id, nodes = cls.parse_pipes(nodes, pipe_key, pipes_cfg)
+                    update_input = False
                 
-                elif any(special_key in val.keys() for special_key in ["input", "kwargs"]):
-                    value = val.get("input", None)
-                    kwargs = val.get("kwargs", {})
-                    key_path = f"{section_path}.{input_key}"
-                    ref_id, input_node = NodeBuilder.parse_input_cfg(key_path, value, kwargs)
-                    input_nodes.update(input_node)
-                    # Replace the file path with a reference to the input node
-                    section_cfg[input_key] = f"{ref_id}"
-                    
-            else:
-                value = val
-                kwargs = None
-            
-                key_path = f"{section_path}.{input_key}"
-                ref_id, input_node = NodeBuilder.parse_input_cfg(key_path, value, kwargs)
-                input_nodes.update(input_node)
-                # Replace the file path with a reference to the input node
-                section_cfg[input_key] = f"{ref_id}"
+                else:
+                    if any(special_key in val.keys() for special_key in ["input", "kwargs"]):
+                        kwargs = val.get("kwargs", {})
+                        val = val.get("input", None)
+
+            if update_input:
+                ref_id, input_node = NodeBuilder.parse_input_cfg(key_path, val, kwargs)
+                nodes['inputs'].update(input_node)
+
+            section_cfg[input_key] = f"{ref_id}"
         
-        return section_cfg, input_nodes
+        return section_cfg, nodes
         
     
     @classmethod
-    def parse_pipes(cls, pipe_key, pipes_cfg):
-        nodes = {}
-        all_input_nodes = {}
-        for pipe_cfg in pipes_cfg:
-            for pipe_name, pipe_cfg in pipe_cfg.items():
+    def parse_pipes(cls, nodes, pipe_key, pipes_cfg):
+        for pipe in pipes_cfg:
+            for pipe_name, cfg in pipe.items():
                 key_path = f"{pipe_key}.{pipe_name}"
-                pipe_cfg, input_nodes = cls.parse_input(key_path, pipe_cfg)
-                pipe_node = NodeBuilder.parse_pipe_cfg(key_path, pipe_cfg)
-                nodes.update(pipe_node)
-                all_input_nodes.update(input_nodes)
-        return nodes, input_nodes
+                new_cfg, nodes = cls.parse_input(nodes, key_path, pipe)
+                ref_id, pipe_node = NodeBuilder.parse_pipe_cfg(key_path, new_cfg)
+                nodes['pipes'].update(pipe_node)
+                
+        return ref_id, nodes
     
     @classmethod
     def parse(cls, config_filepath):

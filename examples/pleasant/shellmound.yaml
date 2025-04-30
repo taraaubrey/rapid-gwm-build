@@ -64,17 +64,6 @@ simulations:
 
       rcha-myrcha:
         recharge: 0.00025
-      
-      oc-myoc:
-        saverecord:
-          pipes:
-            - external_package:
-                input:
-                  saverecord:
-                    0:
-                      head: last
-                      budget: last #TODO: this is a mf-setup specific setting
-                kwargs: {func: 'mfsetup.oc.parse_oc_period_input'}
 
       ims-myims:
         print_option: 'all'
@@ -86,3 +75,13 @@ simulations:
         inner_dvclose: 0.01
         rcloserecord: [0.001, 'relative_rclose']
       
+      oc-myoc:
+        saverecord:
+          pipes:
+            - external_package:
+                input:
+                  saverecord:
+                    0:
+                      head: last
+                      budget: last #TODO: this is a mf-setup specific setting
+                kwargs: {func: 'mfsetup.oc.parse_oc_period_input'}

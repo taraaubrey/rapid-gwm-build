@@ -1,6 +1,6 @@
 from os import PathLike
 
-from rapid_gwm_build.config_parser import ConfigParser
+from rapid_gwm_build.templates.config_parser import ConfigParser
 from rapid_gwm_build.simulation import Simulation
 
 

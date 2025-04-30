@@ -14,22 +14,22 @@ class NetworkRegistry:
             'mesh',
             'temporal',
             'template',
-            'modules',
-            "pipeline",
+            'module',
+            "pipe",
             'data',
         ]
 
-    def add_node(self, id, node: NodeBase, **kwargs):
+    def add_node(self, id, node: NodeBase):
         """
         Add a node to the graph with optional attributes.
         :param node: The node identifier (e.g., a string or number).
         :param attributes: Additional attributes to associate with the node.
         """
-        ntype = node.ntype
+        ntype = node.type
         if ntype not in self._allowed_types:
             raise ValueError(f"Node type '{ntype}' is not allowed. Allowed types are: {self._allowed_types}.")
 
-        self._graph.add_node(id, ntype=ntype, node=node, **kwargs)
+        self._graph.add_node(id, ntype=ntype, node=node)
 
     def remove_node(self, node):
         """
