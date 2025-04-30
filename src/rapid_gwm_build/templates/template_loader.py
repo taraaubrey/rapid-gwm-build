@@ -1,13 +1,14 @@
+from rapid_gwm_build.templates.yaml_processor import template_processor
+
 import logging
 
 templates = {
-    'mf6': r'src\rapid_gwm_build\mf6_template.yaml',
+    'mf6': r'src\rapid_gwm_build\templates\mf6_template.yaml',
 }
 
 class TemplateLoader:
     @staticmethod
     def load_template(sim_type):
-        from rapid_gwm_build.yaml_processor import template_processor
         
         filepath = templates.get(sim_type)
                        

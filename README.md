@@ -29,10 +29,11 @@
 ## Node Naming Convention
 | Node Type     | Description           | Suggested Naming Prefix   | Example ID                            |
 | -----         | --------              | ---------                 | --------------                        |
-| `input.user`    | From frontend YAML; scope is the dict path    | `input.user.<scope>`        | `input.user.discretization.grid_size`   |
-| `input.model` | Specific to backend model template; cmd kwargs in module inputs | `input.model.<module>` | `input.model.drn.stress_period_data` |
-| `module` | Logical building block from templates |` module.<model_type>.<kind>.<usrname> `| `module.mf6.sfr.mysfr` |
+| `input`    | From frontend YAML; scope is the dict path    | `input.<usr_key_path>.<param>.<hash>`        | `input.mesh.resolution` `input.module.gwf.modelname`  |
+| `template` | Specific to backend model template; cmd kwargs in module inputs | `template.<mtype>.<module>.<param>` | `template.mf6.drn.stress_period_data` |
+| `module` | Logical building block from templates |` module.<kind>.<usrname> `| `module.sfr.mysfr` |
 | `mesh` | Spatial discretization | `mesh.<dimension/element>` | `mesh.grid` |
 | `temporal` | Time discretization info | `temporal.<aspect> `| `temporal.time_steps` |
 | `data` | Intermediate/derived info | `data.<module>.<parameter>` | `data.sfr.rmb_botm` |
 | `pipeline` | Operation/process node | `pipeline.<name>` | `pipeline.interpolate_rainfall` |
+| `output` | output from a previous module node | `output.<module_key>` | `output.sim.mysim` |

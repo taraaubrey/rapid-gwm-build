@@ -17,8 +17,13 @@ simulations:
       nlay: 1
       nrow: 10
       ncol: 10
-      top: 100
-      botms: [0] #TODO dict of layer names to botms values
+      top:
+        #pipe: [{pipe_name: {input: [], kwargs: {}}},] #TODO schema
+        input: ${data_dir}rasters/meras_100m_dem.tif
+        kwargs:
+          resampling: min
+      botms: #TODO dict of botms for each layer
+        0: 0 
       xorigin: 0
       yorigin: 0
       # active_domain: ${data_dir}tmr_parent/gis/irregular_boundary.shp
@@ -61,13 +66,15 @@ simulations:
         recharge: 0.00025
       
       oc-myoc:
-        extended_funcs:
-          'mfsetup.oc.parse_oc_period_input':
-            period_input:
-              saverecord:
-                0:
-                  head: last
-                  budget: last #TODO: this is a mf-setup specific setting
+        saverecord:
+          pipes:
+            - external_package:
+                input:
+                  saverecord:
+                    0:
+                      head: last
+                      budget: last #TODO: this is a mf-setup specific setting
+                kwargs: {func: 'mfsetup.oc.parse_oc_period_input'}
 
       ims-myims:
         print_option: 'all'

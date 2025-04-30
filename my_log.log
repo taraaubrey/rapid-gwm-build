@@ -2706,3 +2706,4 @@
 2025-04-23 16:31:15,558 - root - DEBUG - Automatically finding dependancy module sim for None.
 2025-04-23 16:31:15,558 - root - DEBUG - Finished building modules from config file.
 2025-04-23 16:31:15,602 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-04-29 18:33:08,209 - root - ERROR - Template validation failed: {'module_templates': [{'ghb': [{'discretized_data': ['unknown field'], 'pipes': ['unknown field']}], 'rcha': [{'discretized_data': ['unknown field'], 'pipes': ['unknown field']}]}]}

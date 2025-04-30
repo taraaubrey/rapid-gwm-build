@@ -4,7 +4,7 @@ import networkx as nx
 import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
-from rapid_gwm_build.node_builder import NodeBuilder
+from rapid_gwm_build.nodes.node_builder import NodeBuilder
 # from rapid_gwm_build.module_builder import ModuleBuilder
 # from rapid_gwm_build.mesh import Mesh
 
@@ -23,7 +23,7 @@ class Simulation:
         self.template = None # backend template based on sim_type
         self.graph = NetworkRegistry()
         self.name_registry = {}
-        self.node_builder = NodeBuilder(self.name_registry{})
+        self.node_builder = NodeBuilder(self.name_registry)
         
         # self.ws = ws
         # self.cfg = cfg
@@ -49,35 +49,51 @@ class Simulation:
         #     self._create_modules_from_cfg()
 
     def set_template(self, sim_type: str):
-        from rapid_gwm_build.template_loader import TemplateLoader
+        from rapid_gwm_build.templates.template_loader import TemplateLoader
         self.template = TemplateLoader.load_template(sim_type)
     
     @classmethod
-    def from_config(cls, sim_cfg):
+    def from_config(cls, name, sim_cfg):
         sim = cls(
-            name=sim_cfg["name"],
+            name=name,
             sim_type=sim_cfg["sim_type"]
         )
         sim.set_template(sim.sim_type)
 
-        # 1. Build inputs
-        for input_name, input_cfg in sim_cfg.get("inputs", {}).items():
-            sim.add_node(input_name, type="input", **input_cfg)
+        # 1. Build nodes
+        for node_type in sim_cfg['nodes'].keys():
 
-        # 2. Build modules
-        for mod_id, mod_cfg in sim_cfg.get("modules", {}).items():
-            package, user_name = mod_id.split("-")
-            sim.add_node(user_name, type="module", package=package, parameters=mod_cfg)
+            inputs = sim_cfg['nodes'].get(node_type, None)
+            if input:
+                for input_name, input_cfg in inputs.items():
+                    if node_type == 'modules':
+                        module_type = input_cfg.get("module_type", None)
+                        module_template = sim.template['module_templates'][module_type]
+                    else:
+                        module_template = None
+
+                    sim.add_node(input_name, template=module_template, **input_cfg)
+
+        # 2. Add the edges -> recursive from modules
 
         return sim
     
-    def add_node(self, name: str, ntype: str, **kwargs):
-        if ntype:
-            node_id, node = self.node_builder.build_node(name, ntype, **kwargs)
-        else:
-            raise ValueError(f"Unknown node type: {ntype}")
+    
+    def add_node(self, name: str, **kwargs):
+        id, node = self.node_builder.build_node(name, **kwargs)
+        self.graph.add_node(id, node=node)
 
-        self.graph.add_node(node_id, data=node)
+
+    def _resolve_references(self, params):
+        dependencies = []
+        def resolve(v):
+            if isinstance(v, str) and v.startswith("@"):
+                dep_name = v[1:]
+                dependencies.append(dep_name)
+                return self.name_registry.get(dep_name, v)
+            return v
+        resolved = {k: resolve(v) for k, v in params.items()}
+        return resolved, dependencies
 
 
     # def _create_modules_from_cfg(self):

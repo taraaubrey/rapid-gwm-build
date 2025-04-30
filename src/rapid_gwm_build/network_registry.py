@@ -1,6 +1,7 @@
 
 import networkx as nx
 
+from rapid_gwm_build.nodes.node import NodeBase
 from rapid_gwm_build.pipeline_node import PipelineNode
 
 class NetworkRegistry:
@@ -9,22 +10,26 @@ class NetworkRegistry:
         self._graph = nx.DiGraph()
 
         self._allowed_types = [
-            "core",
-            "module",
+            'input',
+            'mesh',
+            'temporal',
+            'template',
+            'modules',
             "pipeline",
+            'data',
         ]
 
-    def add_node(self, node, ntype: str, **attributes):
+    def add_node(self, id, node: NodeBase, **kwargs):
         """
         Add a node to the graph with optional attributes.
         :param node: The node identifier (e.g., a string or number).
         :param attributes: Additional attributes to associate with the node.
         """
-        
+        ntype = node.ntype
         if ntype not in self._allowed_types:
             raise ValueError(f"Node type '{ntype}' is not allowed. Allowed types are: {self._allowed_types}.")
 
-        self._graph.add_node(node, ntype=ntype, **attributes)
+        self._graph.add_node(id, ntype=ntype, node=node, **kwargs)
 
     def remove_node(self, node):
         """
