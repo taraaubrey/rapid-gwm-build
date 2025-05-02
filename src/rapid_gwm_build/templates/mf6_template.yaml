@@ -14,7 +14,7 @@ module_templates:
     tdis:
         type: TimeDiscretizationModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            sim: simulation
+            simulation: '@output.sim.'
         # parameters:
         #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
         cmd: 'flopy.mf6.ModflowTdis'
@@ -23,7 +23,7 @@ module_templates:
     ims:
         type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            sim: simulation
+            simulation: '@output.sim.'
         cmd: 'flopy.mf6.ModflowIms'
         duplicates_allowed: False
 
@@ -32,7 +32,7 @@ module_templates:
     gwf:
         type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            sim: simulation
+            simulation: '@output.sim.'
         allowed_to_build_default: True
         cmd: 'flopy.mf6.ModflowGwf'
         duplicates_allowed: True
@@ -41,103 +41,73 @@ module_templates:
     npf: 
         type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model 
+            model: '@output.gwf..' # referencing {modules.gwf..output}
         cmd: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
 
     dis:
         type: SpatialDiscretizationModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model 
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfdis'
-        special_kwargs: #TODO these input keys have special functions & update cfg (these have special checks asssociated with them) otherwise just passed to cmd as is
-            - model
-            - resolution
-            - botm
-            - idomain 
         duplicates_allowed: False
 
     ic: 
         type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfic'
-        special_kwargs:
-            - model
         duplicates_allowed: False
 
     sto: 
         
         type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfsto'
-        special_kwargs:
-            - model
         duplicates_allowed: False
     ## Simple stress packages ----------------------
 
     wel:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfwel'
-        special_kwargs:
-            - model
         duplicates_allowed: True
 
 
     drn: 
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - conductance
-            - elevation
-        discretized_data:
-            - elevation
-            - conductance
-        pipes:
-            mf6utils.stressdata2external: #this is a function to call
-                input:
-                    - $discetized_data.elevation
-                    - $discetized_data.conductance
-                cmd_key: stress_period_data
+            model: '@output.gwf..'
+            stressperioddata:
+                pipes:
+                    - stress_period_data: [data.drn..cond, data.drn..elev]
+        data:
+            cond: #output -> @data.drn.<name_mod>.cond
+                pipes:
+                    - discretize_2D: #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
+                        input: [input.modules.drn..cond]
+                        kwargs: null #placeholder for future kwargs
+            elev:
+                pipes:
+                    - discretize_2D:
+                        input: [input.modules.drn..elev]
         cmd: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
+
 
     ghb:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - conductance
-        discretized_data:
-            - conductance
-        pipes:
-            mf6utils.stressdata2external: #this is a function to call
-                input:
-                    - $discetized_data.conductance
-                cmd_key: stress_period_data            
+            model: '@output.gwf..'          
         cmd: 'flopy.mf6.ModflowGwfghb'
         duplicates_allowed: True
 
     rcha:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - recharge
-        discretized_data:
-            - recharge
-        pipes:
-            mf6utils.stressdata2external: #this is a function to call
-                input:
-                    - $discetized_data.recharge
-                cmd_key: stress_period_data
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfrcha'
         duplicates_allowed: True
 
@@ -146,25 +116,13 @@ module_templates:
     sfr:
         type: StressModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
-        special_kwargs: #TODO: this is a special list of adjustable parameters which are not explicitly called
-            - model
-            - rivbotm
-        discretized_data:
-            - rivbotm
-            - conductance
-        pipes:
-            mf6utils.stressdata2external: #this is a function to call
-                input:
-                    - $discetized_data.rivbotm
-                    - $discetized_data.conductance
-                cmd_key: stress_period_data
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
     oc:
         type: BasicModule
         build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            gwf: model
+            model: '@output.gwf..'
         cmd: 'flopy.mf6.ModflowGwfoc'
         duplicates_allowed: True

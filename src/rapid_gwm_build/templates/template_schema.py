@@ -1,6 +1,18 @@
-pipe_schema = {
-    "input": {"type": "list", "required": True},
-    "cmd_key": {"type": "string", "required": True},
+pipeline_schema = {
+    "pipes": {
+        "type": "dict",
+        "keysrules": {
+            "type": "string",
+        },
+        "valuesrules": {
+            "type": "dict",
+            "schema": {
+                "type": "list",
+                "keysrules": {"type": "dict"},
+                "valuesrules": {"type": "dict"},
+            },
+        },
+    },
 }
 
 # Schema for each module
@@ -12,7 +24,7 @@ module_schema = {
         "keysrules": {
             "type": "string",
         },
-        "valuesrules": {"type": "string"},
+        # "valuesrules": {"type": "string"},
         "required": False,
         "default": None,
     },
@@ -25,35 +37,13 @@ module_schema = {
         "default": None,
     },
     "cmd": {"type": "string", "required": True},
-    "special_kwargs": {
-        "nullable": True,
-        "type": "list",
-        "schema": {"type": "string"},
-        "required": False,
-        "default": None,
-    },
     "duplicates_allowed": {"type": "boolean", "required": False, "default": False},
-    "discretized_data": {
-        "nullable": True,
-        "type": "list",
-        "schema": {"type": "string"},
-        "required": False,
-        "default": None,
-    },
-    "pipes": {
+    "data": {
         "nullable": True,
         "type": "dict",
-        "valuesrules": {
-            "type": "dict",
-            "schema": pipe_schema,
-            # 'keysrules': {
-            #     'type': 'string',
-            # },
-            # 'valuesrules': {
-            #     'type': 'dict',
-            #     'schema': pipe_schema
-            # },
-        },
+        # "keysrules": {"type": "string",}, #ex. cond, elev, etc
+        # "valuesrules": {"type": "string",}, #ex. cond, elev, etc
+        # "schema": pipeline_schema,
         "required": False,
         "default": None,
     },

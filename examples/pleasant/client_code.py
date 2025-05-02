@@ -2,6 +2,8 @@
 import logging
 import yaml
 
+from rapid_gwm_build.templates.config_parser import ConfigParser
+
 from rapid_gwm_build import create_simulation
 from rapid_gwm_build.utils import set_up_ws
 
@@ -19,6 +21,10 @@ logging.basicConfig(
 
 input_yaml = r"examples\pleasant\shellmound.yaml"
 
+sim = create_simulation(input_yaml)
+
+
+#####
 
 with open(input_yaml, "r") as f:
     cfg = yaml.safe_load(f)

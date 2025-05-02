@@ -2,7 +2,7 @@ from cerberus import Validator
 import yaml
 import logging
 
-from rapid_gwm_build.template_schema import top_level_schema
+from rapid_gwm_build.templates.template_schema import top_level_schema
 
 
 class YamlProcessor:
@@ -11,9 +11,6 @@ class YamlProcessor:
         schema: dict,
     ):
         self.schema = schema
-
-        logging.debug(f"Initializing YamlProcessor with schema: {self.schema}")
-
         self.validator = Validator(self.schema)
 
     def validate(self, template: dict) -> bool:

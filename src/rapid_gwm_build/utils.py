@@ -55,11 +55,11 @@ def set_up_ws(ws_cfg: dict, name: str) -> str:
     return ws_path
 
 
-def _parse_module_key(key: str):
-    if "." in key:
-        kind = key.split(".")[0]
-        usr_modname = key.split(".")[1]
+def _parse_module_usrkey(gkey: str):
+    if "-" in gkey:
+        kind = gkey.split("-")[0]
+        usr_modname = gkey.split("-")[1]
     else:
-        kind = key
-        usr_modname = key
+        kind = gkey
+        usr_modname = gkey
     return kind, usr_modname

@@ -257,6 +257,18 @@ wheels = [
 ]
 
 [[package]]
+name = "gridit"
+version = "0.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f7/80/1c763f62c043291a55d2eff01888869b03974a235a2baab24244ff6880b0/gridit-0.7.tar.gz", hash = "sha256:3eec9ee5caee4f94551e4e9a6d6b91c4a934e43d5edac5212888ebeceea40700", size = 774377 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/98/a73fed6753d055604c0ee018edd946165ec2c0dadee13037498b0f292c73/gridit-0.7-py3-none-any.whl", hash = "sha256:5d5d6b38676474469a8b85d3820eafb397c4e13d638ab6e17f62ea1d422c8cb8", size = 44000 },
+]
+
+[[package]]
 name = "kiwisolver"
 version = "1.4.8"
 source = { registry = "https://pypi.org/simple" }
@@ -663,6 +675,7 @@ source = { editable = "." }
 dependencies = [
     { name = "cerberus" },
     { name = "flopy" },
+    { name = "gridit" },
     { name = "modflow-setup" },
     { name = "networkx" },
     { name = "pyyaml" },
@@ -678,6 +691,7 @@ dev = [
 requires-dist = [
     { name = "cerberus", specifier = ">=1.3.7" },
     { name = "flopy", specifier = "==3.9.2" },
+    { name = "gridit", specifier = ">=0.7" },
     { name = "modflow-setup", specifier = ">=0.6.1" },
     { name = "networkx", specifier = ">=3.4.2" },
     { name = "pyyaml", specifier = ">=6.0.2" },

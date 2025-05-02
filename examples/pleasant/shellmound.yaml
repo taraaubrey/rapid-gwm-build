@@ -11,39 +11,49 @@ simulations:
       mode: overwrite # overwrite OR update
     # load_existing: ${model_dir}
 
-    modules:
-      gwf:
+    mesh:
+      # type: structured #TODO only type supported for now
+      resolution: 100
+      nlay: 1
+      nrow: 10
+      ncol: 10
+      top:
+        #pipe: [{pipe_name: {input: [], kwargs: {}}},] #TODO schema
+        input: ${data_dir}rasters/meras_100m_dem.tif
+        kwargs:
+          resampling: min
+      botms: #TODO dict of botms for each layer
+        0: 0 
+      xorigin: 0
+      yorigin: 0
+      # active_domain: ${data_dir}tmr_parent/gis/irregular_boundary.shp
+      # top: ${data_dir}rasters/meras_100m_dem.tif
+      # botm: ${data_dir}rasters/mdwy_surf.tif
+
+    modules: # these are specific kwargs found in the flopy module
+      gwf: #HACK can't name this
         modelname: shellmound
-      # gwf.changed_dis:
-      #   modelname: shellmound
-      tdis: # if you want to name the package {type_name}.{user_name} use the name key
+      
+      tdis-mytdis: # if you want to name the package {type_name}.{user_name} use the name key
         time_units: days
         start_date_time: '2020-01-01'
         nper: 1
         perioddata:
             - [1., 1, 1.] # perlen, nstp, tsmult
       
-      dis:
-        parent_module: gwf # this is the name of the module that this package is associated with
+      dis-mydis:
         # model: modules.gwf.shellmounda
         length_units: meters
-        nlay: 1
-        resolution: 1000 # meters
-        idomain:
-          0: ${data_dir}tmr_parent/gis/irregular_boundary.shp
-        top: ${data_dir}rasters/meras_100m_dem.tif
-        botm: 
-          0: ${data_dir}rasters/mdwy_surf.tif
 
-      sto:
+      sto-mysto:
         iconvert: 1
         ss: 0.2
         sy: 1.e-6
         transient: False #TODO is there another way of specifying this?
       
-      npf:
+      npf-mynpf:
         icelltype: 1
-        k: 30
+        k: ${data_dir}rasters/mdwy_surf.tif
         k33: 0.3
 
       # sfr: #TODO config sfs settings
@@ -52,19 +62,10 @@ simulations:
       #   perioddata:
       #     - ${data_dir}sfr_perioddata_1.txt
 
-      rcha:
+      rcha-myrcha:
         recharge: 0.00025
-      
-      oc:
-        extended_funcs:
-          'mfsetup.oc.parse_oc_period_input':
-            period_input:
-              saverecord:
-                0:
-                  head: last
-                  budget: last #TODO: this is a mf-setup specific setting
 
-      ims:
+      ims-myims:
         print_option: 'all'
         complexity: 'complex'
         csv_output_filerecord: 'solver_out.csv'
@@ -74,3 +75,13 @@ simulations:
         inner_dvclose: 0.01
         rcloserecord: [0.001, 'relative_rclose']
       
+      oc-myoc:
+        saverecord:
+          pipes:
+            - external_package:
+                input:
+                  saverecord:
+                    0:
+                      head: last
+                      budget: last #TODO: this is a mf-setup specific setting
+                kwargs: {func: 'mfsetup.oc.parse_oc_period_input'}

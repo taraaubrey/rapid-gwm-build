@@ -1,12 +1,20 @@
 from os import PathLike
 
-from rapid_gwm_build.simulation_manager import SimManager
+from rapid_gwm_build.templates.config_parser import ConfigParser
+from rapid_gwm_build.simulation import Simulation
 
 
-def create_simulation(name: str, cfg: dict, ws: PathLike, model_type: str = "generic"):
-    sim_manager = SimManager()
-    sim_cls, _defaults = sim_manager.get(model_type)
+def create_simulation(cfg_filepath: PathLike):
+    parsed = ConfigParser.parse(cfg_filepath)
+    for sim_name, sim_cfg in parsed.items():
+        sim = Simulation.from_config(sim_name, sim_cfg) #TODO: for each sim_cfg
 
-    return sim_cls(
-        name=name, model_type=model_type, cfg=cfg, ws=ws, _defaults=_defaults
-    )
+        sim
+
+    # # Manually override a node or add one
+    # sim.graph.remove_node("npf-mynpf")
+    # sim.graph.add_node("npf-mynpf", ModuleNode(...))
+
+    # sim.run()
+
+    return sim

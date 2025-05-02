@@ -3,7 +3,8 @@ import logging
 import networkx as nx
 
 from rapid_gwm_build.utils import inspect_class_defaults
-
+from rapid_gwm_build.pipe_utils import pipe_registry
+from rapid_gwm_build.pipeline_node import GraphPipeline
 
 class Module:
     def __init__(
@@ -11,19 +12,19 @@ class Module:
         kind: str,
         template_cfg: dict,  ## template config file (ie. yaml file)
         cfg: dict = None,  ## user cfg file (ie. yaml file)
-        usr_modname: str = None,
-        _graph: nx.DiGraph = None,
+        gkey: str = None,
+        graph: nx.DiGraph = None,
         **kwargs,  # TODO these are not used
     ):
+        
+        self.gkey = gkey
         self.kind = kind
-        self.name = (
-            usr_modname if usr_modname else kind
-        )  # name of the module (ie. modflow, mt3d, etc)
-        self.parameters = template_cfg.get("parameters")
+        self.name = None #TODO add parse logic here probably
+        self.pipe_kwargs = template_cfg.get("pipe_kwargs", None)
 
         self._cmd = template_cfg.get("cmd")  # get the command from the config file
         self._special_kwargs = template_cfg.get("special_kwargs", {})
-        self._graph = _graph
+        self._graph = graph
 
         self._dependencies = template_cfg.get("build_dependencies")
         self._cfg = cfg  # config file for the module (ie. yaml file)
@@ -36,16 +37,17 @@ class Module:
             "defaults"
         ]  # TODO: this should be a setter method for the cmd_kwargs
 
-        if cfg:
-            extended_funcs = cfg.get("extended_funcs", None)
-            if extended_funcs:
-                for ext_func, ext_func_kwargs in extended_funcs.items():
-                    # check if the extended function is in the cmd_kwargs
-                    output = self.call_cmd(ext_func, ext_func_kwargs)
-                    if output is not None:
-                        # update the cmd_kwargs with the output
-                        self.update_cmd_kwargs(output)  # TODO: cmd_kwarsgs
-
+        # if cfg:
+        #     extended_funcs = cfg.get("extended_funcs", None)
+        #     if extended_funcs:
+        #         for ext_func, ext_func_kwargs in extended_funcs.items():
+        #             # check if the extended function is in the cmd_kwargs
+        #             output = self.call_cmd(ext_func, ext_func_kwargs)
+        #             if output is not None:
+        #                 # update the cmd_kwargs with the output
+        #                 self.update_cmd_kwargs(output)  # TODO: cmd_kwarsgs
+        if self.pipe_kwargs:
+            self._extract_pipeline_kwargs()
         self._output = None  # TODO this will need to have some sort of setter method
 
     def __repr__(self):
@@ -112,6 +114,18 @@ class Module:
         self.output = self.call_cmd(
             self._cmd, self._cmd_kwargs
         )  # TODO: this should be a setter method for the output
+
+    def _extract_pipeline_kwargs(self):
+        for kwarg, pipelines in self.pipe_kwargs.items():
+
+            for pipe in pipelines:
+                # get pipeline from registry
+                pipe_obj = pipe_registry.get(pipe)
+                if pipe_obj is None:
+                    raise ValueError(f"Pipeline {pipe} not found in registry.") #TODO look in usr file
+                
+                self._graph.add_pipeline_node(pipe_obj)
+
 
 
 class StressModule(Module):
