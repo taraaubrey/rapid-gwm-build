@@ -33,8 +33,9 @@ class NodeBuilder:
     @classmethod
     def parse_input_cfg(cls, key_path, value, kwargs=None):
         input_node = {}
-        hash_id = cls.hash_value(value)
-        input_id = f'input.{key_path}.{hash_id}'
+        # hash_id = cls.hash_value(value)
+        # input_id = f'input.{key_path}.{hash_id}'
+        input_id = f'input.{key_path}'
         input_node[input_id] = {
                 "input": value,
                 "kwargs": kwargs,
@@ -46,10 +47,11 @@ class NodeBuilder:
     @classmethod
     def parse_pipe_cfg(cls, key_path, value, kwargs=None):
         pipe_node = {}
-        hash_id = cls.hash_value(value)
+        # hash_id = cls.hash_value(value)
         pipe_name = [k for k in value.keys()][0]
         pipe_value = [k for k in value.values()][0]
-        pipe_id = f'pipe.{pipe_name}.{hash_id}'
+        # pipe_id = f'pipe.{pipe_name}.{hash_id}'
+        pipe_id = f'pipe.{pipe_name}'
         pipe_node[pipe_id] = {
                 "pipe": pipe_name,
                 "input": pipe_value,

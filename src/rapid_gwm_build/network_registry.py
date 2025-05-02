@@ -19,6 +19,15 @@ class NetworkRegistry:
             'data',
         ]
 
+    def plot(self, **kwargs):
+        from matplotlib import pyplot as plt
+        nx.draw_planar(
+            self._graph,
+            with_labels=True,
+            node_color="#ffff8f",
+        )
+        plt.show()
+    
     def add_node(self, id, node: NodeBase):
         """
         Add a node to the graph with optional attributes.

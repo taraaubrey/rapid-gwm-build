@@ -13,41 +13,22 @@ class Simulation:
         self,
         # ws: str | PathLike,
         name: str = None,  # name of the simulation
+        cfg: dict = None,  # config file for the simulation (ie. yaml file)
         sim_type: str = "generic",  # type of the simulation (ie. modflow, mt3d, etc)
         # cfg: dict = None,  # config file for the simulation (ie. yaml file)
         # _defaults: str = None,  # defaults for the simulation (ie. yaml file)
         # # TODO: add path to model executables
     ):
         self.name = name
-        self.sim_type = sim_type  # type of the simulation (ie. modflow, mt3d, etc)
-        self.template = None # backend template based on sim_type
+        self.cfg = cfg
+        self.sim_type = self.cfg.get("sim_type", sim_type)  # type of the simulation (ie. modflow, mt3d, etc)
+        self.template = self.set_template(self.sim_type) # backend template based on sim_type
         self.graph = NetworkRegistry()
         self.nodes = self.graph._graph.nodes
+        self.edges = self.graph._graph.edges
         self.name_registry = {}
         self.node_builder = NodeBuilder(self.name_registry)
-        
-        # self.ws = ws
-        # self.cfg = cfg
-        # self.mesh = None
-        
-        
-        # self.module_builder = ModuleBuilder(
-        #     templates=self._template["module_templates"],
-        #     graph=self.graph,
-        # )  
-        
-        # if cfg:
-        #     # load input nodes
-
-
-        #     if cfg.get("mesh", None):
-        #         # create mesh
-        #         self.mesh = Mesh.from_cfg(cfg.get("mesh", None))
-        #         self.graph.add_node(
-        #             'core.2Dmesh', ntype='core', mesh=self.mesh)
-
-        #     # create modules
-        #     self._create_modules_from_cfg()
+    
 
     def set_template(self, sim_type: str):
         from rapid_gwm_build.templates.template_loader import TemplateLoader
@@ -57,44 +38,83 @@ class Simulation:
     def from_config(cls, name, sim_cfg):
         sim = cls(
             name=name,
-            sim_type=sim_cfg["sim_type"]
+            cfg=sim_cfg,
         )
-        sim.set_template(sim.sim_type)
 
         # 1. Build nodes (need to first create all the nodes before adding edges)
-        for node_type in sim_cfg['nodes'].keys():
+        for node_type in sim.cfg['nodes'].keys():
 
-            node_type_cfg = sim_cfg['nodes'].get(node_type, None)
+            node_type_cfg = sim.cfg['nodes'].get(node_type, None)
             if node_type_cfg:
                 for node_key, node_cfg in node_type_cfg.items():
-                    if node_type == 'modules':
-                        kind = node_cfg.get("kind", None)
-                        module_template = sim.template['module_templates'][kind]
-                        node_cfg['template'] = module_template
+                    sim._node_from_cfg(node_key, node_cfg)
+                    sim._resolve_references(node_key, node_cfg)
 
-                    sim.add_node(id=node_key, **node_cfg)
-
-        # 2. Add the edges -> recursive from modules
         
 
         return sim
     
     
+    def _resolve_references(self, from_nodeid, from_node_cfg):
+        params = self._flatten_dict(from_node_cfg)
+        for k, v in params.items():
+            if str(v).startswith("@"):
+                dep_id = v[1:]
+                dep_type = dep_id.split(".")[0]
+
+                if dep_id in self.cfg['nodes'][dep_type].keys():
+                    dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
+                    if dep_cfg:
+                        self._node_from_cfg(dep_id, dep_cfg)
+                        self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                else:
+                    raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
+    
+    def _node_from_cfg(self, node_key, node_cfg):
+        node_type = node_key.split(".")[0]
+        if node_key in self.nodes:
+            pass
+        else:
+            if node_type == 'modules':
+                kind = node_cfg.get("kind", None)
+                module_template = self.template['module_templates'][kind]
+                node_cfg['template'] = module_template
+            
+            self.add_node(id=node_key, **node_cfg)
+
+    
     def add_node(self, id, **kwargs):
         node = self.node_builder.build_node(id, **kwargs)
         self.graph.add_node(id, node=node)
 
+    def add_edge(self, source, target, **kwargs):
+        self.graph.add_edge(source, target, **kwargs)
 
-    def _resolve_references(self, params):
-        dependencies = []
-        def resolve(v):
-            if isinstance(v, str) and v.startswith("@"):
-                dep_name = v[1:]
-                dependencies.append(dep_name)
-                return self.name_registry.get(dep_name, v)
-            return v
-        resolved = {k: resolve(v) for k, v in params.items()}
-        return resolved, dependencies
+
+    def _flatten_dict(self, d:dict, id:str=None): #TODO: move to utils
+        if not isinstance(d, dict):
+            raise TypeError(f"Expected a dictionary, got {type(d).__name__}")
+        
+        items = []
+        for k, v in d.items():
+            if isinstance(v, dict):
+                items.extend(self._flatten_dict(v, id=k).items())
+            else:
+                if id:
+                    k = f"{id}.{k}"
+                items.append((k, v))
+        return dict(items)
+
+    # def _resolve_references(self, params):
+    #     dependencies = []
+    #     def resolve(v):
+    #         if isinstance(v, str) and v.startswith("@"):
+    #             dep_name = v[1:]
+    #             dependencies.append(dep_name)
+    #             return self.name_registry.get(dep_name, v)
+    #         return v
+    #     resolved = {k: resolve(v) for k, v in params.items()}
+    #     return resolved, dependencies
 
 
     # def _create_modules_from_cfg(self):
