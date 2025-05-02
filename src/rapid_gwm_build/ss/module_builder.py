@@ -2,7 +2,7 @@ import networkx as nx
 
 from rapid_gwm_build.network_registry import NetworkRegistry
 from rapid_gwm_build.utils import _parse_module_usrkey
-from rapid_gwm_build.module import (
+from rapid_gwm_build.ss.module import (
     Module,
     StressModule,
     SpatialDiscretizationModule,

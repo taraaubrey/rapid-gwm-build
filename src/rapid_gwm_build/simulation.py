@@ -105,16 +105,6 @@ class Simulation:
                 items.append((k, v))
         return dict(items)
 
-    # def _resolve_references(self, params):
-    #     dependencies = []
-    #     def resolve(v):
-    #         if isinstance(v, str) and v.startswith("@"):
-    #             dep_name = v[1:]
-    #             dependencies.append(dep_name)
-    #             return self.name_registry.get(dep_name, v)
-    #         return v
-    #     resolved = {k: resolve(v) for k, v in params.items()}
-    #     return resolved, dependencies
 
 
     # def _create_modules_from_cfg(self):

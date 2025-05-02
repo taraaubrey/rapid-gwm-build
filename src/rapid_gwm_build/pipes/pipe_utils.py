@@ -1,5 +1,5 @@
 
-from rapid_gwm_build.pipeline_node import PipelineNode
+from rapid_gwm_build.pipes.pipeline_node import PipelineNode
 
 def array2text(data, **kwargs):
     return 'output of array2text', 'some_filename'
