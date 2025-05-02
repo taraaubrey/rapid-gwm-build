@@ -22,7 +22,8 @@ class Simulation:
         self.name = name
         self.cfg = cfg
         self.sim_type = self.cfg.get("sim_type", sim_type)  # type of the simulation (ie. modflow, mt3d, etc)
-        self.template = self.set_template(self.sim_type) # backend template based on sim_type
+        self.set_template(self.sim_type) # backend template based on sim_type
+        
         self.graph = NetworkRegistry()
         self.nodes = self.graph._graph.nodes
         self.edges = self.graph._graph.edges
@@ -75,7 +76,7 @@ class Simulation:
         if node_key in self.nodes:
             pass
         else:
-            if node_type == 'modules':
+            if node_type == 'module':
                 kind = node_cfg.get("kind", None)
                 module_template = self.template['module_templates'][kind]
                 node_cfg['template'] = module_template

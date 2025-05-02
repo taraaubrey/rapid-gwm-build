@@ -2,7 +2,7 @@
 import networkx as nx
 
 from rapid_gwm_build.nodes.node import NodeBase
-from rapid_gwm_build.pipeline_node import PipelineNode
+from rapid_gwm_build.pipes.pipeline_node import PipelineNode
 
 class NetworkRegistry:
     def __init__(self):

@@ -36,7 +36,7 @@ module_schema = {
         "required": False,
         "default": None,
     },
-    "cmd": {"type": "string", "required": True},
+    "func": {"type": "string", "required": True},
     "duplicates_allowed": {"type": "boolean", "required": False, "default": False},
     "data": {
         "nullable": True,
@@ -47,6 +47,9 @@ module_schema = {
         "required": False,
         "default": None,
     },
+    "default_build": {
+        "type": "dict",
+    }
 }
 
 

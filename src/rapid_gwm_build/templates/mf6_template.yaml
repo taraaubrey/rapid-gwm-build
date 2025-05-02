@@ -8,78 +8,98 @@ module_templates:
         #     - tdis
         #     - ims
         type: BasicModule
-        cmd: 'flopy.mf6.MFSimulation'
+        func: 'flopy.mf6.MFSimulation'
         duplicates_allowed: False
+        default_build:
+            allowed: True
 
     tdis:
         type: TimeDiscretizationModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: '@output.sim.'
+        build_dependencies: 
+            simulation: '@output.module.sim.'
         # parameters:
         #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
-        cmd: 'flopy.mf6.ModflowTdis'
+        func: 'flopy.mf6.ModflowTdis'
         duplicates_allowed: False
+        default_build:
+            allowed: True
+            parameters:
+                time_units: 'days'
+                start_date_time: '2020-01-01'
+                nper: 1
+                perioddata:
+                    - [1., 1, 1.] # perlen, nstp, tsmult
 
     ims:
         type: BasicModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: '@output.sim.'
-        cmd: 'flopy.mf6.ModflowIms'
+        build_dependencies: 
+            simulation: '@output.module.sim.'
+        func: 'flopy.mf6.ModflowIms'
         duplicates_allowed: False
+        default_build:
+            allowed: True
 
 
     ## GWF packages ----------------------
     gwf:
         type: BasicModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            simulation: '@output.sim.'
-        allowed_to_build_default: True
-        cmd: 'flopy.mf6.ModflowGwf'
+        build_dependencies: 
+            simulation: '@output.module.sim.'
+        func: 'flopy.mf6.ModflowGwf'
         duplicates_allowed: True
-        runtime_dependencies: ['dis', 'ic', 'npf', 'sto'] #TODO: this is a special list of required minimum packages if a gwf module is built
+        default_build:
+            allowed: True
 
     npf: 
         type: BasicModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..' # referencing {modules.gwf..output}
-        cmd: 'flopy.mf6.ModflowGwfnpf'
+        build_dependencies: 
+            model: '@output.module.gwf.' # referencing {modules.gwf..output}
+        func: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
+        default_build:
+            allowed: True
 
     dis:
         type: SpatialDiscretizationModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfdis'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+            top: '@output.mesh.top'
+            botm: '@output.mesh.botm'
+            idomain: '@output.mesh.active_domain'
+        func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
+        default_build:
+            allowed: True
 
     ic: 
         type: BasicModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfic'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+        func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 
     sto: 
         
         type: BasicModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfsto'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+        func: 'flopy.mf6.ModflowGwfsto'
         duplicates_allowed: False
-    ## Simple stress packages ----------------------
+    
+## Simple stress packages ----------------------
 
     wel:
         type: StressModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfwel'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+        func: 'flopy.mf6.ModflowGwfwel'
         duplicates_allowed: True
 
 
     drn: 
         type: StressModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
+        build_dependencies: 
+            model: '@output.module.gwf.'
             stressperioddata:
                 pipes:
                     - stress_period_data: [data.drn..cond, data.drn..elev]
@@ -93,36 +113,36 @@ module_templates:
                 pipes:
                     - discretize_2D:
                         input: [input.modules.drn..elev]
-        cmd: flopy.mf6.ModflowGwfdrn
+        func: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
 
 
     ghb:
         type: StressModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'          
-        cmd: 'flopy.mf6.ModflowGwfghb'
+        build_dependencies: 
+            model: '@output.module.gwf.'          
+        func: 'flopy.mf6.ModflowGwfghb'
         duplicates_allowed: True
 
     rcha:
         type: StressModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfrcha'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+        func: 'flopy.mf6.ModflowGwfrcha'
         duplicates_allowed: True
 
 
     # ??
     sfr:
         type: StressModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfsfr'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+        func: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
     oc:
         type: BasicModule
-        build_dependencies: # TODO referencing a module; in the future will need to be some sort of ModuleManager class to get the module
-            model: '@output.gwf..'
-        cmd: 'flopy.mf6.ModflowGwfoc'
+        build_dependencies: 
+            model: '@output.module.gwf.'
+        func: 'flopy.mf6.ModflowGwfoc'
         duplicates_allowed: True

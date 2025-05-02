@@ -1,3 +1,5 @@
+
+
 def inspect_class_defaults(cls_path: str, ignore=["self", "args", "kwargs"]) -> dict:
     import importlib
     import inspect
@@ -29,6 +31,34 @@ def inspect_class_defaults(cls_path: str, ignore=["self", "args", "kwargs"]) -> 
                 cmd_kwargs["required"].append(name)
 
     return cmd_kwargs
+
+
+def get_default_args(cls_path: str, ignore=["self", "args", "kwargs"]) -> dict:
+    import importlib
+    import inspect
+
+    args = {}
+    
+    try:
+        # Try to import the class from the specified path
+        module_name, class_name = cls_path.rsplit(".", 1)
+        module = importlib.import_module(module_name)
+        inspect_class = getattr(module, class_name)
+    except ImportError as e:
+        # Handle the case where the import fails
+        raise ImportError(f"Could not import {cls_path}: {e}")
+
+    signature = inspect.signature(inspect_class.__init__)
+
+    # Loop through the parameters and get the defaults and required ones
+    for name, param in signature.parameters.items():
+        if name not in ignore:
+            args[name] = param.default  # can also checkout param.annotation or param.kind
+            # if empty then it is a required parameter
+            if param.default == inspect.Parameter.empty:
+                args[name] = None
+
+    return args
 
 
 def set_up_ws(ws_cfg: dict, name: str) -> str:
