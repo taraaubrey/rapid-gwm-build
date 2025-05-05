@@ -112,7 +112,10 @@ class ModuleNode(NodeBase):
 
 
 class PipeNode(NodeBase):
-    def __init__(self, id: str, **kwargs):
+    def __init__(self, id: str, input, **kwargs):
         super().__init__(id=id)
         self.input = input  # template for the module (ie. modflow, mt3d, etc)
         self.kwargs = kwargs if kwargs else None
+
+    def _get_dependencies(self):
+        return self._input_dependencies(self.input)

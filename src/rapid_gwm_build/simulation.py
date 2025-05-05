@@ -48,15 +48,13 @@ class Simulation:
 
             if node_type == "mesh":
                 mesh_cfg = sim.cfg['nodes'].get("mesh", None)
-                sim._node_from_cfg('mesh', mesh_cfg)
-                sim._resolve_references('mesh', mesh_cfg)
+                sim._new_node('mesh', mesh_cfg)
 
             else:
                 node_type_cfg = sim.cfg['nodes'].get(node_type, None)
                 if node_type_cfg:
                     for node_key, node_cfg in node_type_cfg.items():
-                        sim._node_from_cfg(node_key, node_cfg)
-                        sim._resolve_references(node_key, node_cfg)
+                        sim._new_node(node_key, node_cfg)
 
     
         return sim
@@ -74,25 +72,23 @@ class Simulation:
                     dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
 
                 if name == 'default':
-                    self._find_default_id(dep_id, from_nodeid, k)
-
+                    dep_id = self._find_default_id(dep_id, from_nodeid, k)
+                elif dep_type == 'mesh':
+                    dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
+                elif dep_id in self.cfg['nodes'][dep_type].keys():
+                    dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
+                    if dep_cfg:
+                        self._new_node(dep_id, dep_cfg)
                 else:
-                    if dep_type == 'mesh':
-                         dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
+                    raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
+                
+                self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
                     
-                    # a. dep_id in the sim
-                    if dep_id in self.nodes:
-                        self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
-                    # b. dep_id not in sim but in the config file
-                    elif dep_id in self.cfg['nodes'][dep_type].keys():
-                        dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                        if dep_cfg:
-                            self._node_from_cfg(dep_id, dep_cfg)
-                            self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
-                    # c. dep_id not in sim and not in the config file
-                    else:
-                        raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
     
+    def _new_node(self, id, cfg=None):
+        cfg = self._node_from_cfg(id, cfg)
+        self._resolve_references(id, cfg)
+
     def _find_default_id(self, dep_id, from_nodeid, k):
         dep_type = dep_id.split(".")[0]
         mkind = dep_id.split('.')[1]
@@ -107,20 +103,19 @@ class Simulation:
             if len(cfg_filter) == 0:
                 # can you make a default node here?
                 if self.template['module_templates'][mkind]['default_build']['allowed']:
-                    self._node_from_cfg(f"{dep_type}.{mkind}.default")
-                    self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                    self._new_node(f"{dep_type}.{mkind}.default")
+                    return dep_id
                 else:
                     raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
             elif len(cfg_filter) == 1:
                 dep_id = cfg_filter[0]
                 dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                self._node_from_cfg(dep_id, dep_cfg)
-                self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                self._new_node(dep_id, dep_cfg)
+                return dep_id
             else:
                 raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
         elif len(sim_filter) == 1:
-            dep_id = sim_filter[0]
-            self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+            return sim_filter[0]
         else:
             raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
     
@@ -141,6 +136,7 @@ class Simulation:
                     }
             
             self.add_node(id=node_key, **node_cfg)
+        return node_cfg
 
     
     def add_node(self, id, **kwargs):
@@ -148,6 +144,10 @@ class Simulation:
         self.graph.add_node(id, node=node)
 
     def add_edge(self, source, target, **kwargs):
+        # make sure source and target are in the graph
+        if source not in self.nodes or target not in self.nodes:
+            raise ValueError(f"Source {source} or target {target} not found in the graph.")
+        
         self.graph.add_edge(source, target, **kwargs)
 
 
