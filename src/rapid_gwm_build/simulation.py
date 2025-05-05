@@ -41,20 +41,25 @@ class Simulation:
             name=name,
             cfg=sim_cfg,
         )
-
-        # 1. Build nodes (need to first create all the nodes before adding edges)
-        for node_type in sim.cfg['nodes'].keys():
-
-            node_type_cfg = sim.cfg['nodes'].get(node_type, None)
-            if node_type_cfg:
-                for node_key, node_cfg in node_type_cfg.items():
-                    sim._node_from_cfg(node_key, node_cfg)
-                    sim._resolve_references(node_key, node_cfg)
-
         
+        #build order of the simulation
+        build_order = ["mesh", "pipes", "module"]
+        for node_type in build_order:
 
-        return sim
+            if node_type == "mesh":
+                mesh_cfg = sim.cfg['nodes'].get("mesh", None)
+                sim._node_from_cfg('mesh', mesh_cfg)
+                sim._resolve_references('mesh', mesh_cfg)
+
+            else:
+                node_type_cfg = sim.cfg['nodes'].get(node_type, None)
+                if node_type_cfg:
+                    for node_key, node_cfg in node_type_cfg.items():
+                        sim._node_from_cfg(node_key, node_cfg)
+                        sim._resolve_references(node_key, node_cfg)
+
     
+        return sim
     
     def _resolve_references(self, from_nodeid, from_node_cfg):
         params = self._flatten_dict(from_node_cfg)
@@ -62,24 +67,78 @@ class Simulation:
             if str(v).startswith("@"):
                 dep_id = v[1:]
                 dep_type = dep_id.split(".")[0]
+                name = dep_id.split(".")[-1]
+                
+                if dep_type == 'output':
+                    dep_id = dep_id[7:] # remove the "output." prefix
+                    dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
 
-                if dep_id in self.cfg['nodes'][dep_type].keys():
-                    dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                    if dep_cfg:
-                        self._node_from_cfg(dep_id, dep_cfg)
-                        self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                if name == 'default':
+                    self._find_default_id(dep_id, from_nodeid, k)
+
                 else:
-                    raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
+                    if dep_type == 'mesh':
+                         dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
+                    
+                    # a. dep_id in the sim
+                    if dep_id in self.nodes:
+                        self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                    # b. dep_id not in sim but in the config file
+                    elif dep_id in self.cfg['nodes'][dep_type].keys():
+                        dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
+                        if dep_cfg:
+                            self._node_from_cfg(dep_id, dep_cfg)
+                            self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                    # c. dep_id not in sim and not in the config file
+                    else:
+                        raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
     
-    def _node_from_cfg(self, node_key, node_cfg):
+    def _find_default_id(self, dep_id, from_nodeid, k):
+        dep_type = dep_id.split(".")[0]
+        mkind = dep_id.split('.')[1]
+
+        # flag to match node based on the type (ie. module.gwf, module.sim)
+        sim_filter = [n for n in self.nodes if n.startswith(f"{dep_type}.{mkind}.")]
+        # in sim?
+        if len(sim_filter) == 0:
+            #in cfg?
+            cfg_filter = [n for n in self.cfg['nodes'][dep_type] if n.startswith(f"{dep_type}.{mkind}.")]
+        
+            if len(cfg_filter) == 0:
+                # can you make a default node here?
+                if self.template['module_templates'][mkind]['default_build']['allowed']:
+                    self._node_from_cfg(f"{dep_type}.{mkind}.default")
+                    self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                else:
+                    raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
+            elif len(cfg_filter) == 1:
+                dep_id = cfg_filter[0]
+                dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
+                self._node_from_cfg(dep_id, dep_cfg)
+                self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+            else:
+                raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
+        elif len(sim_filter) == 1:
+            dep_id = sim_filter[0]
+            self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+        else:
+            raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
+    
+    def _node_from_cfg(self, node_key, node_cfg=None):
         node_type = node_key.split(".")[0]
+        
         if node_key in self.nodes:
             pass
         else:
             if node_type == 'module':
-                kind = node_cfg.get("kind", None)
+                kind = node_key.split(".")[1]
                 module_template = self.template['module_templates'][kind]
-                node_cfg['template'] = module_template
+                if node_cfg:
+                    node_cfg['template'] = module_template
+                else:
+                    node_cfg = {
+                        "template": module_template,
+                    }
             
             self.add_node(id=node_key, **node_cfg)
 

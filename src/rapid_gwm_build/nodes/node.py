@@ -53,8 +53,8 @@ class ModuleNode(NodeBase):
     def __init__(self, id: str, kind=None, template=None, attr=None, **kwargs):
         super().__init__(id=id)
 
-        self.kind = kind  # Extract package name (e.g., 'npf' from 'npf-mynpf')
-        self.name = id.split('.')[2]
+        self.kind = id.split('.')[1]  # Extract package name (e.g., 'npf' from 'npf-mynpf')
+        self.name = id.split('.')[-1]
         self.template = template  # template for the module (ie. modflow, mt3d, etc)
         self.attr = attr #TODO rename -> basically any user input
 

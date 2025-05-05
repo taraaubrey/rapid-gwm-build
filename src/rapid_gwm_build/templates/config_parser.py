@@ -40,16 +40,18 @@ class ConfigParser:
     @classmethod
     def _flatten_simulation(cls, sim_cfg):
         """Flatten the simulation configuration into node configurations."""
-        sections = ["mesh", "modules", "pipes"] # these are yaml specific sections
         nodes = {}
         nodes['module'] = {} # Track extracted modules nodes
         nodes["input"] = {} # Track extracted input nodes
         nodes['pipe'] = {} # Track extracted pipe nodes
+        nodes['mesh'] = {} # Track extracted mesh nodes
 
         # Process each modules under 'modules'
-        for section in sections:
+        for section in ["mesh", "modules", "pipes"]:
             if section == 'modules':
-                nodes = cls.parse_modules(nodes, sim_cfg, section)
+                nodes = cls.parse_modules(nodes, sim_cfg, section='module')
+            elif section == 'mesh':
+                nodes = cls.parse_mesh(nodes, sim_cfg, section='mesh')
             else:
                 section_cfg = sim_cfg.get(section, {})
                 if section_cfg:
@@ -57,12 +59,20 @@ class ConfigParser:
         return nodes
     
     @classmethod
-    def parse_modules(cls, nodes, sim_cfg, section='modules'):
-        for modules_name, modules_cfg in sim_cfg.get(section, {}).items():
+    def parse_mesh(cls, nodes, sim_cfg, section='mesh'):
+        mesh_cfg = sim_cfg.get(section, {})
+        if mesh_cfg:
+            mesh_cfg, nodes = cls.parse_input(nodes, section, mesh_cfg)
+            nodes['mesh'].update(mesh_cfg)
+        return nodes
+    
+    @classmethod
+    def parse_modules(cls, nodes, sim_cfg, section='module'):
+        for modules_name, modules_cfg in sim_cfg.get('modules', {}).items():
             mtype  = modules_name.split("-")[0]
             mname = modules_name.split("-")[1] if "-" in modules_name else mtype  # Extract modules name (e.g., 'mynpf' from 'npf-mynpf')
             
-            key_path = f"modules.{mtype}.{mname}"
+            key_path = f"{section}.{mtype}.{mname}"
             
             modules_cfg, nodes = cls.parse_input(nodes, key_path, modules_cfg)
 
@@ -94,7 +104,7 @@ class ConfigParser:
                 ref_id, input_node = NodeBuilder.parse_input_cfg(key_path, val, kwargs)
                 nodes['input'].update(input_node)
 
-            section_cfg[input_key] = f"{ref_id}"
+            section_cfg[input_key] = ref_id
         
         return section_cfg, nodes
         

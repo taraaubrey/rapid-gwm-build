@@ -3,9 +3,8 @@ vars:
   data_dir: examples\shellmound\data\shellmound\ # path to the data files
 
 simulations:
-  test_sim_v1: # user specified simulation name
+  shellmound_ss: # user specified simulation name
     sim_type: mf6 #required
-    name: simple_freyburg
     ws:
       path: examples/
       mode: overwrite # overwrite OR update
