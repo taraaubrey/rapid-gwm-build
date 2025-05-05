@@ -1,0 +1,209 @@
+vars:
+  input_dir: examples/data/simple_freyburg # path to the data files
+
+simulations:
+  freyburg_simple: # user specified simulation name
+    sim_type: mf6 #required
+    ws:
+      path: examples/
+      mode: overwrite # overwrite OR update
+    # load_existing: ${input_dir}
+
+    # mesh:
+    #   # type: structured #TODO only type supported for now
+    #   resolution: 100
+    #   nlay: 1
+    #   nrow: 10
+    #   ncol: 10
+    #   top:
+    #     #pipe: [{pipe_name: {input: [], kwargs: {}}},] #TODO schema
+    #     input: ${data_dir}rasters/meras_100m_dem.tif
+    #     kwargs:
+    #       resampling: min
+    #   botms: #TODO dict of botms for each layer
+    #     0: 0 
+    #   xorigin: 0
+    #   yorigin: 0
+    #   # active_domain: ${data_dir}tmr_parent/gis/irregular_boundary.shp
+    #   # top: ${data_dir}rasters/meras_100m_dem.tif
+    #   # botm: ${data_dir}rasters/mdwy_surf.tif
+
+    modules: # these are specific kwargs found in the flopy module
+      gwf:
+        modelname: freyburg6
+      
+      ims:
+        print_option: SUMMARY
+        complexity: COMPLEX
+      
+      oc:
+        budgetfilerecord: freyberg6_freyberg.cbc
+        headfilerecord: freyberg6_freyberg.hds
+        headprintrecord: [10, 11, 4, GENERAL]
+        saverecord:
+          0: [(budget, last), (head, last)]
+        printrecord:
+          0: [(budget, last)]
+      
+      tdis: # if you want to name the package {type_name}.{user_name} use the name key
+        time_units: days
+        start_date_time: '2020-01-01'
+        nper: 25
+        perioddata:
+            - [3652.50000000, 1, 1.]
+            - [31., 1, 1.]
+            - [29., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [31., 1, 1.]
+            - [28., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+      
+      dis:
+        # model: modules.gwf.shellmounda
+        length_units: meters
+        nlay: 1
+        nrow: 40
+        ncol: 20
+        delr: ${input_dir}/freyberg6.dis_delr.txt
+        delc: ${input_dir}/freyberg6.dis_delc.txt
+        top: ${input_dir}/freyberg6.dis_top.txt
+        botm: ${input_dir}/freyberg6.dis_botm_layer1.txt
+        idomain: ${input_dir}/freyberg6.dis_idomain_layer1.txt
+
+      ic:
+        strt: ${input_dir}/freyberg6.ic_strt_layer1.txt
+      
+      npf:
+        save_flows: True
+        icelltype: ${input_dir}/freyberg6.npf_icelltype_layer1.txt
+        k: ${input_dir}/freyberg6.npf_k_layer1.txt
+        k33: ${input_dir}/freyberg6.npf_k33_layer1.txt
+      
+      sto:
+        iconvert: ${input_dir}/freyberg6.sto_iconvert_layer1.txt
+        ss: ${input_dir}/freyberg6.sto_ss_layer1.txt
+        sy: ${input_dir}/freyberg6.sto_sy_layer1.txt
+        transient:
+          0: True
+          1: True
+      
+      sfr:
+        boundnames: True
+        print_input: True
+        save_flows: True
+        observations:
+          sfr.csv:
+            - (headwater, SFR, headwater)
+            - (tailwater, SFR, tailwater)
+            - (gage-1, inflow, 40.0)
+        nreaches: 40
+        packagedata: ${input_dir}/freyberg6.sfr_packagedata.txt
+        connectiondata: ${input_dir}/freyberg6.sfr_connectiondata.txt
+        perioddata:
+          0: ${input_dir}/freyberg6.sfr_perioddata_1.txt
+
+      ghb:
+        print_input: True
+        print_flows: True
+        save_flows: True
+        maxbound: 30
+        stressperioddata:
+          0: ${input_dir}/freyberg6.ghb_stress_period_data_1.txt
+      
+      
+      rcha:
+        save_flows: True
+        stressperioddata:
+          0: ${input_dir}/freyberg6.rch_recharge_1.txt
+          1: ${input_dir}/freyberg6.rch_recharge_2.txt
+          2: ${input_dir}/freyberg6.rch_recharge_3.txt
+          3: ${input_dir}/freyberg6.rch_recharge_4.txt
+          4: ${input_dir}/freyberg6.rch_recharge_5.txt
+          5: ${input_dir}/freyberg6.rch_recharge_6.txt
+          6: ${input_dir}/freyberg6.rch_recharge_7.txt
+          7: ${input_dir}/freyberg6.rch_recharge_8.txt
+          8: ${input_dir}/freyberg6.rch_recharge_9.txt
+          9: ${input_dir}/freyberg6.rch_recharge_10.txt
+          10: ${input_dir}/freyberg6.rch_recharge_11.txt
+          11: ${input_dir}/freyberg6.rch_recharge_12.txt
+          12: ${input_dir}/freyberg6.rch_recharge_13.txt
+          13: ${input_dir}/freyberg6.rch_recharge_14.txt
+          14: ${input_dir}/freyberg6.rch_recharge_15.txt
+          15: ${input_dir}/freyberg6.rch_recharge_16.txt
+          16: ${input_dir}/freyberg6.rch_recharge_17.txt
+          17: ${input_dir}/freyberg6.rch_recharge_18.txt
+          18: ${input_dir}/freyberg6.rch_recharge_19.txt
+          19: ${input_dir}/freyberg6.rch_recharge_20.txt
+          20: ${input_dir}/freyberg6.rch_recharge_21.txt
+          21: ${input_dir}/freyberg6.rch_recharge_22.txt
+          22: ${input_dir}/freyberg6.rch_recharge_23.txt
+          23: ${input_dir}/freyberg6.rch_recharge_24.txt
+          24: ${input_dir}/freyberg6.rch_recharge_25.txt
+      
+      obs:
+        digits: 10
+        print_input: True
+        continuous:
+          heads.csv:
+            - (trgw-0-2-15, HEAD, (1 3, 16))
+            - (trgw-0-2-9, HEAD, (1, 3, 10))
+            - (trgw-0-9-1, HEAD, (1, 10, 2))
+            - (trgw-0-13-10, HEAD, (1, 14, 11))
+            - (trgw-0-15-16, HEAD, (1, 16, 17))
+            - (trgw-0-21-10, HEAD, (1, 22, 11))
+            - (trgw-0-22-15, HEAD, (1, 23, 16))
+            - (trgw-0-24-4, HEAD, (1, 25, 5))
+            - (trgw-0-26-6, HEAD, (1, 27, 7))
+            - (trgw-0-29-15, HEAD, (1, 30, 16))
+            - (trgw-0-33-7, HEAD, (1, 34, 8))
+            - (trgw-0-34-10, HEAD, (1, 35, 11))
+    
+      wel:
+        print_input: True
+        print_flows: True
+        save_flows: True
+        maxbound: 7
+        stressperioddata:
+          0: ${input_dir}/freyberg6.wel_stress_period_data_1.txt
+          1: ${input_dir}/freyberg6.wel_stress_period_data_2.txt
+          2: ${input_dir}/freyberg6.wel_stress_period_data_3.txt
+          3: ${input_dir}/freyberg6.wel_stress_period_data_4.txt
+          4: ${input_dir}/freyberg6.wel_stress_period_data_5.txt
+          5: ${input_dir}/freyberg6.wel_stress_period_data_6.txt
+          6: ${input_dir}/freyberg6.wel_stress_period_data_7.txt
+          7: ${input_dir}/freyberg6.wel_stress_period_data_8.txt
+          8: ${input_dir}/freyberg6.wel_stress_period_data_9.txt
+          9: ${input_dir}/freyberg6.wel_stress_period_data_10.txt
+          10: ${input_dir}/freyberg6.wel_stress_period_data_11.txt
+          11: ${input_dir}/freyberg6.wel_stress_period_data_12.txt
+          12: ${input_dir}/freyberg6.wel_stress_period_data_13.txt
+          13: ${input_dir}/freyberg6.wel_stress_period_data_14.txt  
+          14: ${input_dir}/freyberg6.wel_stress_period_data_15.txt
+          15: ${input_dir}/freyberg6.wel_stress_period_data_16.txt
+          16: ${input_dir}/freyberg6.wel_stress_period_data_17.txt
+          17: ${input_dir}/freyberg6.wel_stress_period_data_18.txt
+          18: ${input_dir}/freyberg6.wel_stress_period_data_19.txt
+          19: ${input_dir}/freyberg6.wel_stress_period_data_20.txt
+          20: ${input_dir}/freyberg6.wel_stress_period_data_21.txt
+          21: ${input_dir}/freyberg6.wel_stress_period_data_22.txt
+          22: ${input_dir}/freyberg6.wel_stress_period_data_23.txt
+          23: ${input_dir}/freyberg6.wel_stress_period_data_24.txt
+          24: ${input_dir}/freyberg6.wel_stress_period_data_25.txt
