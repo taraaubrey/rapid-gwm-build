@@ -11,6 +11,10 @@ class NodeBase:
         return self.id.split(".")[0]
     
     @property
+    def name(self):
+        return self.id.split(".")[-1]
+    
+    @property
     def dependencies(self) -> list:
         if self._dependencies is None:
             self._dependencies = self._get_dependencies()
@@ -54,7 +58,6 @@ class ModuleNode(NodeBase):
         super().__init__(id=id)
 
         self.kind = id.split('.')[1]  # Extract package name (e.g., 'npf' from 'npf-mynpf')
-        self.name = id.split('.')[-1]
         self.template = template  # template for the module (ie. modflow, mt3d, etc)
         self.attr = attr #TODO rename -> basically any user input
 
@@ -62,6 +65,10 @@ class ModuleNode(NodeBase):
 
         if template:
             self.func = self.template.get("func", None)  # function to call for the module
+    
+    @property
+    def name(self):
+        return f'{self.kind}.{self.id.split(".")[-1]}'  # Extract package name (e.g., 'npf' from 'npf-mynpf')
     
     @property
     def args(self):
@@ -107,7 +114,5 @@ class ModuleNode(NodeBase):
 class PipeNode(NodeBase):
     def __init__(self, id: str, **kwargs):
         super().__init__(id=id)
-
-        self.name = id.split('.')[1]
         self.input = input  # template for the module (ie. modflow, mt3d, etc)
         self.kwargs = kwargs if kwargs else None

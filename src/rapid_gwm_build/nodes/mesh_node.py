@@ -1,7 +1,7 @@
-
-class MeshNode:
+from rapid_gwm_build.nodes.node import NodeBase
+class MeshNode(NodeBase):
     def __init__(self, id, **cfg):
-
+        super().__init__(id=id)
         self.cfg = cfg
 
         self.resolution = cfg.get("resolution", None)

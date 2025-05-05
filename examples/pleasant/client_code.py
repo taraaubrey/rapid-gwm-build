@@ -23,7 +23,7 @@ input_yaml = r"examples\pleasant\shellmound.yaml"
 
 sim = create_simulation(input_yaml)
 
-
+sim.graph.plot()
 #####
 
 with open(input_yaml, "r") as f:
