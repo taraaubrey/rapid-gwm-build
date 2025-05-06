@@ -2,19 +2,19 @@
 # - how does Simulation know that it needs a discretization module?
 # - how does Simulation know what a tdis module is?
 module_templates:
+    obs:
+        func: 'flopy.mf6.modflow.mfutlobs'
+        duplicates_allowed: True
+        build_dependencies: 
+            model: '@output.module.gwf.default' # referencing {modules.gwf..output}
+    
     sim:
-        # runtime_dependencies: #TODO: this is a special list of required minimum packages if this module is built
-        #     - gwf
-        #     - tdis
-        #     - ims
-        type: BasicModule
         func: 'flopy.mf6.MFSimulation'
         duplicates_allowed: False
         default_build:
             allowed: True
 
     tdis:
-        type: TimeDiscretizationModule
         build_dependencies: 
             simulation: '@output.module.sim.default'
         # parameters:
@@ -31,7 +31,6 @@ module_templates:
                     - [1., 1, 1.] # perlen, nstp, tsmult
 
     ims:
-        type: BasicModule
         build_dependencies: 
             simulation: '@output.module.sim.default'
         func: 'flopy.mf6.ModflowIms'
@@ -42,7 +41,6 @@ module_templates:
 
     ## GWF packages ----------------------
     gwf:
-        type: BasicModule
         build_dependencies: 
             simulation: '@output.module.sim.default'
         func: 'flopy.mf6.ModflowGwf'
@@ -51,7 +49,6 @@ module_templates:
             allowed: True
 
     npf: 
-        type: BasicModule
         build_dependencies: 
             model: '@output.module.gwf.default' # referencing {modules.gwf..output}
         func: 'flopy.mf6.ModflowGwfnpf'
@@ -60,7 +57,6 @@ module_templates:
             allowed: True
 
     dis:
-        type: SpatialDiscretizationModule
         build_dependencies: 
             model: '@output.module.gwf.default'
             top: '@output.mesh.top'
@@ -72,15 +68,12 @@ module_templates:
             allowed: True
 
     ic: 
-        type: BasicModule
         build_dependencies: 
             model: '@output.module.gwf.default'
         func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 
     sto: 
-        
-        type: BasicModule
         build_dependencies: 
             model: '@output.module.gwf.default'
         func: 'flopy.mf6.ModflowGwfsto'
@@ -89,7 +82,6 @@ module_templates:
 ## Simple stress packages ----------------------
 
     wel:
-        type: StressModule
         build_dependencies: 
             model: '@output.module.gwf.default'
         func: 'flopy.mf6.ModflowGwfwel'
@@ -97,7 +89,6 @@ module_templates:
 
 
     drn: 
-        type: StressModule
         build_dependencies: 
             model: '@output.module.gwf.default'
             stressperioddata:
@@ -118,14 +109,12 @@ module_templates:
 
 
     ghb:
-        type: StressModule
         build_dependencies: 
             model: '@output.module.gwf.default'          
         func: 'flopy.mf6.ModflowGwfghb'
         duplicates_allowed: True
 
     rcha:
-        type: StressModule
         build_dependencies: 
             model: '@output.module.gwf.default'
         func: 'flopy.mf6.ModflowGwfrcha'
@@ -134,14 +123,12 @@ module_templates:
 
     # ??
     sfr:
-        type: StressModule
         build_dependencies: 
             model: '@output.module.gwf.default'
         func: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
     oc:
-        type: BasicModule
         build_dependencies: 
             model: '@output.module.gwf.default'
         func: 'flopy.mf6.ModflowGwfoc'

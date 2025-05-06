@@ -59,11 +59,11 @@ class Simulation:
     
         return sim
     
-    def _resolve_references(self, from_nodeid, from_node_cfg):
-        params = self._flatten_dict(from_node_cfg)
-        for k, v in params.items():
-            if str(v).startswith("@"):
-                dep_id = v[1:]
+    def _resolve_references(self, from_nodeid):
+        node = self.nodes[from_nodeid]['node']
+        if node.dependencies:
+            for dep_id in node.dependencies:
+
                 dep_type = dep_id.split(".")[0]
                 name = dep_id.split(".")[-1]
                 
@@ -72,7 +72,7 @@ class Simulation:
                     dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
 
                 if name == 'default':
-                    dep_id = self._find_default_id(dep_id, from_nodeid, k)
+                    dep_id = self._find_default_id(dep_id)
                 elif dep_type == 'mesh':
                     dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
                 elif dep_id in self.cfg['nodes'][dep_type].keys():
@@ -82,14 +82,17 @@ class Simulation:
                 else:
                     raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
                 
-                self.add_edge(dep_id, from_nodeid, parameter_dependency=k)
+                self.add_edge(dep_id, from_nodeid)
+        else:
+            print(f"Node {from_nodeid} has no dependencies.")
                     
     
     def _new_node(self, id, cfg=None):
-        cfg = self._node_from_cfg(id, cfg)
-        self._resolve_references(id, cfg)
+        self._node_from_cfg(id, cfg)
+        self._resolve_references(id)
 
-    def _find_default_id(self, dep_id, from_nodeid, k):
+
+    def _find_default_id(self, dep_id):
         dep_type = dep_id.split(".")[0]
         mkind = dep_id.split('.')[1]
 
@@ -136,8 +139,6 @@ class Simulation:
                     }
             
             self.add_node(id=node_key, **node_cfg)
-        return node_cfg
-
     
     def add_node(self, id, **kwargs):
         node = self.node_builder.build_node(id, **kwargs)

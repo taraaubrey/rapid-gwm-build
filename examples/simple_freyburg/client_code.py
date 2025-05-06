@@ -23,7 +23,7 @@ input_yaml = r"examples\simple_freyburg\freyburg_1lyr_stress.yaml"
 
 sim = create_simulation(input_yaml)
 
-sim.graph.plot()
+# sim.graph.plot()
 
 # print(here)
 sim.build()

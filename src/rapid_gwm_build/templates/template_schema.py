@@ -17,7 +17,6 @@ pipeline_schema = {
 
 # Schema for each module
 module_schema = {
-    "type": {"type": "string", "required": True},
     "build_dependencies": {
         "nullable": True,
         "type": "dict",

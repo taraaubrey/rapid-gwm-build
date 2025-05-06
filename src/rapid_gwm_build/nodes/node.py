@@ -51,6 +51,8 @@ class InputNode(NodeBase):
     #         loader = InputLoaderRegistry.get(self.loader_type)
     #         self._data = loader(self.path, **self.kwargs)
     #     return self._data
+    def _get_dependencies(self):
+        return None #HACK
 
 
 class ModuleNode(NodeBase):
@@ -84,12 +86,12 @@ class ModuleNode(NodeBase):
 
         # replace the default args with the user provided args
         for arg, value in default_args.items():
-            if arg in self.attr.keys():
+            if self.attr is None:
+                self._args[arg] = value
+            elif arg in self.attr.keys():
                 self._args[arg] = self.attr.get(arg)
             elif arg in self.template['build_dependencies'].keys():
                 self._args[arg] = self.template['build_dependencies'].get(arg)
-            else:
-                self._args[arg] = value
 
     
     # def resolve_dependencies(self):

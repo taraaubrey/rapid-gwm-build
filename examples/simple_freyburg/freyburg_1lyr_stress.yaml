@@ -9,25 +9,6 @@ simulations:
       mode: overwrite # overwrite OR update
     # load_existing: ${input_dir}
 
-    # mesh:
-    #   # type: structured #TODO only type supported for now
-    #   resolution: 100
-    #   nlay: 1
-    #   nrow: 10
-    #   ncol: 10
-    #   top:
-    #     #pipe: [{pipe_name: {input: [], kwargs: {}}},] #TODO schema
-    #     input: ${data_dir}rasters/meras_100m_dem.tif
-    #     kwargs:
-    #       resampling: min
-    #   botms: #TODO dict of botms for each layer
-    #     0: 0 
-    #   xorigin: 0
-    #   yorigin: 0
-    #   # active_domain: ${data_dir}tmr_parent/gis/irregular_boundary.shp
-    #   # top: ${data_dir}rasters/meras_100m_dem.tif
-    #   # botm: ${data_dir}rasters/mdwy_surf.tif
-
     modules: # these are specific kwargs found in the flopy module
       gwf:
         modelname: freyburg6
