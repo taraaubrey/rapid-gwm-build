@@ -22,9 +22,9 @@ simulations:
         headfilerecord: freyberg6_freyberg.hds
         # headprintrecord: [(10, 11, 4, GENERAL)]
         saverecord:
-          0: [(budget, last), (head, last)]
+          0: [[BUDGET, LAST], [HEAD, LAST]]
         printrecord:
-          0: [(budget, last)]
+          0: [[BUDGET, LAST]]
       
       tdis: # if you want to name the package {type_name}.{user_name} use the name key
         time_units: days
@@ -92,55 +92,55 @@ simulations:
         save_flows: True
         observations:
           sfr.csv:
-            - (headwater, SFR, headwater)
-            - (tailwater, SFR, tailwater)
-            - (gage-1, inflow, 40.0)
+            - [headwater, SFR, headwater]
+            - [tailwater, SFR, tailwater]
+            - [gage-1, inflow, 40.0]
         nreaches: 40
-        packagedata: #TODO these are special flopy packages that need to be resolved seperately: not sure how to get external file to work
-          filename: ${input_dir}/freyberg6.sfr_packagedata.txt
-        connectiondata: 
-          filename: ${input_dir}/freyberg6.sfr_connectiondata.txt
-        perioddata:
-          0: 
-            filename: ${input_dir}/freyberg6.sfr_perioddata_1.txt
+        packagedata: {filename: '${input_dir}/freyberg6.sfr_packagedata.txt'}
+        connectiondata: {filename: '${input_dir}/freyberg6.sfr_connectiondata.txt'}
+        perioddata: {
+          0: {filename: '${input_dir}/freyberg6.sfr_perioddata_1.txt'},
+        }
 
       ghb:
         print_input: True
         print_flows: True
         save_flows: True
         maxbound: 30
-        stressperioddata:
-          0: ${input_dir}/freyberg6.ghb_stress_period_data_1.txt
+        stress_period_data: {
+          0: {filename: '${input_dir}/freyberg6.ghb_stress_period_data_1.txt'},
+          }
       
       
-      rcha:
+      rch:
         save_flows: True
-        stressperioddata:
-          0: ${input_dir}/freyberg6.rch_recharge_1.txt
-          1: ${input_dir}/freyberg6.rch_recharge_2.txt
-          2: ${input_dir}/freyberg6.rch_recharge_3.txt
-          3: ${input_dir}/freyberg6.rch_recharge_4.txt
-          4: ${input_dir}/freyberg6.rch_recharge_5.txt
-          5: ${input_dir}/freyberg6.rch_recharge_6.txt
-          6: ${input_dir}/freyberg6.rch_recharge_7.txt
-          7: ${input_dir}/freyberg6.rch_recharge_8.txt
-          8: ${input_dir}/freyberg6.rch_recharge_9.txt
-          9: ${input_dir}/freyberg6.rch_recharge_10.txt
-          10: ${input_dir}/freyberg6.rch_recharge_11.txt
-          11: ${input_dir}/freyberg6.rch_recharge_12.txt
-          12: ${input_dir}/freyberg6.rch_recharge_13.txt
-          13: ${input_dir}/freyberg6.rch_recharge_14.txt
-          14: ${input_dir}/freyberg6.rch_recharge_15.txt
-          15: ${input_dir}/freyberg6.rch_recharge_16.txt
-          16: ${input_dir}/freyberg6.rch_recharge_17.txt
-          17: ${input_dir}/freyberg6.rch_recharge_18.txt
-          18: ${input_dir}/freyberg6.rch_recharge_19.txt
-          19: ${input_dir}/freyberg6.rch_recharge_20.txt
-          20: ${input_dir}/freyberg6.rch_recharge_21.txt
-          21: ${input_dir}/freyberg6.rch_recharge_22.txt
-          22: ${input_dir}/freyberg6.rch_recharge_23.txt
-          23: ${input_dir}/freyberg6.rch_recharge_24.txt
-          24: ${input_dir}/freyberg6.rch_recharge_25.txt
+        stress_period_data: {
+          0: {filename: '${input_dir}/freyberg6.rch_recharge_1.txt'},
+          1: {filename: '${input_dir}/freyberg6.rch_recharge_2.txt'},
+          2: {filename: '${input_dir}/freyberg6.rch_recharge_3.txt'},
+          3: {filename: '${input_dir}/freyberg6.rch_recharge_4.txt'},
+          4: {filename: '${input_dir}/freyberg6.rch_recharge_5.txt'},
+          5: {filename: '${input_dir}/freyberg6.rch_recharge_6.txt'},
+          6: {filename: '${input_dir}/freyberg6.rch_recharge_7.txt'},
+          7: {filename: '${input_dir}/freyberg6.rch_recharge_8.txt'},
+          8: {filename: '${input_dir}/freyberg6.rch_recharge_9.txt'},
+          9: {filename: '${input_dir}/freyberg6.rch_recharge_10.txt'},
+          10: {filename: '${input_dir}/freyberg6.rch_recharge_11.txt'},
+          11: {filename: '${input_dir}/freyberg6.rch_recharge_12.txt'},
+          12: {filename: '${input_dir}/freyberg6.rch_recharge_13.txt'},
+          13: {filename: '${input_dir}/freyberg6.rch_recharge_14.txt'},
+          14: {filename: '${input_dir}/freyberg6.rch_recharge_15.txt'},
+          15: {filename: '${input_dir}/freyberg6.rch_recharge_16.txt'},
+          16: {filename: '${input_dir}/freyberg6.rch_recharge_17.txt'},
+          17: {filename: '${input_dir}/freyberg6.rch_recharge_18.txt'},
+          18: {filename: '${input_dir}/freyberg6.rch_recharge_19.txt'},
+          19: {filename: '${input_dir}/freyberg6.rch_recharge_20.txt'},
+          20: {filename: '${input_dir}/freyberg6.rch_recharge_21.txt'},
+          21: {filename: '${input_dir}/freyberg6.rch_recharge_22.txt'},
+          22: {filename: '${input_dir}/freyberg6.rch_recharge_23.txt'},
+          23: {filename: '${input_dir}/freyberg6.rch_recharge_24.txt'},
+          24: {filename: '${input_dir}/freyberg6.rch_recharge_25.txt'},
+        }
       
       # obs:
       #   digits: 10
@@ -165,29 +165,30 @@ simulations:
         print_flows: True
         save_flows: True
         maxbound: 7
-        stressperioddata:
-          0: ${input_dir}/freyberg6.wel_stress_period_data_1.txt
-          1: ${input_dir}/freyberg6.wel_stress_period_data_2.txt
-          2: ${input_dir}/freyberg6.wel_stress_period_data_3.txt
-          3: ${input_dir}/freyberg6.wel_stress_period_data_4.txt
-          4: ${input_dir}/freyberg6.wel_stress_period_data_5.txt
-          5: ${input_dir}/freyberg6.wel_stress_period_data_6.txt
-          6: ${input_dir}/freyberg6.wel_stress_period_data_7.txt
-          7: ${input_dir}/freyberg6.wel_stress_period_data_8.txt
-          8: ${input_dir}/freyberg6.wel_stress_period_data_9.txt
-          9: ${input_dir}/freyberg6.wel_stress_period_data_10.txt
-          10: ${input_dir}/freyberg6.wel_stress_period_data_11.txt
-          11: ${input_dir}/freyberg6.wel_stress_period_data_12.txt
-          12: ${input_dir}/freyberg6.wel_stress_period_data_13.txt
-          13: ${input_dir}/freyberg6.wel_stress_period_data_14.txt  
-          14: ${input_dir}/freyberg6.wel_stress_period_data_15.txt
-          15: ${input_dir}/freyberg6.wel_stress_period_data_16.txt
-          16: ${input_dir}/freyberg6.wel_stress_period_data_17.txt
-          17: ${input_dir}/freyberg6.wel_stress_period_data_18.txt
-          18: ${input_dir}/freyberg6.wel_stress_period_data_19.txt
-          19: ${input_dir}/freyberg6.wel_stress_period_data_20.txt
-          20: ${input_dir}/freyberg6.wel_stress_period_data_21.txt
-          21: ${input_dir}/freyberg6.wel_stress_period_data_22.txt
-          22: ${input_dir}/freyberg6.wel_stress_period_data_23.txt
-          23: ${input_dir}/freyberg6.wel_stress_period_data_24.txt
-          24: ${input_dir}/freyberg6.wel_stress_period_data_25.txt
+        stress_period_data: {
+          0: {filename: '${input_dir}/freyberg6.wel_stress_period_data_1.txt'},
+          1: {filename: '${input_dir}/freyberg6.wel_stress_period_data_2.txt'},
+          2: {filename: '${input_dir}/freyberg6.wel_stress_period_data_3.txt'},
+          3: {filename: '${input_dir}/freyberg6.wel_stress_period_data_4.txt'},
+          4: {filename: '${input_dir}/freyberg6.wel_stress_period_data_5.txt'},
+          5: {filename: '${input_dir}/freyberg6.wel_stress_period_data_6.txt'},
+          6: {filename: '${input_dir}/freyberg6.wel_stress_period_data_7.txt'},
+          7: {filename: '${input_dir}/freyberg6.wel_stress_period_data_8.txt'},
+          8: {filename: '${input_dir}/freyberg6.wel_stress_period_data_9.txt'},
+          9: {filename: '${input_dir}/freyberg6.wel_stress_period_data_10.txt'},
+          10: {filename: '${input_dir}/freyberg6.wel_stress_period_data_11.txt'},
+          11: {filename: '${input_dir}/freyberg6.wel_stress_period_data_12.txt'},
+          12: {filename: '${input_dir}/freyberg6.wel_stress_period_data_13.txt'},
+          13: {filename: '${input_dir}/freyberg6.wel_stress_period_data_14.txt'},
+          14: {filename: '${input_dir}/freyberg6.wel_stress_period_data_15.txt'},
+          15: {filename: '${input_dir}/freyberg6.wel_stress_period_data_16.txt'},
+          16: {filename: '${input_dir}/freyberg6.wel_stress_period_data_17.txt'},
+          17: {filename: '${input_dir}/freyberg6.wel_stress_period_data_18.txt'},
+          18: {filename: '${input_dir}/freyberg6.wel_stress_period_data_19.txt'},
+          19: {filename: '${input_dir}/freyberg6.wel_stress_period_data_20.txt'},
+          20: {filename: '${input_dir}/freyberg6.wel_stress_period_data_21.txt'},
+          21: {filename: '${input_dir}/freyberg6.wel_stress_period_data_22.txt'},
+          22: {filename: '${input_dir}/freyberg6.wel_stress_period_data_23.txt'},
+          23: {filename: '${input_dir}/freyberg6.wel_stress_period_data_24.txt'},
+          24: {filename: '${input_dir}/freyberg6.wel_stress_period_data_25.txt'},
+        }

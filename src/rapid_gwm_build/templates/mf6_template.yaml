@@ -2,7 +2,7 @@
 # - how does Simulation know that it needs a discretization module?
 # - how does Simulation know what a tdis module is?
 write:
-    call: ['@module.sim.', 'write_simulation']
+    func: ['@module.sim.', 'write_simulation']
 
 module_templates:
     obs:
@@ -121,6 +121,12 @@ module_templates:
         build_dependencies: 
             model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfrcha'
+        duplicates_allowed: True
+    
+    rch:
+        build_dependencies: 
+            model: '@module.gwf.'
+        func: 'flopy.mf6.ModflowGwfrch'
         duplicates_allowed: True
 
 

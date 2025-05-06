@@ -5,6 +5,7 @@ import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
 from rapid_gwm_build.nodes.node_builder import NodeBuilder
+from rapid_gwm_build import utils
 # from rapid_gwm_build.module_builder import ModuleBuilder
 # from rapid_gwm_build.mesh import Mesh
 
@@ -27,7 +28,7 @@ class Simulation:
         self.graph = NetworkRegistry()
         self.nodes = self.graph._graph.nodes
         self.edges = self.graph._graph.edges
-        self.name_registry = {}
+        self.name_registry = {} #TODO: clean this up, use graph registry instead
         self.node_builder = NodeBuilder(self.name_registry)
     
 
@@ -107,7 +108,7 @@ class Simulation:
                 # can you make a default node here?
                 if self.template['module_templates'][mkind]['default_build']['allowed']:
                     dep_id = f"{dep_type}.{mkind}."
-                    self._new_node(f"{dep_type}.{mkind}.")
+                    self._new_node(f"{dep_type}.{mkind}.default")
                     return dep_id
                 else:
                     raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
@@ -146,6 +147,7 @@ class Simulation:
         self.graph.add_node(id, node=node)
 
     def add_edge(self, source, target, **kwargs):
+        source = utils.match_nodeid(source, self.nodes)
         # make sure source and target are in the graph
         if source not in self.nodes or target not in self.nodes:
             raise ValueError(f"Source {source} or target {target} not found in the graph.")
@@ -166,14 +168,6 @@ class Simulation:
                     k = f"{id}.{k}"
                 items.append((k, v))
         return dict(items)
-
-
-
-    # def _create_modules_from_cfg(self):
-    #     logging.debug("Building modules from config file.")
-
-    #     for module_key, module_cfg in self.cfg["modules"].items():
-    #         self.module_builder.from_cfg(module_key, module_cfg)
 
     
     def build(self, mode="all"): #TODO move to GraphClass
@@ -199,42 +193,24 @@ class Simulation:
             
             logging.debug(f"Node {nodeid} built.")
 
-    # def _resolve_intermodule_dependencies( #TODO move to GraphClass
-    #     self, pred_node, node
-    # ):  # TODO GraphManagerClass
-    #     module = self.graph.nodes[node]["module"]
-    #     dep_output = self.modules[pred_node].output
-    #     cmd_key = self.graph.edges[(pred_node, node)]["module_dependency"]
-    #     module.update_cmd_kwargs(
-    #         {cmd_key: dep_output}
-    #     )  # update the command kwargs with the output of the parent module
+    def write(self):
+        pass
+        ins = self.template['write']
 
+        ref_ins = []
+        for i in ins['func']:
+            # resolve the references in the input dictionary
+            if i.startswith("@"):
+                id = i[1:]
+                id = utils.match_nodeid(id, self.nodes)
+                
+                i_output = self.nodes[id]['node'].data
+                ref_ins.append(i_output)
+            else:
+                ref_ins.append(i)
+        
+        write_func = getattr(ref_ins[0], ref_ins[1])
+        kwargs = ins.get('kwargs', {})
+        
+        write_func(**kwargs)
 
-
-
-# ## class Simulation:
-#     def __init__(self, config=None):
-#         self.graph = nx.DiGraph()
-#         self.config = config or {}
-#         if config:
-#             self._build_initial_nodes()
-
-#     def _build_initial_nodes(self):
-#         for node_cfg in self.config.get("nodes", []):
-#             self.add_node(node_cfg)
-
-#     def add_node(self, node_cfg):
-#         node = NodeBuilder.build(node_cfg)
-#         self.graph.add_node(node.name, data=node)
-
-#     def modify_node(self, name, new_cfg):
-#         # Optionally update config/state
-#         self.graph.remove_node(name)
-#         self.add_node(new_cfg)
-
-#     def to_config(self):
-#         # Export current state to config dict
-#         return {
-#             "sim_type": self.config.get("sim_type"),
-#             "nodes": [data["data"].to_dict() for _, data in self.graph.nodes(data=True)]
-#         }

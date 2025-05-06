@@ -114,10 +114,11 @@ def match_nodeid(id_in, id_list):
     kind = id_in.split(".")[1]  # Extract the node kind from the name
     name = id_in.split(".")[-1]  # Extract the node name from the name
 
+    
     if name == "":
         filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.")]
     else:
-        filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.") and n.endswith(f".{name}")]
+        filtered_list = [n for n in id_list if n == id_in]
     # If there are multiple matches, return the first one
     if len(filtered_list) > 1:
         raise ValueError(f"Multiple matches found for {id_in}: {filtered_list}")

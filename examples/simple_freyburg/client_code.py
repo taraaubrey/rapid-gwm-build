@@ -28,4 +28,4 @@ sim = create_simulation(input_yaml)
 # print(here)
 sim.build()
 
-sim.write()  # TODO: this should be a method of the simulation object
+sim.write()
