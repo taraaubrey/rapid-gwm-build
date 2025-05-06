@@ -1,12 +1,15 @@
 # TODO
 # - how does Simulation know that it needs a discretization module?
 # - how does Simulation know what a tdis module is?
+write:
+    call: ['@module.sim.', 'write_simulation']
+
 module_templates:
     obs:
         func: 'flopy.mf6.modflow.mfutlobs'
         duplicates_allowed: True
         build_dependencies: 
-            model: '@output.module.gwf.default' # referencing {modules.gwf..output}
+            model: '@module.gwf.' # referencing {modules.gwf..output}
     
     sim:
         func: 'flopy.mf6.MFSimulation'
@@ -16,7 +19,7 @@ module_templates:
 
     tdis:
         build_dependencies: 
-            simulation: '@output.module.sim.default'
+            simulation: '@module.sim.'
         # parameters:
         #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
         func: 'flopy.mf6.ModflowTdis'
@@ -32,7 +35,7 @@ module_templates:
 
     ims:
         build_dependencies: 
-            simulation: '@output.module.sim.default'
+            simulation: '@module.sim.'
         func: 'flopy.mf6.ModflowIms'
         duplicates_allowed: False
         default_build:
@@ -42,7 +45,7 @@ module_templates:
     ## GWF packages ----------------------
     gwf:
         build_dependencies: 
-            simulation: '@output.module.sim.default'
+            simulation: '@module.sim.'
         func: 'flopy.mf6.ModflowGwf'
         duplicates_allowed: True
         default_build:
@@ -50,7 +53,7 @@ module_templates:
 
     npf: 
         build_dependencies: 
-            model: '@output.module.gwf.default' # referencing {modules.gwf..output}
+            model: '@module.gwf.' # referencing {modules.gwf..output}
         func: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
         default_build:
@@ -58,10 +61,10 @@ module_templates:
 
     dis:
         build_dependencies: 
-            model: '@output.module.gwf.default'
-            top: '@output.mesh.top'
-            botm: '@output.mesh.botm'
-            idomain: '@output.mesh.active_domain'
+            model: '@module.gwf.'
+            top: '@mesh.top'
+            botm: '@mesh.botm'
+            idomain: '@mesh.active_domain'
         func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
         default_build:
@@ -69,13 +72,13 @@ module_templates:
 
     ic: 
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 
     sto: 
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfsto'
         duplicates_allowed: False
     
@@ -83,14 +86,14 @@ module_templates:
 
     wel:
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfwel'
         duplicates_allowed: True
 
 
     drn: 
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
             stressperioddata:
                 pipes:
                     - stress_period_data: [data.drn..cond, data.drn..elev]
@@ -110,13 +113,13 @@ module_templates:
 
     ghb:
         build_dependencies: 
-            model: '@output.module.gwf.default'          
+            model: '@module.gwf.'          
         func: 'flopy.mf6.ModflowGwfghb'
         duplicates_allowed: True
 
     rcha:
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfrcha'
         duplicates_allowed: True
 
@@ -124,12 +127,12 @@ module_templates:
     # ??
     sfr:
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
     oc:
         build_dependencies: 
-            model: '@output.module.gwf.default'
+            model: '@module.gwf.'
         func: 'flopy.mf6.ModflowGwfoc'
         duplicates_allowed: True

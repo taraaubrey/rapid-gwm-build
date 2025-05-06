@@ -67,11 +67,11 @@ class Simulation:
                 dep_type = dep_id.split(".")[0]
                 name = dep_id.split(".")[-1]
                 
-                if dep_type == 'output':
-                    dep_id = dep_id[7:] # remove the "output." prefix
-                    dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
+                # if dep_type == 'output':
+                #     dep_id = dep_id[7:] # remove the "output." prefix
+                #     dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
 
-                if name == 'default':
+                if name == '':
                     dep_id = self._find_default_id(dep_id)
                 elif dep_type == 'mesh':
                     dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
@@ -106,7 +106,8 @@ class Simulation:
             if len(cfg_filter) == 0:
                 # can you make a default node here?
                 if self.template['module_templates'][mkind]['default_build']['allowed']:
-                    self._new_node(f"{dep_type}.{mkind}.default")
+                    dep_id = f"{dep_type}.{mkind}."
+                    self._new_node(f"{dep_type}.{mkind}.")
                     return dep_id
                 else:
                     raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
@@ -175,25 +176,28 @@ class Simulation:
     #         self.module_builder.from_cfg(module_key, module_cfg)
 
     
-    # def build(self, mode="all"): #TODO move to GraphClass
-    #     for node in nx.topological_sort(self.graph):
-    #         module = self.graph.nodes[node]["module"]
+    def build(self, mode="all"): #TODO move to GraphClass
+        for nodeid in nx.topological_sort(self.graph._graph):
+            if self.nodes[nodeid].get('ntype') == 'module':
+                node_data = self.nodes[nodeid].get('node')
+                args = {}
+                for dep_node in self.graph._graph.predecessors(nodeid):
+                    if dep_node not in self.graph._graph.nodes:
+                        raise ValueError(f"Module {dep_node} not found in the simulation.")
 
-    #         for dep_node in self.graph.predecessors(node):
-    #             if dep_node not in self.module_registry.keys():
-    #                 raise ValueError(f"Module {dep_node} not found in the simulation.")
+                    elif self.nodes[dep_node].get('node').data:
+                        args[dep_node] = self.nodes[dep_node].get('node').data
+                    else:
+                        # build the node first
+                        self.nodes[dep_node].get('node').build()
+                        args[dep_node] = self.nodes[dep_node].get('node').data
 
-    #             if "module_dependency" in self.graph.edges[(dep_node, node)].keys():
-    #                 self._resolve_intermodule_dependencies(
-    #                     dep_node, node
-    #                 )  # TODO: type of dependency (ie. cmd kwarg/build)
-    #             if "parameter_dependency" in self.graph.edges[(dep_node, node)].keys():
-    #                 pass
-
-    #         if mode == "all":
-    #             module.build()
-    #         if mode == "update":  # this would only build modules that have been changed
-    #             pass
+                if mode == "all":
+                    output = node_data.build(args)
+                if mode == "update":  # this would only build modules that have been changed
+                    pass
+            
+            logging.debug(f"Node {nodeid} built.")
 
     # def _resolve_intermodule_dependencies( #TODO move to GraphClass
     #     self, pred_node, node

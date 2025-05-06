@@ -1,5 +1,19 @@
 
 
+def get_function(func_path: str):
+    import importlib
+
+    try:
+        # Try to import the function from the specified path
+        module_name, func_name = func_path.rsplit(".", 1)
+        module = importlib.import_module(module_name)
+        func = getattr(module, func_name)
+    except ImportError as e:
+        # Handle the case where the import fails
+        raise ImportError(f"Could not import {func_path}: {e}")
+
+    return func
+
 def inspect_class_defaults(cls_path: str, ignore=["self", "args", "kwargs"]) -> dict:
     import importlib
     import inspect
@@ -93,3 +107,21 @@ def _parse_module_usrkey(gkey: str):
         kind = gkey
         usr_modname = gkey
     return kind, usr_modname
+
+
+def match_nodeid(id_in, id_list):
+    ntype = id_in.split(".")[0]  # Extract the node type from the name
+    kind = id_in.split(".")[1]  # Extract the node kind from the name
+    name = id_in.split(".")[-1]  # Extract the node name from the name
+
+    if name == "":
+        filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.")]
+    else:
+        filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.") and n.endswith(f".{name}")]
+    # If there are multiple matches, return the first one
+    if len(filtered_list) > 1:
+        raise ValueError(f"Multiple matches found for {id_in}: {filtered_list}")
+    elif len(filtered_list) == 0:
+        raise ValueError(f"No matches found for {id_in} in {id_list}")
+    else:
+        return filtered_list[0]  # Return the first match

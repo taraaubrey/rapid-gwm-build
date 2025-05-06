@@ -13227,3 +13227,1523 @@
 2025-05-06 14:43:57,238 - PIL.PngImagePlugin - DEBUG - b'sBIT' 41 4 (unknown)
 2025-05-06 14:43:57,238 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 57 9
 2025-05-06 14:43:57,238 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 78 364
+2025-05-06 15:13:12,347 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:13:12,393 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:13:12,395 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:13:12,395 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:13:12,820 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:13:12,834 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:13:14,193 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:14:11,927 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:14:11,957 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:14:11,959 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:14:11,960 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:14:12,387 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:14:12,390 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:14:13,160 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:16:00,512 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:16:00,556 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:16:00,561 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:16:00,561 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:16:01,105 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:16:01,108 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:16:02,074 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:19:27,268 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:19:27,297 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:19:27,299 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:19:27,299 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:19:27,749 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:19:27,752 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:19:28,542 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:25:57,153 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:25:57,198 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:25:57,200 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:25:57,200 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:25:57,617 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:25:57,636 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:25:58,921 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:32:49,917 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:32:49,947 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:32:49,949 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:32:49,950 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:32:50,378 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:32:50,382 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:32:51,082 - root - DEBUG - Node mesh built.
+2025-05-06 15:32:51,120 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:34:17,129 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:34:17,158 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:34:17,162 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:34:17,162 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:34:17,581 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:34:17,586 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:34:18,361 - root - DEBUG - Node mesh built.
+2025-05-06 15:34:18,402 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:34:20,389 - root - DEBUG - Node module.sim.default built.
+2025-05-06 15:34:20,389 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 15:34:20,389 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 15:34:20,390 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 15:34:20,390 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 15:34:20,391 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 15:34:20,391 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 15:34:20,391 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 15:34:20,391 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 15:34:20,392 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 15:34:20,392 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 15:34:20,392 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 15:34:20,392 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 15:34:20,392 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 15:34:20,393 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 15:34:20,393 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 15:34:20,394 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 15:34:20,394 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 15:34:20,394 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 15:34:20,395 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 15:34:20,395 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 15:34:20,395 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 15:34:20,395 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 15:34:20,396 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 15:34:20,396 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 15:34:20,396 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 15:34:20,397 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 15:34:20,397 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 15:34:20,397 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 15:34:20,397 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 15:34:20,397 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 15:34:20,398 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 15:34:20,399 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 15:34:20,399 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 15:34:20,399 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 15:39:56,651 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:39:56,710 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:39:56,713 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:39:56,714 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:39:57,310 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:39:57,330 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:39:59,011 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:40:21,632 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:40:21,662 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:40:21,664 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:40:21,664 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:40:22,077 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:40:22,080 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:40:22,772 - root - DEBUG - Node mesh built.
+2025-05-06 15:40:22,821 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 15:40:56,159 - root - DEBUG - Node module.sim.default built.
+2025-05-06 15:40:56,160 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 15:40:56,160 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 15:40:56,161 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 15:40:56,161 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 15:40:56,161 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 15:40:56,162 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 15:40:56,162 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 15:40:56,162 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 15:40:56,162 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 15:40:56,162 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 15:40:56,163 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 15:40:56,163 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 15:40:56,163 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 15:40:56,163 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 15:40:56,164 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 15:40:56,165 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 15:40:56,166 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 15:40:56,167 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 15:53:32,344 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 15:53:32,394 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:53:32,397 - matplotlib - DEBUG - interactive is False
+2025-05-06 15:53:32,399 - matplotlib - DEBUG - platform is win32
+2025-05-06 15:53:32,880 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 15:53:32,902 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 15:53:34,485 - root - DEBUG - Node mesh built.
+2025-05-06 15:53:34,583 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:01:09,294 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:01:09,322 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:01:09,325 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:01:09,326 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:01:09,921 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:01:09,926 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:01:11,051 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:01:21,468 - root - DEBUG - Node mesh built.
+2025-05-06 16:01:47,263 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:01:47,291 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:01:47,293 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:01:47,294 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:01:47,713 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:01:47,715 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:01:48,460 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:01:51,260 - root - DEBUG - Node mesh built.
+2025-05-06 16:03:28,825 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:03:28,852 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:03:28,854 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:03:28,854 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:03:29,351 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:03:29,355 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:03:30,455 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:03:34,044 - root - DEBUG - Node mesh built.
+2025-05-06 16:04:19,821 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:04:19,850 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:04:19,852 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:04:19,852 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:04:20,268 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:04:20,271 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:04:21,009 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:04:23,764 - root - DEBUG - Node mesh built.
+2025-05-06 16:06:48,570 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:06:48,632 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:06:48,634 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:06:48,634 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:06:49,201 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:06:49,218 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:06:50,691 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:06:52,619 - root - DEBUG - Node mesh built.
+2025-05-06 16:07:48,176 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:07:48,202 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:07:48,204 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:07:48,204 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:07:48,697 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:07:48,701 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:07:49,723 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:07:51,298 - root - DEBUG - Node mesh built.
+2025-05-06 16:07:58,442 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:07:58,443 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:07:58,443 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:07:58,444 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:07:58,444 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:07:58,444 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:07:58,445 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:07:58,445 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:07:58,445 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:07:58,445 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:07:58,445 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:07:58,446 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:07:58,446 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:07:58,446 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:07:58,446 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:07:58,447 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:07:58,447 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:07:58,447 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:07:58,447 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:07:58,447 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:07:58,448 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:07:58,448 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:07:58,448 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:07:58,448 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:07:58,448 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:07:58,448 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:07:58,449 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:07:58,449 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:07:58,449 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:07:58,449 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:07:58,449 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:07:58,450 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:07:58,451 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:07:58,451 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:07:58,451 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:07:58,451 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:07:58,451 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:07:58,452 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:07:58,452 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:12:38,997 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:12:39,036 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:12:39,039 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:12:39,039 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:12:39,586 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:12:39,591 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:12:40,584 - root - DEBUG - Node mesh built.
+2025-05-06 16:12:40,656 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:18:39,287 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:18:39,315 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:18:39,317 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:18:39,317 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:18:39,832 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:18:39,835 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:18:40,723 - root - DEBUG - Node mesh built.
+2025-05-06 16:18:40,809 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:19:14,083 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:19:14,114 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:19:14,116 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:19:14,117 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:19:14,757 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:19:14,760 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:19:15,662 - root - DEBUG - Node mesh built.
+2025-05-06 16:19:15,708 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:19:33,453 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:19:33,487 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:19:33,490 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:19:33,491 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:19:34,022 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:19:34,025 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:19:34,923 - root - DEBUG - Node mesh built.
+2025-05-06 16:19:34,970 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:19:43,744 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:19:43,744 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:19:43,745 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:19:43,745 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:19:43,745 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:19:43,746 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:19:43,746 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:19:43,746 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:19:43,747 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:19:43,747 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:19:43,748 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:19:43,748 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:19:43,748 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:19:43,749 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:19:43,749 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:19:43,749 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:19:43,750 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:19:43,750 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:19:43,750 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:19:43,751 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:19:43,752 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:19:43,752 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:19:43,752 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:19:43,752 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:19:43,752 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:19:43,753 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:19:43,753 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:19:43,753 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:19:43,753 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:19:43,753 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:19:43,754 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:19:43,754 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:19:43,755 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:19:43,755 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:19:43,755 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:19:43,755 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:19:43,755 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:19:43,755 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:19:43,756 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:19:43,756 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:22:35,508 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:22:35,550 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:22:35,552 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:22:35,552 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:22:35,945 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:22:35,965 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:22:37,073 - root - DEBUG - Node mesh built.
+2025-05-06 16:22:37,141 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:22:39,896 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:22:39,897 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:22:39,897 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:22:39,897 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:22:39,898 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:22:39,898 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:22:39,898 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:22:39,899 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:22:39,899 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:22:39,899 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:22:39,899 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:22:39,900 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:22:39,901 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:22:39,902 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:22:39,902 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:22:39,902 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:22:39,902 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:22:39,904 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:22:39,906 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:22:39,906 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:22:39,906 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:22:39,906 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:22:39,906 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:22:39,906 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:22:39,907 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:24:14,503 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:24:14,530 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:24:14,532 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:24:14,532 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:24:15,055 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:24:15,063 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:24:16,097 - root - DEBUG - Node mesh built.
+2025-05-06 16:24:16,145 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:24:18,613 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:24:18,614 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:24:18,614 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:24:18,614 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:24:18,614 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:24:18,614 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:24:18,615 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:24:18,615 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:24:18,615 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:24:18,615 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:24:18,615 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:24:18,615 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:24:18,616 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:24:18,616 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:24:18,617 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:24:18,618 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:24:18,618 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:24:18,618 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:24:18,619 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:24:18,619 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:24:18,622 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:24:18,622 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:24:18,623 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:24:18,626 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:24:18,626 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:24:18,627 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:24:18,627 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:24:18,627 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:24:18,628 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:24:18,628 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:24:18,629 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:24:18,629 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:24:18,631 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:24:18,632 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:24:18,633 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:24:18,633 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:24:18,634 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:24:18,634 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:24:18,634 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:24:18,638 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:25:10,959 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:25:10,990 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:25:10,992 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:25:10,993 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:25:11,503 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:25:11,508 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:25:12,400 - root - DEBUG - Node mesh built.
+2025-05-06 16:25:12,450 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:26:56,471 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:26:56,505 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:26:56,507 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:26:56,507 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:26:56,928 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:26:56,931 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:26:57,647 - root - DEBUG - Node mesh built.
+2025-05-06 16:26:57,703 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:27:14,813 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:27:14,814 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:27:14,814 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:27:14,815 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:27:14,815 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:27:14,815 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:27:14,815 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:27:14,816 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:27:14,816 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:27:14,816 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:27:14,817 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:27:14,817 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:27:14,817 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:27:14,817 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:27:14,817 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:27:14,817 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:27:14,818 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:27:14,819 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:27:14,819 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:27:14,819 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:27:14,820 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:27:14,820 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:27:14,820 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:27:14,820 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:27:14,820 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:27:14,820 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:27:14,821 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:27:14,822 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:27:14,822 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:27:14,822 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:27:14,822 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:30:58,711 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:30:58,767 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:30:58,773 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:30:58,775 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:30:59,327 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:30:59,331 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:31:00,226 - root - DEBUG - Node mesh built.
+2025-05-06 16:31:00,290 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:32:27,736 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:32:27,737 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:32:27,738 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:32:27,738 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:32:27,738 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:32:27,739 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:32:27,739 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:32:27,739 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:32:27,739 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:32:27,739 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:32:27,740 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:32:27,740 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:32:27,741 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:32:27,741 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:32:27,741 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:32:27,741 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:32:27,741 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:32:27,742 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:32:27,742 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:32:27,742 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:32:27,742 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:32:27,743 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:32:27,743 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:32:27,743 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:32:27,744 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:32:27,744 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:32:27,744 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:32:27,745 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:32:27,746 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:32:27,747 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:32:27,747 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:32:27,747 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:32:27,748 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:32:27,748 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:32:27,748 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:32:27,748 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:32:27,749 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:32:27,749 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:32:27,749 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:32:27,749 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:32:50,959 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 16:33:09,278 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:33:09,304 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:33:09,306 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:33:09,306 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:33:09,710 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:33:09,715 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:33:10,412 - root - DEBUG - Node mesh built.
+2025-05-06 16:33:10,448 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:33:14,983 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:33:14,983 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:33:14,983 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:33:14,983 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:33:14,984 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:33:14,984 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:33:14,984 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:33:14,984 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:33:14,985 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:33:14,985 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:33:14,985 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:33:14,985 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:33:14,986 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:33:14,986 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:33:14,986 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:33:14,986 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:33:14,986 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:33:14,987 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:33:14,987 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:33:14,988 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:33:14,989 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:33:14,989 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:33:14,989 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:33:14,989 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:33:14,990 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:33:14,990 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:33:14,990 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:33:14,990 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:33:14,991 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:33:14,992 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:33:14,992 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:33:14,992 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:33:14,993 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:33:14,993 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:33:14,993 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:33:14,993 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:33:14,993 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:33:14,994 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:33:14,994 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:33:14,994 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:33:51,157 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 16:34:44,681 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 16:34:46,129 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 16:35:24,607 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:35:24,658 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:35:24,660 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:35:24,660 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:35:25,065 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:35:25,083 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:35:26,154 - root - DEBUG - Node mesh built.
+2025-05-06 16:35:26,198 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:35:26,199 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:35:26,200 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:35:26,200 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:35:26,200 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:35:26,200 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:35:26,201 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:35:26,201 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:35:26,201 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:35:26,202 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:35:26,202 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:35:26,202 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:35:26,202 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:35:26,202 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:35:26,203 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:35:26,203 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:35:26,203 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:35:26,203 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:35:26,203 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:35:26,204 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:35:26,205 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:35:26,205 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:35:26,205 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:35:26,205 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:35:26,205 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:35:26,206 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:35:26,207 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:35:26,207 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:35:26,207 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:35:26,207 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:35:26,207 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:35:26,213 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 16:35:26,216 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 16:35:26,218 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 16:35:26,373 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:35:49,996 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:35:50,025 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:35:50,027 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:35:50,028 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:35:50,460 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:35:50,463 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:35:51,141 - root - DEBUG - Node mesh built.
+2025-05-06 16:35:51,187 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:35:51,188 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:35:51,188 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:35:51,189 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:35:51,189 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:35:51,189 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:35:51,189 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:35:51,190 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:35:51,190 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:35:51,190 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:35:51,190 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:35:51,191 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:35:51,192 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:35:51,193 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:35:51,194 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:35:51,195 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:35:51,200 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 16:35:51,204 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 16:35:51,207 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 16:35:51,246 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:43:08,693 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:43:08,720 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:43:08,723 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:43:08,724 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:43:09,126 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:43:09,130 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:43:09,869 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:44:07,747 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:44:07,779 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:44:07,781 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:44:07,782 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:44:08,218 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:44:08,221 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:44:09,015 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:45:38,999 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:45:39,066 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:45:39,078 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:45:39,081 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:45:39,484 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:45:39,488 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:45:40,233 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:45:47,935 - root - DEBUG - Node mesh built.
+2025-05-06 16:45:47,985 - root - DEBUG - Node module.sim.default built.
+2025-05-06 16:45:47,986 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:45:47,986 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:45:47,986 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:45:47,986 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:45:47,987 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:45:47,987 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:45:47,987 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:45:47,987 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:45:47,988 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:45:47,989 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:45:47,989 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:45:47,989 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:45:47,990 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:45:47,990 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:45:47,990 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:45:47,990 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:45:47,991 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:45:47,992 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:45:47,992 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:45:47,992 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:45:47,992 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:45:47,992 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:45:47,993 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:45:47,993 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:45:47,993 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:45:47,993 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:45:47,993 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:45:47,994 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:45:47,994 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:45:47,994 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:45:47,995 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:45:47,995 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:45:47,995 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:47:17,012 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:47:17,044 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:47:17,046 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:47:17,047 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:47:17,474 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:47:17,478 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:47:18,233 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:51:29,724 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 16:51:29,773 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:51:29,775 - matplotlib - DEBUG - interactive is False
+2025-05-06 16:51:29,776 - matplotlib - DEBUG - platform is win32
+2025-05-06 16:51:30,264 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 16:51:30,291 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 16:51:31,513 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 16:51:39,926 - root - DEBUG - Node mesh built.
+2025-05-06 16:51:39,984 - root - DEBUG - Node module.sim. built.
+2025-05-06 16:51:39,984 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 16:51:39,984 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 16:51:39,985 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 16:51:39,985 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 16:51:39,985 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 16:51:39,986 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 16:51:39,986 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 16:51:39,986 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 16:51:39,986 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 16:51:39,987 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 16:51:39,987 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 16:51:39,987 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 16:51:39,988 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 16:51:39,988 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 16:51:39,988 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 16:51:39,988 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 16:51:39,988 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 16:51:39,988 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 16:51:39,989 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 16:51:39,989 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 16:51:39,989 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 16:51:39,989 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 16:51:39,989 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 16:51:39,989 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 16:51:39,990 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 16:51:39,991 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 16:51:39,991 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 16:51:39,991 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 16:51:39,991 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 16:51:39,991 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 16:51:39,991 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 16:51:39,992 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 16:51:40,000 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 16:51:40,004 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 16:51:40,007 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:00:28,018 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:00:28,046 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:00:28,047 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:00:28,048 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:00:28,557 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:00:28,563 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:00:29,673 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:00:33,205 - root - DEBUG - Node mesh built.
+2025-05-06 17:00:33,271 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:00:33,272 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:00:33,272 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:00:33,273 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:00:33,273 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 17:00:33,273 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:00:33,273 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:00:33,274 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:00:33,275 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:00:33,275 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:00:33,275 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:00:33,275 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:00:33,275 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:00:33,276 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:00:33,277 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:00:33,277 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:00:33,277 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:00:33,277 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:00:33,278 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:00:33,278 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:00:33,278 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:00:33,278 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:00:33,278 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:00:33,279 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:00:33,279 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:00:33,279 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:00:33,279 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:00:33,279 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:00:33,279 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:00:33,280 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:00:33,280 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:00:33,280 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:00:46,522 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:01:47,527 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:01:47,555 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:01:47,558 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:01:47,558 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:01:48,073 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:01:48,076 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:01:49,029 - root - DEBUG - Node mesh built.
+2025-05-06 17:01:49,082 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:01:49,082 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:01:49,083 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:01:49,083 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:01:49,083 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 17:01:49,083 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:01:49,084 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:01:49,084 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:01:49,084 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:01:49,084 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:01:49,085 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:01:49,085 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:01:49,085 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:01:49,086 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:01:49,086 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:01:49,086 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:01:49,086 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:01:49,086 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:01:49,087 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:01:49,087 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:01:49,087 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:01:49,087 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:01:49,087 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:01:49,087 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:01:49,088 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:01:49,088 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:01:49,088 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:01:49,088 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:01:49,088 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:01:49,089 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:01:49,090 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:01:49,090 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:01:49,090 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:01:49,090 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:01:49,091 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:01:49,091 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:01:49,092 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:01:49,092 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:01:49,092 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:01:49,139 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:01:53,921 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:02:09,822 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:02:12,163 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:08:20,931 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:08:20,998 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:08:21,001 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:08:21,001 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:08:21,580 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:08:21,605 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:08:23,128 - root - DEBUG - Node mesh built.
+2025-05-06 17:08:23,197 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:08:27,054 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:08:27,054 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:08:27,055 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:08:27,055 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:08:27,055 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 17:08:27,055 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:08:27,056 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:08:27,056 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:08:27,056 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:08:27,057 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:08:27,057 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:08:27,057 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:08:27,057 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:08:27,058 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:08:27,058 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:08:27,058 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:08:27,058 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:08:27,059 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:08:27,059 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:08:27,059 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:08:27,060 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:08:27,060 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:08:27,060 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:08:27,060 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:08:27,060 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:08:27,061 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:08:27,061 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:08:27,061 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:08:27,061 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:08:27,062 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:08:27,062 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:08:27,062 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:08:27,062 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:08:27,063 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:08:27,063 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:08:27,063 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:08:27,064 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:08:27,064 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:08:27,064 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:08:27,064 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:08:27,064 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:08:27,065 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:08:27,065 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:08:27,065 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:08:27,065 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:08:27,065 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:08:32,850 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:08:46,453 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:08:57,380 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:12:43,090 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:12:43,118 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:12:43,121 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:12:43,122 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:12:43,546 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:12:43,549 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:12:44,251 - root - DEBUG - Node mesh built.
+2025-05-06 17:12:44,296 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:12:52,168 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:12:52,169 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:12:52,169 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:12:52,170 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:12:52,170 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 17:12:52,170 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:12:52,170 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:12:52,171 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:12:52,171 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:12:52,171 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:12:52,171 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:12:52,171 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:12:52,171 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:12:52,172 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:12:52,172 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:12:52,172 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:12:52,172 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:12:52,172 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:12:52,172 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:12:52,173 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:12:52,173 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:12:52,173 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:12:52,173 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:12:52,173 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:12:52,173 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:12:52,174 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:12:52,175 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:12:52,176 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:12:52,176 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:12:52,182 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:12:52,186 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:12:52,189 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:13:50,094 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:13:50,124 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:13:50,126 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:13:50,127 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:13:50,538 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:13:50,540 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:13:51,306 - root - DEBUG - Node mesh built.
+2025-05-06 17:13:51,352 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:13:51,352 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:13:51,353 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:13:51,353 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:13:51,353 - root - DEBUG - Node input.module.oc.oc.headprintrecord built.
+2025-05-06 17:13:51,354 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:13:51,354 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:13:51,354 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:13:51,354 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:13:51,355 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:13:51,355 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:13:51,355 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:13:51,355 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:13:51,355 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:13:51,356 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:13:51,356 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:13:51,356 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:13:51,356 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:13:51,357 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:13:51,357 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:13:51,357 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:13:51,357 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:13:51,357 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:13:51,357 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:13:51,358 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:13:51,359 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:13:51,360 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:13:51,360 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:13:51,360 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:13:51,360 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:13:51,360 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:13:51,360 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:13:51,367 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:13:51,370 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:13:51,372 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:13:51,655 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:14:29,321 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:14:29,351 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:14:29,354 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:14:29,354 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:14:29,905 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:14:29,909 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:14:30,915 - root - DEBUG - Node mesh built.
+2025-05-06 17:14:30,971 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:14:30,972 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:14:30,972 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:14:30,972 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:14:30,973 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:14:30,973 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:14:30,973 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:14:30,974 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:14:30,974 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:14:30,975 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:14:30,975 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:14:30,975 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:14:30,975 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:14:30,976 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:14:30,976 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:14:30,976 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:14:30,976 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:14:30,976 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:14:30,977 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:14:30,977 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:14:30,977 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:14:30,977 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:14:30,978 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:14:30,978 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:14:30,978 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:14:30,978 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:14:30,979 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:14:30,979 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:14:30,979 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:14:30,979 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:14:30,979 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:14:30,979 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:14:30,980 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:14:30,980 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:14:30,980 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:14:30,980 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:14:30,980 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:14:30,980 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:14:30,981 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:14:30,981 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:14:30,982 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:14:30,982 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:14:30,982 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:14:30,982 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:14:30,982 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:14:30,989 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:14:30,991 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:14:30,993 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:14:31,029 - root - DEBUG - Node module.oc.oc built.
+2025-05-06 17:14:31,034 - root - DEBUG - Node module.dis.dis built.
+2025-05-06 17:14:31,036 - root - DEBUG - Node module.ic.ic built.
+2025-05-06 17:14:31,037 - root - DEBUG - Node module.npf.npf built.
+2025-05-06 17:14:31,040 - root - DEBUG - Node module.sto.sto built.
+2025-05-06 17:14:31,505 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:16:32,903 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:16:32,937 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:16:32,940 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:16:32,941 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:16:33,368 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:16:33,371 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:16:34,072 - root - DEBUG - Node mesh built.
+2025-05-06 17:16:34,119 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:16:34,120 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:16:34,120 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:16:34,120 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:16:34,120 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:16:34,121 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:16:34,121 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:16:34,121 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:16:34,121 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:16:34,121 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:16:34,122 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:16:34,123 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:16:34,123 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:16:34,123 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:16:34,123 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:16:34,123 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:16:34,124 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:16:34,124 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:16:34,124 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:16:34,124 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:16:34,124 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:16:34,125 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:16:34,126 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:16:34,127 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:16:34,132 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:16:34,136 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:16:34,138 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:16:34,164 - root - DEBUG - Node module.oc.oc built.
+2025-05-06 17:16:34,168 - root - DEBUG - Node module.dis.dis built.
+2025-05-06 17:16:34,169 - root - DEBUG - Node module.ic.ic built.
+2025-05-06 17:16:34,170 - root - DEBUG - Node module.npf.npf built.
+2025-05-06 17:16:34,172 - root - DEBUG - Node module.sto.sto built.
+2025-05-06 17:16:34,461 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:17:43,038 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:17:43,063 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:17:43,066 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:17:43,066 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:17:43,484 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:17:43,488 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:17:44,244 - root - DEBUG - Node mesh built.
+2025-05-06 17:17:44,298 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:17:44,298 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:17:44,299 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:17:44,299 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:17:44,299 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:17:44,299 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:17:44,300 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:17:44,300 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:17:44,300 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:17:44,300 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:17:44,301 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:17:44,301 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:17:44,301 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:17:44,301 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:17:44,302 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:17:44,302 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:17:44,302 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:17:44,302 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:17:44,303 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:17:44,304 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:17:44,305 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:17:44,306 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:17:44,306 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:17:44,306 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:17:44,311 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:17:44,314 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:17:44,318 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:17:44,343 - root - DEBUG - Node module.oc.oc built.
+2025-05-06 17:17:44,346 - root - DEBUG - Node module.dis.dis built.
+2025-05-06 17:17:44,347 - root - DEBUG - Node module.ic.ic built.
+2025-05-06 17:17:44,349 - root - DEBUG - Node module.npf.npf built.
+2025-05-06 17:17:44,351 - root - DEBUG - Node module.sto.sto built.
+2025-05-06 17:17:44,729 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:23:45,898 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:23:45,955 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:23:45,956 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:23:45,957 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:23:46,465 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:23:46,482 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:23:48,044 - root - DEBUG - Node mesh built.
+2025-05-06 17:23:48,124 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:23:48,125 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:23:48,126 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:23:48,126 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:23:48,126 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:23:48,126 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:23:48,126 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:23:48,126 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:23:48,127 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:23:48,127 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:23:48,127 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:23:48,128 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:23:48,128 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:23:48,128 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:23:48,128 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:23:48,129 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:23:48,129 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:23:48,129 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:23:48,129 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:23:48,129 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:23:48,130 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:23:48,130 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:23:48,130 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:23:48,131 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:23:48,131 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:23:48,131 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:23:48,131 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:23:48,132 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:23:48,132 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:23:48,132 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:23:48,132 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:23:48,133 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:23:48,133 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:23:48,133 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:23:48,133 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:23:48,134 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:23:48,134 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:23:48,134 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:23:48,134 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:23:48,134 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:23:48,135 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:23:48,135 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:23:48,135 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:23:48,136 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:23:48,136 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:23:48,145 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:23:48,150 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:23:48,152 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:23:48,190 - root - DEBUG - Node module.oc.oc built.
+2025-05-06 17:23:48,195 - root - DEBUG - Node module.dis.dis built.
+2025-05-06 17:23:48,196 - root - DEBUG - Node module.ic.ic built.
+2025-05-06 17:23:48,198 - root - DEBUG - Node module.npf.npf built.
+2025-05-06 17:23:48,200 - root - DEBUG - Node module.sto.sto built.
+2025-05-06 17:23:49,030 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:33:39,087 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:33:39,123 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:33:39,125 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:33:39,126 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:33:39,613 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:33:39,615 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:33:40,322 - root - DEBUG - Node mesh built.
+2025-05-06 17:33:40,366 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:33:40,366 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:33:40,366 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:33:40,367 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:33:40,367 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:33:40,367 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:33:40,367 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:33:40,368 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:33:40,368 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:33:40,368 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:33:40,369 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:33:40,369 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:33:40,369 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:33:40,369 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:33:40,369 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:33:40,370 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:33:40,371 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:33:40,371 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:33:40,371 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:33:40,371 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:33:40,371 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:33:40,371 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:33:40,372 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:33:40,373 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:33:40,379 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:33:40,382 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:33:40,384 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:33:40,410 - root - DEBUG - Node module.oc.oc built.
+2025-05-06 17:33:40,413 - root - DEBUG - Node module.dis.dis built.
+2025-05-06 17:33:40,414 - root - DEBUG - Node module.ic.ic built.
+2025-05-06 17:33:40,416 - root - DEBUG - Node module.npf.npf built.
+2025-05-06 17:33:40,417 - root - DEBUG - Node module.sto.sto built.
+2025-05-06 17:33:40,482 - root - DEBUG - Node module.sfr.sfr built.
+2025-05-06 17:33:40,495 - root - DEBUG - Node module.ghb.ghb built.
+2025-05-06 17:33:40,497 - root - DEBUG - Node module.rcha.rcha built.
+2025-05-06 17:33:40,511 - root - DEBUG - Node module.wel.wel built.
+2025-05-06 17:33:40,555 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.
+2025-05-06 17:38:42,034 - root - ERROR - Template validation failed: {'write': ['unknown field']}
+2025-05-06 17:39:20,565 - matplotlib - DEBUG - matplotlib data path: c:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\.venv\Lib\site-packages\matplotlib\mpl-data
+2025-05-06 17:39:20,622 - matplotlib - DEBUG - CONFIGDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:39:20,624 - matplotlib - DEBUG - interactive is False
+2025-05-06 17:39:20,624 - matplotlib - DEBUG - platform is win32
+2025-05-06 17:39:21,147 - matplotlib - DEBUG - CACHEDIR=C:\Users\tfo46\.matplotlib
+2025-05-06 17:39:21,163 - matplotlib.font_manager - DEBUG - Using fontManager instance from C:\Users\tfo46\.matplotlib\fontlist-v390.json
+2025-05-06 17:39:22,327 - root - DEBUG - Node mesh built.
+2025-05-06 17:39:22,373 - root - DEBUG - Node module.sim. built.
+2025-05-06 17:39:22,373 - root - DEBUG - Node input.module.gwf.gwf.modelname built.
+2025-05-06 17:39:22,374 - root - DEBUG - Node input.module.ims.ims.print_option built.
+2025-05-06 17:39:22,374 - root - DEBUG - Node input.module.ims.ims.complexity built.
+2025-05-06 17:39:22,374 - root - DEBUG - Node input.module.oc.oc.saverecord built.
+2025-05-06 17:39:22,375 - root - DEBUG - Node input.module.oc.oc.printrecord built.
+2025-05-06 17:39:22,375 - root - DEBUG - Node input.module.tdis.tdis.time_units built.
+2025-05-06 17:39:22,375 - root - DEBUG - Node input.module.tdis.tdis.start_date_time built.
+2025-05-06 17:39:22,376 - root - DEBUG - Node input.module.tdis.tdis.nper built.
+2025-05-06 17:39:22,376 - root - DEBUG - Node input.module.tdis.tdis.perioddata built.
+2025-05-06 17:39:22,376 - root - DEBUG - Node input.module.dis.dis.length_units built.
+2025-05-06 17:39:22,376 - root - DEBUG - Node input.module.dis.dis.nlay built.
+2025-05-06 17:39:22,377 - root - DEBUG - Node input.module.dis.dis.nrow built.
+2025-05-06 17:39:22,377 - root - DEBUG - Node input.module.dis.dis.ncol built.
+2025-05-06 17:39:22,377 - root - DEBUG - Node input.module.dis.dis.delr built.
+2025-05-06 17:39:22,377 - root - DEBUG - Node input.module.dis.dis.delc built.
+2025-05-06 17:39:22,378 - root - DEBUG - Node input.module.dis.dis.top built.
+2025-05-06 17:39:22,378 - root - DEBUG - Node input.module.dis.dis.botm built.
+2025-05-06 17:39:22,378 - root - DEBUG - Node input.module.dis.dis.idomain built.
+2025-05-06 17:39:22,378 - root - DEBUG - Node input.module.ic.ic.strt built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.npf.npf.save_flows built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.npf.npf.icelltype built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.npf.npf.k built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.npf.npf.k33 built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.sto.sto.iconvert built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.sto.sto.ss built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.sto.sto.sy built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.sto.sto.transient built.
+2025-05-06 17:39:22,379 - root - DEBUG - Node input.module.sfr.sfr.boundnames built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.print_input built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.save_flows built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.observations built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.nreaches built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.packagedata built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.connectiondata built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.sfr.sfr.perioddata built.
+2025-05-06 17:39:22,381 - root - DEBUG - Node input.module.ghb.ghb.print_input built.
+2025-05-06 17:39:22,382 - root - DEBUG - Node input.module.ghb.ghb.print_flows built.
+2025-05-06 17:39:22,382 - root - DEBUG - Node input.module.ghb.ghb.save_flows built.
+2025-05-06 17:39:22,382 - root - DEBUG - Node input.module.ghb.ghb.maxbound built.
+2025-05-06 17:39:22,382 - root - DEBUG - Node input.module.rcha.rcha.save_flows built.
+2025-05-06 17:39:22,382 - root - DEBUG - Node input.module.wel.wel.print_input built.
+2025-05-06 17:39:22,382 - root - DEBUG - Node input.module.wel.wel.print_flows built.
+2025-05-06 17:39:22,383 - root - DEBUG - Node input.module.wel.wel.save_flows built.
+2025-05-06 17:39:22,383 - root - DEBUG - Node input.module.wel.wel.maxbound built.
+2025-05-06 17:39:22,389 - root - DEBUG - Node module.gwf.gwf built.
+2025-05-06 17:39:22,392 - root - DEBUG - Node module.ims.ims built.
+2025-05-06 17:39:22,395 - root - DEBUG - Node module.tdis.tdis built.
+2025-05-06 17:39:22,421 - root - DEBUG - Node module.oc.oc built.
+2025-05-06 17:39:22,424 - root - DEBUG - Node module.dis.dis built.
+2025-05-06 17:39:22,425 - root - DEBUG - Node module.ic.ic built.
+2025-05-06 17:39:22,429 - root - DEBUG - Node module.npf.npf built.
+2025-05-06 17:39:22,431 - root - DEBUG - Node module.sto.sto built.
+2025-05-06 17:39:22,584 - root - DEBUG - Node module.sfr.sfr built.
+2025-05-06 17:39:22,598 - root - DEBUG - Node module.ghb.ghb built.
+2025-05-06 17:39:22,600 - root - DEBUG - Node module.rcha.rcha built.
+2025-05-06 17:39:22,613 - root - DEBUG - Node module.wel.wel built.
+2025-05-06 17:39:22,668 - matplotlib.pyplot - DEBUG - Loaded backend tkagg version 8.6.

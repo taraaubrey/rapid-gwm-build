@@ -1,5 +1,5 @@
 vars:
-  input_dir: examples/data/simple_freyburg # path to the data files
+  input_dir: examples/simple_freyburg/data/input # path to the data files
 
 simulations:
   freyburg_simple: # user specified simulation name
@@ -20,7 +20,7 @@ simulations:
       oc:
         budgetfilerecord: freyberg6_freyberg.cbc
         headfilerecord: freyberg6_freyberg.hds
-        headprintrecord: [10, 11, 4, GENERAL]
+        # headprintrecord: [(10, 11, 4, GENERAL)]
         saverecord:
           0: [(budget, last), (head, last)]
         printrecord:
@@ -96,10 +96,13 @@ simulations:
             - (tailwater, SFR, tailwater)
             - (gage-1, inflow, 40.0)
         nreaches: 40
-        packagedata: ${input_dir}/freyberg6.sfr_packagedata.txt
-        connectiondata: ${input_dir}/freyberg6.sfr_connectiondata.txt
+        packagedata: #TODO these are special flopy packages that need to be resolved seperately: not sure how to get external file to work
+          filename: ${input_dir}/freyberg6.sfr_packagedata.txt
+        connectiondata: 
+          filename: ${input_dir}/freyberg6.sfr_connectiondata.txt
         perioddata:
-          0: ${input_dir}/freyberg6.sfr_perioddata_1.txt
+          0: 
+            filename: ${input_dir}/freyberg6.sfr_perioddata_1.txt
 
       ghb:
         print_input: True
@@ -139,23 +142,23 @@ simulations:
           23: ${input_dir}/freyberg6.rch_recharge_24.txt
           24: ${input_dir}/freyberg6.rch_recharge_25.txt
       
-      obs:
-        digits: 10
-        print_input: True
-        continuous:
-          heads.csv:
-            - (trgw-0-2-15, HEAD, (1 3, 16))
-            - (trgw-0-2-9, HEAD, (1, 3, 10))
-            - (trgw-0-9-1, HEAD, (1, 10, 2))
-            - (trgw-0-13-10, HEAD, (1, 14, 11))
-            - (trgw-0-15-16, HEAD, (1, 16, 17))
-            - (trgw-0-21-10, HEAD, (1, 22, 11))
-            - (trgw-0-22-15, HEAD, (1, 23, 16))
-            - (trgw-0-24-4, HEAD, (1, 25, 5))
-            - (trgw-0-26-6, HEAD, (1, 27, 7))
-            - (trgw-0-29-15, HEAD, (1, 30, 16))
-            - (trgw-0-33-7, HEAD, (1, 34, 8))
-            - (trgw-0-34-10, HEAD, (1, 35, 11))
+      # obs:
+      #   digits: 10
+      #   print_input: True
+      #   continuous:
+      #     heads.csv:
+      #       - (trgw-0-2-15, HEAD, (1 3, 16))
+      #       - (trgw-0-2-9, HEAD, (1, 3, 10))
+      #       - (trgw-0-9-1, HEAD, (1, 10, 2))
+      #       - (trgw-0-13-10, HEAD, (1, 14, 11))
+      #       - (trgw-0-15-16, HEAD, (1, 16, 17))
+      #       - (trgw-0-21-10, HEAD, (1, 22, 11))
+      #       - (trgw-0-22-15, HEAD, (1, 23, 16))
+      #       - (trgw-0-24-4, HEAD, (1, 25, 5))
+      #       - (trgw-0-26-6, HEAD, (1, 27, 7))
+      #       - (trgw-0-29-15, HEAD, (1, 30, 16))
+      #       - (trgw-0-33-7, HEAD, (1, 34, 8))
+      #       - (trgw-0-34-10, HEAD, (1, 35, 11))
     
       wel:
         print_input: True

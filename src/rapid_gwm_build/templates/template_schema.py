@@ -53,6 +53,7 @@ module_schema = {
 
 
 top_level_schema = {
+    'write': {'type': 'dict'},
     "module_templates": {
         "type": "dict",
         "keysrules": {
