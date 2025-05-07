@@ -197,20 +197,23 @@ class Simulation:
         pass
         ins = self.template['write']
 
-        ref_ins = []
-        for i in ins['func']:
-            # resolve the references in the input dictionary
-            if i.startswith("@"):
-                id = i[1:]
-                id = utils.match_nodeid(id, self.nodes)
-                
-                i_output = self.nodes[id]['node'].data
-                ref_ins.append(i_output)
-            else:
-                ref_ins.append(i)
-        
-        write_func = getattr(ref_ins[0], ref_ins[1])
-        kwargs = ins.get('kwargs', {})
-        
-        write_func(**kwargs)
+        for i, call_dict in ins.items():
+            func = call_dict.get('func', None)
+            args = call_dict.get('args', None)
+
+            ref_func = []
+            for i in func:
+                # resolve the references in the input dictionary
+                if i.startswith("@"):
+                    id = i[1:]
+                    id = utils.match_nodeid(id, self.nodes)
+                    
+                    i_output = self.nodes[id]['node'].data
+                    ref_func.append(i_output)
+                else:
+                    ref_func.append(i)
+            
+            func = getattr(ref_func[0], ref_func[1])
+            func(**(args or {}))
+
 

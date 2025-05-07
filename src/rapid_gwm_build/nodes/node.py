@@ -109,8 +109,9 @@ class ModuleNode(NodeBase):
                 self._args[arg] = value
             elif arg in self.attr.keys():
                 self._args[arg] = self.attr.get(arg)
-            elif arg in self.template['build_dependencies'].keys():
-                self._args[arg] = self.template['build_dependencies'].get(arg)
+            elif self.template.get('build_dependencies', None):
+                if arg in self.template.get('build_dependencies', {}).keys():
+                    self._args[arg] = self.template['build_dependencies'].get(arg)
 
     def build(self, args={}):
         cmd_args = self._resolve_references(args)  # Resolve references in the args

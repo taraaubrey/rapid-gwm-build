@@ -1,15 +1,22 @@
 vars:
-  input_dir: examples/simple_freyburg/data/input # path to the data files
+  input_dir: data/input # path to the data files
+  output_dir: examples/simple_freyburg # path to the data files
+  mf6_exe: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\bin\mf6.exe # path to the mf6 executable
 
 simulations:
   freyburg_simple: # user specified simulation name
-    sim_type: mf6 #required
-    ws:
-      path: examples/
-      mode: overwrite # overwrite OR update
+    sim_type: mf6 # required
+    # ws:
+    #   path: examples/
+    #   mode: overwrite # overwrite OR update
     # load_existing: ${input_dir}
 
     modules: # these are specific kwargs found in the flopy module
+      sim:
+        sim_name: freyberg6_simple
+        sim_ws: ${output_dir}
+        exe_name: ${mf6_exe}
+      
       gwf:
         modelname: freyburg6
       
@@ -112,9 +119,9 @@ simulations:
           }
       
       
-      rch:
+      rcha:
         save_flows: True
-        stress_period_data: {
+        recharge: {
           0: {filename: '${input_dir}/freyberg6.rch_recharge_1.txt'},
           1: {filename: '${input_dir}/freyberg6.rch_recharge_2.txt'},
           2: {filename: '${input_dir}/freyberg6.rch_recharge_3.txt'},
