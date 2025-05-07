@@ -1,8 +1,10 @@
 import hashlib
 
 from rapid_gwm_build.nodes.node import InputNode, ModuleNode, PipeNode
+from rapid_gwm_build.nodes.mesh_node import MeshNode
 
 node_types = {
+    'mesh': MeshNode,
     'input': InputNode,
     'module': ModuleNode,
     'pipe': PipeNode,
@@ -22,7 +24,7 @@ class NodeBuilder:
     def parse_module_cfg(cls, key_path, cfg, module_type, module_name):
         module_node = {}
         # Add the module node
-        module_node[f"module.{key_path}"] = {
+        module_node[f"{key_path}"] = {
             "kind": module_type,
             "name": module_name,
             "attr": cfg
@@ -68,19 +70,6 @@ class NodeBuilder:
         node = Node(id=id, **kwargs)
         self.name_registry[id] = id  # Register the node ID in the name registry
         return node
-
-    # def build_input_node(self, name, path, input_type=None, open_instructions=None):
-    #     node_id = f"input::{name}"
-    #     node = InputNode(id=node_id, path=path, input_type=input_type, open_instructions=open_instructions or {})
-    #     self.name_registry[name] = node_id
-    #     return node_id, node
-
-    # def build_module_node(self, name, package, parameters):
-    #     node_id = f"module::{name}"
-    #     resolved_params = self._resolve_references(parameters)
-    #     node = ModuleNode(id=node_id, package=package, parameters=resolved_params)
-    #     self.name_registry[name] = node_id
-    #     return node_id, node
 
     def _resolve_references(self, params):
         def resolve(v):

@@ -2,7 +2,7 @@
 import networkx as nx
 
 from rapid_gwm_build.nodes.node import NodeBase
-from rapid_gwm_build.pipeline_node import PipelineNode
+from rapid_gwm_build.pipes.pipeline_node import PipelineNode
 
 class NetworkRegistry:
     def __init__(self):
@@ -21,11 +21,28 @@ class NetworkRegistry:
 
     def plot(self, **kwargs):
         from matplotlib import pyplot as plt
-        nx.draw_planar(
+
+        pos = nx.planar_layout(self._graph)  # positions for all nodes
+
+        color_list = []
+        for node in self._graph.nodes(data=True):
+            node_colors = {
+                "input": "yellow",
+                "mesh": "purple",
+                "temporal": "#99ff99",
+                "template": "#ffcc99",
+                "module": "lightblue",
+                "pipe": "pink",}
+            color_list.append(node_colors.get(node[1]["ntype"], "gray"))
+        labels = {node:data['name'] for node, data in self._graph.nodes(data=True)}
+
+        nx.draw_networkx(
             self._graph,
-            with_labels=True,
-            node_color="#ffff8f",
+            pos=pos,
+            with_labels=False,
+            node_color=color_list,
         )
+        nx.draw_networkx_labels(self._graph, pos=pos, labels=labels, font_size=8, font_color="black")
         plt.show()
     
     def add_node(self, id, node: NodeBase):
@@ -35,10 +52,11 @@ class NetworkRegistry:
         :param attributes: Additional attributes to associate with the node.
         """
         ntype = node.type
+        name = node.name
         if ntype not in self._allowed_types:
             raise ValueError(f"Node type '{ntype}' is not allowed. Allowed types are: {self._allowed_types}.")
 
-        self._graph.add_node(id, ntype=ntype, node=node)
+        self._graph.add_node(id, ntype=ntype, name=name, node=node)
 
     def remove_node(self, node):
         """

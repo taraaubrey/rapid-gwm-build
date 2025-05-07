@@ -1,3 +1,19 @@
+
+
+def get_function(func_path: str):
+    import importlib
+
+    try:
+        # Try to import the function from the specified path
+        module_name, func_name = func_path.rsplit(".", 1)
+        module = importlib.import_module(module_name)
+        func = getattr(module, func_name)
+    except ImportError as e:
+        # Handle the case where the import fails
+        raise ImportError(f"Could not import {func_path}: {e}")
+
+    return func
+
 def inspect_class_defaults(cls_path: str, ignore=["self", "args", "kwargs"]) -> dict:
     import importlib
     import inspect
@@ -29,6 +45,34 @@ def inspect_class_defaults(cls_path: str, ignore=["self", "args", "kwargs"]) -> 
                 cmd_kwargs["required"].append(name)
 
     return cmd_kwargs
+
+
+def get_default_args(cls_path: str, ignore=["self", "args", "kwargs"]) -> dict:
+    import importlib
+    import inspect
+
+    args = {}
+    
+    try:
+        # Try to import the class from the specified path
+        module_name, class_name = cls_path.rsplit(".", 1)
+        module = importlib.import_module(module_name)
+        inspect_class = getattr(module, class_name)
+    except ImportError as e:
+        # Handle the case where the import fails
+        raise ImportError(f"Could not import {cls_path}: {e}")
+
+    signature = inspect.signature(inspect_class.__init__)
+
+    # Loop through the parameters and get the defaults and required ones
+    for name, param in signature.parameters.items():
+        if name not in ignore:
+            args[name] = param.default  # can also checkout param.annotation or param.kind
+            # if empty then it is a required parameter
+            if param.default == inspect.Parameter.empty:
+                args[name] = None
+
+    return args
 
 
 def set_up_ws(ws_cfg: dict, name: str) -> str:
@@ -63,3 +107,22 @@ def _parse_module_usrkey(gkey: str):
         kind = gkey
         usr_modname = gkey
     return kind, usr_modname
+
+
+def match_nodeid(id_in, id_list):
+    ntype = id_in.split(".")[0]  # Extract the node type from the name
+    kind = id_in.split(".")[1]  # Extract the node kind from the name
+    name = id_in.split(".")[-1]  # Extract the node name from the name
+
+    
+    if name == "":
+        filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.")]
+    else:
+        filtered_list = [n for n in id_list if n == id_in]
+    # If there are multiple matches, return the first one
+    if len(filtered_list) > 1:
+        raise ValueError(f"Multiple matches found for {id_in}: {filtered_list}")
+    elif len(filtered_list) == 0:
+        raise ValueError(f"No matches found for {id_in} in {id_list}")
+    else:
+        return filtered_list[0]  # Return the first match

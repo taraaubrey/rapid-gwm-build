@@ -17,7 +17,6 @@ pipeline_schema = {
 
 # Schema for each module
 module_schema = {
-    "type": {"type": "string", "required": True},
     "build_dependencies": {
         "nullable": True,
         "type": "dict",
@@ -36,7 +35,7 @@ module_schema = {
         "required": False,
         "default": None,
     },
-    "cmd": {"type": "string", "required": True},
+    "func": {"type": "string", "required": True},
     "duplicates_allowed": {"type": "boolean", "required": False, "default": False},
     "data": {
         "nullable": True,
@@ -47,10 +46,14 @@ module_schema = {
         "required": False,
         "default": None,
     },
+    "default_build": {
+        "type": "dict",
+    }
 }
 
 
 top_level_schema = {
+    'write': {'type': 'dict'},
     "module_templates": {
         "type": "dict",
         "keysrules": {
