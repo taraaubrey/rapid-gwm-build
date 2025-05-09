@@ -111,7 +111,7 @@ def _parse_module_usrkey(gkey: str):
 
 def match_nodeid(node_id, node_list):
 
-    filtered_list = [n for n in node_list if n.id == node_id]
+    filtered_list = [nid for nid in node_list if nid == node_id]
     
     # if len(id_in.split(".")) > 1:
     #     ntype = id_in.split(".")[0]  # Extract the node type from the name

@@ -4,7 +4,7 @@ import networkx as nx
 import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
-from rapid_gwm_build.nodes.node_builder import NodeBuilder
+from rapid_gwm_build.ss.node_builder import NodeBuilder
 from rapid_gwm_build.nodes.node_cfg import NodeCFG
 from rapid_gwm_build import utils
 # from rapid_gwm_build.module_builder import ModuleBuilder
@@ -46,21 +46,6 @@ class Simulation:
 
         for node in sim_cfg['nodes']:
             sim._new_node(node)
-        
-        # #build order of the simulation
-        # build_order = ["mesh", "pipes", "module"]
-        # for node_type in build_order:
-
-        #     if node_type == "mesh":
-        #         mesh_cfg = sim.cfg['nodes'].get("mesh", None)
-        #         if mesh_cfg:
-        #             sim._new_node('mesh', mesh_cfg)
-
-        #     else:
-        #         node_type_cfg = sim.cfg['nodes'].get(node_type, None)
-        #         if node_type_cfg:
-        #             for node_key, node_cfg in node_type_cfg.items():
-        #                 sim._new_node(node_key, node_cfg)
 
     
         return sim
@@ -70,7 +55,7 @@ class Simulation:
             for dep_id in node.dependencies:
                 
                 #get node from self.nodes
-                node_list = [dat['node'] for id, dat in self.nodes.items()]
+                node_list = [dat['node'].id for dat in self.nodes.values()]
                 dep_node = utils.match_nodeid(dep_id, node_list)
 
                 if dep_node:
@@ -87,36 +72,36 @@ class Simulation:
         self._resolve_references(ncfg)
 
 
-    def _find_default_id(self, dep_id):
-        dep_type = dep_id.split(".")[0]
-        mkind = dep_id.split('.')[1]
+    # def _find_default_id(self, dep_id):
+    #     dep_type = dep_id.split(".")[0]
+    #     mkind = dep_id.split('.')[1]
 
-        # flag to match node based on the type (ie. module.gwf, module.sim)
-        sim_filter = [n for n in self.nodes if n.startswith(f"{dep_type}.{mkind}.")]
-        # in sim?
-        if len(sim_filter) == 0:
-            #in cfg?
-            cfg_filter = [n for n in self.cfg['nodes'][dep_type] if n.startswith(f"{dep_type}.{mkind}.")]
+    #     # flag to match node based on the type (ie. module.gwf, module.sim)
+    #     sim_filter = [n for n in self.nodes if n.startswith(f"{dep_type}.{mkind}.")]
+    #     # in sim?
+    #     if len(sim_filter) == 0:
+    #         #in cfg?
+    #         cfg_filter = [n for n in self.cfg['nodes'][dep_type] if n.startswith(f"{dep_type}.{mkind}.")]
         
-            if len(cfg_filter) == 0:
-                # can you make a default node here?
-                if self.template['module_templates'][mkind]['default_build']['allowed']:
-                    dep_id = f"{dep_type}.{mkind}."
-                    self._new_node(f"{dep_type}.{mkind}.default")
-                    return dep_id
-                else:
-                    raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
-            elif len(cfg_filter) == 1:
-                dep_id = cfg_filter[0]
-                dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                self._new_node(dep_id, dep_cfg)
-                return dep_id
-            else:
-                raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
-        elif len(sim_filter) == 1:
-            return sim_filter[0]
-        else:
-            raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
+    #         if len(cfg_filter) == 0:
+    #             # can you make a default node here?
+    #             if self.template['module_templates'][mkind]['default_build']['allowed']:
+    #                 dep_id = f"{dep_type}.{mkind}."
+    #                 self._new_node(f"{dep_type}.{mkind}.default")
+    #                 return dep_id
+    #             else:
+    #                 raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
+    #         elif len(cfg_filter) == 1:
+    #             dep_id = cfg_filter[0]
+    #             dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
+    #             self._new_node(dep_id, dep_cfg)
+    #             return dep_id
+    #         else:
+    #             raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
+    #     elif len(sim_filter) == 1:
+    #         return sim_filter[0]
+    #     else:
+    #         raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
     
     def _node_from_cfg(self, ncfg):
         
@@ -137,11 +122,6 @@ class Simulation:
             self.graph.add_node(ncfg.id, ncfg=ncfg)
 
     def add_edge(self, source, target, **kwargs):
-        # source = utils.match_nodeid(source, self.nodes)
-        # # make sure source and target are in the graph
-        # if source not in self.nodes or target not in self.nodes:
-        #     raise ValueError(f"Source {source} or target {target} not found in the graph.")
-        
         self.graph.add_edge(source, target, **kwargs)
 
 
@@ -162,8 +142,8 @@ class Simulation:
     
     def build(self, mode="all"): #TODO move to GraphClass
         for nodeid in nx.topological_sort(self.graph._graph):
-            if self.nodes[nodeid].get('ntype') == 'module':
-                node_data = self.nodes[nodeid].get('node')
+            node = self.nodes[nodeid].get('node')
+            if node.type == 'module':
                 args = {}
                 for dep_node in self.graph._graph.predecessors(nodeid):
                     if dep_node not in self.graph._graph.nodes:
@@ -173,11 +153,11 @@ class Simulation:
                         args[dep_node] = self.nodes[dep_node].get('node').data
                     else:
                         # build the node first
-                        self.nodes[dep_node].get('node').build()
+                        self.nodes[dep_node].get('node').get_data()
                         args[dep_node] = self.nodes[dep_node].get('node').data
 
                 if mode == "all":
-                    output = node_data.build(args)
+                    output = node.build(args)
                 if mode == "update":  # this would only build modules that have been changed
                     pass
             
@@ -195,10 +175,11 @@ class Simulation:
             for i in func:
                 # resolve the references in the input dictionary
                 if i.startswith("@"):
-                    id = i[1:]
-                    id = utils.match_nodeid(id, self.nodes)
+                    node_id = i[1:]
+                    node_list = [dat['node'].id for dat in self.nodes.values()]
+                    ref_id = utils.match_nodeid(node_id, node_list)
                     
-                    i_output = self.nodes[id]['node'].data
+                    i_output = self.nodes['input.sim.sim_name'].get('node')
                     ref_func.append(i_output)
                 else:
                     ref_func.append(i)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from copy import deepcopy
+from abc import ABC, abstractmethod
 
 from rapid_gwm_build import utils
 
@@ -86,12 +87,20 @@ class NodeCFG:
         self._src = src
         self._dependencies = None
         self._name = None
+        self._data = None  # will be loaded during execution
 
 
         if module_key:
             self.module_name = module_key.split("-")[1] if "-" in module_key else None
             self.module_type = module_key.split(".")[0]
  
+    
+    @property
+    def data(self):
+        """Read-only property for data."""
+        # if self._data is None:
+        #     raise ValueError("Data has not been built yet. Call 'build()' first.")
+        return self._data
     
     @property
     def name(self):
@@ -228,7 +237,12 @@ class NodeCFG:
                     dependencies.append(node_id)
             return dependencies
     
-
+    @abstractmethod
+    def get_data(self):
+        """
+        Get the data for this node. This method should be overridden in subclasses.
+        """
+        raise NotImplementedError("Subclasses must implement this method.")
 
     def __str__(self):
         return self.id
@@ -343,6 +357,32 @@ class ModuleNode(NodeCFG):
             elif self.template.get('build_dependencies', None):
                 if arg in self.template.get('build_dependencies', {}).keys():
                     self._args[arg] = self.template['build_dependencies'].get(arg)
+    
+    
+    def build(self, args={}):
+        cmd_args = self._resolve_references(args)  # Resolve references in the args
+
+        # build the module using the template and args
+        if self.func is None:
+            raise ValueError(f"Module function not found for {self.kind}")
+        
+
+        # get the function from the template
+        func = utils.get_function(self.func)
+        # Build the module using the function and args
+        self._data = func(**cmd_args)  # Set the internal _data attribute
+        return self._data
+    
+    def _resolve_references(self, args):
+        cmd_args = self.args.copy()  # Copy the default args
+        for key, value in cmd_args.items():
+            if isinstance(value, str) and value.startswith("@"):
+                dep_id = value[1:]  # Remove the "@" prefix
+                ref_id = utils.match_nodeid(dep_id, args.keys())  # Check if the dependency ID is valid
+                
+                new_value = args.get(ref_id, None)  # Get the value from the args
+                cmd_args[key] = new_value  # Update the value in the cmd_args
+        return cmd_args
 
 
 class MeshNode(NodeCFG):
@@ -359,3 +399,9 @@ class InputNode(NodeCFG):
     """
     def __init__(self, kwargs: dict):
         super().__init__('input', **kwargs)
+    
+    def get_data(self):
+        """
+        Get the data for this node. This method should be overridden in subclasses.
+        """
+        self._data = self.src

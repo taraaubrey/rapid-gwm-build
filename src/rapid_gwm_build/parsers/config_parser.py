@@ -4,7 +4,7 @@ import hashlib
 import yaml
 from copy import deepcopy
 
-from rapid_gwm_build.nodes.node_builder import NodeBuilder
+from rapid_gwm_build.ss.node_builder import NodeBuilder
 from rapid_gwm_build.parsers.node_parser import NodeParser
 
 class ConfigParser:

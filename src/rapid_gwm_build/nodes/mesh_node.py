@@ -1,4 +1,4 @@
-from rapid_gwm_build.nodes.node import NodeBase
+from rapid_gwm_build.ss.node import NodeBase
 class MeshNode(NodeBase):
     def __init__(self, id, **cfg):
         super().__init__(id=id)
