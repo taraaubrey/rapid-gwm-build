@@ -62,13 +62,12 @@ class NodeBuilder:
         ref_id = f"@{pipe_id}"
         return ref_id, pipe_node
     
-    def build_node(self, id, **kwargs):
-        kind = id.split('.')[0]  # Extract the node type from the name
-        Node = node_types.get(kind)
+    def build_node(self, ncfg):
+        Node = node_types.get(type)
         if Node is None:
-            raise ValueError(f"Unknown node type: {kind}")
-        node = Node(id=id, **kwargs)
-        self.name_registry[id] = id  # Register the node ID in the name registry
+            raise ValueError(f"Unknown node type: {type}")
+        node = Node(ncfg=ncfg)
+        self.name_registry[ncfg.id] = ncfg.id  # Register the node ID in the name registry
         return node
 
     def _resolve_references(self, params):

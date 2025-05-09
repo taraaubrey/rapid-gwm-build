@@ -5,6 +5,7 @@ import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
 from rapid_gwm_build.nodes.node_builder import NodeBuilder
+from rapid_gwm_build.nodes.node_cfg import NodeCFG
 from rapid_gwm_build import utils
 # from rapid_gwm_build.module_builder import ModuleBuilder
 # from rapid_gwm_build.mesh import Mesh
@@ -42,55 +43,48 @@ class Simulation:
             name=name,
             cfg=sim_cfg,
         )
+
+        for node in sim_cfg['nodes']:
+            sim._new_node(node)
         
-        #build order of the simulation
-        build_order = ["mesh", "pipes", "module"]
-        for node_type in build_order:
+        # #build order of the simulation
+        # build_order = ["mesh", "pipes", "module"]
+        # for node_type in build_order:
 
-            if node_type == "mesh":
-                mesh_cfg = sim.cfg['nodes'].get("mesh", None)
-                sim._new_node('mesh', mesh_cfg)
+        #     if node_type == "mesh":
+        #         mesh_cfg = sim.cfg['nodes'].get("mesh", None)
+        #         if mesh_cfg:
+        #             sim._new_node('mesh', mesh_cfg)
 
-            else:
-                node_type_cfg = sim.cfg['nodes'].get(node_type, None)
-                if node_type_cfg:
-                    for node_key, node_cfg in node_type_cfg.items():
-                        sim._new_node(node_key, node_cfg)
+        #     else:
+        #         node_type_cfg = sim.cfg['nodes'].get(node_type, None)
+        #         if node_type_cfg:
+        #             for node_key, node_cfg in node_type_cfg.items():
+        #                 sim._new_node(node_key, node_cfg)
 
     
         return sim
     
-    def _resolve_references(self, from_nodeid):
-        node = self.nodes[from_nodeid]['node']
+    def _resolve_references(self, node):
         if node.dependencies:
             for dep_id in node.dependencies:
-
-                dep_type = dep_id.split(".")[0]
-                name = dep_id.split(".")[-1]
                 
-                # if dep_type == 'output':
-                #     dep_id = dep_id[7:] # remove the "output." prefix
-                #     dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
+                #get node from self.nodes
+                node_list = [dat['node'] for id, dat in self.nodes.items()]
+                dep_node = utils.match_nodeid(dep_id, node_list)
 
-                if name == '':
-                    dep_id = self._find_default_id(dep_id)
-                elif dep_type == 'mesh':
-                    dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
-                elif dep_id in self.cfg['nodes'][dep_type].keys():
-                    dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                    if dep_cfg:
-                        self._new_node(dep_id, dep_cfg)
+                if dep_node:
+                    self.add_edge(dep_id, node.id)
                 else:
-                    raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
-                
-                self.add_edge(dep_id, from_nodeid)
+                    raise NotImplementedError(f"Dependency {dep_id} not implemented yet.")
         else:
-            print(f"Node {from_nodeid} has no dependencies.")
+            logging.debug(f"Node {node.id} has no dependencies.")
+            pass
                     
     
-    def _new_node(self, id, cfg=None):
-        self._node_from_cfg(id, cfg)
-        self._resolve_references(id)
+    def _new_node(self, ncfg: NodeCFG):
+        self._node_from_cfg(ncfg)
+        self._resolve_references(ncfg)
 
 
     def _find_default_id(self, dep_id):
@@ -124,33 +118,29 @@ class Simulation:
         else:
             raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
     
-    def _node_from_cfg(self, node_key, node_cfg=None):
-        node_type = node_key.split(".")[0]
+    def _node_from_cfg(self, ncfg):
         
-        if node_key in self.nodes:
+        if ncfg.id in self.nodes:
             pass
         else:
-            if node_type == 'module':
-                kind = node_key.split(".")[1]
-                module_template = self.template['module_templates'][kind]
-                if node_cfg:
-                    node_cfg['template'] = module_template
-                else:
-                    node_cfg = {
-                        "template": module_template,
-                    }
+            if ncfg.type == 'module':
+                module_template = self.template['module_templates'][ncfg.module_type]
+                ncfg.template = module_template
             
-            self.add_node(id=node_key, **node_cfg)
+            self.add_node(ncfg)
     
-    def add_node(self, id, **kwargs):
-        node = self.node_builder.build_node(id, **kwargs)
-        self.graph.add_node(id, node=node)
+    def add_node(self, ncfg: NodeCFG=None):
+        if isinstance(ncfg, NodeCFG):
+            self.graph.add_node(ncfg)
+        elif isinstance(ncfg, dict):
+            raise NotImplementedError("Node configuration dictionary not implemented yet.") #TODO: implement this
+            self.graph.add_node(ncfg.id, ncfg=ncfg)
 
     def add_edge(self, source, target, **kwargs):
-        source = utils.match_nodeid(source, self.nodes)
-        # make sure source and target are in the graph
-        if source not in self.nodes or target not in self.nodes:
-            raise ValueError(f"Source {source} or target {target} not found in the graph.")
+        # source = utils.match_nodeid(source, self.nodes)
+        # # make sure source and target are in the graph
+        # if source not in self.nodes or target not in self.nodes:
+        #     raise ValueError(f"Source {source} or target {target} not found in the graph.")
         
         self.graph.add_edge(source, target, **kwargs)
 

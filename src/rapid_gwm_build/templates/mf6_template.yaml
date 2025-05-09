@@ -2,15 +2,15 @@
 # - how does Simulation know that it needs a discretization module?
 # - how does Simulation know what a tdis module is?
 write:
-    0: {func: ['@module.sim.', 'set_all_data_external']}
-    1: {func: ['@module.sim.', 'write_simulation']}
+    0: {func: ['@module.sim', 'set_all_data_external']}
+    1: {func: ['@module.sim', 'write_simulation']}
 
 module_templates:
     obs:
         func: 'flopy.mf6.modflow.mfutlobs'
         duplicates_allowed: True
         build_dependencies: 
-            model: '@module.gwf.' # referencing {modules.gwf..output}
+            model: '@module.gwf' # referencing {modules.gwf..output}
     
     sim:
         func: 'flopy.mf6.MFSimulation'
@@ -20,7 +20,7 @@ module_templates:
 
     tdis:
         build_dependencies: 
-            simulation: '@module.sim.'
+            simulation: '@module.sim'
         # parameters:
         #     period_data: ['nper', 'perlen', 'nstp', 'steady'] #TODO: this is a special list of adjustable parameters which are not explicitly called
         func: 'flopy.mf6.ModflowTdis'
@@ -36,7 +36,7 @@ module_templates:
 
     ims:
         build_dependencies: 
-            simulation: '@module.sim.'
+            simulation: '@module.sim'
         func: 'flopy.mf6.ModflowIms'
         duplicates_allowed: False
         default_build:
@@ -46,7 +46,7 @@ module_templates:
     ## GWF packages ----------------------
     gwf:
         build_dependencies: 
-            simulation: '@module.sim.'
+            simulation: '@module.sim'
         func: 'flopy.mf6.ModflowGwf'
         duplicates_allowed: True
         default_build:
@@ -54,7 +54,7 @@ module_templates:
 
     npf: 
         build_dependencies: 
-            model: '@module.gwf.' # referencing {modules.gwf..output}
+            model: '@module.gwf' # referencing {modules.gwf..output}
         func: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
         default_build:
@@ -62,7 +62,7 @@ module_templates:
 
     dis:
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
             top: '@mesh.top'
             botm: '@mesh.botm'
             idomain: '@mesh.active_domain'
@@ -73,13 +73,13 @@ module_templates:
 
     ic: 
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 
     sto: 
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfsto'
         duplicates_allowed: False
     
@@ -87,46 +87,50 @@ module_templates:
 
     wel:
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfwel'
         duplicates_allowed: True
 
 
     drn: 
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
             stressperioddata:
-                pipes:
-                    - stress_period_data: [data.drn..cond, data.drn..elev]
+                pipeline:
+                    - processor: to_stress_period_data
+                      input: [data.drn.cond, data.drn.elev]
+                      column_names: ['cond', 'elev']
+                      format: 'some_format'
         data:
             cond: #output -> @data.drn.<name_mod>.cond
-                pipes:
-                    - discretize_2D: #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
-                        input: [input.modules.drn..cond]
-                        kwargs: null #placeholder for future kwargs
+                pipeline:
+                    - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
+                      input: ['@input.modules.drn-.derived_from.cond']
+                      mesh: '@mesh.grid'
             elev:
-                pipes:
-                    - discretize_2D:
-                        input: [input.modules.drn..elev]
+                pipeline:
+                    - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
+                      input: ['@input.modules.drn-.derived_from.elev']
+                      mesh: '@mesh.grid'
         func: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
 
 
     ghb:
         build_dependencies: 
-            model: '@module.gwf.'          
+            model: '@module.gwf'          
         func: 'flopy.mf6.ModflowGwfghb'
         duplicates_allowed: True
 
     rcha:
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfrcha'
         duplicates_allowed: True
     
     rch:
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfrch'
         duplicates_allowed: True
 
@@ -134,12 +138,12 @@ module_templates:
     # ??
     sfr:
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfsfr'
         duplicates_allowed: True
 
     oc:
         build_dependencies: 
-            model: '@module.gwf.'
+            model: '@module.gwf'
         func: 'flopy.mf6.ModflowGwfoc'
         duplicates_allowed: True

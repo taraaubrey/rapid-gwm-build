@@ -15,7 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [0.1.0-alpha] - 2025-05-07
+## [0.1.0-alpha.0] - 2025-05-07
 ### Added
 - Initial pre-release version.
 - Core functionality for `Simulation` based on graph network model.

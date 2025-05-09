@@ -12,6 +12,8 @@ simulations:
     # load_existing: ${input_dir}
 
     modules: # these are specific kwargs found in the flopy module
+      
+      
       sim:
         sim_name: freyberg6_simple
         sim_ws: ${output_dir}
@@ -38,7 +40,7 @@ simulations:
         start_date_time: '2020-01-01'
         nper: 25
         perioddata:
-            - [3652.50000000, 1, 1.]
+            - [3652.50000000, 1, 1.] # perlen, nstp, tsmult
             - [31., 1, 1.]
             - [29., 1, 1.]
             - [31., 1, 1.]
@@ -108,17 +110,7 @@ simulations:
         perioddata: {
           0: {filename: '${input_dir}/freyberg6.sfr_perioddata_1.txt'},
         }
-
-      ghb:
-        print_input: True
-        print_flows: True
-        save_flows: True
-        maxbound: 30
-        stress_period_data: {
-          0: {filename: '${input_dir}/freyberg6.ghb_stress_period_data_1.txt'},
-          }
-      
-      
+    
       rcha:
         save_flows: True
         recharge: {
@@ -148,6 +140,17 @@ simulations:
           23: {filename: '${input_dir}/freyberg6.rch_recharge_24.txt'},
           24: {filename: '${input_dir}/freyberg6.rch_recharge_25.txt'},
         }
+      ghb:
+        src:
+          stress_period_data:
+            pipeline:
+              - processor: read_data
+                input: ghb.csv
+              - processor: to_mf6_txt
+        print_input: True
+        print_flows: True
+        save_flows: True
+        maxbound: 30
       
       # obs:
       #   digits: 10

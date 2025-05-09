@@ -1,4 +1,4 @@
-from rapid_gwm_build.templates.yaml_processor import template_processor
+from rapid_gwm_build.parsers.yaml_processor import template_processor
 
 import logging
 

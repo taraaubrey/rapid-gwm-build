@@ -1,7 +1,7 @@
 
 import networkx as nx
 
-from rapid_gwm_build.nodes.node import NodeBase
+from rapid_gwm_build.nodes.node_cfg import NodeCFG
 from rapid_gwm_build.pipes.pipeline_node import PipelineNode
 
 class NetworkRegistry:
@@ -33,8 +33,8 @@ class NetworkRegistry:
                 "template": "#ffcc99",
                 "module": "lightblue",
                 "pipe": "pink",}
-            color_list.append(node_colors.get(node[1]["ntype"], "gray"))
-        labels = {node:data['name'] for node, data in self._graph.nodes(data=True)}
+            color_list.append(node_colors.get(node[1]['node'].type, "gray"))
+        labels = {node: data['node'].name for node, data in self._graph.nodes(data=True)}
 
         nx.draw_networkx(
             self._graph,
@@ -45,18 +45,13 @@ class NetworkRegistry:
         nx.draw_networkx_labels(self._graph, pos=pos, labels=labels, font_size=8, font_color="black")
         plt.show()
     
-    def add_node(self, id, node: NodeBase):
+    def add_node(self, ncfg: NodeCFG):
         """
         Add a node to the graph with optional attributes.
         :param node: The node identifier (e.g., a string or number).
         :param attributes: Additional attributes to associate with the node.
         """
-        ntype = node.type
-        name = node.name
-        if ntype not in self._allowed_types:
-            raise ValueError(f"Node type '{ntype}' is not allowed. Allowed types are: {self._allowed_types}.")
-
-        self._graph.add_node(id, ntype=ntype, name=name, node=node)
+        self._graph.add_node(ncfg.id, node=ncfg)
 
     def remove_node(self, node):
         """
