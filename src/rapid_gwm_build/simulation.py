@@ -149,7 +149,9 @@ class Simulation:
                     node.resolve(args)
                 if mode == "update":  # this would only build modules that have been changed
                     pass
-            
+                
+                if node.id != 'module.sim':
+                    node.data.set_all_data_external()
                 logging.debug(f"Node {nodeid} built.")
         logging.debug(f"Simulation {self.name} built.")
 

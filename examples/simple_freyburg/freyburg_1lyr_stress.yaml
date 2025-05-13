@@ -12,21 +12,24 @@ simulations:
 
     modules: # these are specific kwargs found in the flopy module
       
-      ghb:
-        src:
-          stress_period_data:
-            pipeline:
-              input: ${vars.input_dir}/ghb.csv
-              pipes:
-                - processor: read_data
-                - processor: to_mf6_txt
-                  map:
-                    period: stress_period
-                  cols: [k, i, j, head, cond]
-        print_input: True
-        print_flows: True
-        save_flows: True
-        maxbound: 30
+      # ghb:
+      #   # src:
+      #   #   stress_period_data:
+      #   #     pipeline:
+      #   #       input: ${vars.input_dir}/ghb.csv
+      #   #       pipes:
+      #   #         - processor: read_data
+      #   #         - processor: to_mf6_txt
+      #   #           map:
+      #   #             period: stress_period
+      #   #           cols: [k, i, j, head, cond]
+      #   print_input: True
+      #   print_flows: True
+      #   save_flows: True
+      #   maxbound: 30
+      #   stress_period_data: {
+      #     0: {filename: '${vars.input_dir}/freyberg6.ghb_stress_period_data_1.txt'}
+      #     }
       
       sim:
         sim_name: freyberg6_simple
