@@ -1,6 +1,6 @@
 [project]
 name = "rapid-gwm-build"
-version = "0.1.0-alpha.0"
+version = "0.1.0-alpha.1"
 description = "A Python package for building numerical groundwater models."
 readme = "README.md"
 authors = [

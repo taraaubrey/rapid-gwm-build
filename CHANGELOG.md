@@ -14,6 +14,11 @@ All notable changes to this project will be documented in this file.
 - ...
 
 ---
+## [0.1.0-alpha.1] - 2025-05-13
+### Added
+- Added pipelines functionilty.
+- Major refactoring.
+
 
 ## [0.1.0-alpha.0] - 2025-05-07
 ### Added
