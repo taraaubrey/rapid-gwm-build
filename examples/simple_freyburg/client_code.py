@@ -24,3 +24,5 @@ sim = create_simulation(input_yaml)
 sim.build()
 
 sim.write()
+
+print('done')

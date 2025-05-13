@@ -53,11 +53,10 @@ class NodeBase:
 
 
 class InputNode(NodeBase):
-    def __init__(self, id: str, input, loader_type="default", **kwargs):
+    def __init__(self, id: str, input, src_data=False, **kwargs):
         super().__init__(id=id)
         self.input = input  # value of the input node (ie. file path)
         # self.path = path
-        self.loader_type = loader_type
         self.kwargs = kwargs
         self._data = None  # will be loaded during execution
     

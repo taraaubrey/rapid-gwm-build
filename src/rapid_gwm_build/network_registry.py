@@ -1,7 +1,7 @@
 
 import networkx as nx
 
-from rapid_gwm_build.nodes.node_cfg import NodeCFG
+from rapid_gwm_build.nodes.node_base import NodeCFG
 from rapid_gwm_build.pipes.pipeline_node import PipelineNode
 
 class NetworkRegistry:

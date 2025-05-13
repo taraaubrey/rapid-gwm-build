@@ -21,6 +21,43 @@ class ConfigParser:
             return yaml.safe_load(file)
 
     @classmethod
+    def substitute_config(cls, config):
+        return cls.recursive_substitute(config, config)
+    
+    @staticmethod
+    def resolve_placeholder(value, context):
+        """
+        Resolve a single placeholder in the value string.
+        """
+        if isinstance(value, str):
+            # Match placeholders like ${key.subkey1.subkey2}
+            while "${" in value:
+                matches = re.findall(r"\$\{([a-zA-Z0-9_.]+)\}", value)
+                for match in matches:
+                    keys = match.split(".")
+                    resolved_value = context
+                    for key in keys:
+                        resolved_value = resolved_value.get(key, None)
+                        if resolved_value is None:
+                            raise KeyError(f"Key '{match}' not found in the configuration.")
+                    value = value.replace(f"${{{match}}}", str(resolved_value))
+        return value
+
+    @classmethod
+    def recursive_substitute(cls, obj, context):
+        """
+        Recursively substitute placeholders in the object.
+        """
+        if isinstance(obj, dict):
+            return {key: cls.recursive_substitute(value, context) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [cls.recursive_substitute(item, context) for item in obj]
+        else:
+            return cls.resolve_placeholder(obj, context)
+
+
+
+    @classmethod
     def substitute_vars(cls, config):
         """Substitute variables in the config using the 'vars' block."""
         vars_ = config.get("vars", {})
@@ -45,7 +82,7 @@ class ConfigParser:
         for node_type in ["mesh", "modules", "pipes"]:
             node_manager.parse_node(node_type, sim_cfg.get(node_type, None))
 
-        return node_manager.nodes
+        return {n.id: n for n in node_manager.nodes}
     
     @classmethod
     def parse_mesh(cls, nodes, sim_cfg, section='mesh'):
@@ -114,8 +151,9 @@ class ConfigParser:
         """Parse the user config and return a normalized structure."""
         config = cls.load_yaml(config_filepath)
 
+        config = cls.substitute_config(config)
         # First, substitute variables (like ${data_dir})
-        config = cls.substitute_vars(config)
+        # config = cls.substitute_vars(config)
 
         all_sims = {}
 
@@ -125,6 +163,7 @@ class ConfigParser:
             node_cfgs = cls._get_node_cfg(sim_cfg)
             all_sims[sim_name] = {
                 "sim_type": sim_cfg["sim_type"],  # e.g., 'mf6'
+                "ws": sim_cfg["ws"],  # Working directory
                 "nodes": node_cfgs  # Extracted nodes (modules + inputs)
             }
 

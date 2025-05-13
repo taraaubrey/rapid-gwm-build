@@ -42,7 +42,7 @@ class NodeParser:
         updated_refs = {}
         for attr, src_val in src_cfg.items():
             src_ncfg = self.node_builder.create(node_type='input', ncfg=ncfg, attr='src')
-            ref_id = self.parse_input(ncfg=src_ncfg, attr=attr, src=src_val)
+            ref_id = self.parse_input(ncfg=src_ncfg, attr=attr, src=src_val, src_arg=False)
             updated_refs[attr] = ref_id
         return updated_refs
 
@@ -57,7 +57,7 @@ class NodeParser:
                         new_cfg = self.parse_src(ncfg, v)
                         module_refs.update(new_cfg)
                     else:
-                        ref_id = self.parse_input(ncfg, k, v)
+                        ref_id = self.parse_input(ncfg=ncfg, attr=k, src=v)
                         module_refs[k] = ref_id
 
                 ncfg.src = module_refs
@@ -67,8 +67,8 @@ class NodeParser:
             raise NotImplementedError(f"Unsupported module configuration type: {type(modules_cfg)}") #TODO: not implemented yet
 
     
-    def parse_input(self, ncfg, attr, src):
-        new_ncfg = self.node_builder.create(node_type='input', ncfg=ncfg, attr=attr)
+    def parse_input(self, ncfg, attr, src, src_arg=True):
+        new_ncfg = self.node_builder.create(node_type='input', ncfg=ncfg, attr=attr, src_arg=src_arg)
         
         if isinstance(src, dict) and src.get('pipeline'):
             ref_id = self.parse_pipeline(ncfg=new_ncfg, src=src['pipeline'])
@@ -81,9 +81,12 @@ class NodeParser:
             
 
     def parse_pipeline(self, ncfg, src):
-        pipeline_ncfg = self.node_builder.create(node_type='pipeline', ncfg=ncfg)
+        src_input = src.pop('input')
+        in_refid = self.parse_input(ncfg, attr=['pipeline', 'input'], src=src_input, src_arg=False)
+
+        pipeline_ncfg = self.node_builder.create(node_type='pipeline', ncfg=ncfg, src_input=in_refid)
         pipes = []
-        for pipe_src in src:
+        for pipe_src in src.get('pipes'):
             ref_id = self.parse_pipes(pipeline_ncfg, pipe_src)
             pipes.append(ref_id)
         
@@ -101,7 +104,7 @@ class NodeParser:
         
         new_src = {}
         for attr, src_val in src.items():
-            ref_id = self.parse_input(ncfg=pipe_ncfg, attr=attr, src=src_val)
+            ref_id = self.parse_input(ncfg=pipe_ncfg, attr=attr, src=src_val, src_arg=False)
             new_src[attr] = ref_id
 
         pipe_ncfg.src = new_src
