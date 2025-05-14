@@ -27,6 +27,7 @@ module_schema = {
         "required": False,
         "default": None,
     },
+    "src_data_input": {"type": "dict", "required": False},
     "allowed_to_build_default": {"type": "boolean", "required": False, "default": True},
     "runtime_dependencies": {
         "nullable": True,

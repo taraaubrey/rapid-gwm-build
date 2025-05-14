@@ -98,15 +98,21 @@ module_templates:
             stressperioddata:
                 pipeline:
                     - processor: to_stress_period_data
-                      input: [data.drn.cond, data.drn.elev]
-                      column_names: ['cond', 'elev']
+                      input: 
+                        cond: '@pipe.drn.src_data.cond.discretie_2D'
+                        elev: '@pipe.drn.src_data.elev.discretie_2D'
+                        mask: '@mesh.active_domain'
+                      cols: ['cond', 'elev']
                       format: 'some_format'
-        data:
+        src_data_input:
             cond: #output -> @data.drn.<name_mod>.cond
                 pipeline:
-                    - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
-                      input: ['@input.modules.drn-.derived_from.cond']
-                      mesh: '@mesh.grid'
+                    pipes:
+                        - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
+                          mesh: '@mesh.grid'
+                          # output: (input.drn.src.cond).data
+                        # input: ['@input.module.src.data.cond']
+                        # mesh: '@mesh.grid'
             elev:
                 pipeline:
                     - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}

@@ -12,7 +12,6 @@ simulations:
 
     modules: # these are specific kwargs found in the flopy module
       
-      
       sim:
         sim_name: freyberg6_simple
         sim_ws: ${simulations.freyburg_simple.ws}
@@ -142,6 +141,8 @@ simulations:
       
       ghb:
         src:
+          # cond: ${vars.input_dir}/freyberg6.ghb_cond_layer1.txt
+          # head: ${vars.input_dir}/freyberg6.ghb_head_layer1.txt
           stress_period_data:
             pipeline:
               input: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\simple_freyburg\data\ghb.csv

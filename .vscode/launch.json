@@ -6,10 +6,10 @@
     "configurations": [
         
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python Debugger: Specific File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/examples/simple_freyburg/client_code.py",
             "console": "integratedTerminal",
             "justMyCode": false
         }

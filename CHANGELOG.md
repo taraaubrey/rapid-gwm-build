@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
-- ...
+- also works with pipeline external data
 
 ### Changed
 - ...
@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - ...
+  
+### Todos
+- no tests :s
+- graph pipelines needs adjusting
 
 ---
 ## [0.1.0-alpha.1] - 2025-05-13

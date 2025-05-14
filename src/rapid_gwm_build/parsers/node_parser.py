@@ -84,11 +84,12 @@ class NodeParser:
         src_input = src.pop('input')
         in_refid = self.parse_input(ncfg, attr=['pipeline', 'input'], src=src_input, src_arg=False)
 
-        pipeline_ncfg = self.node_builder.create(node_type='pipeline', ncfg=ncfg, src_input=in_refid)
+        pipeline_ncfg = self.node_builder.create(node_type='pipeline', ncfg=ncfg)
         pipes = []
         for pipe_src in src.get('pipes'):
-            ref_id = self.parse_pipes(pipeline_ncfg, pipe_src)
+            ref_id = self.parse_pipes(pipeline_ncfg, pipe_src, pipe_input=in_refid)
             pipes.append(ref_id)
+            in_refid = ref_id # update the input reference for the next pipe
         
         pipeline_ncfg.src = src
         pipeline_ncfg.pipes = pipes
@@ -97,10 +98,10 @@ class NodeParser:
         return pipeline_ncfg.ref_id
 
 
-    def parse_pipes(self, ncfg, src):
+    def parse_pipes(self, ncfg, src, pipe_input):
         # create a pipe_ncfg
         processor = src.pop('processor')
-        pipe_ncfg = self.node_builder.create(node_type='pipe', ncfg=ncfg, attr=processor)
+        pipe_ncfg = self.node_builder.create(node_type='pipe', ncfg=ncfg, attr=processor, input=pipe_input)
         
         new_src = {}
         for attr, src_val in src.items():

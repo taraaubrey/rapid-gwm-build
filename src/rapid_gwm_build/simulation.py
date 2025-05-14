@@ -132,28 +132,30 @@ class Simulation:
     def build(self, mode="all"): #TODO move to GraphClass
         
         
-        for nodeid in nx.topological_sort(self.graph._graph):
+        for nodeid in nx.topological_sort(self.graph._graph): #TODO don't resolve nodes which are not needed
             node = self.nodes[nodeid]
-            if node.type == 'module':
-                args = {}
-                for dep_id in self.graph._graph.predecessors(nodeid):
-                    if dep_id not in self.nodes.keys():
-                        raise ValueError(f"Module {dep_id} not found in the simulation.")
+            node.resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
+            
+        #     if node.type == 'module':
+        #         args = {}
+        #         for dep_id in self.graph._graph.predecessors(nodeid):
+        #             if dep_id not in self.nodes.keys():
+        #                 raise ValueError(f"Module {dep_id} not found in the simulation.")
 
-                    elif not self.nodes[dep_id].data:
-                        self.nodes[dep_id].resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
+        #             elif not self.nodes[dep_id].data:
+        #                 self.nodes[dep_id].resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
                     
-                    args[dep_id] = self.nodes[dep_id].data
+        #             args[dep_id] = self.nodes[dep_id].data
 
-                if mode == "all":
-                    node.resolve(args)
-                if mode == "update":  # this would only build modules that have been changed
-                    pass
+        #         if mode == "all":
+        #             node.resolve(args)
+        #         if mode == "update":  # this would only build modules that have been changed
+        #             pass
                 
-                if node.id != 'module.sim':
-                    node.data.set_all_data_external()
-                logging.debug(f"Node {nodeid} built.")
-        logging.debug(f"Simulation {self.name} built.")
+        #         if node.id != 'module.sim':
+        #             node.data.set_all_data_external()
+        #         logging.debug(f"Node {nodeid} built.")
+        # logging.debug(f"Simulation {self.name} built.")
 
     def write(self):
         pass

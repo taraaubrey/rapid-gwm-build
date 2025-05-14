@@ -11,8 +11,24 @@ class PipeNode(NodeCFG):
     """
     def __init__(self, **kwargs):
         super().__init__('pipe', **kwargs)
+        self._input = None
     
-    def resolve(self, input_data, sim_nodes: dict=None, derived_dir=None, **kwargs):
+    
+    @property
+    def input(self):
+        """
+        Returns the input of the node.
+        """
+        return self._input
+    
+    @input.setter
+    def input(self, value):
+        """
+        Sets the input of the node.
+        """
+        self._input = value
+    
+    def resolve(self, sim_nodes: dict=None, derived_dir=None, **kwargs):
         """
         Get the data for this node. This method should be overridden in subclasses.
         """
@@ -22,11 +38,21 @@ class PipeNode(NodeCFG):
         for k, v in self.src.items():
             if isinstance(v, str) and v.startswith("@"):
                 dep_node = sim_nodes.get(v[1:])
-                if not dep_node.data:
-                    dep_node.resolve()
                 kwargs[k] = dep_node.data
+        
+        # Get the input data
+        if isinstance(self.input, str) and self.input.startswith("@"):
+            input_node = sim_nodes[self.input[1:]]
+            input_data = input_node.data
 
         self._data = func(input_data, node_id=self.id, outdir=derived_dir, **kwargs)
+
+    
+    def _get_dependencies(self):
+        """
+        Get the dependencies for this node. This method should be overridden in subclasses.
+        """
+        return self._input_dependencies(self.input)
 
 
 
@@ -34,27 +60,27 @@ class PipelineNode(NodeCFG):
     """
     Class to represent a node ID in the GWM file.
     """
-    def __init__(self, src_input=None, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__('pipeline', **kwargs)
         self._pipes = []
-        self._src_input = src_input
+        # self._src_input = src_input
         self.int_data = []
     
-    @property
-    def src_input(self):
-        """
-        Returns the input of the node.
-        """
-        return self._src_input
+    # @property
+    # def src_input(self):
+    #     """
+    #     Returns the input of the node.
+    #     """
+    #     return self._src_input
     
-    @src_input.setter
-    def src_input(self, value):
-        """
-        Sets the input of the node.
-        """
-        if not isinstance(value, list | str):
-            raise ValueError("Input must be a list.")
-        self._src_input = value
+    # @src_input.setter
+    # def src_input(self, value):
+    #     """
+    #     Sets the input of the node.
+    #     """
+    #     if not isinstance(value, list | str):
+    #         raise ValueError("Input must be a list.")
+    #     self._src_input = value
     
     @property
     def pipes(self):
@@ -77,31 +103,28 @@ class PipelineNode(NodeCFG):
         Get the dependencies for this node. This method should be overridden in subclasses.
         """
         
-        dep_pipes = self._input_dependencies(self.pipes)
-        dep_input = self._input_dependencies(self.src_input)
+        return self._input_dependencies(self.pipes)
+        # dep_input = self._input_dependencies(self.src_input)
 
-        if dep_pipes and dep_input:
-            return dep_pipes + dep_input
-        elif dep_pipes:
-            return dep_pipes
-        elif dep_input:
-            return dep_input
+        # if dep_pipes and dep_input:
+        #     return dep_pipes + dep_input
+        # elif dep_pipes:
+        #     return dep_pipes
+        # elif dep_input:
+        #     return dep_input
     
     
     def resolve(self, sim_nodes: dict=None, ref_dir=None, derived_dir=None, **kwargs):
-        input_node = sim_nodes[self.src_input[1:]]
-
-        if not input_node.data:
-            input_node.resolve()
 
         for pipe_rif in self.pipes:
             pipe_node = sim_nodes.get(pipe_rif[1:])
-            if not pipe_node.data:
-                pipe_node.resolve(input_node.data, sim_nodes=sim_nodes, derived_dir=derived_dir, **kwargs)
-                out_data = pipe_node.data
-                self.int_data.append(out_data)
-            else:
-                raise ValueError(f"Pipe node {pipe_node} not found in the simulation.")
+            self.int_data.append(pipe_node.data)
+            # if not pipe_node.data:
+            #     pipe_node.resolve(input_node.data, sim_nodes=sim_nodes, derived_dir=derived_dir, **kwargs)
+            #     out_data = pipe_node.data
+            #     self.int_data.append(out_data)
+            # else:
+            #     raise ValueError(f"Pipe node {pipe_node} not found in the simulation.")
 
         self._data = self.int_data[-1]
 
@@ -168,8 +191,9 @@ class ModuleNode(NodeCFG):
                     self._args[arg] = self.template['build_dependencies'].get(arg)
     
     
-    def resolve(self, args={}, **kwargs):
-        cmd_args = self._resolve_references(args)  # Resolve references in the args
+    def resolve(self, sim_nodes: dict=None, ref_dir=None, derived_dir=None, **kwargs):
+        cmd_args = self._get_arg_data(sim_nodes)  # Get the data for the arguments
+        # cmd_args = self._resolve_references(args)  # Resolve references in the args
 
         # build the module using the template and args
         if self.func is None:
@@ -192,6 +216,21 @@ class ModuleNode(NodeCFG):
                 new_value = args.get(ref_id, None)  # Get the value from the args
                 cmd_args[key] = new_value  # Update the value in the cmd_args
         return cmd_args
+
+    def _get_arg_data(self, sim_nodes: dict):
+        """
+        Get the data for the arguments of the module. This method should be overridden in subclasses.
+        """
+        arg_data = {}
+        for k, v in self.args.items():
+            if isinstance(v, str) and v.startswith("@"):
+                dep_node = sim_nodes.get(v[1:])
+                if not dep_node.data:
+                    raise ValueError(f"Dependency node {dep_node} is empty.")
+                arg_data[k] = dep_node.data
+            else:
+                arg_data[k] = v
+        return arg_data
 
 
 class MeshNode(NodeCFG):
