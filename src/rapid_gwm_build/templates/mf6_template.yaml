@@ -63,8 +63,13 @@ module_templates:
     dis:
         build_dependencies: 
             model: '@module.gwf'
+            nlay: '@mesh.nlay'
+            nrow: '@mesh.nrow'
+            ncol: '@mesh.ncol'
+            delr: '@mesh.delr'
+            delc: '@mesh.delc'
             top: '@mesh.top'
-            botm: '@mesh.botm'
+            botm: '@mesh.bottoms'
             idomain: '@mesh.active_domain'
         func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False

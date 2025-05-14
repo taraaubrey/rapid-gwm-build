@@ -57,7 +57,6 @@ class NodeBuilder:
         if not isinstance(old_ncfg, NodeCFG):
             raise ValueError(f"Invalid node configuration: {ncfg}. Expected NodeCFG instance.")
         
-
         if new_type != old_ncfg.type:
             Node = self.node_type.get(new_type)
             new_ncfg = Node.from_node(old_ncfg, kwargs)

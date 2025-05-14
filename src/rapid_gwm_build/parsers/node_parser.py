@@ -125,12 +125,17 @@ class NodeParser:
     
     
     def parse_mesh(self, mesh_cfg):
-        # for key, cfg in mesh_cfg.items():
+        mesh_ncfg = self.node_builder.create(node_type='mesh')
+        updated_refs = {}
+        for k, v in mesh_cfg.items():
+                ref_id = self.parse_input(ncfg=mesh_ncfg, attr=['mesh', k], src=v, src_arg=False)
+                updated_refs[k] = ref_id
+        mesh_ncfg.src = updated_refs
+        self.nodes.append(mesh_ncfg)
 
-
-        mesh_cfg = sim_cfg.get(section, {})
-        if mesh_cfg:
-            mesh_cfg, nodes = cls.parse_input(nodes, section, mesh_cfg)
-            nodes['mesh'].update(mesh_cfg)
-        return nodes
+        # mesh_cfg = sim_cfg.get(section, {})
+        # if mesh_cfg:
+        #     mesh_cfg, nodes = cls.parse_input(nodes, section, mesh_cfg)
+        #     nodes['mesh'].update(mesh_cfg)
+        # return nodes
     

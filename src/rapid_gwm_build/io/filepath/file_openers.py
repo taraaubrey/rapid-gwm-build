@@ -37,3 +37,9 @@ class CSVOpener(FileOpener):
     def open(filepath, opener_kwargs={}):
         import pandas as pd
         return pd.read_csv(filepath, **opener_kwargs)
+
+@dataclass
+class ArrayOpener(FileOpener):
+    def open(filepath, opener_kwargs={}):
+        import numpy as np
+        return np.loadtxt(filepath, **opener_kwargs)

@@ -56,27 +56,40 @@ class Simulation:
             derived_dir=derived_dir,
         )
 
-        for node_id, node in sim_cfg['nodes'].items():
-            sim._new_node(node)
-
-    
+        for ncfg in sim_cfg['nodes'].values():
+            sim._new_node(ncfg=ncfg)
         return sim
+    
+    def _check_nodeid_in_sim(self, node_id: str):
+        if node_id not in self.nodes.keys() and node_id not in self.cfg['nodes'].keys():
+            return False
+
+        node_list = [node_id for node_id in self.nodes.keys()]
+        match_nodeid = utils.match_nodeid(node_id, node_list) #TODO more advanced matching method
+
+        if not match_nodeid:
+            self._new_node(node_id=node_id)
+        return True
+
     
     def _resolve_references(self, node):
         if node.dependencies:
             for dep_id in node.dependencies:
-
-                if dep_id not in self.nodes.keys() and dep_id not in self.cfg['nodes'].keys():
-                    raise ValueError(f"Node {dep_id} not found in the simulation.")
+                check = self._check_nodeid_in_sim(dep_id)
                 
-                #get node from self.nodes
-                node_list = [node_id for node_id in self.nodes.keys()]
-                dep_nodeid = utils.match_nodeid(dep_id, node_list)
+                if not check:
+                    if dep_id.split(".")[0] == "mesh":
+                        self._check_nodeid_in_sim('mesh')
+                        # create a new mesh node with data from the mesh node -> ie. create the mesh.top node
+                        mesh_node = self.nodes.get('mesh')
+                        new_kwargs = {
+                            'attr': dep_id.split(".")[1],
+                            'mesh': mesh_node.ref_id,
+                            'param': dep_id.split(".")[1],
+                        }
+                        new_ncfg = mesh_node.from_node(old_ncfg=mesh_node, kwargs=new_kwargs)
+                        self._new_node(ncfg=new_ncfg)
 
-                if not dep_nodeid:
-                    dep_cfg = self.cfg['nodes'].get(dep_id, None)
-                    self._new_node(dep_cfg)
-                    
                 
                 self.add_edge(dep_id, node.id)
 
@@ -85,13 +98,18 @@ class Simulation:
             pass
                     
     
-    def _new_node(self, ncfg: NodeCFG):
+    def _new_node(self, node_id: str=None, ncfg: NodeCFG=None):
+        if node_id and ncfg:
+            if node_id != ncfg.id:
+                raise ValueError(f"Node ID {node_id} does not match node configuration ID {ncfg.id}.")
+        elif node_id:
+            ncfg = self.cfg['nodes'].get(node_id, None)
+        
         self._node_from_cfg(ncfg)
         self._resolve_references(ncfg)
 
 
     def _node_from_cfg(self, ncfg):
-        
         if ncfg.id in [n_id for n_id in self.nodes.keys()]:
             pass
         else:
@@ -130,35 +148,13 @@ class Simulation:
 
     
     def build(self, mode="all"): #TODO move to GraphClass
-        
-        
         for nodeid in nx.topological_sort(self.graph._graph): #TODO don't resolve nodes which are not needed
             node = self.nodes[nodeid]
             node.resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
-            
-        #     if node.type == 'module':
-        #         args = {}
-        #         for dep_id in self.graph._graph.predecessors(nodeid):
-        #             if dep_id not in self.nodes.keys():
-        #                 raise ValueError(f"Module {dep_id} not found in the simulation.")
+        logging.debug(f"Simulation {self.name} built successfully.")
 
-        #             elif not self.nodes[dep_id].data:
-        #                 self.nodes[dep_id].resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
-                    
-        #             args[dep_id] = self.nodes[dep_id].data
-
-        #         if mode == "all":
-        #             node.resolve(args)
-        #         if mode == "update":  # this would only build modules that have been changed
-        #             pass
-                
-        #         if node.id != 'module.sim':
-        #             node.data.set_all_data_external()
-        #         logging.debug(f"Node {nodeid} built.")
-        # logging.debug(f"Simulation {self.name} built.")
-
+    
     def write(self):
-        pass
         ins = self.template['write']
 
         for i, call_dict in ins.items():

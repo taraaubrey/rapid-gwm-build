@@ -5,7 +5,8 @@ from .file_openers import (
     RasterOpener,
     ShapefileOpener,
     NetCDFOpener,
-    CSVOpener
+    CSVOpener,
+    ArrayOpener
 )
 
 class FileTypeFactory:
@@ -40,3 +41,4 @@ filetype_factory.register("asc", RasterOpener)
 filetype_factory.register("shp", ShapefileOpener)
 filetype_factory.register("cdf", NetCDFOpener)
 filetype_factory.register("csv", CSVOpener)
+filetype_factory.register("arr", ArrayOpener)

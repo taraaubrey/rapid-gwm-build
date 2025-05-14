@@ -1,9 +1,11 @@
+import numpy as np
 
 from rapid_gwm_build import utils
 from rapid_gwm_build.io.input_types import InputValueSpec
 from rapid_gwm_build.nodes.node_base import NodeCFG
 from rapid_gwm_build.io.user_input_factory import user_input_factory
 from rapid_gwm_build.pipes.pipe_registry import pipe_registry
+from rapid_gwm_build.mesh import Mesh
 
 class PipeNode(NodeCFG):
     """
@@ -52,8 +54,14 @@ class PipeNode(NodeCFG):
         """
         Get the dependencies for this node. This method should be overridden in subclasses.
         """
-        return self._input_dependencies(self.input)
-
+        input_dep = self._input_dependencies(self.input)
+        src_dep = self._input_dependencies(self.src)
+        if input_dep is not None and src_dep is not None:
+            return input_dep + src_dep
+        elif input_dep is not None:
+            return input_dep
+        elif src_dep is not None:
+            return src_dep
 
 
 class PipelineNode(NodeCFG):
@@ -65,22 +73,6 @@ class PipelineNode(NodeCFG):
         self._pipes = []
         # self._src_input = src_input
         self.int_data = []
-    
-    # @property
-    # def src_input(self):
-    #     """
-    #     Returns the input of the node.
-    #     """
-    #     return self._src_input
-    
-    # @src_input.setter
-    # def src_input(self, value):
-    #     """
-    #     Sets the input of the node.
-    #     """
-    #     if not isinstance(value, list | str):
-    #         raise ValueError("Input must be a list.")
-    #     self._src_input = value
     
     @property
     def pipes(self):
@@ -104,14 +96,6 @@ class PipelineNode(NodeCFG):
         """
         
         return self._input_dependencies(self.pipes)
-        # dep_input = self._input_dependencies(self.src_input)
-
-        # if dep_pipes and dep_input:
-        #     return dep_pipes + dep_input
-        # elif dep_pipes:
-        #     return dep_pipes
-        # elif dep_input:
-        #     return dep_input
     
     
     def resolve(self, sim_nodes: dict=None, ref_dir=None, derived_dir=None, **kwargs):
@@ -119,16 +103,8 @@ class PipelineNode(NodeCFG):
         for pipe_rif in self.pipes:
             pipe_node = sim_nodes.get(pipe_rif[1:])
             self.int_data.append(pipe_node.data)
-            # if not pipe_node.data:
-            #     pipe_node.resolve(input_node.data, sim_nodes=sim_nodes, derived_dir=derived_dir, **kwargs)
-            #     out_data = pipe_node.data
-            #     self.int_data.append(out_data)
-            # else:
-            #     raise ValueError(f"Pipe node {pipe_node} not found in the simulation.")
 
         self._data = self.int_data[-1]
-
-        
 
 
 class ModuleNode(NodeCFG):
@@ -147,12 +123,6 @@ class ModuleNode(NodeCFG):
         Get the dependencies for this node. This method should be overridden in subclasses.
         """
         input_dependencies =  self._input_dependencies(self.args)
-        
-        # if self.template['build_dependencies']:
-        #     for k, v in self.template['build_dependencies'].items():
-        #         if v not in self.src:
-        #             dep_id = self._input_dependencies(v)
-        #             input_dependencies.append(dep_id)
 
         return input_dependencies
 
@@ -237,8 +207,61 @@ class MeshNode(NodeCFG):
     """
     Class to represent a node ID in the GWM file.
     """
-    def __init__(self, kwargs: dict):
+    def __init__(
+            self,
+            **kwargs):
         super().__init__('mesh', **kwargs)
+        self._param = None
+        self._mesh = None
+
+    @property
+    def mesh(self):
+        return self._mesh
+    
+    @mesh.setter
+    def mesh(self, value):
+        if value.startswith("@"):
+            self._mesh = value
+        else:
+            raise ValueError("Cannot modify mesh. Update the source instead.")
+
+    def _set_mesh(self, sim_nodes):
+        kwargs = {}
+        for k, v in self.src.items():
+            if isinstance(v, str) and v.startswith("@"):
+                dep_node = sim_nodes.get(v[1:])
+                kwargs[k] = dep_node.data
+            else:
+                kwargs[k] = v
+
+        self._mesh = Mesh(**kwargs)
+
+    @property
+    def param(self):
+        return self._param
+    
+    @param.setter
+    def param(self, value):
+        self._param = value
+
+    def _get_dependencies(self):
+        src_dep = self._input_dependencies(self.src)
+        mesh_dep = self._input_dependencies(self.mesh)
+    
+    def resolve(self, sim_nodes: dict, **kwargs):
+        """
+        Get the data for this node. This method should be overridden in subclasses.
+        """
+        if self.id == 'mesh':
+            self._set_mesh(sim_nodes)
+        elif self.mesh.startswith("@"):
+            mesh_node = sim_nodes.get(self._mesh[1:])
+            self._data = mesh_node.data.getattr(self.param)
+        else:
+            self._set_mesh()
+            self._data = self.mesh
+
+
 
 
 class InputNode(NodeCFG):

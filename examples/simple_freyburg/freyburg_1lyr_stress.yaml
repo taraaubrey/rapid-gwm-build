@@ -9,9 +9,19 @@ simulations:
     ws: ${vars.ws}/models/freyburg_simple # these get created
     #   mode: overwrite # overwrite OR update
     # load_existing: ${vars.input_dir}
-
+    mesh:
+      kind: structured # required
+      nlay: 1
+      nrow: 40
+      ncol: 20
+      resolution: 10
+      # delr: ${vars.input_dir}/freyberg6.dis_delr.txt
+      # delc: ${vars.input_dir}/freyberg6.dis_delc.txt
+      top: ${vars.input_dir}/freyberg6.dis_top.arr
+      bottoms: ${vars.input_dir}/freyberg6.dis_botm_layer1.arr
+      active_domain: ${vars.input_dir}/freyberg6.dis_idomain_layer1.arr
+    
     modules: # these are specific kwargs found in the flopy module
-      
       sim:
         sim_name: freyberg6_simple
         sim_ws: ${simulations.freyburg_simple.ws}
@@ -25,8 +35,8 @@ simulations:
         complexity: COMPLEX
       
       oc:
-        budgetfilerecord: freyberg6_freyberg.cbc
-        headfilerecord: freyberg6_freyberg.hds
+        budget_filerecord: freyberg6_freyberg.cbc
+        head_filerecord: freyberg6_freyberg.hds
         # headprintrecord: [(10, 11, 4, GENERAL)]
         saverecord:
           0: [[BUDGET, LAST], [HEAD, LAST]]
@@ -67,11 +77,11 @@ simulations:
       dis:
         # model: modules.gwf.shellmounda
         length_units: meters
-        nlay: 1
-        nrow: 40
-        ncol: 20
-        delr: ${vars.input_dir}/freyberg6.dis_delr.txt
-        delc: ${vars.input_dir}/freyberg6.dis_delc.txt
+        # nlay: 1
+        # nrow: 40
+        # ncol: 20
+        # delr: ${vars.input_dir}/freyberg6.dis_delr.txt
+        # delc: ${vars.input_dir}/freyberg6.dis_delc.txt
         top: ${vars.input_dir}/freyberg6.dis_top.txt
         botm: ${vars.input_dir}/freyberg6.dis_botm_layer1.txt
         idomain: ${vars.input_dir}/freyberg6.dis_idomain_layer1.txt
@@ -150,8 +160,9 @@ simulations:
                 - processor: read_data
                 - processor: to_mf6_txt
                   map:
-                    period: stress_period
-                  cols: [k, i, j, head, cond]
+                    period: stress_period # map to adjust the column names
+                    head: bhead
+                  cols: [k, i, j, bhead, cond] #order to output the filenames
         print_input: True
         print_flows: True
         save_flows: True

@@ -5,30 +5,37 @@ import gridit as gi
 class Mesh:
     def __init__(
             self,
+            kind: str = "structured",
             nlay = 1,
-            ncol = 10,
             nrow = 10,
-            resolution = 10,
-            top:np.array = None,
-            botms: np.array = None,
+            ncol = 10,
+            delr = None,
+            delc = None,
+            resolution = None,
+            top:np.ndarray = None,
+            bottoms: np.ndarray | dict = None,
             xorigin = 0.0, # based on xorigin of the upper-left corner of the upper-left pixel
             yorigin = 0.0, # based on yorigin of the upper-left corner of the upper-left pixel
             active_domain = None,
-            cfg: dict = None,
+            # cfg: dict = None,
     ):
-        self.cfg = cfg
+        # self.cfg = cfg
         self.nlay = nlay
         self.ncol = ncol
         self.nrow = nrow
-        self.resolution = resolution
+        
+        self.resolution = resolution if resolution is not None and delr is None and delc is None else None
+        self.delr = delr if delr is not None else np.ones(ncol) * resolution
+        self.delc = delc if delc is not None else np.ones(nrow) * resolution
+
         self.top = top
-        self.botms = botms
+        self.bottoms = self._set_bottoms(bottoms)
         self.xorigin = xorigin
         self.yorigin = yorigin
         self.active_domain = active_domain
 
         # create grid
-        self.Grid2D = self._make2DGrid()
+        self.grid = self._make2DGrid()
 
     @classmethod
     def from_cfg(cls, cfg: dict):
@@ -64,3 +71,20 @@ class Mesh:
         """
         xy_shape = (self.ncol, self.nrow)
         return gi.Grid(resolution=self.resolution, shape=xy_shape, top_left=(self.xorigin, self.yorigin))
+
+    def _set_bottoms(self, bottoms):
+        """
+        Set the bottoms of the mesh.
+        """
+        if isinstance(bottoms, dict):
+            return bottoms
+        elif isinstance(bottoms, np.ndarray):
+            ndim = bottoms.ndim
+            if ndim == 2 and self.nlay == 1:
+                # 2D array, reshape to (nlay, nrow, ncol)
+                bottoms = bottoms.reshape(self.nlay, self.nrow, self.ncol)
+            else:
+                raise NotImplementedError("Something wrong with the shape of the bottoms array.")
+            return {f"botm_{i}": bottoms[i] for i in range(self.nlay)}
+        else:
+            raise ValueError("Bottoms must be a dictionary or a numpy array.")

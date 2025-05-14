@@ -18,12 +18,4 @@ def create_simulation(cfg_filepath: os.PathLike):
 
         sim = Simulation.from_config(sim_name, sim_cfg, ref_dir=ref_dir, derived_dir=derived_dir) #TODO: for each sim_cfg
 
-        sim
-
-    # # Manually override a node or add one
-    # sim.graph.remove_node("npf-mynpf")
-    # sim.graph.add_node("npf-mynpf", ModuleNode(...))
-
-    # sim.run()
-
     return sim
