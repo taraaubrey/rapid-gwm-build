@@ -1,11 +1,10 @@
 from __future__ import annotations
 from copy import deepcopy
-from abc import ABC, abstractmethod
 
 from rapid_gwm_build.nodes.node_base import NodeCFG
 from rapid_gwm_build.nodes.node_types import MeshNode, InputNode, ModuleNode, PipeNode, PipelineNode
 
-class NodeBuilder:
+class NodeFactory:
     def __init__(self):
         self._node_type = {
             'mesh': MeshNode,
@@ -29,19 +28,19 @@ class NodeBuilder:
         """
         return self._node_type
     
-    def create(
+    def build_node(
             self,
             node_type: str,
-            ncfg: NodeCFG=None,
+            from_node: NodeCFG=None,
             **kwargs):
         """
         Factory method to create a NodeCFG instance.
         """
-        if isinstance(ncfg, NodeCFG):
-            return self._update_from_clone(old_ncfg=ncfg, new_type=node_type, **kwargs)
+        if isinstance(from_node, NodeCFG):
+            return self._update_from_clone(from_node=from_node, new_type=node_type, **kwargs)
         elif isinstance(node_type, str):
             Node = self.node_type.get(node_type)
-            return Node.create(kwargs=kwargs)
+            return Node.create(**kwargs)
         else:
             raise ValueError(f"Invalid key type: {type(key)}. Expected str or NodeCFG.")
 
@@ -49,19 +48,19 @@ class NodeBuilder:
     def _update_from_clone(
             self,
             new_type: str,
-            old_ncfg: NodeCFG,
+            from_node: NodeCFG,
             **kwargs):
         """
         Factory method to create a NodeCFG instance from an existing NodeCFG.
         """
-        if not isinstance(old_ncfg, NodeCFG):
-            raise ValueError(f"Invalid node configuration: {ncfg}. Expected NodeCFG instance.")
+        if not isinstance(from_node, NodeCFG):
+            raise ValueError(f"Invalid node configuration: {from_node}. Expected NodeCFG instance.")
         
-        if new_type != old_ncfg.type:
+        if new_type != from_node.type:
             Node = self.node_type.get(new_type)
-            new_ncfg = Node.from_node(old_ncfg, kwargs)
+            new_ncfg = Node.from_node(from_node, kwargs)
         else:
-            new_ncfg = deepcopy(old_ncfg)
+            new_ncfg = deepcopy(from_node)
             new_ncfg.update(**kwargs)
 
         return new_ncfg

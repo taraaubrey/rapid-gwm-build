@@ -80,71 +80,11 @@ class ConfigParser:
         node_manager = NodeParser()
 
         for node_type in ["mesh", "modules", "pipes"]:
-            node_manager.parse_node(node_type, sim_cfg.get(node_type, None))
+            type_cfg = sim_cfg.get(node_type, None)
+            if type_cfg:
+                node_manager.parse_node(node_type, **type_cfg)
 
         return {n.id: n for n in node_manager.nodes}
-    
-    @classmethod
-    def parse_mesh(cls, nodes, sim_cfg, section='mesh'):
-        mesh_cfg = sim_cfg.get(section, {})
-        if mesh_cfg:
-            mesh_cfg, nodes = cls.parse_input(nodes, section, mesh_cfg)
-            nodes['mesh'].update(mesh_cfg)
-        return nodes
-    
-    @classmethod
-    def parse_modules(cls, nodes, sim_cfg, section='module'):
-        for modules_name, modules_cfg in sim_cfg.get('modules', {}).items():
-            mtype  = modules_name.split("-")[0]
-            mname = modules_name.split("-")[1] if "-" in modules_name else mtype  # Extract modules name (e.g., 'mynpf' from 'npf-mynpf')
-            
-            key_path = f"{section}.{mtype}.{mname}"
-            
-            modules_cfg, nodes = cls.parse_input(nodes, key_path, modules_cfg)
-
-            modules_node = NodeBuilder.parse_module_cfg(key_path, modules_cfg, mtype, mname)
-            nodes['module'].update(modules_node)
-        return nodes
-    
-
-    @classmethod
-    def parse_input(cls, nodes, section_path, section_cfg):
-        for input_key, val in section_cfg.items():
-            update_input = True
-            kwargs = None
-            key_path = f"{section_path}.{input_key}"
-
-            if isinstance(val, dict):
-                if 'pipes' in val.keys():
-                    pipes_cfg = val['pipes']
-                    pipe_key = f"{section_path}.{input_key}"
-                    ref_id, nodes = cls.parse_pipes(nodes, pipe_key, pipes_cfg)
-                    update_input = False
-                
-                else:
-                    if any(special_key in val.keys() for special_key in ["input", "kwargs"]):
-                        kwargs = val.get("kwargs", {})
-                        val = val.get("input", None)
-
-            if update_input:
-                ref_id, input_node = NodeBuilder.parse_input_cfg(key_path, val, kwargs)
-                nodes['input'].update(input_node)
-
-            section_cfg[input_key] = ref_id
-        
-        return section_cfg, nodes
-        
-    
-    @classmethod
-    def parse_pipes(cls, nodes, pipe_key, pipes_cfg):
-        for pipe in pipes_cfg:
-            for pipe_name, cfg in pipe.items():
-                key_path = f"{pipe_key}.{pipe_name}"
-                new_cfg, nodes = cls.parse_input(nodes, key_path, pipe)
-                ref_id, pipe_node = NodeBuilder.parse_pipe_cfg(key_path, new_cfg)
-                nodes['pipe'].update(pipe_node)
-                
-        return ref_id, nodes
     
     @classmethod
     def parse(cls, config_filepath):
@@ -168,3 +108,16 @@ class ConfigParser:
             }
 
         return all_sims
+    
+    @classmethod
+    def parse_template(cls, cfg_dict):
+        node_manager = NodeParser()
+        config = cls.substitute_config(cfg_dict)
+
+        all_modules = {}
+
+        for k, v in cfg_dict.items():
+            all_modules[k] = v
+            if k == 'module_templates':
+                for module, module_cfg in cfg_dict.get(k, {}).items():
+                    node_manager.parse_node(node_type, sim_cfg.get(node_type, None))

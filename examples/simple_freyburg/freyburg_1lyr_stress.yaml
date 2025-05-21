@@ -22,6 +22,30 @@ simulations:
       active_domain: ${vars.input_dir}/freyberg6.dis_idomain_layer1.arr
     
     modules: # these are specific kwargs found in the flopy module
+      ghb:
+        src:
+          # cond: ${vars.input_dir}/freyberg6.ghb_cond_layer1.txt
+          # head: ${vars.input_dir}/freyberg6.ghb_head_layer1.txt
+          stress_period_data:
+            pipeline:
+              input: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\simple_freyburg\data\ghb.csv
+              pipes:
+                - processor: read_data
+                - processor: to_mf6_txt
+                  type: table
+                  map:
+                    period: stress_period # map to adjust the column names
+                    head: bhead
+                  cols: [k, i, j, bhead, cond] #order to output the filenames
+                  output_format: '{kper}: {{filename: {filename}}}'
+        print_input: True
+        print_flows: True
+        save_flows: True
+        maxbound: 30
+        # stress_period_data: {
+        #   0: {filename: '${vars.input_dir}/freyberg6.ghb_stress_period_data_1.txt'}
+        #   }
+      
       sim:
         sim_name: freyberg6_simple
         sim_ws: ${simulations.freyburg_simple.ws}
@@ -90,9 +114,16 @@ simulations:
         strt: ${vars.input_dir}/freyberg6.ic_strt_layer1.txt
       
       npf:
+        # src:
+        #   k:
+        #     pipeline:
+        #       input: [file_input]
+        #       pipes:
+        #         - processor: geolgrid.make
+        #           var1: xx
         save_flows: True
         icelltype: ${vars.input_dir}/freyberg6.npf_icelltype_layer1.txt
-        k: ${vars.input_dir}/freyberg6.npf_k_layer1.txt
+        # k: ${vars.input_dir}/freyberg6.npf_k_layer1.txt
         k33: ${vars.input_dir}/freyberg6.npf_k33_layer1.txt
       
       sto:
@@ -149,27 +180,6 @@ simulations:
           24: {filename: '${vars.input_dir}/freyberg6.rch_recharge_25.txt'},
         }
       
-      ghb:
-        src:
-          # cond: ${vars.input_dir}/freyberg6.ghb_cond_layer1.txt
-          # head: ${vars.input_dir}/freyberg6.ghb_head_layer1.txt
-          stress_period_data:
-            pipeline:
-              input: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\simple_freyburg\data\ghb.csv
-              pipes:
-                - processor: read_data
-                - processor: to_mf6_txt
-                  map:
-                    period: stress_period # map to adjust the column names
-                    head: bhead
-                  cols: [k, i, j, bhead, cond] #order to output the filenames
-        print_input: True
-        print_flows: True
-        save_flows: True
-        maxbound: 30
-        # stress_period_data: {
-        #   0: {filename: '${vars.input_dir}/freyberg6.ghb_stress_period_data_1.txt'}
-        #   }
       
       # obs:
       #   digits: 10

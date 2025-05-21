@@ -77,7 +77,7 @@ class Mesh:
         Set the bottoms of the mesh.
         """
         if isinstance(bottoms, dict):
-            return bottoms
+            raise NotImplementedError
         elif isinstance(bottoms, np.ndarray):
             ndim = bottoms.ndim
             if ndim == 2 and self.nlay == 1:

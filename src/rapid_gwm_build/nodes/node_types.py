@@ -11,24 +11,24 @@ class PipeNode(NodeCFG):
     """
     Class to represent a node ID in the GWM file.
     """
-    def __init__(self, **kwargs):
+    def __init__(self, input_id, **kwargs):
         super().__init__('pipe', **kwargs)
-        self._input = None
+        self._input_id = input_id
     
     
     @property
-    def input(self):
+    def input_id(self):
         """
         Returns the input of the node.
         """
-        return self._input
+        return self._input_id
     
-    @input.setter
-    def input(self, value):
-        """
-        Sets the input of the node.
-        """
-        self._input = value
+    # @input.setter
+    # def input(self, value):
+    #     """
+    #     Sets the input of the node.
+    #     """
+    #     self._input = value
     
     def resolve(self, sim_nodes: dict=None, derived_dir=None, **kwargs):
         """
@@ -43,8 +43,8 @@ class PipeNode(NodeCFG):
                 kwargs[k] = dep_node.data
         
         # Get the input data
-        if isinstance(self.input, str) and self.input.startswith("@"):
-            input_node = sim_nodes[self.input[1:]]
+        if isinstance(self.input_id, str) and self.input_id.startswith("@"):
+            input_node = sim_nodes[self.input_id[1:]]
             input_data = input_node.data
 
         self._data = func(input_data, node_id=self.id, outdir=derived_dir, **kwargs)
@@ -54,7 +54,7 @@ class PipeNode(NodeCFG):
         """
         Get the dependencies for this node. This method should be overridden in subclasses.
         """
-        input_dep = self._input_dependencies(self.input)
+        input_dep = self._input_dependencies(self.input_id)
         src_dep = self._input_dependencies(self.src)
         if input_dep is not None and src_dep is not None:
             return input_dep + src_dep
@@ -158,7 +158,14 @@ class ModuleNode(NodeCFG):
                 self._args[arg] = self.src.get(arg)
             elif self.template.get('build_dependencies', None):
                 if arg in self.template.get('build_dependencies', {}).keys():
-                    self._args[arg] = self.template['build_dependencies'].get(arg)
+                    val = self.template['build_dependencies'].get(arg)
+                    if isinstance(val, str) and val.startswith("@"):
+                        self._args[arg] = val
+                    elif isinstance(val, dict) and 'pipeline' in val.keys():
+                        # ref = parse_pipeline(val['pipeline'])
+                        # parse pipeline
+                        # raise NotImplementedError("Pipeline parsing not implemented yet.")
+                        pass #TODO: implement this
     
     
     def resolve(self, sim_nodes: dict=None, ref_dir=None, derived_dir=None, **kwargs):
@@ -209,10 +216,12 @@ class MeshNode(NodeCFG):
     """
     def __init__(
             self,
+            param=None,
+            mesh=None,
             **kwargs):
         super().__init__('mesh', **kwargs)
-        self._param = None
-        self._mesh = None
+        self._param = param
+        self._mesh = mesh #TODO: add mesh type
 
     @property
     def mesh(self):
@@ -247,6 +256,12 @@ class MeshNode(NodeCFG):
     def _get_dependencies(self):
         src_dep = self._input_dependencies(self.src)
         mesh_dep = self._input_dependencies(self.mesh)
+        if src_dep is not None and mesh_dep is not None:
+            return src_dep + mesh_dep
+        elif src_dep is not None:
+            return src_dep
+        elif mesh_dep is not None:
+            return mesh_dep
     
     def resolve(self, sim_nodes: dict, **kwargs):
         """
@@ -254,9 +269,10 @@ class MeshNode(NodeCFG):
         """
         if self.id == 'mesh':
             self._set_mesh(sim_nodes)
+            self._data = self.mesh
         elif self.mesh.startswith("@"):
             mesh_node = sim_nodes.get(self._mesh[1:])
-            self._data = mesh_node.data.getattr(self.param)
+            self._data = getattr(mesh_node.data, self.param)
         else:
             self._set_mesh()
             self._data = self.mesh

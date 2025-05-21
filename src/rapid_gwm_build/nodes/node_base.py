@@ -13,7 +13,8 @@ class NodeCFG:
             module_type: str = None,
             module_name: str = None,
             attr: list = [],
-            src = None):
+            src = None,
+            **kwargs):
         self.type = node_type
         self.module_type = module_type
         self.module_name = module_name
@@ -70,8 +71,8 @@ class NodeCFG:
         """
         Sets the source of the node.
         """
-        if self.src:
-            raise Warning("Source already set. Overwriting the source.")
+        # if self.src:
+        #     raise Warning("Source already set. Overwriting the source.")
         self._src = value
 
     @property
@@ -113,27 +114,52 @@ class NodeCFG:
     @classmethod
     def create(
         cls,
-        kwargs: dict = None):
+        **kwargs):
         """
         Factory method to create a NodeCFG instance.
         """
         return cls(**kwargs)
 
     @classmethod
-    def from_node(cls, old_ncfg: NodeCFG, kwargs: dict = None):
-        # create a dict of the old_ncfg attributes
-        new_kwargs = {}
-        for key in ['module_type', 'module_name', 'attr']:
-            if hasattr(old_ncfg, key):
-                new_kwargs[key] = deepcopy(getattr(old_ncfg, key))
+    def from_node(cls, from_node: NodeCFG, kwargs: dict = {}):
+        """
+        Make a copy of the node and update it with new attributes.
+        """
+        # pass on 'module_type' and 'module_name'
+        kwargs['module_type'] = from_node.module_type
+        kwargs['module_name'] = from_node.module_name
+        
+        from_attr = deepcopy(from_node.attr)
+        to_attr = kwargs.get('attr', None)
+        if to_attr:
+            if isinstance(to_attr, str):
+                from_attr.append(to_attr)
+            elif isinstance(to_attr, list):
+                from_attr.extend(to_attr)
+            kwargs['attr'] = from_attr
+        else:
+            kwargs['attr'] = from_attr
+
+        new_node = cls(**kwargs)
+        
+        # # create a dict of the old_ncfg attributes
+        # new_kwargs = {}
+        # for key in ['module_type', 'module_name', 'attr']:
+        #     if hasattr(from_node, key):
+        #         new_kwargs[key] = deepcopy(getattr(from_node, key))
+        
+        # if 'attr' in kwargs.keys():
+        #     new_kwargs['attr'].append(kwargs.pop('attr'))
         
         # kwargs.update(new_kwargs)
-        # Update attributes from the dictionary
-        new_ncfg = cls(**new_kwargs)
         
-        new_ncfg.update(**kwargs)
+        # # kwargs.update(new_kwargs)
+        # # Update attributes from the dictionary
+        # new_ncfg = cls(**new_kwargs)
         
-        return new_ncfg
+        # new_ncfg.update(**kwargs)
+        
+        return new_node
     
     def update(self, **kwargs):
         for key, value in kwargs.items():

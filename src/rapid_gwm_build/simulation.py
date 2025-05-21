@@ -7,6 +7,7 @@ import logging
 from rapid_gwm_build.network_registry import NetworkRegistry
 from rapid_gwm_build.ss.node_builder import NodeBuilder
 from rapid_gwm_build.nodes.node_base import NodeCFG
+from rapid_gwm_build.parsers.config_parser import ConfigParser
 from rapid_gwm_build import utils
 # from rapid_gwm_build.module_builder import ModuleBuilder
 # from rapid_gwm_build.mesh import Mesh
@@ -46,6 +47,7 @@ class Simulation:
     def set_template(self, sim_type: str):
         from rapid_gwm_build.templates.template_loader import TemplateLoader
         self.template = TemplateLoader.load_template(sim_type)
+        ConfigParser.parse_template(self.template)
     
     @classmethod
     def from_config(cls, name, sim_cfg, ref_dir=None, derived_dir=None):

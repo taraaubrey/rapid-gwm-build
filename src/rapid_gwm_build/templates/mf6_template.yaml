@@ -66,11 +66,42 @@ module_templates:
             nlay: '@mesh.nlay'
             nrow: '@mesh.nrow'
             ncol: '@mesh.ncol'
-            delr: '@mesh.delr'
-            delc: '@mesh.delc'
-            top: '@mesh.top'
-            botm: '@mesh.bottoms'
-            idomain: '@mesh.active_domain'
+            delr: 
+                pipeline:
+                    input: '@mesh.delr'
+                    pipes:
+                        - processor: to_mf6_txt
+                          type: array
+                          output_format: '{filename}'
+                          # output: (input.dis.nlay).data'@mesh.delr'
+            delc:
+                pipeline:
+                    input: '@mesh.delc'
+                    pipes:
+                        - processor: to_mf6_txt
+                          type: array
+                          output_format: '{filename}'
+            top:                     
+                pipeline:
+                    input: '@mesh.tops'    
+                    pipes:
+                        - processor: to_mf6_txt
+                          type: array
+                          output_format: '{filename}'
+            botm:
+                pipeline:
+                    input: '@mesh.bottoms'
+                    pipes:
+                        - processor: to_mf6_txt
+                          type: array
+                          output_format: '{filename}'
+            idomain:
+                pipeline:
+                    input: '@mesh.active_domain'
+                    pipes:
+                        - processor: to_mf6_txt
+                          type: array
+                          output_format: '{filename}'
         func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
         default_build:
