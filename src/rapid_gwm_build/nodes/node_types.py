@@ -328,7 +328,7 @@ class TemplateNode(NodeCFG):
     
     def resolve(self, sim_nodes: dict=None, derived_dir=None, **kwargs):
         """
-        Get the data for this node. This method should be overridden in subclasses.
+        #TODO.
         """
         pass
 
