@@ -15,7 +15,7 @@ class NodeCFG:
             attr: list = [],
             src = None,
             **kwargs):
-        self.type = node_type
+        self._type = node_type
         self.module_type = module_type
         self.module_name = module_name
         self._attr = attr
@@ -29,6 +29,16 @@ class NodeCFG:
             self.module_name = module_key.split("-")[1] if "-" in module_key else None
             self.module_type = module_key.split(".")[0]
  
+    
+    @property
+    def type(self):
+        return self._type
+    
+    def istemplate(self):
+        """Check if the node is a template."""
+        if 'template' in self.attr:
+            return True
+        
     
     @property
     def data(self):
@@ -102,6 +112,8 @@ class NodeCFG:
         """
         Returns the ID of the node.
         """
+        if self._type == 'placeholder':
+            return self._placeholder_id
         return self._set_id()
 
     @property

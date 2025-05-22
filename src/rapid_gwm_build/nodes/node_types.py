@@ -36,18 +36,22 @@ class PipeNode(NodeCFG):
         """
         func = pipe_registry.get(self.name)
 
-        kwargs = {}
-        for k, v in self.src.items():
-            if isinstance(v, str) and v.startswith("@"):
-                dep_node = sim_nodes.get(v[1:])
-                kwargs[k] = dep_node.data
+        # kwargs = {}
+        # for k, v in self.src.items():
+        #     if isinstance(v, str) and v.startswith("@"):
+        #         dep_node = sim_nodes.get(v[1:])
+        #         kwargs[k] = dep_node.data
         
         # Get the input data
-        if isinstance(self.input_id, str) and self.input_id.startswith("@"):
-            input_node = sim_nodes[self.input_id[1:]]
-            input_data = input_node.data
+        def resolve_input(input_id):
+            if isinstance(input_id, str) and input_id.startswith("@"):
+                input_node = sim_nodes[input_id[1:]]
+                return resolve_input(input_node.data)
+            return input_id
 
-        self._data = func(input_data, node_id=self.id, outdir=derived_dir, **kwargs)
+        input_data = resolve_input(self.input_id)
+
+        self._data = func(input_data, node_id=self.id, outdir=derived_dir, **self.src)
 
     
     def _get_dependencies(self):
@@ -255,6 +259,7 @@ class MeshNode(NodeCFG):
 
     def _get_dependencies(self):
         src_dep = self._input_dependencies(self.src)
+        # return src_dep
         mesh_dep = self._input_dependencies(self.mesh)
         if src_dep is not None and mesh_dep is not None:
             return src_dep + mesh_dep
@@ -312,3 +317,31 @@ class InputNode(NodeCFG):
         Get the data for this node. This method should be overridden in subclasses.
         """
         self._data = self.input.open()
+
+class TemplateNode(NodeCFG):
+    """
+    Class to represent a node ID in the GWM file.
+    """
+    def __init__(self, **kwargs):
+        super().__init__('pipe', **kwargs)
+    
+    
+    def resolve(self, sim_nodes: dict=None, derived_dir=None, **kwargs):
+        """
+        Get the data for this node. This method should be overridden in subclasses.
+        """
+        pass
+
+    
+    def _get_dependencies(self):
+        """
+        Get the dependencies for this node. This method should be overridden in subclasses.
+        """
+        return self._input_dependencies(self.src)
+
+
+class PlaceholderNode(NodeCFG):
+
+    def __init__(self, node_id, **kwargs):
+        super().__init__('placeholder', **kwargs)
+        self._placeholder_id = node_id

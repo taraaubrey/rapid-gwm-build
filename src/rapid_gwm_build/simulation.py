@@ -5,8 +5,9 @@ import networkx as nx
 import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
-from rapid_gwm_build.ss.node_builder import NodeBuilder
+# from rapid_gwm_build.ss.node_builder import NodeBuilder
 from rapid_gwm_build.nodes.node_base import NodeCFG
+from rapid_gwm_build.nodes.node_cfg import NodeFactory
 from rapid_gwm_build.parsers.config_parser import ConfigParser
 from rapid_gwm_build import utils
 # from rapid_gwm_build.module_builder import ModuleBuilder
@@ -32,12 +33,13 @@ class Simulation:
         self.derived_dir = derived_dir if isinstance(derived_dir, Path) else Path(derived_dir)
         
         self.sim_type = self.cfg.get("sim_type", sim_type)  # type of the simulation (ie. modflow, mt3d, etc)
-        self.set_template(self.sim_type) # backend template based on sim_type
         
         self.graph = NetworkRegistry()
         self.edges = self.graph._graph.edges
         self.name_registry = {} #TODO: clean this up, use graph registry instead
-        self.node_builder = NodeBuilder(self.name_registry)
+        # self.node_builder = NodeBuilder(self.name_registry)
+
+        self.set_template(self.sim_type) # backend template based on sim_type
     
 
     @property
@@ -47,7 +49,13 @@ class Simulation:
     def set_template(self, sim_type: str):
         from rapid_gwm_build.templates.template_loader import TemplateLoader
         self.template = TemplateLoader.load_template(sim_type)
-        ConfigParser.parse_template(self.template)
+        config, template_nodes = ConfigParser.parse_template(self.template)
+        # update template with config
+        self.template.update(config)
+        for ncfg in template_nodes.values():
+            self._new_node(ncfg=ncfg)
+        print('here')
+
     
     @classmethod
     def from_config(cls, name, sim_cfg, ref_dir=None, derived_dir=None):
@@ -66,6 +74,7 @@ class Simulation:
         if node_id not in self.nodes.keys() and node_id not in self.cfg['nodes'].keys():
             return False
 
+        # check existing node IDs
         node_list = [node_id for node_id in self.nodes.keys()]
         match_nodeid = utils.match_nodeid(node_id, node_list) #TODO more advanced matching method
 
@@ -81,19 +90,30 @@ class Simulation:
                 
                 if not check:
                     if dep_id.split(".")[0] == "mesh":
-                        self._check_nodeid_in_sim('mesh')
+                        mesh_check = self._check_nodeid_in_sim('mesh')
                         # create a new mesh node with data from the mesh node -> ie. create the mesh.top node
-                        mesh_node = self.nodes.get('mesh')
-                        new_kwargs = {
-                            'attr': dep_id.split(".")[1],
-                            'mesh': mesh_node.ref_id,
-                            'param': dep_id.split(".")[1],
-                        }
-                        new_ncfg = mesh_node.from_node(old_ncfg=mesh_node, kwargs=new_kwargs)
+                        if mesh_check:
+                            mesh_node = self.nodes.get('mesh')
+                            new_kwargs = {
+                                'attr': dep_id.split(".")[1],
+                                'mesh': mesh_node.ref_id,
+                                'param': dep_id.split(".")[1],
+                            }
+                            new_ncfg = mesh_node.from_node(from_node=mesh_node, kwargs=new_kwargs)
+                            self._new_node(ncfg=new_ncfg)
+                        else:
+                            # create a new mesh node
+                            new_ncfg = NodeFactory.build_node(node_type='placeholder', node_id=dep_id)
+                            self._new_node(ncfg=new_ncfg)
+                    else:
+                        #create a placeholder node
+                        new_ncfg = NodeFactory.build_node(node_type='placeholder', node_id=dep_id)
                         self._new_node(ncfg=new_ncfg)
-
                 
-                self.add_edge(dep_id, node.id)
+                if node:
+                    self.add_edge(dep_id, node.id)
+                else:
+                    raise ValueError(f"Node {node.id} is empty.")
 
         else:
             logging.debug(f"Node {node.id} has no dependencies.")
@@ -107,8 +127,11 @@ class Simulation:
         elif node_id:
             ncfg = self.cfg['nodes'].get(node_id, None)
         
-        self._node_from_cfg(ncfg)
-        self._resolve_references(ncfg)
+        if ncfg:
+            self._node_from_cfg(ncfg)
+            self._resolve_references(ncfg)
+        else:
+            raise ValueError(f"Node configuration for {node_id} is None.")
 
 
     def _node_from_cfg(self, ncfg):
@@ -150,9 +173,12 @@ class Simulation:
 
     
     def build(self, mode="all"): #TODO move to GraphClass
-        for nodeid in nx.topological_sort(self.graph._graph): #TODO don't resolve nodes which are not needed
+
+        for nodeid in nx.topological_sort(self.graph.subgraph): #TODO don't resolve nodes which are not needed
             node = self.nodes[nodeid]
-            node.resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
+            if node.type != 'placeholder':
+                node.resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
+                logging.debug(f"Node {node.id} resolved successfully.")
         logging.debug(f"Simulation {self.name} built successfully.")
 
     

@@ -22,6 +22,11 @@ simulations:
       active_domain: ${vars.input_dir}/freyberg6.dis_idomain_layer1.arr
     
     modules: # these are specific kwargs found in the flopy module
+      # drn:
+      #   src:
+      #     cond: 5
+      #     mask: [1, 1, 1]
+      
       ghb:
         src:
           # cond: ${vars.input_dir}/freyberg6.ghb_cond_layer1.txt
@@ -30,7 +35,6 @@ simulations:
             pipeline:
               input: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\simple_freyburg\data\ghb.csv
               pipes:
-                - processor: read_data
                 - processor: to_mf6_txt
                   type: table
                   map:

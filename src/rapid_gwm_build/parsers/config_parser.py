@@ -89,12 +89,8 @@ class ConfigParser:
     @classmethod
     def parse(cls, config_filepath):
         """Parse the user config and return a normalized structure."""
-        config = cls.load_yaml(config_filepath)
-
+        config = cls.load_yaml(config_filepath) # First, substitute variables (like ${data_dir})
         config = cls.substitute_config(config)
-        # First, substitute variables (like ${data_dir})
-        # config = cls.substitute_vars(config)
-
         all_sims = {}
 
         # Process each simulation block
@@ -113,11 +109,16 @@ class ConfigParser:
     def parse_template(cls, cfg_dict):
         node_manager = NodeParser()
         config = cls.substitute_config(cfg_dict)
-
-        all_modules = {}
-
-        for k, v in cfg_dict.items():
-            all_modules[k] = v
+        for k, v in config.items():
             if k == 'module_templates':
-                for module, module_cfg in cfg_dict.get(k, {}).items():
-                    node_manager.parse_node(node_type, sim_cfg.get(node_type, None))
+                for module, module_cfg in v.items():
+                    # parse build_dependency keys
+                    if 'build_dependencies' in module_cfg.keys():
+                        template_cfg = module_cfg['build_dependencies']
+                        if template_cfg:
+                            for k, val in template_cfg.items():
+                                if isinstance(val, dict):
+                                    template_node = node_manager.parse_template(module_key=module, attr=k, cfg=val)
+                                    config['module_templates'][module]['build_dependencies'][k] = template_node.ref_id
+
+        return config, {n.id: n for n in node_manager.nodes}

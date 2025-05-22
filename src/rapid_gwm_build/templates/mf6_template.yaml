@@ -83,7 +83,7 @@ module_templates:
                           output_format: '{filename}'
             top:                     
                 pipeline:
-                    input: '@mesh.tops'    
+                    input: '@mesh.top'    
                     pipes:
                         - processor: to_mf6_txt
                           type: array
@@ -133,27 +133,26 @@ module_templates:
             model: '@module.gwf'
             stressperioddata:
                 pipeline:
-                    - processor: to_stress_period_data
-                      input: 
-                        cond: '@pipe.drn.src_data.cond.discretie_2D'
-                        elev: '@pipe.drn.src_data.elev.discretie_2D'
+                    input:
+                        cond: '@pipeline.drn.src.cond'
+                        elev: '@pipeline.drn.src.elev'
                         mask: '@mesh.active_domain'
-                      cols: ['cond', 'elev']
-                      format: 'some_format'
-        src_data_input:
-            cond: #output -> @data.drn.<name_mod>.cond
-                pipeline:
                     pipes:
-                        - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
+                        - processor: to_stress_period_data
+                          cols: ['cond', 'elev']
+                          format: 'some_format'
+            cond: 
+                pipeline:
+                    input: '@input.drn.src.cond'
+                    pipes:
+                        - processor: discretize_2D
                           mesh: '@mesh.grid'
-                          # output: (input.drn.src.cond).data
-                        # input: ['@input.module.src.data.cond']
-                        # mesh: '@mesh.grid'
             elev:
                 pipeline:
-                    - processor: discretize_2D #pipeline_name: {input: [input1, input2], kwargs: {kwarg1: value1, kwarg2: value2}}
-                      input: ['@input.modules.drn-.derived_from.elev']
-                      mesh: '@mesh.grid'
+                    input: '@input.drn.src.elev' #TODO eventually this should be automatic
+                    pipes:
+                        - processor: discretize_2D
+                          mesh: '@mesh.grid'
         func: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
 
