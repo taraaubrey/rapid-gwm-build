@@ -30,11 +30,15 @@ Zoom in showing the pipeline nodes for ghb build.
 input_yaml = r"examples\simple_freyburg\freyburg_1lyr_stress.yaml"
 
 sim = create_simulation(input_yaml)
+```
 
+```python
 #visualize model
 sim.graph.plot() # all nodes in the model (including template, pipeline, default nodes)
 sim.graph.plot(subgraph=True) # this is only the nodes which are built (ie. upstream of the module nodes)
+```
 
+```python
 sim.build() # resolves all the data for the nodes upstream of module nodes (ie. runs the pipelines)
 
 #view module data
@@ -43,9 +47,10 @@ dis.top # view top input data for flopy
 
 #view pipeline/pipe specific data
 sim.nodes['pipeline.ghb.stress_period_data'].data
+```
 
+```python
 sim.write() # writes the simulation files
-
 sim.nodes['module.sim'].data.run_simulation() # you can run the model
 
 ```
