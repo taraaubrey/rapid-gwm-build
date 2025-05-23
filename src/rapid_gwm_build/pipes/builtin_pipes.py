@@ -36,5 +36,7 @@ def to_mf6_txt(data: DataFrame, map=None, cols=None, outdir=None, node_id=None, 
             header = [f'#{col}' for col in cols]
             data.to_csv(out_path, index=False, header=header, sep=' ')
             outs[1] = {'filename': out_path}
+    else:
+        outs = data
 
     return outs

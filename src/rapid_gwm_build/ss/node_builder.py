@@ -1,7 +1,7 @@
 import hashlib
 
 from rapid_gwm_build.ss.node import InputNode, ModuleNode, PipeNode
-from rapid_gwm_build.nodes.mesh_node import MeshNode
+from rapid_gwm_build.ss.mesh_node import MeshNode
 
 node_types = {
     'mesh': MeshNode,

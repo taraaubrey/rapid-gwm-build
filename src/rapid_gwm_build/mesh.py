@@ -84,7 +84,7 @@ class Mesh:
                 # 2D array, reshape to (nlay, nrow, ncol)
                 bottoms = bottoms.reshape(self.nlay, self.nrow, self.ncol)
             else:
-                raise NotImplementedError("Something wrong with the shape of the bottoms array.")
-            return {f"botm_{i}": bottoms[i] for i in range(self.nlay)}
+                raise NotImplementedError("Haven't written any explicit bottom layering functions yet.")
+            return bottoms
         else:
             raise ValueError("Bottoms must be a dictionary or a numpy array.")

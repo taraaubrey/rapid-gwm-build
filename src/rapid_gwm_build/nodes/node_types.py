@@ -1,4 +1,5 @@
 import numpy as np
+import logging 
 
 from rapid_gwm_build import utils
 from rapid_gwm_build.io.input_types import InputValueSpec
@@ -117,7 +118,7 @@ class ModuleNode(NodeCFG):
     """
     def __init__(self, **kwargs):
         super().__init__('module', **kwargs)
-        self.template = None
+        self.template = {}
         self._args = None
         self._func = None
 
@@ -149,6 +150,7 @@ class ModuleNode(NodeCFG):
         return self._args
     
     def _set_args(self):
+        template_deps = self.template.get('build_dependencies', {})
         self._args = {}
 
         # get default args from the template
@@ -156,34 +158,27 @@ class ModuleNode(NodeCFG):
 
         # replace the default args with the user provided args
         for arg, value in default_args.items():
-            if self.src is None:
-                self._args[arg] = value
-            elif arg in self.src.keys():
+            if arg in self.src:
                 self._args[arg] = self.src.get(arg)
-            elif self.template.get('build_dependencies', None):
-                if arg in self.template.get('build_dependencies', {}).keys():
-                    val = self.template['build_dependencies'].get(arg)
-                    if isinstance(val, str) and val.startswith("@"):
-                        self._args[arg] = val
-                    elif isinstance(val, dict) and 'pipeline' in val.keys():
-                        # ref = parse_pipeline(val['pipeline'])
-                        # parse pipeline
-                        # raise NotImplementedError("Pipeline parsing not implemented yet.")
-                        pass #TODO: implement this
+            elif arg in self.src.get('src', {}):
+                self._args[arg] = self.src['src'].get(arg)
+            elif arg in template_deps:
+                self._args[arg] = template_deps.get(arg)
+                    # if isinstance(val, str) and val.startswith("@"):
+                    #     self._args[arg] = val
+            else:
+                logging.warning(f"Argument {arg} not found in source or template dependencies. Using default value.")
     
     
     def resolve(self, sim_nodes: dict=None, ref_dir=None, derived_dir=None, **kwargs):
         cmd_args = self._get_arg_data(sim_nodes)  # Get the data for the arguments
-        # cmd_args = self._resolve_references(args)  # Resolve references in the args
 
         # build the module using the template and args
         if self.func is None:
             raise ValueError(f"Module function not found for {self.kind}")
         
-
         # get the function from the template
         func = utils.get_function(self.func)
-        # Build the module using the function and args
         self._data = func(**cmd_args)  # Set the internal _data attribute
         return self._data
     
@@ -206,7 +201,7 @@ class ModuleNode(NodeCFG):
         for k, v in self.args.items():
             if isinstance(v, str) and v.startswith("@"):
                 dep_node = sim_nodes.get(v[1:])
-                if not dep_node.data:
+                if dep_node.data is None:
                     raise ValueError(f"Dependency node {dep_node} is empty.")
                 arg_data[k] = dep_node.data
             else:
@@ -323,14 +318,18 @@ class TemplateNode(NodeCFG):
     Class to represent a node ID in the GWM file.
     """
     def __init__(self, **kwargs):
-        super().__init__('pipe', **kwargs)
+        super().__init__('template', **kwargs)
     
     
     def resolve(self, sim_nodes: dict=None, derived_dir=None, **kwargs):
-        """
-        #TODO.
-        """
-        pass
+        for k, data in self.src.items():
+            if isinstance(data, str) and data.startswith("@"):
+                dep_node = sim_nodes.get(data[1:])
+                if dep_node.data is None:
+                    raise ValueError(f"Dependency node {dep_node} is empty.")
+                self._data = dep_node.data
+            else:
+                self._data = data
 
     
     def _get_dependencies(self):

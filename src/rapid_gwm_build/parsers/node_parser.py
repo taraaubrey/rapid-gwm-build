@@ -53,8 +53,14 @@ class NodeParser:
     def parse_src(self, from_node=None, src=None, **kwargs):
         updated_refs = {}
         for attr, src_val in src.items():
-            parser = self.get_parser(attr, src_val)
-            ref_id = parser(attr=['src', attr], src=src_val, from_node=from_node)
+            if isinstance(src_val, dict) and 'pipeline' in src_val:
+                pipeline_src = src_val.get('pipeline')
+                # if src_val is a dictionary, parse it recursively
+                parser = self.get_parser('pipeline', pipeline_src)
+                ref_id = parser(attr=attr, src=pipeline_src, from_node=from_node)
+            else:
+                parser = self.get_parser(attr, src_val)
+                ref_id = parser(attr=['src', attr], src=src_val, from_node=from_node)
             # ref_id = self.parse_node(attr, attr=['src', attr], src=src_val, from_node=from_node, src_arg=True)
             updated_refs[attr] = ref_id
         return updated_refs
@@ -96,12 +102,12 @@ class NodeParser:
 
 
     def parse_template(self, module_key, attr, cfg):
-        node = NodeFactory.build_node(node_type='template', module_key=module_key, attr=['template', attr])
+        node = NodeFactory.build_node(node_type='template', module_key=module_key, attr=[attr])
 
         template_refs = {}
         for k, k_cfg in cfg.items():
             parser = self.get_parser(k, k_cfg)
-            ref_id = parser(src=k_cfg, from_node=node, src_arg=False)
+            ref_id = parser(src=k_cfg, from_node=node, attr=['template'], src_arg=False)
             # parser = self.get_parser(k)
             # if isinstance(k_cfg, dict) and parser:
             #     ref_id =  parser(from_node=node, src=k_cfg)
@@ -131,13 +137,18 @@ class NodeParser:
         return node.ref_id
             
 
-    def parse_pipeline(self, src=None, from_node=None, **ncfg):
+    def parse_pipeline(self, src=None, from_node=None, attr=None, **ncfg):
+        in_attr = ['pipeline', 'input']
+        if isinstance(attr, list):
+            in_attr.extend(attr)
+            
+        
         src_input = src.pop('input')
         in_ref_id = self.parse_input(
-            src=src_input, attr=['pipeline', 'input'], from_node=from_node, src_arg=False)
+            src=src_input, attr=in_attr, from_node=from_node, src_arg=False)
         
         pipeline_node = NodeFactory.build_node(
-            node_type='pipeline', src=src, from_node=from_node, src_arg=True)
+            node_type='pipeline', src=src, from_node=from_node, src_arg=True, attr=attr)
 
         pipes = []
         for pipe_cfg in src.get('pipes'):
@@ -153,8 +164,12 @@ class NodeParser:
         return pipeline_node.ref_id
 
 
-    def parse_pipe(self, processor:str=None, from_node=None, input_id=None, src=None):
-        pipe_ncfg = NodeFactory.build_node(node_type='pipe', from_node=from_node, attr=processor, input_id=input_id, src=src)
+    def parse_pipe(self, processor:str=None, from_node=None, input_id=None, src=None, attr=None):
+        if attr:
+            pipe_attr = [processor, attr]
+        else:
+            pipe_attr = processor
+        pipe_ncfg = NodeFactory.build_node(node_type='pipe', from_node=from_node, attr=pipe_attr, input_id=input_id, src=src)
         self.nodes.append(pipe_ncfg)
         return pipe_ncfg.ref_id
     

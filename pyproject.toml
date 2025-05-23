@@ -12,6 +12,7 @@ dependencies = [
     "flopy==3.9.2", #TODO: remove hardcoded version
     "gridit>=0.7",
     "modflow-setup>=0.6.1", #HACK: hardcoded for now (remove)
+    "netcdf4>=1.7.2",
     "networkx>=3.4.2", #TODO: maybe remove if not using
     "pyyaml>=6.0.2",
     "setuptools>=78.1.0", #HACK remove when remov modflow-setup

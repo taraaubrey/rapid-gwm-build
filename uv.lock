@@ -670,13 +670,14 @@ wheels = [
 
 [[package]]
 name = "rapid-gwm-build"
-version = "0.1.0a0"
+version = "0.1.0a1"
 source = { editable = "." }
 dependencies = [
     { name = "cerberus" },
     { name = "flopy" },
     { name = "gridit" },
     { name = "modflow-setup" },
+    { name = "netcdf4" },
     { name = "networkx" },
     { name = "pyyaml" },
     { name = "setuptools" },
@@ -693,6 +694,7 @@ requires-dist = [
     { name = "flopy", specifier = "==3.9.2" },
     { name = "gridit", specifier = ">=0.7" },
     { name = "modflow-setup", specifier = ">=0.6.1" },
+    { name = "netcdf4", specifier = ">=1.7.2" },
     { name = "networkx", specifier = ">=3.4.2" },
     { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "setuptools", specifier = ">=78.1.0" },

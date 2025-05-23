@@ -25,7 +25,7 @@ module_schema = {
         },
         # "valuesrules": {"type": "string"},
         "required": False,
-        "default": None,
+        "default": {},
     },
     "src_data_input": {"type": "dict", "required": False},
     "allowed_to_build_default": {"type": "boolean", "required": False, "default": True},
