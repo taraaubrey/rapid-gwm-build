@@ -1,5 +1,13 @@
-# Overview of rmb
+**Still under major development:** At the moment many placeholders, and very basic functionality (proof of concept).
+
+# Overview/Goals of rmb
 `rmb` (rapid model builder) is a Python package designed to streamline the creation and manipulation of groundwater model input files. It does this by leveraging a user-defined YAML input file and a set of backend templates.
+
+- Generic to any model software (provided a template file exists)
+- Rapid model framework: YAML input file
+- Visualize and capture pre-processing pipelines through to model file creation in a single place
+- Uses network graph models as backend to solve for dependancy (similar to snakemake)
+- Hopefully future integration with data versioning CICD (ie. DVC)
 
 ## Core Functionality
 **Model Template Selection**: The input file specifies a model_type, which rmb uses to pull the appropriate backend templates.
@@ -12,18 +20,45 @@
 
 **Enables modular edits**: if a node is changed (e.g. a boundary condition or array), only downstream dependent nodes are recomputed.
 
-![image.png](https://networkx.org/nx-guides/_images/0075f6bdb07afa1c22357228ac072f1c218a5fca1fb91dca3610dae9188959b4.png)
+![Example_model_graph.png](/docs/Example_model_graph.png)
+Zoom in showing the pipeline nodes for ghb build.
+![Example_model_graph_subset.png](/docs/Example_model_graph_subset.png)
+
+# Usage
+
+```python
+input_yaml = r"examples\simple_freyburg\freyburg_1lyr_stress.yaml"
+
+sim = create_simulation(input_yaml)
+
+#visualize model
+sim.graph.plot() # all nodes in the model (including template, pipeline, default nodes)
+sim.graph.plot(subgraph=True) # this is only the nodes which are built (ie. upstream of the module nodes)
+
+sim.build() # resolves all the data for the nodes upstream of module nodes (ie. runs the pipelines)
+
+#view module data
+dis = sim.nodes['module.dis'].data
+dis.top # view top input data for flopy
+
+#view pipeline/pipe specific data
+sim.nodes['pipeline.ghb.stress_period_data'].data
+
+sim.write() # writes the simulation files
+
+sim.nodes['module.sim'].data.run_simulation() # you can run the model
+
+```
+
 
 # Nodes
 ## Types of nodes/Edges
 
 - **Input nodes**:
   - **User input**: from the user config file (ie. yamls)
-  - **Model input**: Specific to the template model files (ie. mf6, swat). related to module nodes. This is also the 'output' of rmb, but the input to the model.
+  - **Template**: Specific to the template model files (ie. mf6, swat). related to module nodes. This is also the 'output' of rmb, but the input to the model.
 - **Module nodes**: Derived based on core inputs in user input file and backend model type template files (ie. generic, mf6, swat). 
 - **Mesh nodes**: Derived based on core inputs in user input file. Represents spatial discretization.
-- **Temporal nodes**: Derived based on core inputs in user input file. Represents temporal discretization.
-- **Data nodes**: Represents intermediate needs, but useful for user to investigate or plot model parts. Generated based on Mesh, Temporal, User, Model, Module nodes. Data nodes will be specific to model inputs. But not necessarily in the output format.
 - **Pipeline nodes**: Represents operational processes. Will have input and output nodes. Maybe this is a type of edge?
 
 ## Node Naming Convention
@@ -33,7 +68,4 @@
 | `template` | Specific to backend model template; cmd kwargs in module inputs | `template.<mtype>.<module>.<param>` | `template.mf6.drn.stress_period_data` |
 | `module` | Logical building block from templates |` module.<kind>.<usrname> `| `module.sfr.mysfr` |
 | `mesh` | Spatial discretization | `mesh.<dimension/element>` | `mesh.grid` |
-| `temporal` | Time discretization info | `temporal.<aspect> `| `temporal.time_steps` |
-| `data` | Intermediate/derived info | `data.<module>.<parameter>` | `data.sfr.rmb_botm` |
 | `pipeline` | Operation/process node | `pipeline.<name>` | `pipeline.interpolate_rainfall` |
-| `output` | output from a previous module node | `output.<module_key>` | `output.sim.mysim` |

@@ -1,10 +1,14 @@
 # import pathlike
 from os import PathLike
+from pathlib import Path
 import networkx as nx
 import logging
 
 from rapid_gwm_build.network_registry import NetworkRegistry
-from rapid_gwm_build.nodes.node_builder import NodeBuilder
+# from rapid_gwm_build.ss.node_builder import NodeBuilder
+from rapid_gwm_build.nodes.node_base import NodeCFG
+from rapid_gwm_build.nodes.node_cfg import NodeFactory
+from rapid_gwm_build.parsers.config_parser import ConfigParser
 from rapid_gwm_build import utils
 # from rapid_gwm_build.module_builder import ModuleBuilder
 # from rapid_gwm_build.mesh import Mesh
@@ -16,142 +20,140 @@ class Simulation:
         name: str = None,  # name of the simulation
         cfg: dict = None,  # config file for the simulation (ie. yaml file)
         sim_type: str = "generic",  # type of the simulation (ie. modflow, mt3d, etc)
+        ref_dir: str | PathLike = None,  # output directory for the simulation
+        derived_dir: str | PathLike = None,  # output directory for the simulation
         # cfg: dict = None,  # config file for the simulation (ie. yaml file)
         # _defaults: str = None,  # defaults for the simulation (ie. yaml file)
         # # TODO: add path to model executables
     ):
         self.name = name
         self.cfg = cfg
+        
+        self.ref_dir = ref_dir if isinstance(ref_dir, Path) else Path(ref_dir)
+        self.derived_dir = derived_dir if isinstance(derived_dir, Path) else Path(derived_dir)
+        
         self.sim_type = self.cfg.get("sim_type", sim_type)  # type of the simulation (ie. modflow, mt3d, etc)
-        self.set_template(self.sim_type) # backend template based on sim_type
         
         self.graph = NetworkRegistry()
-        self.nodes = self.graph._graph.nodes
         self.edges = self.graph._graph.edges
         self.name_registry = {} #TODO: clean this up, use graph registry instead
-        self.node_builder = NodeBuilder(self.name_registry)
+        # self.node_builder = NodeBuilder(self.name_registry)
+
+        self.set_template(self.sim_type) # backend template based on sim_type
     
 
+    @property
+    def nodes(self):
+        return {n_id: data['node'] for n_id, data in self.graph._graph.nodes.data()}
+    
     def set_template(self, sim_type: str):
         from rapid_gwm_build.templates.template_loader import TemplateLoader
         self.template = TemplateLoader.load_template(sim_type)
+        config, template_nodes = ConfigParser.parse_template(self.template)
+        # update template with config
+        self.template.update(config)
+        for ncfg in template_nodes.values():
+            self._new_node(ncfg=ncfg)
+        print('here')
+
     
     @classmethod
-    def from_config(cls, name, sim_cfg):
+    def from_config(cls, name, sim_cfg, ref_dir=None, derived_dir=None):
         sim = cls(
             name=name,
             cfg=sim_cfg,
+            ref_dir=ref_dir,
+            derived_dir=derived_dir,
         )
-        
-        #build order of the simulation
-        build_order = ["mesh", "pipes", "module"]
-        for node_type in build_order:
 
-            if node_type == "mesh":
-                mesh_cfg = sim.cfg['nodes'].get("mesh", None)
-                sim._new_node('mesh', mesh_cfg)
-
-            else:
-                node_type_cfg = sim.cfg['nodes'].get(node_type, None)
-                if node_type_cfg:
-                    for node_key, node_cfg in node_type_cfg.items():
-                        sim._new_node(node_key, node_cfg)
-
-    
+        for ncfg in sim_cfg['nodes'].values():
+            sim._new_node(ncfg=ncfg)
         return sim
     
-    def _resolve_references(self, from_nodeid):
-        node = self.nodes[from_nodeid]['node']
+    def _check_nodeid_in_sim(self, node_id: str):
+        if node_id not in self.nodes.keys() and node_id not in self.cfg['nodes'].keys():
+            return False
+
+        # check existing node IDs
+        node_list = [node_id for node_id in self.nodes.keys()]
+        match_nodeid = utils.match_nodeid(node_id, node_list) #TODO more advanced matching method
+
+        if not match_nodeid:
+            self._new_node(node_id=node_id)
+        return True
+
+    
+    def _resolve_references(self, node):
         if node.dependencies:
             for dep_id in node.dependencies:
-
-                dep_type = dep_id.split(".")[0]
-                name = dep_id.split(".")[-1]
+                check = self._check_nodeid_in_sim(dep_id)
                 
-                # if dep_type == 'output':
-                #     dep_id = dep_id[7:] # remove the "output." prefix
-                #     dep_type = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
-
-                if name == '':
-                    dep_id = self._find_default_id(dep_id)
-                elif dep_type == 'mesh':
-                    dep_id = dep_id.split(".")[0] # get the type of the dependency (ie. module, input, etc)
-                elif dep_id in self.cfg['nodes'][dep_type].keys():
-                    dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                    if dep_cfg:
-                        self._new_node(dep_id, dep_cfg)
+                if not check:
+                    if dep_id.split(".")[0] == "mesh":
+                        mesh_check = self._check_nodeid_in_sim('mesh')
+                        # create a new mesh node with data from the mesh node -> ie. create the mesh.top node
+                        if mesh_check:
+                            mesh_node = self.nodes.get('mesh')
+                            new_kwargs = {
+                                'attr': dep_id.split(".")[1],
+                                'mesh': mesh_node.ref_id,
+                                'param': dep_id.split(".")[1],
+                            }
+                            new_ncfg = mesh_node.from_node(from_node=mesh_node, kwargs=new_kwargs)
+                            self._new_node(ncfg=new_ncfg)
+                        else:
+                            # create a new mesh node
+                            new_ncfg = NodeFactory.build_node(node_type='placeholder', node_id=dep_id)
+                            self._new_node(ncfg=new_ncfg)
+                    else:
+                        #create a placeholder node
+                        new_ncfg = NodeFactory.build_node(node_type='placeholder', node_id=dep_id)
+                        self._new_node(ncfg=new_ncfg)
+                
+                if node:
+                    self.add_edge(dep_id, node.id)
                 else:
-                    raise ValueError(f"Dependency {dep_id} not found in the simulation config.")
-                
-                self.add_edge(dep_id, from_nodeid)
+                    raise ValueError(f"Node {node.id} is empty.")
+
         else:
-            print(f"Node {from_nodeid} has no dependencies.")
+            logging.debug(f"Node {node.id} has no dependencies.")
+            pass
                     
     
-    def _new_node(self, id, cfg=None):
-        self._node_from_cfg(id, cfg)
-        self._resolve_references(id)
-
-
-    def _find_default_id(self, dep_id):
-        dep_type = dep_id.split(".")[0]
-        mkind = dep_id.split('.')[1]
-
-        # flag to match node based on the type (ie. module.gwf, module.sim)
-        sim_filter = [n for n in self.nodes if n.startswith(f"{dep_type}.{mkind}.")]
-        # in sim?
-        if len(sim_filter) == 0:
-            #in cfg?
-            cfg_filter = [n for n in self.cfg['nodes'][dep_type] if n.startswith(f"{dep_type}.{mkind}.")]
+    def _new_node(self, node_id: str=None, ncfg: NodeCFG=None):
+        if node_id and ncfg:
+            if node_id != ncfg.id:
+                raise ValueError(f"Node ID {node_id} does not match node configuration ID {ncfg.id}.")
+        elif node_id:
+            ncfg = self.cfg['nodes'].get(node_id, None)
         
-            if len(cfg_filter) == 0:
-                # can you make a default node here?
-                if self.template['module_templates'][mkind]['default_build']['allowed']:
-                    dep_id = f"{dep_type}.{mkind}."
-                    self._new_node(f"{dep_type}.{mkind}.default")
-                    return dep_id
-                else:
-                    raise ValueError(f"Default node not found for {dep_id}. Please specify a unique name.")
-            elif len(cfg_filter) == 1:
-                dep_id = cfg_filter[0]
-                dep_cfg = self.cfg['nodes'][dep_type].get(dep_id, None)
-                self._new_node(dep_id, dep_cfg)
-                return dep_id
-            else:
-                raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
-        elif len(sim_filter) == 1:
-            return sim_filter[0]
+        if ncfg:
+            self._node_from_cfg(ncfg)
+            self._resolve_references(ncfg)
         else:
-            raise ValueError(f"Multiple nodes found for {dep_id}. Please specify a unique name.")
-    
-    def _node_from_cfg(self, node_key, node_cfg=None):
-        node_type = node_key.split(".")[0]
-        
-        if node_key in self.nodes:
+            raise ValueError(f"Node configuration for {node_id} is None.")
+
+
+    def _node_from_cfg(self, ncfg):
+        if ncfg.id in [n_id for n_id in self.nodes.keys()]:
             pass
         else:
-            if node_type == 'module':
-                kind = node_key.split(".")[1]
-                module_template = self.template['module_templates'][kind]
-                if node_cfg:
-                    node_cfg['template'] = module_template
-                else:
-                    node_cfg = {
-                        "template": module_template,
-                    }
+            if ncfg.type == 'module':
+                module_template = self.template['module_templates'][ncfg.module_type]
+                ncfg.template = module_template
             
-            self.add_node(id=node_key, **node_cfg)
+            self.add_node(ncfg)
     
-    def add_node(self, id, **kwargs):
-        node = self.node_builder.build_node(id, **kwargs)
-        self.graph.add_node(id, node=node)
+
+    def add_node(self, ncfg: NodeCFG=None):
+        if isinstance(ncfg, NodeCFG):
+            self.graph.add_node(ncfg)
+        elif isinstance(ncfg, dict):
+            raise NotImplementedError("Node configuration dictionary not implemented yet.") #TODO: implement this
+            self.graph.add_node(ncfg.id, ncfg=ncfg)
+
 
     def add_edge(self, source, target, **kwargs):
-        source = utils.match_nodeid(source, self.nodes)
-        # make sure source and target are in the graph
-        if source not in self.nodes or target not in self.nodes:
-            raise ValueError(f"Source {source} or target {target} not found in the graph.")
-        
         self.graph.add_edge(source, target, **kwargs)
 
 
@@ -171,30 +173,16 @@ class Simulation:
 
     
     def build(self, mode="all"): #TODO move to GraphClass
-        for nodeid in nx.topological_sort(self.graph._graph):
-            if self.nodes[nodeid].get('ntype') == 'module':
-                node_data = self.nodes[nodeid].get('node')
-                args = {}
-                for dep_node in self.graph._graph.predecessors(nodeid):
-                    if dep_node not in self.graph._graph.nodes:
-                        raise ValueError(f"Module {dep_node} not found in the simulation.")
 
-                    elif self.nodes[dep_node].get('node').data:
-                        args[dep_node] = self.nodes[dep_node].get('node').data
-                    else:
-                        # build the node first
-                        self.nodes[dep_node].get('node').build()
-                        args[dep_node] = self.nodes[dep_node].get('node').data
+        for nodeid in nx.topological_sort(self.graph.subgraph): #TODO don't resolve nodes which are not needed
+            node = self.nodes[nodeid]
+            if node.type != 'placeholder':
+                node.resolve(sim_nodes=self.nodes, ref_dir=self.ref_dir, derived_dir=self.derived_dir)
+                logging.debug(f"Node {node.id} resolved successfully.")
+        logging.debug(f"Simulation {self.name} built successfully.")
 
-                if mode == "all":
-                    output = node_data.build(args)
-                if mode == "update":  # this would only build modules that have been changed
-                    pass
-            
-            logging.debug(f"Node {nodeid} built.")
-
+    
     def write(self):
-        pass
         ins = self.template['write']
 
         for i, call_dict in ins.items():
@@ -205,11 +193,12 @@ class Simulation:
             for i in func:
                 # resolve the references in the input dictionary
                 if i.startswith("@"):
-                    id = i[1:]
-                    id = utils.match_nodeid(id, self.nodes)
+                    node_id = i[1:]
+                    node_list = [i for i in self.nodes.keys()]
+                    ref_id = utils.match_nodeid(node_id, node_list)
                     
-                    i_output = self.nodes[id]['node'].data
-                    ref_func.append(i_output)
+                    ref_node = self.nodes.get(ref_id)
+                    ref_func.append(ref_node.data)
                 else:
                     ref_func.append(i)
             

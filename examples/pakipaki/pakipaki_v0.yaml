@@ -1,0 +1,237 @@
+vars:
+  ws: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/simple_freyburg # path to the data files
+  input_dir: ${vars.ws}/data/input # path to the data files
+  mf6_exe: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/bin/mf6.exe # path to the mf6 executable
+
+simulations:
+  freyburg_simple: # user specified simulation name
+    sim_type: mf6 # required
+    ws: ${vars.ws}/models/freyburg_simple # these get created
+    #   mode: overwrite # overwrite OR update
+    # load_existing: ${vars.input_dir}
+    mesh:
+      kind: structured # required
+      nlay: 1
+      nrow: 40
+      ncol: 20
+      resolution: 10
+      # delr: ${vars.input_dir}/freyberg6.dis_delr.txt
+      # delc: ${vars.input_dir}/freyberg6.dis_delc.txt
+      top: ${vars.input_dir}/freyberg6.dis_top.arr
+      bottoms: ${vars.input_dir}/freyberg6.dis_botm_layer1.arr
+      active_domain: ${vars.input_dir}/freyberg6.dis_idomain_layer1.arr
+    
+    modules: # these are specific kwargs found in the flopy module
+      # drn:
+      #   src:
+      #     cond: 5
+      #     mask: [1, 1, 1]
+      
+      ghb:
+        src:
+          # cond: ${vars.input_dir}/freyberg6.ghb_cond_layer1.txt
+          # head: ${vars.input_dir}/freyberg6.ghb_head_layer1.txt
+          stress_period_data:
+            pipeline:
+              input: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\simple_freyburg\data\ghb.csv
+              pipes:
+                - processor: to_mf6_txt
+                  type: table
+                  map:
+                    period: stress_period # map to adjust the column names
+                    head: bhead
+                  cols: [k, i, j, bhead, cond] #order to output the filenames
+                  output_format: '{kper}: {{filename: {filename}}}'
+        print_input: True
+        print_flows: True
+        save_flows: True
+        maxbound: 30
+        # stress_period_data: {
+        #   0: {filename: '${vars.input_dir}/freyberg6.ghb_stress_period_data_1.txt'}
+        #   }
+      
+      sim:
+        sim_name: freyberg6_simple
+        sim_ws: ${simulations.freyburg_simple.ws}
+        exe_name: ${vars.mf6_exe}
+      
+      gwf:
+        modelname: freyburg6
+      
+      ims:
+        print_option: SUMMARY
+        complexity: COMPLEX
+      
+      oc:
+        budget_filerecord: freyberg6_freyberg.cbc
+        head_filerecord: freyberg6_freyberg.hds
+        # headprintrecord: [(10, 11, 4, GENERAL)]
+        saverecord:
+          0: [[BUDGET, LAST], [HEAD, LAST]]
+        printrecord:
+          0: [[BUDGET, LAST]]
+      
+      tdis: # if you want to name the package {type_name}.{user_name} use the name key
+        time_units: days
+        start_date_time: '2020-01-01'
+        nper: 25
+        perioddata:
+            - [3652.50000000, 1, 1.] # perlen, nstp, tsmult
+            - [31., 1, 1.]
+            - [29., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [31., 1, 1.]
+            - [28., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+            - [30., 1, 1.]
+            - [31., 1, 1.]
+      
+      dis:
+        # model: modules.gwf.shellmounda
+        length_units: meters
+        # nlay: 1
+        # nrow: 40
+        # ncol: 20
+        # delr: ${vars.input_dir}/freyberg6.dis_delr.txt
+        # delc: ${vars.input_dir}/freyberg6.dis_delc.txt
+        top: ${vars.input_dir}/freyberg6.dis_top.txt
+        botm: ${vars.input_dir}/freyberg6.dis_botm_layer1.txt
+        idomain: ${vars.input_dir}/freyberg6.dis_idomain_layer1.txt
+
+      ic:
+        strt: ${vars.input_dir}/freyberg6.ic_strt_layer1.txt
+      
+      npf:
+        # src:
+        #   k:
+        #     pipeline:
+        #       input: [file_input]
+        #       pipes:
+        #         - processor: geolgrid.make
+        #           var1: xx
+        save_flows: True
+        icelltype: ${vars.input_dir}/freyberg6.npf_icelltype_layer1.txt
+        # k: ${vars.input_dir}/freyberg6.npf_k_layer1.txt
+        k33: ${vars.input_dir}/freyberg6.npf_k33_layer1.txt
+      
+      sto:
+        iconvert: ${vars.input_dir}/freyberg6.sto_iconvert_layer1.txt
+        ss: ${vars.input_dir}/freyberg6.sto_ss_layer1.txt
+        sy: ${vars.input_dir}/freyberg6.sto_sy_layer1.txt
+        transient:
+          0: True
+          1: True
+      
+      sfr:
+        boundnames: True
+        print_input: True
+        save_flows: True
+        observations:
+          sfr.csv:
+            - [headwater, SFR, headwater]
+            - [tailwater, SFR, tailwater]
+            - [gage-1, inflow, 40.0]
+        nreaches: 40
+        packagedata: {filename: '${vars.input_dir}/freyberg6.sfr_packagedata.txt'}
+        connectiondata: {filename: '${vars.input_dir}/freyberg6.sfr_connectiondata.txt'}
+        perioddata: {
+          0: {filename: '${vars.input_dir}/freyberg6.sfr_perioddata_1.txt'},
+        }
+    
+      rcha:
+        save_flows: True
+        recharge: {
+          0: {filename: '${vars.input_dir}/freyberg6.rch_recharge_1.txt'},
+          1: {filename: '${vars.input_dir}/freyberg6.rch_recharge_2.txt'},
+          2: {filename: '${vars.input_dir}/freyberg6.rch_recharge_3.txt'},
+          3: {filename: '${vars.input_dir}/freyberg6.rch_recharge_4.txt'},
+          4: {filename: '${vars.input_dir}/freyberg6.rch_recharge_5.txt'},
+          5: {filename: '${vars.input_dir}/freyberg6.rch_recharge_6.txt'},
+          6: {filename: '${vars.input_dir}/freyberg6.rch_recharge_7.txt'},
+          7: {filename: '${vars.input_dir}/freyberg6.rch_recharge_8.txt'},
+          8: {filename: '${vars.input_dir}/freyberg6.rch_recharge_9.txt'},
+          9: {filename: '${vars.input_dir}/freyberg6.rch_recharge_10.txt'},
+          10: {filename: '${vars.input_dir}/freyberg6.rch_recharge_11.txt'},
+          11: {filename: '${vars.input_dir}/freyberg6.rch_recharge_12.txt'},
+          12: {filename: '${vars.input_dir}/freyberg6.rch_recharge_13.txt'},
+          13: {filename: '${vars.input_dir}/freyberg6.rch_recharge_14.txt'},
+          14: {filename: '${vars.input_dir}/freyberg6.rch_recharge_15.txt'},
+          15: {filename: '${vars.input_dir}/freyberg6.rch_recharge_16.txt'},
+          16: {filename: '${vars.input_dir}/freyberg6.rch_recharge_17.txt'},
+          17: {filename: '${vars.input_dir}/freyberg6.rch_recharge_18.txt'},
+          18: {filename: '${vars.input_dir}/freyberg6.rch_recharge_19.txt'},
+          19: {filename: '${vars.input_dir}/freyberg6.rch_recharge_20.txt'},
+          20: {filename: '${vars.input_dir}/freyberg6.rch_recharge_21.txt'},
+          21: {filename: '${vars.input_dir}/freyberg6.rch_recharge_22.txt'},
+          22: {filename: '${vars.input_dir}/freyberg6.rch_recharge_23.txt'},
+          23: {filename: '${vars.input_dir}/freyberg6.rch_recharge_24.txt'},
+          24: {filename: '${vars.input_dir}/freyberg6.rch_recharge_25.txt'},
+        }
+      
+      
+      # obs:
+      #   digits: 10
+      #   print_input: True
+      #   continuous:
+      #     heads.csv:
+      #       - (trgw-0-2-15, HEAD, (1 3, 16))
+      #       - (trgw-0-2-9, HEAD, (1, 3, 10))
+      #       - (trgw-0-9-1, HEAD, (1, 10, 2))
+      #       - (trgw-0-13-10, HEAD, (1, 14, 11))
+      #       - (trgw-0-15-16, HEAD, (1, 16, 17))
+      #       - (trgw-0-21-10, HEAD, (1, 22, 11))
+      #       - (trgw-0-22-15, HEAD, (1, 23, 16))
+      #       - (trgw-0-24-4, HEAD, (1, 25, 5))
+      #       - (trgw-0-26-6, HEAD, (1, 27, 7))
+      #       - (trgw-0-29-15, HEAD, (1, 30, 16))
+      #       - (trgw-0-33-7, HEAD, (1, 34, 8))
+      #       - (trgw-0-34-10, HEAD, (1, 35, 11))
+    
+      wel:
+        print_input: True
+        print_flows: True
+        save_flows: True
+        maxbound: 7
+        stress_period_data: {
+          0: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_1.txt'},
+          1: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_2.txt'},
+          2: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_3.txt'},
+          3: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_4.txt'},
+          4: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_5.txt'},
+          5: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_6.txt'},
+          6: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_7.txt'},
+          7: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_8.txt'},
+          8: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_9.txt'},
+          9: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_10.txt'},
+          10: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_11.txt'},
+          11: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_12.txt'},
+          12: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_13.txt'},
+          13: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_14.txt'},
+          14: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_15.txt'},
+          15: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_16.txt'},
+          16: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_17.txt'},
+          17: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_18.txt'},
+          18: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_19.txt'},
+          19: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_20.txt'},
+          20: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_21.txt'},
+          21: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_22.txt'},
+          22: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_23.txt'},
+          23: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_24.txt'},
+          24: {filename: '${vars.input_dir}/freyberg6.wel_stress_period_data_25.txt'},
+        }

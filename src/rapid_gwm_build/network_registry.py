@@ -1,7 +1,7 @@
 
 import networkx as nx
 
-from rapid_gwm_build.nodes.node import NodeBase
+from rapid_gwm_build.nodes.node_base import NodeCFG
 from rapid_gwm_build.pipes.pipeline_node import PipelineNode
 
 class NetworkRegistry:
@@ -19,44 +19,72 @@ class NetworkRegistry:
             'data',
         ]
 
-    def plot(self, **kwargs):
+    
+    @property
+    def subgraph(self):
+        module_nodes = [n_id for n_id, data in self._graph.nodes.data() if data['node'].type == 'module']
+        
+        def get_adj_nodes(in_list, master_nodes):
+            
+            for n_id in in_list:
+                adj_nodes = list(self._graph.predecessors(n_id))
+                master_nodes.extend(adj_nodes)
+                master_nodes = get_adj_nodes(adj_nodes, master_nodes)
+            return master_nodes
+        
+        master_nodes = get_adj_nodes(module_nodes, module_nodes)
+
+        # get unique
+        subset_nodes = list(dict.fromkeys(master_nodes))
+        return self._graph.subgraph(subset_nodes)
+
+    
+    def plot(self, subgraph=False, **kwargs):
         from matplotlib import pyplot as plt
 
-        pos = nx.planar_layout(self._graph)  # positions for all nodes
+        if subgraph:
+            G = self.subgraph
+        else:
+            G = self._graph
+
+        node_colors = {
+            "input": "yellow",
+            "mesh": "purple",
+            "module": "lightblue",
+            "pipe": "pink",
+            "template": "orange",
+            "pipeline": "lightgreen",
+            'placeholder': "gray",}
+        line_color = {
+            True: 0.5,
+        }
+
+        pos = nx.planar_layout(G)  # positions for all nodes
 
         color_list = []
-        for node in self._graph.nodes(data=True):
-            node_colors = {
-                "input": "yellow",
-                "mesh": "purple",
-                "temporal": "#99ff99",
-                "template": "#ffcc99",
-                "module": "lightblue",
-                "pipe": "pink",}
-            color_list.append(node_colors.get(node[1]["ntype"], "gray"))
-        labels = {node:data['name'] for node, data in self._graph.nodes(data=True)}
+        template_list = []
+        for node in G.nodes(data=True):
+            color_list.append(node_colors.get(node[1]['node'].type, "gray"))
+            template_list.append(line_color.get(node[1]['node'].istemplate(), 1))
+        labels = {node: data['node'].name for node, data in G.nodes(data=True)}
 
         nx.draw_networkx(
-            self._graph,
+            G,
             pos=pos,
             with_labels=False,
             node_color=color_list,
+            alpha=template_list,
         )
-        nx.draw_networkx_labels(self._graph, pos=pos, labels=labels, font_size=8, font_color="black")
+        nx.draw_networkx_labels(G, pos=pos, labels=labels, font_size=8, font_color="black")
         plt.show()
     
-    def add_node(self, id, node: NodeBase):
+    def add_node(self, ncfg: NodeCFG):
         """
         Add a node to the graph with optional attributes.
         :param node: The node identifier (e.g., a string or number).
         :param attributes: Additional attributes to associate with the node.
         """
-        ntype = node.type
-        name = node.name
-        if ntype not in self._allowed_types:
-            raise ValueError(f"Node type '{ntype}' is not allowed. Allowed types are: {self._allowed_types}.")
-
-        self._graph.add_node(id, ntype=ntype, name=name, node=node)
+        self._graph.add_node(ncfg.id, node=ncfg)
 
     def remove_node(self, node):
         """

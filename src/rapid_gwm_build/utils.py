@@ -109,20 +109,28 @@ def _parse_module_usrkey(gkey: str):
     return kind, usr_modname
 
 
-def match_nodeid(id_in, id_list):
-    ntype = id_in.split(".")[0]  # Extract the node type from the name
-    kind = id_in.split(".")[1]  # Extract the node kind from the name
-    name = id_in.split(".")[-1]  # Extract the node name from the name
+def match_nodeid(node_id, node_list):
+
+    filtered_list = [nid for nid in node_list if nid == node_id]
+    
+    # if len(id_in.split(".")) > 1:
+    #     ntype = id_in.split(".")[0]  # Extract the node type from the name
+    #     kind = id_in.split(".")[1]  # Extract the node kind from the name
+    #     name = id_in.split(".")[-1]  # Extract the node name from the name
+    # else:
+    #     name = id_in
 
     
-    if name == "":
-        filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.")]
-    else:
-        filtered_list = [n for n in id_list if n == id_in]
+    # if name == "":
+    #     filtered_list = [n for n in id_list if n.startswith(f"{ntype}.{kind}.")]
+    # else:
+    #     filtered_list = [n for n in id_list if n == id_in]
     # If there are multiple matches, return the first one
     if len(filtered_list) > 1:
-        raise ValueError(f"Multiple matches found for {id_in}: {filtered_list}")
+        raise ValueError(f"Multiple matches found for {node_id}: node_list")
     elif len(filtered_list) == 0:
-        raise ValueError(f"No matches found for {id_in} in {id_list}")
+        return None
     else:
         return filtered_list[0]  # Return the first match
+    
+    
