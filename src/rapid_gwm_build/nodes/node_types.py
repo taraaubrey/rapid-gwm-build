@@ -12,9 +12,10 @@ class PipeNode(NodeCFG):
     """
     Class to represent a node ID in the GWM file.
     """
-    def __init__(self, input_id, **kwargs):
+    def __init__(self, input_id, module_path=None, **kwargs):
         super().__init__('pipe', **kwargs)
         self._input_id = input_id
+        self.module_path = module_path
     
     
     @property
@@ -36,23 +37,36 @@ class PipeNode(NodeCFG):
         Get the data for this node. This method should be overridden in subclasses.
         """
         func = pipe_registry.get(self.name)
+        if func is None:
+            func = utils.get_function_from_filepath(self.module_path)
 
-        # kwargs = {}
-        # for k, v in self.src.items():
-        #     if isinstance(v, str) and v.startswith("@"):
-        #         dep_node = sim_nodes.get(v[1:])
-        #         kwargs[k] = dep_node.data
+        if func is None:
+            raise ValueError(f"Function {self.name} not found in the registry or module path.")
         
         # Get the input data
         def resolve_input(input_id):
             if isinstance(input_id, str) and input_id.startswith("@"):
                 input_node = sim_nodes[input_id[1:]]
+                if input_node.data is None:
+                    raise ValueError(f"Dependency node {dep_node} is empty.")
                 return resolve_input(input_node.data)
             return input_id
 
         input_data = resolve_input(self.input_id)
 
-        self._data = func(input_data, node_id=self.id, outdir=derived_dir, **self.src)
+        func_args = {}
+        for k, v in self.src.items():
+            if isinstance(v, str) and v.startswith("@"):
+                dep_node = sim_nodes.get(v[1:])
+                if dep_node.data is None:
+                    raise ValueError(f"Dependency node {dep_node} is empty.")
+                func_args[k] = dep_node.data
+            elif isinstance(v, list):
+                func_args[k] = [resolve_input(i) for i in v]
+            else:
+                func_args[k] = resolve_input(v)
+
+        self._data = func(outdir=derived_dir, **func_args)
 
     
     def _get_dependencies(self):
@@ -253,26 +267,27 @@ class MeshNode(NodeCFG):
         self._param = value
 
     def _get_dependencies(self):
-        src_dep = self._input_dependencies(self.src)
+        # src_dep = self._input_dependencies(self.src)
         # return src_dep
         mesh_dep = self._input_dependencies(self.mesh)
-        if src_dep is not None and mesh_dep is not None:
-            return src_dep + mesh_dep
-        elif src_dep is not None:
-            return src_dep
-        elif mesh_dep is not None:
-            return mesh_dep
+        return mesh_dep
+        # if src_dep is not None and mesh_dep is not None:
+        #     return src_dep + mesh_dep
+        # elif src_dep is not None:
+        #     return src_dep
+        # elif mesh_dep is not None:
+        #     return mesh_dep
     
     def resolve(self, sim_nodes: dict, **kwargs):
-        """
-        Get the data for this node. This method should be overridden in subclasses.
-        """
+
         if self.id == 'mesh':
             self._set_mesh(sim_nodes)
             self._data = self.mesh
+        
         elif self.mesh.startswith("@"):
             mesh_node = sim_nodes.get(self._mesh[1:])
             self._data = getattr(mesh_node.data, self.param)
+        
         else:
             self._set_mesh()
             self._data = self.mesh

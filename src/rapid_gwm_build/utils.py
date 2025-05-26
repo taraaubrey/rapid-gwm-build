@@ -1,5 +1,24 @@
 
 
+
+
+def get_function_from_filepath(module_path: str):
+    from importlib.util import spec_from_file_location, module_from_spec
+    import os
+    import sys
+    
+    module_path, func_name = module_path.rsplit('.', 1)
+    module_name = os.path.basename(module_path)  # Get the last part of the path as module name
+    file_path = module_path + '.py'
+    
+    spec = spec_from_file_location(module_name, file_path)
+    module = module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    
+    return getattr(module, func_name)
+
+
 def get_function(func_path: str):
     import importlib
 

@@ -26,7 +26,8 @@ class PipeFactory:
         if name in self._registry:
             return self._registry[name]
         else:
-            raise KeyError(f"No function registered with name '{name}', and no default function is set.")
+            logging.warning(f"Function '{name}' not found in the registry. Returning None.")
+            return None
         
     
     def load_all_from_module(self, module_name=None):

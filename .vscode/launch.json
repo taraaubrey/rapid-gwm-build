@@ -4,9 +4,16 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Python Debugger: Specific File",
+            "name": "Pakipaki/client_code",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/pakipaki/client_code.py",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "simple_freyburg/client_code",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/examples/simple_freyburg/client_code.py",

@@ -17,11 +17,11 @@ class NodeParser:
             'pipeline': self.parse_pipeline,
             'mesh': self.parse_mesh,
             'modules': self.parse_modules,
-            'src': self.parse_src,
+            'src': self.parse_dict,
         }
 
     
-    def get_parser(self, k, src):
+    def get_parser(self, k):
         """
         Returns the parser function for the given key.
         """
@@ -50,20 +50,19 @@ class NodeParser:
             pass
             # raise NotImplementedError(f"Unsupported node type: {node_type}") #TODO: not implemented yet
     
-    def parse_src(self, from_node=None, src=None, **kwargs):
-        updated_refs = {}
-        for attr, src_val in src.items():
-            if isinstance(src_val, dict) and 'pipeline' in src_val:
-                pipeline_src = src_val.get('pipeline')
-                # if src_val is a dictionary, parse it recursively
-                parser = self.get_parser('pipeline', pipeline_src)
-                ref_id = parser(attr=attr, src=pipeline_src, from_node=from_node)
-            else:
-                parser = self.get_parser(attr, src_val)
-                ref_id = parser(attr=['src', attr], src=src_val, from_node=from_node)
-            # ref_id = self.parse_node(attr, attr=['src', attr], src=src_val, from_node=from_node, src_arg=True)
-            updated_refs[attr] = ref_id
-        return updated_refs
+    # def parse_src(self, from_node=None, src=None, **kwargs):
+    #     updated_src = self.parse_dict(self, cfg_dict=node_cfg, from_node=from_node, src_arg=True)
+    #     updated_refs = {}
+    #     for attr, src_val in src.items():
+    #         if isinstance(src_val, dict) and 'pipeline' in src_val:
+    #             pipeline_src = src_val.get('pipeline')
+    #             ref_id = self.parse_pipeline(attr=attr, src=pipeline_src, from_node=from_node)
+    #         else:
+    #             parser = self.get_parser(attr, src_val)
+    #             ref_id = parser(attr=['src', attr], src=src_val, from_node=from_node)
+    #         # ref_id = self.parse_node(attr, attr=['src', attr], src=src_val, from_node=from_node, src_arg=True)
+    #         updated_refs[attr] = ref_id
+    #     return updated_refs
 
     
     def parse_modules(self, modules_cfg:dict):
@@ -73,30 +72,19 @@ class NodeParser:
         else:
             raise NotImplementedError(f"Unsupported module configuration type: {type(modules_cfg)}") #TODO: not implemented yet
 
-    
-    # def parse(self, k, src, from_node=None, src_args=True): ##src == cfg
-    #         parser = self.get_parser(k)
-    #         if not isinstance(src, dict) and not parser:
-    #             parser = self.get_parser('input')
-    #         return parser(from_node=from_node, src=src, src_arg=src_args)
-
     def parse_module(self, module_key, **node_cfg):
         """
         Factory method to create a parser for the given module type.
         """
         node = NodeFactory.build_node(node_type='module', module_key=module_key)
-        
-        module_refs = {}
-        for k, k_cfg in node_cfg.items():
-            parser = self.get_parser(k, k_cfg)
-            # if isinstance(k_cfg, dict) and parser:
-            #     ref_id =  parser(from_node=node, **k_cfg)
-            # else:
-            #     parser = self.get_parser('input')
-            ref_id = parser(attr=k, from_node=node, src=k_cfg, src_arg=True)
-            module_refs[k] = ref_id
+        updated_src = self.parse_dict(cfg_dict=node_cfg, from_node=node, src_arg=True)
+        # module_refs = {}
+        # for k, k_cfg in node_cfg.items():
+        #     parser = self.get_parser(k, k_cfg)
+        #     ref_id = parser(attr=k, from_node=node, src=k_cfg, src_arg=True)
+        #     module_refs[k] = ref_id
 
-        node.src = module_refs
+        node.src = updated_src
 
         self.nodes.append(node)
 
@@ -104,34 +92,29 @@ class NodeParser:
     def parse_template(self, module_key, attr, cfg):
         node = NodeFactory.build_node(node_type='template', module_key=module_key, attr=[attr])
 
-        template_refs = {}
-        for k, k_cfg in cfg.items():
-            parser = self.get_parser(k, k_cfg)
-            ref_id = parser(src=k_cfg, from_node=node, attr=['template'], src_arg=False)
-            # parser = self.get_parser(k)
-            # if isinstance(k_cfg, dict) and parser:
-            #     ref_id =  parser(from_node=node, src=k_cfg)
-            # else:
-            #     parser = self.get_parser('input')
-            #     ref_id = parser(from_node=node, src=k_cfg)
-            template_refs[k] = ref_id
+        updated_src = self.parse_dict(cfg_dict=cfg, from_node=node, src_arg=False)
+        # template_refs = {}
+        # for k, k_cfg in cfg.items():
+        #     parser = self.get_parser(k, k_cfg)
+        #     ref_id = parser(src=k_cfg, from_node=node, attr=['template'], src_arg=False)
+        #     template_refs[k] = ref_id
 
-        node.src = template_refs
+        node.src = updated_src
 
         self.nodes.append(node)
 
         return node
     
-
     def parse_input(self, src=None, src_arg=False, from_node=None, attr=None):
         node = NodeFactory.build_node(node_type='input', src_arg=src_arg, src=src, from_node=from_node, attr=attr)
         
         if not src_arg and isinstance(src, dict):
-            for k, v in src.items():
-                parser = self.get_parser(k, v)
-                ref_id = parser(attr=k, src=v, from_node=node, src_arg=src_arg)
-                # ref_id = self.parse_node(k, attr=k, src=v, from_node=node, src_args=True)
-                node.src = ref_id
+            updated_src = self.parse_dict(cfg_dict=src, from_node=node, src_arg=src_arg)
+            # for k, v in src.items():
+            #     parser = self.get_parser(k, v)
+            #     ref_id = parser(attr=k, src=v, from_node=node, src_arg=src_arg)
+            #     # ref_id = self.parse_node(k, attr=k, src=v, from_node=node, src_args=True)
+            node.src = updated_src
         self.nodes.append(node)
 
         return node.ref_id
@@ -142,10 +125,12 @@ class NodeParser:
         if isinstance(attr, list):
             in_attr.extend(attr)
             
-        
-        src_input = src.pop('input')
-        in_ref_id = self.parse_input(
-            src=src_input, attr=in_attr, from_node=from_node, src_arg=False)
+        if 'input' in src:
+            src_input = src.pop('input')
+            in_ref_id = self.parse_input(
+                src=src_input, attr=in_attr, from_node=from_node, src_arg=False)
+        else:
+            in_ref_id = None
         
         pipeline_node = NodeFactory.build_node(
             node_type='pipeline', src=src, from_node=from_node, src_arg=True, attr=attr)
@@ -165,31 +150,62 @@ class NodeParser:
 
 
     def parse_pipe(self, processor:str=None, from_node=None, input_id=None, src=None, attr=None):
+        if len(processor.split('.')) > 1:
+            # If the processor is a module, we need to parse it differently
+            module_path = processor
+            processor = processor.split('.')[-1]
+        else:
+            module_path = None
+        
         if attr:
             pipe_attr = [processor, attr]
         else:
             pipe_attr = processor
-        pipe_ncfg = NodeFactory.build_node(node_type='pipe', from_node=from_node, attr=pipe_attr, input_id=input_id, src=src)
+        
+        pipe_ncfg = NodeFactory.build_node(node_type='pipe', from_node=from_node, attr=pipe_attr, input_id=input_id, src=src, module_path=module_path)
+        updated_src = self.parse_dict(cfg_dict=src, from_node=pipe_ncfg, src_arg=False)
+        pipe_ncfg.src = updated_src
         self.nodes.append(pipe_ncfg)
+        
         return pipe_ncfg.ref_id
     
     
     def parse_mesh(self, **node_cfg):
         mesh_ncfg = NodeFactory.build_node(node_type='mesh')
-        updated_refs = {}
-        for k, v in node_cfg.items():
-                parser = self.get_parser(k, v)
-                ref_id = parser(
-                    attr=['mesh', k], src=v, from_node=mesh_ncfg, src_arg=False)
-                # cfg = {
-                #     'attr': ['mesh', k],
-                #     'src': v,
-                #     'param': v,
-                #     'from_node': mesh_ncfg,
-                #     'src_args': True
-                # }
-                # ref_id = self.parse_node(k, **cfg)
-                updated_refs[k] = ref_id
-        mesh_ncfg.src = updated_refs
+        updated_src = self.parse_dict(cfg_dict=node_cfg, from_node=mesh_ncfg, src_arg=False)
+        # updated_refs = {}
+        # for k, v in node_cfg.items():
+        #         if isinstance(v, str) and v.startswith('@'):
+        #             # If the value is a reference, we need to parse it differently
+        #             ref_id = v
+        #         parser = self.get_parser(k)
+        #         ref_id = parser(
+        #             attr=['mesh', k], src=v, from_node=mesh_ncfg, src_arg=False)
+        #         updated_refs[k] = ref_id
+        mesh_ncfg.src = updated_src
         self.nodes.append(mesh_ncfg)
 
+
+    def parse_dict(self, cfg_dict, from_node=None, src_arg=False):
+        updated_refs = {}
+        for k, v in cfg_dict.items():
+            
+            if isinstance(v, str) and v.startswith('@'):
+                ref_id = v
+            elif isinstance(v, dict) and 'pipeline' in v:
+                pipeline_src = v.get('pipeline')
+                ref_id = self.parse_pipeline(attr=k, src=pipeline_src, from_node=from_node)
+            else:
+                parser = self.get_parser(k)
+                if isinstance(v, dict) and 'src' in v:
+                    src_val = v.get('src')
+                    ref_id = parser(attr=['src', k], src=src_val, from_node=from_node, src_arg=src_arg)
+                elif from_node.type == 'template':
+                    ref_id = parser(attr=['template', k], src=v, from_node=from_node, src_arg=src_arg)
+                elif from_node.type == 'mesh':
+                    ref_id = parser(attr=['mesh', k], src=v, from_node=from_node, src_arg=src_arg)
+                else:
+                    ref_id = parser(attr=k, src=v, from_node=from_node, src_arg=src_arg)
+            
+            updated_refs[k] = ref_id
+        return updated_refs

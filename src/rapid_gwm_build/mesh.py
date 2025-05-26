@@ -12,11 +12,12 @@ class Mesh:
             delr = None,
             delc = None,
             resolution = None,
-            top:np.ndarray = None,
-            bottoms: np.ndarray | dict = None,
+            top: np.ndarray = None,
+            bottom: np.ndarray = None,
             xorigin = 0.0, # based on xorigin of the upper-left corner of the upper-left pixel
             yorigin = 0.0, # based on yorigin of the upper-left corner of the upper-left pixel
             active_domain = None,
+            pipeline=None,
             # cfg: dict = None,
     ):
         # self.cfg = cfg
@@ -29,10 +30,11 @@ class Mesh:
         self.delc = delc if delc is not None else np.ones(nrow) * resolution
 
         self.top = top
-        self.bottoms = self._set_bottoms(bottoms)
+        self.bottom = bottom
         self.xorigin = xorigin
         self.yorigin = yorigin
         self.active_domain = active_domain
+        self.pipeline = pipeline
 
         # create grid
         self.grid = self._make2DGrid()

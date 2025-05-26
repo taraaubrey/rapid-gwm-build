@@ -174,6 +174,10 @@ class Simulation:
     
     def build(self, mode="all"): #TODO move to GraphClass
 
+        # check if the graph is acyclic
+        if not nx.is_directed_acyclic_graph(self.graph._graph):
+            raise ValueError(f"The graph is not acyclic. Cycle found here: {nx.find_cycle(self.graph._graph)}")
+
         for nodeid in nx.topological_sort(self.graph.subgraph): #TODO don't resolve nodes which are not needed
             node = self.nodes[nodeid]
             if node.type != 'placeholder':

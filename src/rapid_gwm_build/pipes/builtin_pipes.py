@@ -40,3 +40,7 @@ def to_mf6_txt(data: DataFrame, map=None, cols=None, outdir=None, node_id=None, 
         outs = data
 
     return outs
+
+
+def make_layers(top, bottom, nlay, layer_thickness, min_thickness, method):
+    pass
