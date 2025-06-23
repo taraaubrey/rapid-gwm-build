@@ -7,35 +7,19 @@ import pandas as pd
 from scipy.ndimage import uniform_filter
 
 from utils import *
+from a_setup import *
 
-MODEL_NAME = 'local2'  # name of the model
-
-# model domain
-RES = 10
-NLAY = 8
-NLAY_THICKNESS = 10  # thickness of each layer in meters
-
-#% paths
-DOMAIN = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_domain.shp"
-TOP = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data/b_derived/dem_elevation_derivatives/dem_clipped.tif"
-BOTTOM = r"C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\pakipaki\models\derived_data\basement_z.tif"
-DRAINS = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_drains.shp"
-MBR = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_mbr.shp"
-LIMESTONE_INACTIVE = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_limestone_inactive_bottom.shp"
-POUKAWA_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_chd.shp"
-INFLUX_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_influx.shp"
-OUTFLUX_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_outflux.shp"
-
-# Directories
-
-FIG_DIR = f'examples/manual_builds/models/{MODEL_NAME}/figures'  # directory for figures
-MODEL_DIR = f'examples/manual_builds/models/{MODEL_NAME}/{MODEL_NAME}' # model workspace to be used
 
 # create directories if they do not exist
-if not os.path.exists(FIG_DIR):
-    os.makedirs(FIG_DIR)
+for d in [SPATIAL_DIR, FIG_DIR]:
+    if not os.path.exists(d):
+        os.makedirs(d)
 
 grid = gi.Grid.from_vector(DOMAIN, RES)
+
+# save grid
+grid_gpd = grid.cell_geodataframe()
+grid_gpd.to_file(os.path.join(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
 
 # top & bottom
 top = grid.array_from_raster(TOP)
@@ -45,13 +29,17 @@ bottom = grid.array_from_raster(BOTTOM)  # get the bottom elevation
 arr = grid.array_from_vector(DOMAIN)
 # arr = np.where(top.data > 15, 0, arr)
 
-arr3d = arr[np.newaxis, :, :]  # shape (1, nrow, ncol)
-idomain = np.broadcast_to(arr3d.data, (NLAY-2, grid.shape[0], grid.shape[1]))
+idomain = np.stack([arr] * NLAY, axis=0)
+# confining layer active map
+conf_area = grid.array_from_vector(CONF_AREA_ACTIVE)
+idomain[-2] = np.where(conf_area.data == 0, 0, idomain[-2])  # set the confining layer active where the confining area is active
+idomain[-1] = np.where(conf_area.data == 0, 0, idomain[-1])
+
 #limeston_inactive
-limestone = grid.array_from_vector(LIMESTONE_INACTIVE)
-arr_limestone = np.where(limestone == 1, 0, arr)
-# add arr_limestone to idomain
-idomain = np.vstack([idomain, arr_limestone[np.newaxis, :, :], arr_limestone[np.newaxis, :, :]])
+# limestone = grid.array_from_vector(LIMESTONE_INACTIVE)
+# arr_limestone = np.where(limestone == 1, 0, arr)
+# # add arr_limestone to idomain
+# idomain = np.vstack([idomain, arr_limestone[np.newaxis, :, :], arr_limestone[np.newaxis, :, :]])
 
 nrow = grid.shape[0]
 ncol = grid.shape[1]
@@ -60,12 +48,18 @@ delc = np.ones(nrow) * RES
 
 
 # dis
+shallow_elevation = 0 # top of clay /confining layer
 top = top.data  # use the top elevation for the first layer, only where idomain is active
-bottom_shallow = np.where(bottom.data < 5, 5, bottom.data)  # set bottom elevation to top elevation where it is higher
+bottom_shallow = np.where(bottom.data < shallow_elevation, shallow_elevation, bottom.data)  # set bottom elevation to top elevation where it is higher
 thickness_shallow = top.data - bottom_shallow  # calculate the thickness of the layers
-thickness_deeper = np.ones_like(thickness_shallow) * 10  # set the thickness of the deeper layers
-# bottoms
-min_b = 1
+# thickness_deeper = np.ones_like(thickness_shallow) * 10  # set the thickness of the deeper layers
+
+conf_elev = -10
+grav_elev = -20
+conf_bottom = np.where(bottom.data < conf_elev, conf_elev, bottom.data)  # set bottom elevation to conf_elev where it is higher
+grav_bottom = np.where(bottom.data < grav_elev, grav_elev, bottom.data)  # set bottom elevation to conf_elev where it is higher
+
+min_b = 1 # min thickness
 
 thicknesses = []
 botm = []
@@ -74,8 +68,11 @@ for i in range(NLAY):
     if i < 6:
         b = np.where(thickness_shallow/6 < min_b, min_b, thickness_shallow/6)
         ibotm = b0 - b  # calculate the bottom elevation for each layer
-    else:
-        b = np.where(thickness_deeper/2 < min_b, min_b, thickness_deeper/2)
+    elif i == 6:
+        b = np.where(b0 - conf_bottom < min_b, min_b, b0 - conf_bottom)  # set the thickness of the confining layer
+        ibotm = b0 - b  # calculate the bottom elevation for each layer
+    else:   
+        b = np.where(b0 - grav_bottom < min_b, min_b, b0 - grav_bottom)  # set the thickness of the confining layer
         ibotm = b0 - b  # calculate the bottom elevation for each layer
     thicknesses.append(b)
     botm.append(ibotm)
@@ -84,6 +81,11 @@ for i in range(NLAY):
 botm = np.array(botm)
 b_arr = np.array(thicknesses)
 # plot_array_layers(b_arr, figsize=(15, 5), cmap='viridis', titles=None)
+
+# update idomain to 0 where layer 7 and 8 have min thickness
+idomain[-2] = np.where(b_arr[-2] <= min_b, 0, idomain[-2])  # layer 7
+idomain[-1] = np.where(b_arr[-1] <= min_b, 0, idomain[-1])  # layer 8
+
 
 # drains
 drain_arr = grid.array_from_vector(DRAINS)
@@ -133,11 +135,11 @@ for i in range(NLAY-2):
 outflux_df = pd.DataFrame({'index': outflux_indices})
 
 # chd - confined boundary inflow
-# chd_conf_arr = idomain[-1]
-# chd_conf_indices = get_indices(chd_conf_arr, layer=NLAY-1)
-# chd_conf_df = pd.DataFrame({'index': chd_conf_indices})
-chd_conf_in = influx_df.copy()
-chd_conf_out = outflux_df.copy()
+chd_conf_arr = idomain[-1]
+chd_conf_indices = get_indices(chd_conf_arr, layer=NLAY-1)
+chd_conf_df = pd.DataFrame({'index': chd_conf_indices})
+# chd_conf_in = influx_df.copy()
+# chd_conf_out = outflux_df.copy()
 
 # k
 all_k = []
@@ -163,8 +165,9 @@ drn_top_input['cond'] = 1
 
 # chd
 chd_pw_df['head'] = [i[1] for i in chd_pw_indices]  # head for Poukawa boundary
-chd_conf_in['head'] = 13  # head for confined boundary
-chd_conf_out['head'] = 12  # head for confined boundary
+chd_conf_df['head'] = 13  # head for confined boundary inflow
+# chd_conf_in['head'] = 13  # head for confined boundary
+# chd_conf_out['head'] = 12  # head for confined boundary
 
 # mbr
 mbr_df['flux'] = 2 # m3/d
@@ -183,13 +186,10 @@ recharge = 0.0001
 
 # 2 BUILD A MODEL -------------------------------------------------------
 
-modelname = MODEL_NAME # model name to be used
-modelws = MODEL_DIR
-
-sim = fp.mf6.MFSimulation(sim_name=modelname, # name of simulation
+sim = fp.mf6.MFSimulation(sim_name=MODEL_NAME, # name of simulation
                           version='mf6', # version of MODFLOW
                           exe_name=r'C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\bin\mf6.exe', # absolute path to MODFLOW executable
-                          sim_ws=modelws, # path to workspace where all files are stored
+                          sim_ws=MODEL_DIR, # path to workspace where all files are stored
                          )
 
 tdis = fp.mf6.ModflowTdis(simulation=sim, # add to the simulation called sim (defined in prevous code cell)
@@ -204,9 +204,9 @@ ims = fp.mf6.ModflowIms(simulation=sim,
                        )
 
 gwf = fp.mf6.ModflowGwf(simulation=sim, 
-                        modelname=modelname, # model name
-                        model_nam_file=f"{modelname}.nam", # name of nam file
-                        save_flows=True # make sure all flows are stored in binary output file
+                        modelname=MODEL_NAME, # model name
+                        model_nam_file=f"{MODEL_NAME}.nam", # name of nam file
+                        save_flows=True, # make sure all flows are stored in binary output file
                        )
 
 dis = fp.mf6.ModflowGwfdis(model=gwf, # add to groundwater flow model called gwf
@@ -219,6 +219,8 @@ dis = fp.mf6.ModflowGwfdis(model=gwf, # add to groundwater flow model called gwf
                            top=top, 
                            botm=botm,
                            idomain=idomain, # 3D array of active cells 
+                           xorigin=grid.bounds[0],
+                           yorigin=grid.bounds[1],
                           )
 
 npf = fp.mf6.ModflowGwfnpf(model=gwf, #node property flow package
@@ -246,16 +248,22 @@ chd_pw = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created
                             pname='chd_pw', # package name
                             save_flows=True, # save flows for this package 
                            )
-chd_conf_in = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                            stress_period_data={0: chd_conf_in.values.tolist()},
-                            pname='chd_conf_in', # package name
+
+chd_conf = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
+                            stress_period_data={0: chd_conf_df.values.tolist()},
+                            pname='chd_conf', # package name
                             save_flows=True, # save flows for this package 
                            )
-chd_conf_out = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                            stress_period_data={0: chd_conf_out.values.tolist()},
-                            pname='chd_conf_out', # package name
-                            save_flows=True, # save flows for this package 
-                           )
+# chd_conf_in = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
+#                             stress_period_data={0: chd_conf_in.values.tolist()},
+#                             pname='chd_conf_in', # package name
+#                             save_flows=True, # save flows for this package 
+#                            )
+# chd_conf_out = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
+#                             stress_period_data={0: chd_conf_out.values.tolist()},
+#                             pname='chd_conf_out', # package name
+#                             save_flows=True, # save flows for this package 
+#                            )
 # drn_top = fp.mf6.ModflowGwfdrn(model=gwf, # add drain package to model gwf (created in previous code cell)
 #                            stress_period_data={0: drn_top_input.values.tolist()},
 #                             pname='drn_t', # package name
@@ -280,8 +288,8 @@ outflux = fp.mf6.ModflowGwfwel(model=gwf,
 #                           )
 
 oc = fp.mf6.ModflowGwfoc(model=gwf, # add output control to model gwf (created in previous code cell)
-                         budget_filerecord=f"{modelname}.cbc", # file name where all budget output is stored
-                         head_filerecord=f"{modelname}.hds", # file name where all head output is stored
+                         budget_filerecord=f"{MODEL_NAME}.cbc", # file name where all budget output is stored
+                         head_filerecord=f"{MODEL_NAME}.hds", # file name where all head output is stored
                          saverecord=[("HEAD", "ALL"), ("BUDGET", "ALL")],
                         )
 
@@ -294,15 +302,15 @@ pmv.plot_array(top *idomain[0], masked_values=[1e30], alpha=0.5, cmap='viridis')
 pmv.plot_bc(name='chd_pw', color='purple') # add 'chd' cells
 pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
 pmv.plot_bc(name='drn_r', color='blue') # add 'wells' cells
-pmv.plot_bc(name='chd_conf_in', color='orange') # add 'chd' cells
-pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
+pmv.plot_bc(name='chd_conf', color='orange') # add 'chd' cells
+# pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
 pmv.plot_bc(name='influx', color='green') # add 'influx' cells
 pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
 # pmv.plot_inactive(color='lightgray', alpha=0.5) # plot inactive cells
 # pmv.plot_grid(colors='silver', lw=0.01); # add grid
 
 # save to figures
-plt.savefig(os.path.join(FIG_DIR, f'{modelname}_domain.png'), dpi=300, bbox_inches='tight') # save figure
+plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_domain.png'), dpi=300, bbox_inches='tight') # save figure
 
 
 # --------------------------------------------------------
@@ -364,8 +372,8 @@ for i in range(NLAY):
     pmv.plot_bc(name='chd_pw', color='purple') # add 'chd' cells
     pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
     pmv.plot_bc(name='drn_r', color='blue') # add 'wells' cells
-    pmv.plot_bc(name='chd_conf_in', color='orange') # add 'chd' cells
-    pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
+    pmv.plot_bc(name='chd_conf', color='orange') # add 'chd' cells
+    # pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
     pmv.plot_bc(name='influx', color='green') # add 'influx' cells
     pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
     
@@ -376,7 +384,7 @@ for i in range(NLAY):
     plt.clabel(cs, fmt='%1.1f'); # add contour labels with one decimal place
 
     # save to figures
-    plt.savefig(os.path.join(FIG_DIR, f'{modelname}_heads{i}.png'), dpi=300, bbox_inches='tight') # save figure
+    plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_heads{i}.png'), dpi=300, bbox_inches='tight') # save figure
     plt.close()
 
 # -------------------------------------------------------------
@@ -389,77 +397,8 @@ crossview.plot_grid(colors='black', lw=1); # add grid
 crossview.plot_inactive(color='lightgray') # plot inactive cells
 cb = plt.colorbar(strtArray, shrink=0.5) # add color bar
 # strtArray = crossview.plot_array(head, masked_values=[1e30], alpha = 0.5) # plot the array of heads in cross section
-plt.savefig(os.path.join(FIG_DIR, f'{modelname}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
+plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
 plt.close()  # close the figure to avoid memory issues
 
 
-# -------------------------------------------------------------
-partlocs = []
-for ilay in range(NLAY):
-    for jrow in range(0, nrow, 5):
-        for jcol in range(0, ncol, 5):
-            if idomain[ilay, jrow, jcol] == 1:
-                # if the cell is active, add the particle location
-                partlocs.append((int(ilay), int(jrow), int(jcol)))
 
-
-
-
-
-# Specify the paricle data
-particledata = fp.modpath.ParticleData(partlocs=partlocs,
-                                       structured=True,
-                                      )
-# Group partcles in a group
-pg = fp.modpath.ParticleGroup(particledata=particledata)
-
-# Create a modpath model and call it mp
-mp = fp.modpath.Modpath7(modelname=modelname, # name of the model
-                         model_ws=modelws, # path to workspace where all files are stored
-                         flowmodel=gwf, # groundwater flow model to get the flow from
-                         exe_name=r'C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\bin\mp7.exe', # absolute path to MODPATH7 executable'
-                        )
-
-# Add the Basic package to the model called mp and specify the porosity
-mpbas = fp.modpath.Modpath7Bas(model=mp, porosity=0.3)
-
-# Add the MODPATH simulation package
-mpsim = fp.modpath.Modpath7Sim(model=mp, # add to model called mp
-                               particlegroups=pg, # particle group pg defined above
-                               stoptimeoption='extend',
-                               trackingdirection='forward',
-                              )
-
-mp.write_input()
-mp.run_model(silent=False)
-
-fname = os.path.join(modelws, f"{modelname}.mppth")
-plf = fp.utils.PathlineFile(fname)
-
-pline = plf.get_data(partid=5) # get data for particle with id number 5
-pline.dtype.names # get names stored in a rec array
-
-for i in range(NLAY):
-    pmv = fp.plot.PlotMapView(model=gwf, layer=i)
-
-    pmv.plot_bc(name='chd_pw', color='purple') # add 'chd' cells
-    pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
-    pmv.plot_bc(name='drn_r', color='blue') # add 'wells' cells
-    pmv.plot_bc(name='chd_conf_in', color='orange') # add 'chd' cells
-    pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
-    pmv.plot_bc(name='influx', color='green') # add 'influx' cells
-    pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
-    
-    pmv.contour_array(head[i], levels=np.arange(15, 30, 0.5), linewidths=1, colors='k')
-
-    for j in range(len(partlocs)):
-        pline = plf.get_data(partid=j)
-        if partlocs[j][0] == i:
-            plt.plot(pline['x'], pline['y'], 'C1', lw=0.2, alpha=0.5)  # plot the particle path for layer i
-
-    # save to figures
-    plt.title(f'Particle paths for layer {i}')
-    plt.savefig(os.path.join(FIG_DIR, f'{modelname}_particles{i}.png'), dpi=300, bbox_inches='tight') # save figure
-    plt.close()  # close the figure to avoid memory issues
-
-print('here')

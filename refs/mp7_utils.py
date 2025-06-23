@@ -1,12 +1,10 @@
-# modified from Wes Kitlasten
-
 import os
 import numpy as np
-# import flopy
+import flopy
 import pandas as pd
-# import pyemu
+import pyemu
 #import geopandas as gpd
-# from nzmf6.build.src import utils
+from nzmf6.build.src import utils
 
 
 def samples_to_pars(gwf, obs_data=None, npartob=100, radius=20, nan_height=2, gclass=None,
@@ -32,7 +30,7 @@ def samples_to_pars(gwf, obs_data=None, npartob=100, radius=20, nan_height=2, gc
     else:
         par.loc[:, 'height'] = nan_height
     par['height'].fillna(nan_height, inplace=True)
-    par['z'].clip(nan_height, None)
+    par['boredepth'].clip(nan_height, None)
     # absolutely necessary to sort if going between different grids with same pst obs
     par.sort_index(inplace=True)
     if 'input_factor' not in par.columns:
@@ -96,8 +94,8 @@ def points_to_rloc(df, gwf):
     df['fk'] = df.loc[:,['k', 'i', 'j']].apply(lambda x: bottom[x[0], x[1], x[2]], axis=1)
 
     # now local cell position, rloc is in pos x, y, z directions
-    df['rj'] = (df['x'] - df['fj']) / delr[df['j']]
-    df['ri'] = (df['y'] - df['fi']) / delc[df['i']]
+    df['rj'] = (df['nztme'] - df['fj']) / delr[df['j']]
+    df['ri'] = (df['nztmn'] - df['fi']) / delc[df['i']]
     df['rk'] = (df['elev'] - df['fk']).div(thick[df['k'], df['i'], df['j']])
 
     # clip it for subtle rounding errors
@@ -117,7 +115,6 @@ def cylinder_partloc(gwf, indf=None, sim_ws='.', mpsim_name='', wrkrs=1,
     
     indf: dataframe with columns [radius, height, npartob, nztme, nztmn, boredepth] for all locations
     '''
-    import numpy as np
 
     idom = gwf.dis.idomain.array.copy()
     top = gwf.dis.top.array.copy()
@@ -133,41 +130,36 @@ def cylinder_partloc(gwf, indf=None, sim_ws='.', mpsim_name='', wrkrs=1,
 
 
     # get parameters for particle locations
+    if type(indf) == str:
+        indf = pd.read_csv(os.path.join(sim_ws, indf))
+    if 'obsnme' in indf.columns:
+        indf.index = indf.obsnme
     if 'radius' not in indf.columns:
         indf['radius'] = radius
     if 'height' not in indf.columns:
         indf['height'] = height
     if 'npartob' not in indf.columns:
         indf['npartob'] = npartob
-    # indf['z'] is par, not 'boreelev' but need elev for intersection
-    indf['ij'] = indf[['x', 'y']].apply(lambda x: gwf.modelgrid.intersect(x[0], x[1], z=None,
+    # indf['boredepth'] is par, not 'boreelev' but need elev for intersection
+    indf['ij'] = indf[['nztme', 'nztmn']].apply(lambda x: gwf.modelgrid.intersect(x[0], x[1], z=None,
                                                                                     local=False,
                                                                                     forgive=True), axis=1)
     indf['i'] = indf['ij'].apply(lambda x: x[0])
     indf['j'] = indf['ij'].apply(lambda x: x[1])
     indf['top'] = top[tuple(indf[['i', 'j']].values.T)]
-
     tree = False
     # df of part locations for each site
     print(f'creating particles for {len(indf)} sites in {mpsim_name}')
-    
-    all_particles = []
     for site in indf.index:
         radius = indf.loc[site, 'radius']
         height = indf.loc[site, 'height']
         npartob = indf.loc[site, 'npartob']
-        
         parts = uniform_parts(radius=radius, height=height, npartob=npartob)
-        parts['x'] = parts['dx'] + indf.loc[site,'x']
-        parts['y'] = parts['dy'] + indf.loc[site, 'y']
-        parts['site'] = site
-
+        parts['nztme'] = parts['dx'] + indf.loc[site,'nztme']
+        parts['nztmn'] = parts['dy'] + indf.loc[site, 'nztmn']
         # original boreelev is bottom, add dz to move up along cyl
-        if np.isnan(indf.loc[site, 'z']):
-            parts['elev'] = indf.loc[site, 'top'] - 0.5 + parts['dz'] # 0.5 is an offset from the top
-        else:
-            parts['elev'] = indf.loc[site, 'top'] - indf.loc[site, 'z'] + parts['dz']
-        parts['kij'] = parts[['x', 'y', 'elev']].apply(lambda x: \
+        parts['elev'] = indf.loc[site, 'top'] - indf.loc[site, 'boredepth'] + parts['dz']
+        parts['kij'] = parts[['nztme', 'nztmn', 'elev']].apply(lambda x: \
                                                            gwf.modelgrid.intersect(x[0], x[1], z=x[2], local=False,
                                                                                    forgive=True), axis=1)
         parts['k'] = parts['kij'].apply(lambda x: x[0])
@@ -191,8 +183,8 @@ def cylinder_partloc(gwf, indf=None, sim_ws='.', mpsim_name='', wrkrs=1,
             # KDtree will find nearest cell center
             # even if current point in active cell already
             # so only look for "notin" subset
-            outpoints = np.array([parts.loc[notin, 'x'],
-                               parts.loc[notin, 'y'],
+            outpoints = np.array([parts.loc[notin, 'nztme'],
+                               parts.loc[notin, 'nztmn'],
                                parts.loc[notin, 'elev']]).transpose()
             dist, indices = tree.query(outpoints, k=1, workers=wrkrs)
             parts.loc[notin, 'j'] = sidxs[indices, 0]
@@ -207,8 +199,6 @@ def cylinder_partloc(gwf, indf=None, sim_ws='.', mpsim_name='', wrkrs=1,
         parts['dum'] = 0
         # for zero based
         parts[['i', 'j', 'k']] = parts[['i', 'j', 'k']] + 1
-        
-        
         fname = os.path.join(sim_ws, f'part_loc.{site}.csv')
         with open(fname, 'w+') as f:
             f.write('# input style (1); locationstyle (1); count, id_option (1); k,i,j (Cellnumber), LocalX, LocalY, LocalZ, TimeOffset, Drape\n')
@@ -219,16 +209,7 @@ def cylinder_partloc(gwf, indf=None, sim_ws='.', mpsim_name='', wrkrs=1,
         if write_partcoord:
             fname = f'part_coord.{site}.csv'
             parts.to_csv(os.path.join(sim_ws, fname))
-        all_particles.append(parts[['site', 'k', 'i', 'j', 'rj', 'ri', 'rk']].copy())
-    
-    # merge dfs
-    if len(all_particles) > 0:
-        all_particles = pd.concat(all_particles)
-        # reset index
-        all_particles.reset_index(inplace=True, drop=True)
-        
-
-    return all_particles
+    return
 
 
 def rando_parts(radius, height, npartob):
@@ -244,8 +225,6 @@ def rando_parts(radius, height, npartob):
 
 
 def uniform_parts(radius=2, height=2, npartob=100):
-    import numpy as np
-    import pandas as pd
     num_ang = 5
     num_z = np.ceil(npartob / num_ang)
     ang = np.linspace(0, 2 * np.pi, int(num_ang) + 1)[:-1]
@@ -268,31 +247,31 @@ def uniform_parts(radius=2, height=2, npartob=100):
 
 def samples_to_mp7(gwf, par, mpsim_name, model_ws='.',
                    geoclass=None, gclass_keys=[]):
-    # import numpy as np
-    # import pandas as pd
-    # import os
-    # import flopy
+    import numpy as np
+    import pandas as pd
+    import os
+    import flopy
 
-    # if type(gwf) == str:
-    #     # get model stuff
-    #     sim = flopy.mf6.MFSimulation.load(sim_ws=model_ws, load_only=['dis'])
-    #     gwf = sim.get_model(gwf)
-    # if geoclass is None:
-    #     gclist = [_ for _ in os.listdir(model_ws) if 'geoclass' in _]
-    #     if len(gclist) == 1:
-    #         gclass = np.stack([np.read_txt(os.path.join(model_ws, gclist[0]))] * gwf.dis.nlay.data)
-    #     else:
-    #         gclass = np.zeros(gwf.dis.botm.array.shape)
-    #         for f in gclist:
-    #             if 'geoclass_layer' in f:
-    #                 k = int(f.split('geoclass_layer')[-1].split('.')[0])-1
-    #                 gclass[k] = np.loadtxt(os.path.join(model_ws, f))
-    # if len(gclass_keys)==0:
-    #     gclass_keys = [int(_) for _ in np.unique(gclass)]
-    # if type(par) == str:
-    #     par = pd.read_csv(os.path.join(model_ws, par), index_col=0)
-    # if 'obsnme' in par.columns:
-    #     par.index = par.obsnme
+    if type(gwf) == str:
+        # get model stuff
+        sim = flopy.mf6.MFSimulation.load(sim_ws=model_ws, load_only=['dis'])
+        gwf = sim.get_model(gwf)
+    if geoclass is None:
+        gclist = [_ for _ in os.listdir(model_ws) if 'geoclass' in _]
+        if len(gclist) == 1:
+            gclass = np.stack([np.read_txt(os.path.join(model_ws, gclist[0]))] * gwf.dis.nlay.data)
+        else:
+            gclass = np.zeros(gwf.dis.botm.array.shape)
+            for f in gclist:
+                if 'geoclass_layer' in f:
+                    k = int(f.split('geoclass_layer')[-1].split('.')[0])-1
+                    gclass[k] = np.loadtxt(os.path.join(model_ws, f))
+    if len(gclass_keys)==0:
+        gclass_keys = [int(_) for _ in np.unique(gclass)]
+    if type(par) == str:
+        par = pd.read_csv(os.path.join(model_ws, par), index_col=0)
+    if 'obsnme' in par.columns:
+        par.index = par.obsnme
     cylinder_partloc(gwf, indf=par, mpsim_name=mpsim_name, sim_ws=model_ws,
                      gclass=gclass, gclass_keys=gclass_keys)
     # write mp7 files
@@ -519,22 +498,22 @@ def mp7_random_samples(gwf, gclass_file=False, gsgp=[191], model_ws='.', poly_pa
         idx = [_ for _ in np.argwhere((geoclass == gs) & (depth < max_depth))]
         # all points of gs
         df = pd.DataFrame(idx, columns=['k', 'i', 'j'])
-        df['x'] = x[df.i, df.j]
-        df['y'] = y[df.i, df.j]
+        df['nztme'] = x[df.i, df.j]
+        df['nztmn'] = y[df.i, df.j]
         df['height'] = height
         df['depth'] = depth[df.k, df.i, df.j]
         df['uni_depth'] = depth_rand_state.uniform(0, 1, len(idx))
         df['uni_date'] = date_rand_state.uniform(0, 1, len(idx))
         df['min_depth'] = min_depth
         df['max_depth'] = max_depth
-        df.loc[:, 'z'] = df.loc[:, 'min_depth'] + \
+        df.loc[:, 'boredepth'] = df.loc[:, 'min_depth'] + \
                                   df.loc[:, 'uni_depth'] * (df.loc[:, ['max_depth', 'depth']].min(axis=1))
-        df['nom_depth'] = df.apply(lambda x: int(round(x['z'])), axis=1)
+        df['nom_depth'] = df.apply(lambda x: int(round(x['boredepth'])), axis=1)
         df['node'] = df.apply(lambda x: int(gwf.modelgrid.get_node(x[['k', 'i', 'j']])[0]), axis=1)
 
         # sorted by e, n , depth
         # necessary to sort AFTER DROPPING OOB if going between different grids with same pst obs
-        df.sort_values(['x', 'y', 'z'], inplace=True)
+        df.sort_values(['nztme', 'nztmn', 'boredepth'], inplace=True)
         df.reset_index(inplace=True, drop=True)
         df['part_gp'] = df.index
         df['obsnme'] = df.apply(lambda x: f"pg_{int(x['part_gp'])}_{x['nom_depth']}", axis=1)
@@ -571,7 +550,7 @@ def mp7_random_samples(gwf, gclass_file=False, gsgp=[191], model_ws='.', poly_pa
         if 'date' not in df.columns:
             df['datetime'] = (df['min_date'] + df['uni_date'] * (df['max_date'] - df['min_date']))
             df['date'] = df['datetime'].dt.date
-        df[['site_id', 'date', 'x', 'y', 'z',
+        df[['site_id', 'date', 'nztme', 'nztmn', 'boredepth',
             'height', tracer, 'sigtr']] \
             .to_csv(os.path.join(model_ws, f'{mpsim_name}.obs.csv'), index='obsnme')
     return mpsim_names
@@ -583,10 +562,10 @@ def mp7_random_samples(gwf, gclass_file=False, gsgp=[191], model_ws='.', poly_pa
 #         obs_data = pd.read_csv(obs_data)
 #     # need bottom of bore for samples_to_mp7, not mean
 #     height = 2
-#     obs_data['z'] = obs_data['mean_depth'] + height / 2
+#     obs_data['boredepth'] = obs_data['mean_depth'] + height / 2
 #     df = samples_to_mp7(model_ws, model_name, x_field='mean_nztme', y_field='mean_nztmn',
-#                         z_field='z',
-#                         obs_data=obs_data.loc[:, ['mean_nztme', 'mean_nztmn', 'z']],
+#                         z_field='boredepth',
+#                         obs_data=obs_data.loc[:, ['mean_nztme', 'mean_nztmn', 'boredepth']],
 #                         npartob=100, radius=10, height=height, nan_depth=10, cellidx=True,
 #                         min_depth=0.2, mpsim_name=mpsim_name, tracer='age')
 #     cylinder_partloc(indf=df, mpsim_name=mpsim_name, sim_ws=model_ws)
@@ -613,12 +592,12 @@ def mpsim_to_obsnme(mpsim, mpsim_name, sim_ws='.'):
         # all particles same mp group, define obsnme by particle
         # derive particle obsnme from order in mpend file
         # doesn't guarantee the same name due to rounding... what to do?
-        if 'z' not in mpsim.columns:
+        if 'boredepth' not in mpsim.columns:
             mpsim['obsnme'] = mpsim[['particleid', 'k0']]. \
                 apply(lambda x: f"{mpsim_name.replace('.', '_')}_{int(x[0])}_lay_{int(x[1])}", axis=1)
-            mpsim['z'] = mpsim['model_top'] - mpsim['z0'] + mpsim['zloc']
+            mpsim['boredepth'] = mpsim['model_top'] - mpsim['z0'] + mpsim['zloc']
         else:
-            mpsim['obsnme'] = mpsim[['particleid', 'z']].\
+            mpsim['obsnme'] = mpsim[['particleid', 'boredepth']].\
                 apply(lambda x: f"{mpsim_name.replace('.','_')}_{int(x[0])}_{int(x[1])}", axis=1)
         mpsim.sort_values(by='obsnme', inplace=True)
     return mpsim
@@ -653,10 +632,10 @@ def mp_to_table(mpsim_name, model_name=None,
     mpsim.loc[:, 'j'] = mpsim.loc[:, 'kij'].apply(lambda x: x[2])
 
     mpsim['model_top'] = top[tuple(mpsim[['i', 'j']].values.T)]
-    mpsim['x'] = mpsim['x0'] + mg.xoffset
-    mpsim['y'] = mpsim['y0'] + mg.yoffset
+    mpsim['nztme'] = mpsim['x0'] + mg.xoffset
+    mpsim['nztmn'] = mpsim['y0'] + mg.yoffset
     mpsim['boreelev'] = mpsim['z0']
-    #mpsim['z'] = mpsim['model_top'] - mpsim['boreelev']
+    #mpsim['boredepth'] = mpsim['model_top'] - mpsim['boreelev']
 
     mpsim = mpsim_to_obsnme(mpsim, mpsim_name, sim_ws=sim_ws)
     mpsim.set_index('obsnme', inplace=True, drop=True)
@@ -669,7 +648,7 @@ def mp_to_table(mpsim_name, model_name=None,
     mpsim.loc[:, 'i'] = mpsim.loc[:, 'i'] + 1
     mpsim.loc[:, 'j'] = mpsim.loc[:, 'j'] + 1
     mpsim.sort_index(inplace=True)
-    mpsim[[obs_type, 'x', 'y', 'model_top', 'boreelev', 'z', 'date', 'i', 'j', 'k']]. \
+    mpsim[[obs_type, 'nztme', 'nztmn', 'model_top', 'boreelev', 'boredepth', 'date', 'i', 'j', 'k']]. \
         to_csv(os.path.join(sim_ws, outfile), date_format='%d/%m/%Y')
     return outfile
 
@@ -987,8 +966,8 @@ def rep_with(og, f='site_id', rep_with={}, part=True, axis=0):
 def clean_chem(fpth, sample_file, sample_req, loc_req, loc_file=False, out_file=False,
                rep_with_part={'_': [' ', '/', '-', '__'], '@': [' @', '@ ', '_@', '@_']},
                rep_with_whole={'nan': ['NaN', 'Nan', 'NA']},
-               add_cols=['z', 'sigtr'],
-               attr_by_keys={'z': {0: ['river', 'stream', 'creek', 'culvert',
+               add_cols=['boredepth', 'sigtr'],
+               attr_by_keys={'boredepth': {0: ['river', 'stream', 'creek', 'culvert',
                                                 'lake', 'pond', 'pool', 'drain',
                                                 'spring', 'seep', 'swamp', 'marsh']},
                              2: ['shallow']}):
@@ -1009,10 +988,10 @@ def clean_chem(fpth, sample_file, sample_req, loc_req, loc_file=False, out_file=
                                       loc_file=loc_file,
                                       loc_req=['ID','NZTM_E','NZTM_N'],
                                       sample_req=sample_req,
-                                      add_cols=['z','sigtr','tritium_code'])
+                                      add_cols=['boredepth','sigtr','tritium_code'])
         mdf=utils.clean_chem(r'..\\..\\data\\chemistry\\wairau','GNS-SR_2019-063 Marlborough All Results from LIMS with Coordinates.csv',
                              loc_file='MDC__AllResults_for_Conny.csv',sample_req=['Site ID','tritium','Date'],loc_req=['ID','NZTM_E','NZTM_N'],
-                             add_cols=['z','sigtr'],out_file='wairau_tritium_clean.csv')
+                             add_cols=['boredepth','sigtr'],out_file='wairau_tritium_clean.csv')
         '''
     # sample file
     sample_df = pd.read_csv(os.path.join(fpth, sample_file), usecols=sample_req)
@@ -1048,16 +1027,16 @@ def clean_chem(fpth, sample_file, sample_req, loc_req, loc_file=False, out_file=
     loc_df = gloc.merge(loc_df, how='left', on=loc_req)
 
     # need to update nan locations in sample_df with same site_id from loc_df
-    nansams = [sample_df.loc[_,'site_id'] for _ in sample_df.index if np.isnan(sample_df.loc[_, 'x'])]
-    nansams = nansams + [sample_df.loc[_,'site_id'] for _ in sample_df.index if np.isnan(sample_df.loc[_, 'y'])]
+    nansams = [sample_df.loc[_,'site_id'] for _ in sample_df.index if np.isnan(sample_df.loc[_, 'nztme'])]
+    nansams = nansams + [sample_df.loc[_,'site_id'] for _ in sample_df.index if np.isnan(sample_df.loc[_, 'nztmn'])]
     for nansam in nansams:
         if nansam in loc_df.site_id.values:
-            sample_df.loc[sample_df['site_id'] == nansam, ['x', 'y']] = loc_df.loc[loc_df['site_id'] == nansam, ['x', 'y']]
-    nansams = [sample_df.loc[_, 'site_id'] for _ in sample_df.index if np.isnan(sample_df.loc[_, 'z'])]
+            sample_df.loc[sample_df['site_id'] == nansam, ['nztme', 'nztmn']] = loc_df.loc[loc_df['site_id'] == nansam, ['nztme', 'nztmn']]
+    nansams = [sample_df.loc[_, 'site_id'] for _ in sample_df.index if np.isnan(sample_df.loc[_, 'boredepth'])]
     for nansam in nansams:
         if nansam in loc_df.site_id.values:
-            depth = np.mean(loc_df.loc[loc_df['site_id'] == nansam, 'z'].values)
-            sample_df.loc[sample_df['site_id'] == nansam, 'z'] = depth
+            depth = np.mean(loc_df.loc[loc_df['site_id'] == nansam, 'boredepth'].values)
+            sample_df.loc[sample_df['site_id'] == nansam, 'boredepth'] = depth
 
     # merge sample_df cols with loc_df
     # on site_id will blend all data for same site id, huge issue for wairau_river
@@ -1080,10 +1059,10 @@ def clean_chem(fpth, sample_file, sample_req, loc_req, loc_file=False, out_file=
     sample_df['date'] = pd.to_datetime(sample_df['date'], format='%d/%m/%Y')
     # absolutely necessary if going between different grids with same pst obs
     # sort by postion before assigning idx
-    sample_df.sort_values(['x', 'y', 'z'], inplace=True)
+    sample_df.sort_values(['nztme', 'nztmn', 'boredepth'], inplace=True)
     sample_df.reset_index(inplace=True, drop=True)
     # mp7 name restricted to 16 char
-    sample_df['obsnme'] = sample_df[['site_id', 'z']].apply(lambda x: x[0] + '_nan' if np.isnan(x[1]) \
+    sample_df['obsnme'] = sample_df[['site_id', 'boredepth']].apply(lambda x: x[0] + '_nan' if np.isnan(x[1]) \
         else x[0] + '_' + str(int(x[1])), axis=1)
     # last 12 chars leaving 4 for unique and '_'
     sample_df['obsnme'] = sample_df['obsnme'].apply(lambda x: x[-12:])
