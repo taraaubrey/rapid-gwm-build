@@ -1,0 +1,69 @@
+import os
+import shutil
+import pyemu
+import flopy as fp
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+from a_setup import *
+
+
+if os.path.exists(PEST_DIR):
+    shutil.rmtree(PEST_DIR)
+shutil.copytree(MODEL_DIR, PEST_DIR)
+
+files = os.listdir(BIN_DIR)
+for f in files:
+    if os.path.exists(os.path.join(PEST_DIR, f)):
+        os.remove(os.path.join(PEST_DIR, f))
+    shutil.copy2(os.path.join(BIN_DIR, f), os.path.join(PEST_DIR, f))
+
+# -----------------------------------------------------------------
+
+# load simulation
+sim = fp.mf6.MFSimulation.load(sim_ws=PEST_DIR)
+# load flow model
+gwf = sim.get_model()
+
+# run the model once to make sure it works
+pyemu.os_utils.run("mf6", cwd=PEST_DIR)
+# run modpath7
+pyemu.os_utils.run(f'mp7 {MODEL_DIR}.mpsim', cwd=PEST_DIR)
+
+sr = pyemu.helpers.SpatialReference.from_namfile(
+        os.path.join(PEST_DIR, "freyberg6.nam"),
+        delr=gwf.dis.delr.array, delc=gwf.dis.delc.array)
+
+# specify a template directory (i.e. the PstFrom working folder)
+template_ws = os.path.join(f"{MODEL_NAME}_template")
+# instantiate PstFrom
+pf = pyemu.utils.PstFrom(original_d=PEST_DIR, # where the model is stored
+                            new_d=template_ws, # the PEST template folder
+                            remove_existing=True, # ensures a clean start
+                            longnames=True, # set False if using PEST/PEST_HP
+                            spatial_reference=sr, #the spatial reference we generated earlier
+                            zero_based=False, # does the MODEL use zero based indices? For example, MODFLOW does NOT
+                            # start_datetime=start_datetime, # required when specifying temporal correlation between parameters
+                            echo=False) # to stop PstFrom from writting lots of infromation to the notebook; experiment by setting it as True to see the difference; usefull for troubleshooting
+
+
+# PARAMETERIZATION --------------------------------------------------
+# exponential variogram for spatially varying parameters
+v_space = pyemu.geostats.ExpVario(contribution=1.0, #sill
+                                    a=1000, # range of correlation; length units of the model. In our case 'meters'
+                                    anisotropy=1.0, #name says it all
+                                    bearing=0.0 #angle in degrees East of North corresponding to anisotropy ellipse
+                                    )
+
+# geostatistical structure for spatially varying parameters
+grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log') 
+
+# plot the gs if you like:
+# _ = grid_gs.plot()
+
+# get the IIDOMAIN array; in our case we only have one layer
+ib = gwf.dis.idomain.array
+
+
+# OBSERVATIONS ------------------------------------------------------
+

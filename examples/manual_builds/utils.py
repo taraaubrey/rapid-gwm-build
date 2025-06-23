@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 def extract_value_with_indices(arr, layer=None, val_col='elev', mask_value=np.nan):
@@ -107,6 +108,24 @@ def get_indices(arr, layer=None, value=False):
 
     return result
 
+
+def savedf2txt(df, filename, sim_ws):
+    """
+    Save a DataFrame to a text file with specified separator.
+    
+    Args:
+        df: pandas DataFrame to save
+        filename: Name of the output text file
+        sim_ws: model workspace directory
+    """
+    df['k'] = df['index'].apply(lambda x: int(x[0]))
+    df['i'] = df['index'].apply(lambda x: int(x[1]))
+    df['j'] = df['index'].apply(lambda x: int(x[2]))
+    # delete df['index']  # remove index column if not needed
+    df = df.drop(columns=['index'])
+    df = df[['k', 'i', 'j'] + [col for col in df.columns if col not in ['k', 'i', 'j']]]
+
+    df.to_csv(os.path.join(sim_ws, filename), sep='\t', header=False, index=False)
 
 # plot layers
 import matplotlib.pyplot as plt

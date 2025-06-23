@@ -17,6 +17,7 @@ dependencies = [
     "modflow-setup>=0.6.1", #HACK: hardcoded for now (eventually will remove)
     "netcdf4>=1.7.2", #HACK: hardcoded for now (remove)
     "networkx>=3.4.2",
+    "pyemu>=1.3.8",
     "pyyaml>=6.0.2",
     "setuptools>=78.1.0", #HACK remove when remove modflow-setup
 ]

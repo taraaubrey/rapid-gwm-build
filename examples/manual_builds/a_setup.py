@@ -17,10 +17,12 @@ POUKAWA_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD
 INFLUX_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_influx.shp"
 OUTFLUX_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_outflux.shp"
 
-# Directories
+# Directories / paths
+BIN_DIR = f'examples/bin'
 FIG_DIR = f'examples/manual_builds/models/{MODEL_NAME}/figures'  # directory for figures
 MODEL_DIR = f'examples/manual_builds/models/{MODEL_NAME}/{MODEL_NAME}' # model workspace to be used
 SPATIAL_DIR = f'examples/manual_builds/models/{MODEL_NAME}/spatial'  # directory for spatial data
+PEST_DIR = f'examples/manual_builds/models/{MODEL_NAME}/pest/{MODEL_NAME}'  # directory for pest files
 
 # Particle locations
 SAMPLES = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\sample_locations.shp"
