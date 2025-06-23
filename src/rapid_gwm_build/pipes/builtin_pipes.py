@@ -42,5 +42,11 @@ def to_mf6_txt(data: DataFrame, map=None, cols=None, outdir=None, node_id=None, 
     return outs
 
 
-def make_layers(top, bottom, nlay, layer_thickness, min_thickness, method):
-    pass
+def make_layers(**kwargs):
+    return 'make_layers function'
+
+def to_grid(**kwargs):
+    return 'to_grid function'
+
+def adjust_top(**kwargs):
+    return 'adjust_top function'

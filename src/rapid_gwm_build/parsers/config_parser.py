@@ -7,6 +7,7 @@ from copy import deepcopy
 from rapid_gwm_build.ss.node_builder import NodeBuilder
 from rapid_gwm_build.parsers.node_parser import NodeParser
 
+import logging
 class ConfigParser:
     # Regular expression to match variables like ${variable_name}
     VAR_PATTERN = re.compile(r"\$\{(\w+)\}")
@@ -79,15 +80,18 @@ class ConfigParser:
     def _get_node_cfg(cls, sim_cfg):
         node_manager = NodeParser()
 
-        for node_type in ["mesh", "modules", "pipes"]:
-            type_cfg = sim_cfg.get(node_type, None)
-            if type_cfg:
-                node_manager.parse_node(node_type, **type_cfg)
+        for node_type, type_cfg in sim_cfg.items():
+            if node_type == 'mesh':
+                node_manager.parse_mesh(type_cfg)
+            elif node_type == 'modules':
+                node_manager.parse_modules(type_cfg)
+            elif node_type == 'pipes':
+                node_manager.parse_pipe(**type_cfg)
 
         return {n.id: n for n in node_manager.nodes}
     
     @classmethod
-    def parse(cls, config_filepath):
+    def parse(cls, config_filepath, dvc=True):
         """Parse the user config and return a normalized structure."""
         config = cls.load_yaml(config_filepath) # First, substitute variables (like ${data_dir})
         config = cls.substitute_config(config)
@@ -103,12 +107,14 @@ class ConfigParser:
                 "nodes": node_cfgs  # Extracted nodes (modules + inputs)
             }
 
+            #if dvc -> save 
+
         return all_sims
     
+    
     @classmethod
-    def parse_template(cls, cfg_dict):
+    def get_template_nodes(cls, config):
         node_manager = NodeParser()
-        config = cls.substitute_config(cfg_dict)
         for k, v in config.items():
             if k == 'module_templates':
                 for module, module_cfg in v.items():
@@ -121,4 +127,4 @@ class ConfigParser:
                                     template_node = node_manager.parse_template(module_key=module, attr=k, cfg=val)
                                     config['module_templates'][module]['build_dependencies'][k] = template_node.ref_id
 
-        return config, {n.id: n for n in node_manager.nodes}
+        return {n.id: n for n in node_manager.nodes}

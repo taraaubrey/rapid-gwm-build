@@ -48,13 +48,8 @@ class Simulation:
     
     def set_template(self, sim_type: str):
         from rapid_gwm_build.templates.template_loader import TemplateLoader
-        self.template = TemplateLoader.load_template(sim_type)
-        config, template_nodes = ConfigParser.parse_template(self.template)
-        # update template with config
-        self.template.update(config)
-        for ncfg in template_nodes.values():
-            self._new_node(ncfg=ncfg)
-        print('here')
+        template_cfg = TemplateLoader.load_template(sim_type)
+        self.template = ConfigParser.substitute_config(template_cfg)
 
     
     @classmethod
@@ -66,8 +61,14 @@ class Simulation:
             derived_dir=derived_dir,
         )
 
-        for ncfg in sim_cfg['nodes'].values():
+        # combine sim cfg with template cfg
+        node_cfg = sim_cfg.get('nodes', {})
+        template_node_cfg = ConfigParser.get_template_nodes(sim.template)
+        node_cfg.update(template_node_cfg)  # merge nodes from sim_cfg with template nodes
+
+        for ncfg in node_cfg.values():
             sim._new_node(ncfg=ncfg)
+
         return sim
     
     def _check_nodeid_in_sim(self, node_id: str):
@@ -88,27 +89,28 @@ class Simulation:
             for dep_id in node.dependencies:
                 check = self._check_nodeid_in_sim(dep_id)
                 
-                if not check:
+                if check==False:
                     if dep_id.split(".")[0] == "mesh":
                         mesh_check = self._check_nodeid_in_sim('mesh')
                         # create a new mesh node with data from the mesh node -> ie. create the mesh.top node
                         if mesh_check:
                             mesh_node = self.nodes.get('mesh')
-                            new_kwargs = {
-                                'attr': dep_id.split(".")[1],
-                                'mesh': mesh_node.ref_id,
-                                'param': dep_id.split(".")[1],
-                            }
-                            new_ncfg = mesh_node.from_node(from_node=mesh_node, kwargs=new_kwargs)
+                            attr = dep_id.split(".")[1]
+                            param = dep_id.split(".")[1]
+                            new_ncfg = NodeFactory.build_node(
+                                node_type='mesh', attr=[attr], from_node=mesh_node, param=param, src=None)
+                            # new_ncfg = mesh_node.from_node(from_node=mesh_node, kwargs=new_kwargs)
                             self._new_node(ncfg=new_ncfg)
                         else:
-                            # create a new mesh node
-                            new_ncfg = NodeFactory.build_node(node_type='placeholder', node_id=dep_id)
-                            self._new_node(ncfg=new_ncfg)
+                            raise ValueError(f"Mesh node {dep_id} not found in simulation.")
+
                     else:
                         #create a placeholder node
+                        raise ValueError(f"Node {dep_id} not found in simulation. Creating a placeholder node.")
                         new_ncfg = NodeFactory.build_node(node_type='placeholder', node_id=dep_id)
                         self._new_node(ncfg=new_ncfg)
+                else:
+                    dep_node = self.nodes.get(dep_id, None)
                 
                 if node:
                     self.add_edge(dep_id, node.id)
@@ -142,7 +144,10 @@ class Simulation:
                 module_template = self.template['module_templates'][ncfg.module_type]
                 ncfg.template = module_template
             
-            self.add_node(ncfg)
+            if ncfg is not None:
+                self.add_node(ncfg)
+            else:
+                raise ValueError(f"Node configuration for {ncfg.id} is None.")
     
 
     def add_node(self, ncfg: NodeCFG=None):
@@ -172,6 +177,23 @@ class Simulation:
         return dict(items)
 
     
+    def build_dvc_inputs(self, dvc_dir: str | PathLike = None, graph_name: str | PathLike = None):
+        # check if the graph is acyclic
+        if not nx.is_directed_acyclic_graph(self.graph._graph):
+            raise ValueError(f"The graph is not acyclic. Cycle found here: {nx.find_cycle(self.graph._graph)}")
+
+        node_list = []
+        for nodeid in nx.topological_sort(self.graph.subgraph): #TODO don't resolve nodes which are not needed
+            node = self.nodes[nodeid]
+            node.save(path=dvc_dir)
+            node_list.append(node.id)
+        logging.debug(f"Simulation {self.name} built successfully.")
+
+        #write graph to dvc_dir
+        nx.write_adjlist(self.graph._graph, dvc_dir + f"/{graph_name}")
+
+        return node_list
+
     def build(self, mode="all"): #TODO move to GraphClass
 
         # check if the graph is acyclic

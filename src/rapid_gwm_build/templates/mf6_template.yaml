@@ -68,40 +68,39 @@ module_templates:
             ncol: '@mesh.ncol'
             delr: 
                 pipeline:
-                    input: '@mesh.delr'
-                    pipes:
-                        - processor: to_mf6_txt
-                          type: array
-                          output_format: '{filename}'
-                          # output: (input.dis.nlay).data'@mesh.delr'
+                    - processor: to_mf6_txt
+                      data: '@mesh.delr'
+                      type: array
+                      output_format: '{filename}'
+                    # output: (input.dis.nlay).data'@mesh.delr'
             delc:
                 pipeline:
-                    input: '@mesh.delc'
-                    pipes:
-                        - processor: to_mf6_txt
-                          type: array
-                          output_format: '{filename}'
+                    - processor: to_mf6_txt
+                      data: '@mesh.delr'
+                      type: array
+                      output_format: '{filename}'
+                    # output: (input.dis.nlay).data'@mesh.delr'
             top:                     
                 pipeline:
-                    input: '@mesh.top'    
-                    pipes:
-                        - processor: to_mf6_txt
-                          type: array
-                          output_format: '{filename}'
+                    - processor: to_mf6_txt
+                      data: '@mesh.top'
+                      type: array
+                      output_format: '{filename}'
+                    # output: (input.dis.nlay).data'@mesh.delr'
             botm:
                 pipeline:
-                    input: '@mesh.bottoms'
-                    pipes:
-                        - processor: to_mf6_txt
-                          type: array
-                          output_format: '{filename}'
+                    - processor: to_mf6_txt
+                      data: '@mesh.bottoms'
+                      type: array
+                      output_format: '{filename}'
+                    # output: (input.dis.nlay).data'@mesh.delr'
             idomain:
                 pipeline:
-                    input: '@mesh.active_domain'
-                    pipes:
-                        - processor: to_mf6_txt
-                          type: array
-                          output_format: '{filename}'
+                    - processor: to_mf6_txt
+                      data: '@mesh.idomain'
+                      type: array
+                      output_format: '{filename}'
+                    # output: (input.dis.nlay).data'@mesh.delr'
         func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
         default_build:
@@ -131,28 +130,24 @@ module_templates:
     drn: 
         build_dependencies: 
             model: '@module.gwf'
-            stressperioddata:
-                pipeline:
-                    input:
-                        cond: '@pipeline.drn.src.cond'
-                        elev: '@pipeline.drn.src.elev'
-                        mask: '@mesh.active_domain'
-                    pipes:
-                        - processor: to_stress_period_data
-                          cols: ['cond', 'elev']
-                          format: 'some_format'
-            cond: 
-                pipeline:
-                    input: '@input.drn.src.cond'
-                    pipes:
-                        - processor: discretize_2D
-                          mesh: '@mesh.grid'
-            elev:
-                pipeline:
-                    input: '@input.drn.src.elev' #TODO eventually this should be automatic
-                    pipes:
-                        - processor: discretize_2D
-                          mesh: '@mesh.grid'
+            # stressperioddata:
+            #     pipeline:
+            #         - processor: to_stress_period_data
+            #           cond: '@drn.src.cond'
+            #           elev: '@drn.src.elev'
+            #           mask: '@mesh.active_domain'
+            #           cols: ['cond', 'elev']
+            #           format: 'some_format'
+            # cond: 
+            #     pipeline:
+            #         - processor: discretize_2D
+            #           input: '@drn.src.cond'
+            #           mesh: '@mesh.grid'
+            # elev:
+            #     pipeline:
+            #         - processor: discretize_2D
+            #           input: '@drn.src.elev' #TODO eventually this should be automatic
+            #           mesh: '@mesh.grid'
         func: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
 

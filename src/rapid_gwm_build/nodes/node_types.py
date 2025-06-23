@@ -44,7 +44,7 @@ class PipeNode(NodeCFG):
             raise ValueError(f"Function {self.name} not found in the registry or module path.")
         
         # Get the input data
-        def resolve_input(input_id):
+        def resolve_input(input_id): 
             if isinstance(input_id, str) and input_id.startswith("@"):
                 input_node = sim_nodes[input_id[1:]]
                 if input_node.data is None:
@@ -89,37 +89,37 @@ class PipelineNode(NodeCFG):
     """
     def __init__(self, **kwargs):
         super().__init__('pipeline', **kwargs)
-        self._pipes = []
+        # self._pipes = []
         # self._src_input = src_input
         self.int_data = []
     
-    @property
-    def pipes(self):
-        """
-        Returns the pipes of the node.
-        """
-        return self._pipes
+    # @property
+    # def pipes(self):
+    #     """
+    #     Returns the pipes of the node.
+    #     """
+    #     return self._pipes
     
-    @pipes.setter
-    def pipes(self, value):
-        """
-        Sets the pipes of the node.
-        """
-        if not isinstance(value, list):
-            raise ValueError("Pipes must be a list.")
-        self._pipes = value
+    # @pipes.setter
+    # def pipes(self, value):
+    #     """
+    #     Sets the pipes of the node.
+    #     """
+    #     if not isinstance(value, list):
+    #         raise ValueError("Pipes must be a list.")
+    #     self._pipes = value
 
     def _get_dependencies(self):
         """
         Get the dependencies for this node. This method should be overridden in subclasses.
         """
         
-        return self._input_dependencies(self.pipes)
+        return self._input_dependencies(self.src)
     
     
     def resolve(self, sim_nodes: dict=None, ref_dir=None, derived_dir=None, **kwargs):
 
-        for pipe_rif in self.pipes:
+        for pipe_rif in self.src:
             pipe_node = sim_nodes.get(pipe_rif[1:])
             self.int_data.append(pipe_node.data)
 
@@ -250,11 +250,9 @@ class MeshNode(NodeCFG):
     def _set_mesh(self, sim_nodes):
         kwargs = {}
         for k, v in self.src.items():
-            if isinstance(v, str) and v.startswith("@"):
+            if isinstance(v, str) and v.startswith("@input"):
                 dep_node = sim_nodes.get(v[1:])
-                kwargs[k] = dep_node.data
-            else:
-                kwargs[k] = v
+                kwargs[k] = dep_node.src
 
         self._mesh = Mesh(**kwargs)
 
@@ -267,10 +265,25 @@ class MeshNode(NodeCFG):
         self._param = value
 
     def _get_dependencies(self):
+        if len(self.id.split(".")) > 1:
+            if self.src:
+                return ['mesh', self.src[1:]]
+            else:
+                return ['mesh']
+        elif self.id == 'mesh':
+            deps = []
+            for v in self.src.values():
+                if v.startswith("@input"):
+                    deps.append(v[1:])
+            if len(deps) > 1:
+                return deps
+            else:
+                return None
+        return None
         # src_dep = self._input_dependencies(self.src)
-        # return src_dep
-        mesh_dep = self._input_dependencies(self.mesh)
-        return mesh_dep
+        # # return src_dep
+        # mesh_dep = self._input_dependencies(self.mesh)
+        
         # if src_dep is not None and mesh_dep is not None:
         #     return src_dep + mesh_dep
         # elif src_dep is not None:
@@ -284,13 +297,20 @@ class MeshNode(NodeCFG):
             self._set_mesh(sim_nodes)
             self._data = self.mesh
         
-        elif self.mesh.startswith("@"):
-            mesh_node = sim_nodes.get(self._mesh[1:])
-            self._data = getattr(mesh_node.data, self.param)
-        
         else:
-            self._set_mesh()
-            self._data = self.mesh
+            mesh_node = sim_nodes.get('mesh')
+            if self.param in ['nrow', 'ncol', 'nlay', 'active_domain', 'delr', 'delc', 'grid']:
+                self._data = getattr(mesh_node.data, self.param)
+            elif self.param in ['top', 'bottoms']:
+                if self.param == 'top':
+                    pipeline = sim_nodes.get(mesh_node.src['top'])
+                    self._data = mesh_node.data.make_top(self.src)
+                elif self.param == 'bottoms':
+                    self._data = mesh_node.data.make_bottoms(self.src)
+                else:
+                    raise ValueError(f"Parameter {self.param} not recognized for mesh node.")
+            else:
+                raise ValueError(f"Parameter {self.param} not recognized for mesh node.")
 
 
 
@@ -326,7 +346,11 @@ class InputNode(NodeCFG):
         """
         Get the data for this node. This method should be overridden in subclasses.
         """
-        self._data = self.input.open()
+        data = self.input.open()
+        if data is not None:
+            self._data = data
+        else:
+            self._data = self.src
 
 class TemplateNode(NodeCFG):
     """
@@ -337,14 +361,14 @@ class TemplateNode(NodeCFG):
     
     
     def resolve(self, sim_nodes: dict=None, derived_dir=None, **kwargs):
-        for k, data in self.src.items():
-            if isinstance(data, str) and data.startswith("@"):
-                dep_node = sim_nodes.get(data[1:])
+        for k, v in self.src.items():
+            if isinstance(v, str) and v.startswith("@"):
+                dep_node = sim_nodes.get(v[1:])
                 if dep_node.data is None:
                     raise ValueError(f"Dependency node {dep_node} is empty.")
                 self._data = dep_node.data
             else:
-                self._data = data
+                self._data = v
 
     
     def _get_dependencies(self):

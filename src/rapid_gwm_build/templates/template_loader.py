@@ -1,21 +1,21 @@
 from rapid_gwm_build.parsers.yaml_processor import template_processor
 
+import importlib.resources
 import logging
 
 templates = {
-    'mf6': r'src\rapid_gwm_build\templates\mf6_template.yaml',
+    'mf6': r'mf6_template.yaml',
 }
 
 class TemplateLoader:
     @staticmethod
     def load_template(sim_type):
         
-        filepath = templates.get(sim_type)
+        filename = templates.get(sim_type)
                        
-        if filepath:
-            return template_processor.load_and_validate(
-                filepath
-            )  # load the template file and validate it
+        if filename:
+            with importlib.resources.path('rapid_gwm_build.templates', filename) as filepath:
+                return template_processor.load_and_validate(str(filepath))
         else:
             logging.debug("No sim template file.")
             return None

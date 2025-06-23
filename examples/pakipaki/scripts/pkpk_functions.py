@@ -55,3 +55,6 @@ def extract_top_of_basement(outdir, res_data, column, res, crs, fill_depth=None,
 
     metadata['out_path'] = out_path
     return grid, metadata
+
+def make_layers():
+    pass

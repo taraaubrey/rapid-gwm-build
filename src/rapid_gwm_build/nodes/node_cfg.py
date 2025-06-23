@@ -14,20 +14,6 @@ class NodeFactory:
         'template': TemplateNode,
         'placeholder': PlaceholderNode,
     }
-
-    # @property
-    # def node_type(self):
-    #     """
-    #     Returns the node type dictionary.
-    #     """
-    #     return self._node_type
-    
-    # @node_type.getter
-    # def node_type(self):
-    #     """
-    #     Returns the node type dictionary.
-    #     """
-    #     return self._node_type
     
     @classmethod
     def build_node(
@@ -38,8 +24,13 @@ class NodeFactory:
         """
         Factory method to create a NodeCFG instance.
         """
+        Node = cls.node_type.get(node_type)
         if isinstance(from_node, NodeCFG):
-            return cls._update_from_clone(from_node=from_node, new_type=node_type, **kwargs)
+            from_attr = deepcopy(from_node.attr)
+            new_attr = deepcopy(kwargs.get('attr', []))
+            from_attr.extend(new_attr if isinstance(new_attr, list) else [new_attr])
+            kwargs['attr'] = from_attr
+            return Node.create(**kwargs)
         elif isinstance(node_type, str):
             Node = cls.node_type.get(node_type)
             return Node.create(**kwargs)
@@ -64,7 +55,6 @@ class NodeFactory:
         else:
             new_ncfg = deepcopy(from_node)
             new_ncfg.update(**kwargs)
-
         return new_ncfg
     
 

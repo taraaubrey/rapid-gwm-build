@@ -1,0 +1,518 @@
+                                   MODFLOW 6
+                U.S. GEOLOGICAL SURVEY MODULAR HYDROLOGIC MODEL
+                          GROUNDWATER FLOW MODEL (GWF)
+                   VERSION 6.3.0 release candidate 02/06/2022
+                               ***DEVELOP MODE***
+
+   MODFLOW 6 compiled Feb 06 2022 02:35:51 with Intel(R) Fortran Intel(R) 64
+   Compiler Classic for applications running on Intel(R) 64, Version 2021.5.0
+                             Build 20211109_000000
+
+This software is preliminary or provisional and is subject to 
+revision. It is being provided to meet the need for timely best 
+science. The software has not received final approval by the U.S. 
+Geological Survey (USGS). No warranty, expressed or implied, is made 
+by the USGS or the U.S. Government as to the functionality of the 
+software and related material nor shall the fact of release 
+constitute any such warranty. The software is provided on the 
+condition that neither the USGS nor the U.S. Government shall be held 
+liable for any damages resulting from the authorized or unauthorized 
+use of the software.
+
+
+As a work of the United States Government, this USGS product is 
+in the public domain within the United States. You can copy, 
+modify, distribute, and perform the work, even for commercial 
+purposes, all without asking permission. Additionally, USGS 
+waives copyright and related rights in the work worldwide 
+through CC0 1.0 Universal Public Domain Dedication 
+(https://creativecommons.org/publicdomain/zero/1.0/).
+
+The following GNU Lesser General Public License (LGPL) libraries
+are used in this USGS product:
+
+    SPARSKIT version 2.0
+      ilut, luson, and qsplit 
+      (https://www-users.cse.umn.edu/~saad/software/SPARSKIT/)
+
+    RCM - Reverse Cuthill McKee Ordering
+      (https://people.math.sc.edu/Burkardt/f_src/rcm/rcm.html)
+
+    BLAS - Basic Linear Algebra Subprograms Level 1
+      (https://people.math.sc.edu/Burkardt/f_src/blas1_d/blas1_d.html)
+
+    SPARSEKIT - Sparse Matrix Utility Package
+      amux, dperm, dvperm, rperm, and cperm
+      (https://people.sc.fsu.edu/~jburkardt/f77_src/sparsekit/sparsekit.html)
+
+The following BSD-3 License libraries are used in this USGS product:
+
+    Modern Fortran DAG Library
+      Copyright (c) 2018, Jacob Williams
+      All rights reserved.
+      (https://github.com/jacobwilliams/daglib)
+
+MODFLOW 6 compiler options: /O2 /heap-arrays:0 /fpe:0 /traceback /nologo /fpp
+/c /module:.\mod_temp\ /object:.\obj_temp\
+
+System command used to initiate simulation:
+C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\bin\mf6.exe
+
+MODFLOW was compiled using uniform precision.
+
+Real Variables
+  KIND: 8
+  TINY (smallest non-zero value):    2.225074-308
+  HUGE (largest value):    1.797693+308
+  PRECISION: 15
+  BIT SIZE: 64
+
+Integer Variables
+  KIND: 4
+  HUGE (largest value): 2147483647
+  BIT SIZE: 32
+
+Long Integer Variables
+  KIND: 8
+  HUGE (largest value): 9223372036854775807
+  BIT SIZE: 64
+
+Logical Variables
+  KIND: 4
+  BIT SIZE: 32
+ 
+
+ OPENED local1.dis
+ FILE TYPE:DIS6                   UNIT 1005   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf
+ FILE TYPE:NPF6                   UNIT 1006   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.ic
+ FILE TYPE:IC6                    UNIT 1007   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.rcha
+ FILE TYPE:RCH6                   UNIT 1008   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.drn
+ FILE TYPE:DRN6                   UNIT 1009   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.chd
+ FILE TYPE:CHD6                   UNIT 1010   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_0.chd
+ FILE TYPE:CHD6                   UNIT 1011   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.wel
+ FILE TYPE:WEL6                   UNIT 1012   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_0.wel
+ FILE TYPE:WEL6                   UNIT 1013   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_1.wel
+ FILE TYPE:WEL6                   UNIT 1014   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.oc
+ FILE TYPE:OC6                    UNIT 1015   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+ NAMEFILE OPTIONS:
+    FLOWS WILL BE SAVED TO BUDGET FILE SPECIFIED IN OUTPUT CONTROL
+
+ DIS -- STRUCTURED GRID DISCRETIZATION PACKAGE, VERSION 2 : 3/27/2014 - INPUT READ FROM UNIT 1005
+
+
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:04.
+ PROCESSING DISCRETIZATION OPTIONS
+    MODEL LENGTH UNIT IS METERS
+ END OF DISCRETIZATION OPTIONS
+ PROCESSING DISCRETIZATION DIMENSIONS
+    NLAY =       8
+    NROW =     121
+    NCOL =     151
+ END OF DISCRETIZATION DIMENSIONS
+ PROCESSING GRIDDATA
+ END PROCESSING GRIDDATA
+
+ THE SPECIFIED IDOMAIN RESULTS IN A REDUCED NUMBER OF CELLS.
+ NUMBER OF USER NODES: 146168
+ NUMBER OF NODES IN SOLUTION: 73512
+
+
+
+ NPF -- NODE PROPERTY FLOW PACKAGE, VERSION 1, 3/30/2015 INPUT READ FROM UNIT 1006
+
+
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:04.
+ PROCESSING NPF OPTIONS
+    SPECIFIC DISCHARGE WILL BE CALCULATED AT CELL CENTERS AND WRITTEN TO DATA-SPDIS IN BUDGET FILE WHEN REQUESTED.
+ END OF NPF OPTIONS
+
+ WEL   -- WEL PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1012
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:05.
+
+ PROCESSING WEL OPTIONS
+ END OF WEL OPTIONS
+
+ PROCESSING WEL DIMENSIONS
+    MAXBOUND =     151
+ END OF WEL DIMENSIONS
+
+ WEL   -- WEL PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1013
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:05.
+
+ PROCESSING WEL OPTIONS
+ END OF WEL OPTIONS
+
+ PROCESSING WEL DIMENSIONS
+    MAXBOUND =     872
+ END OF WEL DIMENSIONS
+
+ WEL   -- WEL PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1014
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:05.
+
+ PROCESSING WEL OPTIONS
+ END OF WEL OPTIONS
+
+ PROCESSING WEL DIMENSIONS
+    MAXBOUND =     694
+ END OF WEL DIMENSIONS
+
+ DRN   -- DRN PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1009
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:04.
+
+ PROCESSING DRN OPTIONS
+ END OF DRN OPTIONS
+
+ PROCESSING DRN DIMENSIONS
+    MAXBOUND =     319
+ END OF DRN DIMENSIONS
+
+ RCH   -- RCH PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1008
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:04.
+
+ PROCESSING RCH OPTIONS
+    RECHARGE INPUT WILL BE READ AS ARRAY(S).
+ END OF RCHA OPTIONS
+
+ CHD   -- CHD PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1010
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:04.
+
+ PROCESSING CHD OPTIONS
+    FLOWS WILL BE SAVED TO BUDGET FILE SPECIFIED IN OUTPUT CONTROL
+ END OF CHD OPTIONS
+
+ PROCESSING CHD DIMENSIONS
+    MAXBOUND =      81
+ END OF CHD DIMENSIONS
+
+ CHD   -- CHD PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1011
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:05.
+
+ PROCESSING CHD OPTIONS
+    FLOWS WILL BE SAVED TO BUDGET FILE SPECIFIED IN OUTPUT CONTROL
+ END OF CHD OPTIONS
+
+ PROCESSING CHD DIMENSIONS
+    MAXBOUND =    7266
+ END OF CHD DIMENSIONS
+
+ IC -- INITIAL CONDITIONS PACKAGE, VERSION 8, 3/28/2015 INPUT READ FROM UNIT 1007
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:04.
+ PROCESSING IC OPTIONS
+ END OF IC OPTIONS
+ PROCESSING GRIDDATA
+
+     INITIAL HEAD =   7.412592    
+ END PROCESSING GRIDDATA
+ PROCESSING GRIDDATA
+
+                ICELLTYPE = 0
+ K33 not provided.  Assuming K33 = K.
+ K22 not provided.  Assuming K22 = K.
+ END PROCESSING GRIDDATA
+    BINARY GRID INFORMATION WILL BE WRITTEN TO:
+      UNIT NUMBER: 1017
+      FILE NAME: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\manual_builds\models\local1\local1\local1.dis.grb
+
+ OPENED C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\manual_builds\models\local1\local1\local1.dis.grb
+ FILE TYPE:DATA(BINARY)   UNIT 1017   STATUS:REPLACE             
+ FORMAT:UNFORMATTED            ACCESS:STREAM              
+ ACTION:READWRITE           
+
+      THE LAST TIME STEP WILL BE PRINTED
+      THE LAST TIME STEP WILL BE PRINTED
+ # File generated by Flopy version 3.9.2 on 06/19/2025 at 16:27:05.
+
+ PROCESSING OC OPTIONS
+
+    BUDGET INFORMATION WILL BE WRITTEN TO:
+      UNIT NUMBER: 1018
+      FILE NAME: local1.cbc
+
+ OPENED local1.cbc
+ FILE TYPE:DATA(BINARY)   UNIT 1018   STATUS:REPLACE             
+ FORMAT:UNFORMATTED            ACCESS:STREAM              
+ ACTION:READWRITE           
+
+    HEAD INFORMATION WILL BE WRITTEN TO:
+      UNIT NUMBER: 1019
+      FILE NAME: local1.hds
+
+ OPENED local1.hds
+ FILE TYPE:DATA(BINARY)   UNIT 1019   STATUS:REPLACE             
+ FORMAT:UNFORMATTED            ACCESS:STREAM              
+ ACTION:READWRITE           
+
+ END OF OC OPTIONS
+
+start timestep kper="1" kstp="1" mode="normal"
+
+
+ BEGIN READING OUTPUT CONTROL FOR STRESS PERIOD 1
+      ALL TIME STEPS WILL BE SAVED
+      ALL TIME STEPS WILL BE SAVED
+
+ END READING OUTPUT CONTROL FOR STRESS PERIOD 1
+
+                 RECHARGE =  0.1000000E-03
+
+ SLN_1 INNER ITERATION SUMMARY
+ --------------------------------------------------------------------------------------------------------------------------------------
+      TOTAL      OUTER      INNER                                                            MAXIMUM                                   
+  ITERATION  ITERATION  ITERATION  MAXIMUM CHANGE      MAXIMUM CHANGE MODEL-(CELLID)        RESIDUAL    MAXIMUM RESIDUAL MODEL-(CELLID)
+ --------------------------------------------------------------------------------------------------------------------------------------
+          1          1          1      -6.8699209                    1_GWF-(3,3,120)      -11.925901                    1_GWF-(1,71,98)
+          2          1          2       1.1664916                    1_GWF-(1,107,2)      -4.7076582                    1_GWF-(1,71,98)
+          3          1          3      0.94867497                    1_GWF-(1,107,2)      -2.8978313                    1_GWF-(1,71,98)
+          4          1          4      0.71806586                    1_GWF-(1,107,2)      -1.6888835                    1_GWF-(1,71,98)
+          5          1          5      0.59667554                    1_GWF-(1,107,2)      -1.2313883                     1_GWF-(1,98,5)
+          6          1          6      0.54236784                    1_GWF-(1,106,3)     -0.99122369                     1_GWF-(1,98,5)
+          7          1          7      0.46583139                    1_GWF-(1,106,3)     -0.82464490                     1_GWF-(1,95,3)
+          8          1          8      0.48025842                    1_GWF-(1,105,3)     -0.69100727                     1_GWF-(1,95,3)
+          9          1          9     -0.89688085                    1_GWF-(1,104,3)     -0.92076642                     1_GWF-(1,95,3)
+         10          1         10       2.0449573                    1_GWF-(1,103,3)     -0.52916649                     1_GWF-(1,98,3)
+         11          1         11      0.35625547                    1_GWF-(1,104,3)      0.52762860                   1_GWF-(1,51,103)
+         12          1         12      0.26126632                    1_GWF-(1,102,3)     -0.41753076                     1_GWF-(1,95,3)
+         13          1         13      0.34748373                    1_GWF-(1,101,3)      0.61418291                   1_GWF-(1,51,103)
+         14          1         14      0.31437045                    1_GWF-(1,102,3)     -0.31866763                     1_GWF-(1,90,3)
+         15          1         15      0.33530911                    1_GWF-(1,102,3)     -0.28493708                     1_GWF-(1,89,3)
+         16          1         16      -7.4613653                    1_GWF-(1,102,3)       1.0842910                   1_GWF-(1,51,103)
+         17          1         17       9.1233480                    1_GWF-(1,102,3)      0.43296812                   1_GWF-(1,51,103)
+         18          1         18      0.29956689                    1_GWF-(1,100,3)     -0.29184681                     1_GWF-(4,3,65)
+         19          1         19 -6.62805777E-02                    1_GWF-(1,83,67)      0.39323603                   1_GWF-(1,53,102)
+         20          1         20      0.16221030                    1_GWF-(1,107,2)     -0.20797364                     1_GWF-(5,94,3)
+         21          1         21      0.17120460                    1_GWF-(1,107,2)     -0.27475238                     1_GWF-(4,3,66)
+         22          1         22      0.14513819                    1_GWF-(1,107,2)     -0.19707230                     1_GWF-(5,94,3)
+         23          1         23      0.11326751                    1_GWF-(1,107,2)     -0.19358682                     1_GWF-(5,94,3)
+         24          1         24  6.82888302E-03                    1_GWF-(4,105,5)     -0.19381514                     1_GWF-(5,90,3)
+         25          1         25      0.18019328                    1_GWF-(1,107,2)     -0.26800359                     1_GWF-(4,3,67)
+         26          1         26  6.28100767E-02                    1_GWF-(5,108,1)     -0.18589746                     1_GWF-(5,94,3)
+         27          1         27      0.16334533                    1_GWF-(4,107,2)     -0.18082605                     1_GWF-(5,89,3)
+         28          1         28  1.82716284E-02                    1_GWF-(4,105,6)     -0.21943223                     1_GWF-(4,3,67)
+         29          1         29      0.16019137                    1_GWF-(4,107,2)     -0.17618579                     1_GWF-(5,90,3)
+         30          1         30  7.86559025E-02                    1_GWF-(4,105,5)     -0.22755996                     1_GWF-(4,3,65)
+         31          1         31  1.45785912E-02                    1_GWF-(4,105,6)     -0.17357074                     1_GWF-(5,90,3)
+         32          1         32  8.76994539E-02                    1_GWF-(4,105,6)     -0.17053288                     1_GWF-(5,91,3)
+         33          1         33  1.55437038E-02                    1_GWF-(4,105,5)     -0.17057271                     1_GWF-(5,90,3)
+         34          1         34  1.56847623E-02                    1_GWF-(4,105,6)     -0.16989727                     1_GWF-(5,90,3)
+         35          1         35      0.18101046                    1_GWF-(4,105,5)     -0.36262714                    1_GWF-(5,104,5)
+         36          1         36     -0.12236353                    1_GWF-(4,105,5)       1.6836875                     1_GWF-(4,3,66)
+         37          1         37  5.61653272E-02                    1_GWF-(4,105,5)     -0.16672165                     1_GWF-(5,90,3)
+         38          1         38      0.20038109                    1_GWF-(4,105,5)     -0.44354429                    1_GWF-(4,74,81)
+         39          1         39  8.10649948E-03                    1_GWF-(4,105,6)     -0.16055894                     1_GWF-(5,90,3)
+         40          1         40     -0.12654299                    1_GWF-(4,104,5)     -0.25994989                    1_GWF-(4,73,82)
+         41          1         41       38.339551                    1_GWF-(5,104,3)      -34.757451                    1_GWF-(4,73,83)
+         42          1         42      -38.453058                    1_GWF-(5,104,3)     -0.32878838                    1_GWF-(4,73,83)
+         43          1         43     -0.48326178                    1_GWF-(5,103,3)     -0.30975122                    1_GWF-(4,73,82)
+         44          1         44  1.59476195E-02                    1_GWF-(4,105,6)     -0.18044996                     1_GWF-(5,90,3)
+         45          1         45     -0.64759386                    1_GWF-(5,103,3)     -0.19846992                     1_GWF-(5,90,3)
+         46          1         46 -6.18782037E-02                     1_GWF-(5,99,3)     -0.59676604                    1_GWF-(4,73,83)
+         47          1         47      0.49077351                    1_GWF-(5,102,3)     -0.50192323                    1_GWF-(4,73,83)
+         48          1         48     -0.39007108                    1_GWF-(5,102,3)     -0.19736757                     1_GWF-(5,90,3)
+         49          1         49      -1.2561559                    1_GWF-(5,102,3)     -0.23227304                     1_GWF-(5,90,3)
+         50          1         50      0.15097598                    1_GWF-(5,103,3)     -0.26708453                    1_GWF-(4,74,82)
+         51          1         51     -0.95529094                    1_GWF-(5,102,3)     -0.25452077                     1_GWF-(5,90,3)
+         52          1         52       2.3764367                    1_GWF-(4,105,5)       1.4210040                    1_GWF-(4,73,83)
+         53          1         53  1.58229059E-02                    1_GWF-(4,74,81)      0.84432749                    1_GWF-(4,73,83)
+         54          1         54 -8.48795319E-02                    1_GWF-(4,104,5)     -0.19837106                    1_GWF-(4,74,82)
+         55          1         55     -0.89883231                    1_GWF-(5,102,3)     -0.21272210                     1_GWF-(5,90,3)
+         56          1         56      -1.0665841                    1_GWF-(5,102,3)     -0.24090551                     1_GWF-(5,90,3)
+         57          1         57  6.73379572E-02                    1_GWF-(4,105,5)     -0.30675993                    1_GWF-(4,73,83)
+         58          1         58      -38.769662                    1_GWF-(5,102,3)      -1.7819546                    1_GWF-(4,73,83)
+         59          1         59       28.775265                    1_GWF-(5,102,3)     -0.88652893                    1_GWF-(4,73,82)
+         60          1         60  1.70238551E-02                    1_GWF-(4,105,5)     -0.49993057                     1_GWF-(5,90,3)
+         61          1         61       31.091263                    1_GWF-(5,102,3)      0.78549317                    1_GWF-(4,74,83)
+         62          1         62       36.202976                    1_GWF-(5,102,3)       1.2603077                     1_GWF-(5,90,3)
+         63          1         63      -38.515719                    1_GWF-(5,102,3)       1.9247043                    1_GWF-(4,73,83)
+         64          1         64  1.65641146E-02                    1_GWF-(4,73,81)      0.31591663                    1_GWF-(4,73,83)
+         65          1         65     -0.77603471                    1_GWF-(5,102,3)      0.23519828                     1_GWF-(5,90,3)
+         66          1         66      -9.5296109                    1_GWF-(5,102,3) -1.42311500E-02                     1_GWF-(5,89,3)
+         67          1         67      0.37374068                    1_GWF-(5,102,3)  1.35963482E-02                    1_GWF-(4,73,83)
+         68          1         68 -2.97787569E-04                   1_GWF-(4,117,99)  9.73596536E-03                   1_GWF-(5,114,99)
+         69          2          1      -6.1815978                    1_GWF-(3,3,120)      -10.733427                    1_GWF-(1,71,98)
+         70          2          2      0.97145601                    1_GWF-(1,107,2)      -4.3633534                    1_GWF-(1,71,98)
+         71          2          3      0.62567121                    1_GWF-(1,107,2)      -2.5309042                    1_GWF-(1,71,98)
+         72          2          4      0.41079111                   1_GWF-(1,100,95)      -1.4807195                    1_GWF-(1,71,98)
+         73          2          5      0.35669377                    1_GWF-(1,97,92)     -0.93014537                    1_GWF-(1,90,90)
+         74          2          6      0.32973422                    1_GWF-(1,93,90)     -0.71299062                    1_GWF-(1,90,99)
+         75          2          7      0.26897243                    1_GWF-(1,92,88)     -0.44371037                    1_GWF-(1,89,89)
+         76          2          8      0.23906693                    1_GWF-(1,90,87)      0.34917243                    1_GWF-(1,4,135)
+         77          2          9      0.46862981                    1_GWF-(1,89,86)      0.26795008                    1_GWF-(1,5,120)
+         78          2         10     -0.25389427                    1_GWF-(1,94,90)      0.37341452                   1_GWF-(2,50,103)
+         79          2         11 -9.88744497E-02                    1_GWF-(1,5,125)      0.39837128                   1_GWF-(1,51,103)
+         80          2         12 -6.30769592E-02                    1_GWF-(1,5,126)     -0.18058556                    1_GWF-(5,28,22)
+         81          2         13  9.80901438E-02                    1_GWF-(5,47,13)      0.54497002                   1_GWF-(1,51,103)
+         82          2         14  7.23629936E-02                    1_GWF-(5,36,18)     -0.16810966                    1_GWF-(5,28,22)
+         83          2         15      0.10068348                    1_GWF-(5,36,18)      0.40131560                   1_GWF-(2,55,100)
+         84          2         16      0.14025891                    1_GWF-(5,36,18)     -0.16233259                     1_GWF-(5,4,64)
+         85          2         17  7.39067691E-02                    1_GWF-(4,42,22)      0.44523545                   1_GWF-(1,53,102)
+         86          2         18  9.23252281E-02                    1_GWF-(5,32,20)     -0.18463569                     1_GWF-(5,4,65)
+         87          2         19  9.18705510E-03                    1_GWF-(4,41,23)     -0.17404971                     1_GWF-(5,4,64)
+         88          2         20  5.70778408E-02                    1_GWF-(5,31,21)     -0.14188813                    1_GWF-(5,28,22)
+         89          2         21  7.17891468E-02                    1_GWF-(5,30,22)     -0.26654000                     1_GWF-(5,4,64)
+         90          2         22  3.37215018E-02                    1_GWF-(5,30,22)     -0.13654587                     1_GWF-(5,3,66)
+         91          2         23  3.88392549E-02                    1_GWF-(5,30,22)     -0.23462750                     1_GWF-(4,3,65)
+         92          2         24  2.20870808E-02                     1_GWF-(4,3,66)     -0.74866456                     1_GWF-(4,4,65)
+         93          2         25 -3.66095142E-02                    1_GWF-(5,32,21)     -0.14365663                     1_GWF-(5,3,65)
+         94          2         26 -1.72208651E-02                    1_GWF-(5,32,21)     -0.13603779                    1_GWF-(5,28,22)
+         95          2         27 -7.35910214E-02                    1_GWF-(5,34,20)     -0.22777030                     1_GWF-(5,4,64)
+         96          2         28  4.85737219E-03                     1_GWF-(4,5,64)     -0.14815632                     1_GWF-(5,4,65)
+         97          2         29     -0.17971009                    1_GWF-(5,35,20)     -0.15817361                     1_GWF-(5,4,65)
+         98          2         30      0.77974893                    1_GWF-(5,27,24)      -1.1416493                     1_GWF-(4,4,65)
+         99          2         31  4.62629183E-02                    1_GWF-(5,54,11)      0.83502258                     1_GWF-(4,3,66)
+        100          2         32     -0.42163861                    1_GWF-(5,54,11)     -0.11969398                    1_GWF-(5,28,22)
+        101          2         33      0.22421824                    1_GWF-(5,55,11)     -0.11881550                     1_GWF-(5,3,67)
+        102          2         34     -0.25927594                    1_GWF-(5,55,11)     -0.12089550                    1_GWF-(5,28,22)
+        103          2         35     -0.66962674                    1_GWF-(5,78,26)     -0.74587000                     1_GWF-(4,3,67)
+        104          2         36      -1.3485132                     1_GWF-(5,65,8)      -1.7828436                     1_GWF-(4,3,66)
+        105          2         37      0.32137675                     1_GWF-(5,65,8)     -0.50638296                    1_GWF-(4,73,82)
+        106          2         38      -6.2047999                     1_GWF-(5,64,8)     -0.41749103                    1_GWF-(4,75,80)
+        107          2         39       4.0831243                     1_GWF-(5,64,8)     -0.33421237                    1_GWF-(4,73,83)
+        108          2         40      -2.8318730                     1_GWF-(5,64,8)     -0.36253353                    1_GWF-(5,28,22)
+        109          2         41       18.766383                     1_GWF-(5,64,8)      0.46454876                    1_GWF-(4,74,81)
+        110          2         42      0.71427505                     1_GWF-(5,61,9)      0.33332834                    1_GWF-(4,73,82)
+        111          2         43      -5.4536825                     1_GWF-(5,64,8)      0.12998330                    1_GWF-(5,28,22)
+        112          2         44      -1.3614005                     1_GWF-(5,64,8)  8.30002697E-02                    1_GWF-(5,39,17)
+        113          2         45      0.16691317                    1_GWF-(5,67,11)      0.38862890                    1_GWF-(4,73,83)
+        114          2         46     -0.73904868                     1_GWF-(5,62,9)  6.37530018E-02                     1_GWF-(5,68,4)
+        115          2         47      0.28724687                     1_GWF-(5,61,9)  7.31336850E-02                     1_GWF-(5,68,4)
+        116          2         48     -0.51625973                     1_GWF-(5,61,9)  6.84767962E-02                    1_GWF-(4,73,82)
+        117          2         49     -0.32684062                    1_GWF-(5,57,10)      0.22390239                    1_GWF-(4,73,82)
+        118          2         50     -0.25798863                     1_GWF-(5,62,8)     -0.13622681                    1_GWF-(4,73,84)
+        119          2         51  3.77484627E-02                     1_GWF-(5,61,9)  3.77121370E-02                     1_GWF-(5,68,4)
+        120          3          1     -0.51436164                    1_GWF-(1,79,88)       2.2854459                    1_GWF-(1,80,90)
+        121          3          2     -0.12152891                    1_GWF-(1,80,90)      0.64119334                    1_GWF-(1,78,90)
+        122          3          3 -5.67477158E-02                    1_GWF-(1,82,85)      0.22186640                    1_GWF-(1,84,90)
+        123          3          4 -5.78088656E-02                    1_GWF-(1,84,84)      0.14608809                    1_GWF-(1,87,88)
+        124          3          5 -6.40851141E-02                    1_GWF-(1,87,82)      0.11123475                    1_GWF-(1,90,90)
+        125          3          6     -0.16765283                    1_GWF-(1,87,82)     -0.12441396                    1_GWF-(1,84,88)
+        126          3          7  8.47850891E-02                    1_GWF-(1,86,82)     -0.10232798                    1_GWF-(1,80,91)
+        127          3          8 -4.77301821E-02                    1_GWF-(1,90,87) -7.73734306E-02                    1_GWF-(1,80,91)
+        128          4          1     -0.10198637                    1_GWF-(1,79,88)      0.44345102                    1_GWF-(1,80,87)
+        129          4          2 -2.21751947E-02                    1_GWF-(1,79,90)  8.66968823E-02                    1_GWF-(1,78,90)
+        130          5          1 -2.18083917E-02                    1_GWF-(1,79,88)      0.11906030                    1_GWF-(1,80,90)
+        131          5          2 -2.10497922E-02                    1_GWF-(1,80,90)     -0.10634770                    1_GWF-(1,81,90)
+        132          5          3 -5.07174169E-02                     1_GWF-(5,70,5)     -0.35441544                    1_GWF-(1,79,90)
+        133          5          4     -0.11759637                     1_GWF-(5,70,5)     -0.30129046                    1_GWF-(1,79,90)
+        134          5          5     -0.25601386                     1_GWF-(5,69,5)     -0.31427192                    1_GWF-(1,79,90)
+        135          5          6     -0.48870959                     1_GWF-(5,69,5)      0.21195605                    1_GWF-(1,96,97)
+        136          5          7      0.15770741                     1_GWF-(5,70,5)     -0.13374239                    1_GWF-(1,79,90)
+        137          5          8     -0.11944400                     1_GWF-(5,69,5) -5.23363824E-02                    1_GWF-(1,84,89)
+        138          5          9 -3.97158787E-02                     1_GWF-(5,70,5) -4.09035711E-02                    1_GWF-(1,82,91)
+        139          6          1 -6.59917341E-02                    1_GWF-(3,83,68)      0.19980109                     1_GWF-(1,90,3)
+        140          6          2 -1.17131843E-02                     1_GWF-(1,90,3)  5.25137599E-02                    1_GWF-(1,89,22)
+ --------------------------------------------------------------------------------------------------------------------------------------
+
+
+ UBDSV1 SAVING     FLOW-JA-FACE ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING       DATA-SPDIS IN MODEL LOCAL1           PACKAGE NPF             CONNECTED TO MODEL LOCAL1           PACKAGE NPF              ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              WEL IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE MBR              ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              WEL IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE INFLUX           ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              WEL IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE OUTFLUX          ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              DRN IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE DRN_R            ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING             RCHA IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE RCH              ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              CHD IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE CHD_PW           ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              CHD IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE CHD_CONF         ON UNIT   1018 AT TIME STEP      1, STRESS PERIOD      1
+
+ HEAD WILL BE SAVED ON UNIT 1019 AT END OF TIME STEP    1, STRESS PERIOD    1
+
+
+  VOLUME BUDGET FOR ENTIRE MODEL AT END OF TIME STEP    1, STRESS PERIOD   1
+  ---------------------------------------------------------------------------------------------------
+
+     CUMULATIVE VOLUME      L**3       RATES FOR THIS TIME STEP      L**3/T          PACKAGE NAME    
+     ------------------                 ------------------------                     ----------------
+
+           IN:                                      IN:
+           ---                                      ---
+                 WEL =        1510.0000                   WEL =        1510.0000     MBR                              
+                 WEL =         872.0000                   WEL =         872.0000     INFLUX                           
+                 WEL =           0.0000                   WEL =           0.0000     OUTFLUX                          
+                 DRN =           0.0000                   DRN =           0.0000     DRN_R                            
+                RCHA =          97.4900                  RCHA =          97.4900     RCH                              
+                 CHD =        1122.5762                   CHD =        1122.5762     CHD_PW                           
+                 CHD =        1214.2979                   CHD =        1214.2979     CHD_CONF                         
+
+            TOTAL IN =        4816.3642              TOTAL IN =        4816.3642
+
+          OUT:                                     OUT:
+          ----                                     ----
+                 WEL =           0.0000                   WEL =           0.0000     MBR                              
+                 WEL =           0.0000                   WEL =           0.0000     INFLUX                           
+                 WEL =         694.0000                   WEL =         694.0000     OUTFLUX                          
+                 DRN =        2919.8421                   DRN =        2919.8421     DRN_R                            
+                RCHA =           0.0000                  RCHA =           0.0000     RCH                              
+                 CHD =        1334.9476                   CHD =        1334.9476     CHD_PW                           
+                 CHD =           0.0000                   CHD =           0.0000     CHD_CONF                         
+
+           TOTAL OUT =        4948.7897             TOTAL OUT =        4948.7897
+
+            IN - OUT =        -132.4256              IN - OUT =        -132.4256
+
+ PERCENT DISCREPANCY =          -2.71     PERCENT DISCREPANCY =          -2.71
+
+
+
+
+         TIME SUMMARY AT END OF TIME STEP    1 IN STRESS PERIOD    1
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
+ STRESS PERIOD TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+         TOTAL TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+
+
+end timestep
+

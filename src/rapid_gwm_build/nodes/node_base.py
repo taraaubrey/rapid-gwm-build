@@ -90,22 +90,25 @@ class NodeCFG:
         """
         Returns the attributes of the node.
         """
-        return self._attr
+        if isinstance(self._attr, str):
+            return [self._attr]
+        elif isinstance(self._attr, list):
+            return self._attr
     
-    @attr.setter
-    def attr(self, value):
-        """
-        Sets the attributes of the node.
-        """
-        # add to list
-        if isinstance(value, str):
-            self._attr.append(value)
-        elif isinstance(value, list):
-            for i in value:
-                if isinstance(i, str):
-                    self._attr.append(i)
-                else:
-                    raise ValueError(f"Invalid attribute type: {type(i)}. Expected str.")
+    # @attr.setter
+    # def attr(self, value):
+    #     """
+    #     Sets the attributes of the node.
+    #     """
+    #     # add to list
+    #     if isinstance(value, str):
+    #         self._attr.append(value)
+    #     elif isinstance(value, list):
+    #         for i in value:
+    #             if isinstance(i, str):
+    #                 self._attr.append(i)
+    #             else:
+    #                 raise ValueError(f"Invalid attribute type: {type(i)}. Expected str.")
     
     @property
     def id(self):
@@ -153,23 +156,6 @@ class NodeCFG:
             kwargs['attr'] = from_attr
 
         new_node = cls(**kwargs)
-        
-        # # create a dict of the old_ncfg attributes
-        # new_kwargs = {}
-        # for key in ['module_type', 'module_name', 'attr']:
-        #     if hasattr(from_node, key):
-        #         new_kwargs[key] = deepcopy(getattr(from_node, key))
-        
-        # if 'attr' in kwargs.keys():
-        #     new_kwargs['attr'].append(kwargs.pop('attr'))
-        
-        # kwargs.update(new_kwargs)
-        
-        # # kwargs.update(new_kwargs)
-        # # Update attributes from the dictionary
-        # new_ncfg = cls(**new_kwargs)
-        
-        # new_ncfg.update(**kwargs)
         
         return new_node
     
@@ -221,6 +207,37 @@ class NodeCFG:
                     node_id = item[1:]
                     dependencies.append(node_id)
             return dependencies
+    
+    def save(self, path: str):
+        """
+        Save the base metadata of the node.
+        This method can be overridden in subclasses to save additional metadata.
+        """
+        # pickle node
+        import pickle
+        from pathlib import Path
+        
+        path = Path(path)
+        # out_path = path / f"{self.id}.node"
+        # with open(out_path, 'wb') as f:
+        #     pickle.dump(self, f)
+
+        meta = {
+            "id": self.id,
+            "type": self.type,
+            "module_type": self.module_type,
+            "module_name": self.module_name,
+            "attr": self.attr,
+            "src": self.src,
+            # "data": self.data,
+            # "pickle_path": str(out_path)
+        }
+
+        # write meta to yaml
+        import yaml
+        meta_path = path / f"{self.id}.yaml"
+        with open(meta_path, 'w') as f:
+            yaml.dump(meta, f, default_flow_style=False)
     
     @abstractmethod
     def resolve(self, **kwargs):

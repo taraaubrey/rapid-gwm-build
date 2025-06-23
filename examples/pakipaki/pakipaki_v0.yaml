@@ -4,6 +4,17 @@ vars:
   data_dir: C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data
   scripts: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\pakipaki\scripts
 
+data:
+  res_data: ${vars.data_dir}/a_source\skytem_skytem\Heretaunga_skytem_3Dmodels\Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
+  # slope:
+  #   input: ${vars.data_dir}/b_derived/dem_elevation_derivatives/slope.tif
+  #   pipeline:
+  #     - processor: to_grid
+  #       grid: '@mesh.grid'
+  #     - processor: drop_by_slope
+  #       slope_threshold: 0.1
+  #       grid: '@mesh.grid'
+
 simulations:
   pakipaki:
     sim_type: mf6 # required
@@ -13,25 +24,40 @@ simulations:
       crs: 2193
       nlay: 6
       resolution: 25
-      top: ${vars.data_dir}/b_derived/dem_elevation_derivatives/dem_clipped.tif
-      bottom:
-        pipeline: 
-          pipes:
-            - processor: ${vars.scripts}/pkpk_functions.extract_top_of_basement
-              res_data: ${vars.data_dir}/a_source\skytem_skytem\Heretaunga_skytem_3Dmodels\Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
-              column: AP
-              res: 100
-              save: True
-              fill_depth: -440
-              crs: 2193
-      active_domain: ${vars.data_dir}\b_derived\dom_domains\model_domains\model_domain_20250526.shp
-      # pipeline:
-      #   pipes:
-      #       - processor: make_layers
-      #         nlay: [3, 3]
-      #         layer_thickness: 2
-      #         min_thickness: 1
-      #         method: [equal_thickness, equal_interval]
+      # active_domain: ${vars.data_dir}\b_derived\dom_domains\model_domains\model_domain_20250526.shp
+      active_domain:
+        input: active_domain.shp
+        pipeline:
+          - processor: drop_by_slope # input: '@pipe.to_grid.data'
+            slope_fn: '@data.slope'
+            grid: '@mesh.grid'
+            slope_threshold: 0.1
+      top: #@mesh.top
+        input: XX
+        pipeline:
+          - processor: to_grid
+            input: ${vars.data_dir}/b_derived/dem_elevation_derivatives/dem_clipped.tif
+            grid: '@mesh.grid'
+          - processor: adjust_top # input: '@pipe.from_grid.output'
+            index: '@drn.src.elev'
+            i_mask: '@drn.src.mask'
+      bottoms:
+        pipeline:
+          - processor: ${vars.scripts}/pkpk_functions.extract_top_of_basement
+            res_data: ${data.res_data}
+            column: AP
+            res: 100
+            save: True
+            fill_depth: -450
+            crs: 2193
+          - processor: to_grid
+            grid: '@mesh.grid'
+          - processor: make_layers # input: '@pipe.extract_top_of_basement.output'
+            top: '@mesh.top'
+            nlay: [3, 3]
+            layer_thickness: 2
+            min_thickness: 1
+            method: [equal_thickness, equal_interval]
     
     modules:
       sim:
@@ -43,7 +69,22 @@ simulations:
         modelname: pkpk
       
       dis:
+        delr: '@mesh.delr'
+        delc: '@mesh.delc'
+        nrow: '@mesh.nrow'
+        ncol: '@mesh.ncol'
         nlay: '@mesh.nlay'
         top: '@mesh.top'
         botm: '@mesh.bottoms'
         idomain: '@mesh.active_domain'
+      
+      drn:
+        src:
+          cond:
+            pipeline:
+              - processor: extract_min
+                res: ${data.res_data}
+                from_z: 0
+                to_z: -20
+          elev: 5
+          mask: "${vars.data_dir}/b_derived/sw_surface_water/sw_Pakipaki_upstream_20231012/upstream_sw.shp"

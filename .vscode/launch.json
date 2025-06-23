@@ -19,6 +19,22 @@
             "program": "${workspaceFolder}/examples/simple_freyburg/client_code.py",
             "console": "integratedTerminal",
             "justMyCode": false
+        },
+        {
+            "name": "Python: Remote Attach",
+            "type": "debugpy",
+            "request": "attach",
+            "justMyCode": false,
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/examples/pakipaki/dvc_stuff",
+                    "remoteRoot": "C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/pakipaki/dvc_stuff/scripts"
+                }
+            ]
         }
     ]
 }
