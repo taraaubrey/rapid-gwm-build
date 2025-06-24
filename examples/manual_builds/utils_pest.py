@@ -1,50 +1,56 @@
 import os
 
-
-def mult_array(pf, ws,
+def define_mult_array(pf, ws,
           tag='local1.recharge',
           ib=None,
           grid_gs=None,
           lb=0.2, ub=5.0,
           ulb=0.01, uub=100,
           add_coarse=True):
+    
     files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
-    for f in files:
+    
+    for i, f in enumerate(files):
         if isinstance(f,str):
             base = f.split(".")[1].replace("_","")
         else:
             base = f[0].split(".")[1]
+        
         # grid (fine) scale parameters
-        pf.add_parameters(f,
-                        zone_array=ib,
-                        par_type="grid", #specify the type, these will be unique parameters for each cell
-                        geostruct=grid_gs, # the gestatisical structure for spatial correlation 
-                        par_name_base=base+"gr", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
-                        pargp=base+"gr", #likewise for the parameter group name
-                        lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
-                        ult_ubound=uub, ult_lbound=ulb # The ultimate bounds for multiplied model input values. Here we are stating that, after accounting for all multipliers, Kh cannot exceed these values. Very important with multipliers
-                        )
+        pf.add_parameters(
+            f,
+            zone_array=ib[i],
+            par_type="grid", #specify the type, these will be unique parameters for each cell
+            geostruct=grid_gs, # the gestatisical structure for spatial correlation 
+            par_name_base=base+"gr", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
+            pargp=base+"gr", #likewise for the parameter group name
+            lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
+            ult_ubound=uub, ult_lbound=ulb # The ultimate bounds for multiplied model input values. Here we are stating that, after accounting for all multipliers, Kh cannot exceed these values. Very important with multipliers
+            )
                         
         # pilot point (medium) scale parameters
-        pf.add_parameters(f,
-                            zone_array=ib,
-                            par_type="pilotpoints",
-                            geostruct=grid_gs,
-                            par_name_base=base+"pp",
-                            pargp=base+"pp",
-                            lower_bound=lb, upper_bound=ub,
-                            ult_ubound=uub, ult_lbound=ulb,
-                            pp_space=5) # `PstFrom` will generate a unifrom grid of pilot points in every 4th row and column
+        pf.add_parameters(
+            f,
+            zone_array=ib[i],
+            par_type="pilotpoints",
+            geostruct=grid_gs,
+            par_name_base=base+"pp",
+            pargp=base+"pp",
+            lower_bound=lb, upper_bound=ub,
+            ult_ubound=uub, ult_lbound=ulb) # `PstFrom` will generate a unifrom grid of pilot points in every 4th row and column
+        
         if add_coarse==True:
             # constant (coarse) scale parameters
             pf.add_parameters(f,
-                                zone_array=ib,
+                                zone_array=ib[i],
                                 par_type="constant",
                                 geostruct=grid_gs,
                                 par_name_base=base+"cn",
                                 pargp=base+"cn",
                                 lower_bound=lb, upper_bound=ub,
                                 ult_ubound=uub, ult_lbound=ulb)
+    return
+
 
 def wel(pf, ws, name='wel', tag='local1.wel_stress_period_data', grid_gs=None,
         q_bounds=[0.1, 10], q_ultbounds=[0.01, 10]):
@@ -74,7 +80,7 @@ def wel(pf, ws, name='wel', tag='local1.wel_stress_period_data', grid_gs=None,
                             upper_bound=q_bounds[1],
                             ult_lbound=q_ultbounds[0],
                             ult_ubound=q_ultbounds[1])
-
+    return
 
 def drn(pf, ws, name='drn', tag='local1.drn_stress_period_data', grid_gs=None, cond_bounds=[0.1, 10], cond_ultbounds=[0.01, 100], head_bounds=[32.5, 42], head_ultbounds=[None, None]):
     name = name + '_cond'
@@ -131,6 +137,7 @@ def drn(pf, ws, name='drn', tag='local1.drn_stress_period_data', grid_gs=None, c
                             upper_bound=head_bounds[1],
                             ult_lbound=head_ultbounds[0],
                             ult_ubound=head_ultbounds[1])
+    return
 
 def chd(pf, ws, name='chd',
         tag='local1.chd_stress_period_data',
@@ -167,3 +174,4 @@ def chd(pf, ws, name='chd',
                             upper_bound=head_bounds[1],
                             ult_lbound=head_ultbounds[0],
                             ult_ubound=head_ultbounds[1])
+    return

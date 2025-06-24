@@ -118,14 +118,14 @@ def savedf2txt(df, filename):
         filename: Name of the output text file
         sim_ws: model workspace directory
     """
-    df['k'] = df['index'].apply(lambda x: int(x[0]))
-    df['i'] = df['index'].apply(lambda x: int(x[1]))
-    df['j'] = df['index'].apply(lambda x: int(x[2]))
+    df['k'] = df['index'].apply(lambda x: int(x[0] + 1))
+    df['i'] = df['index'].apply(lambda x: int(x[1] + 1))
+    df['j'] = df['index'].apply(lambda x: int(x[2] + 1))
     # delete df['index']  # remove index column if not needed
     df = df.drop(columns=['index'])
     df = df[['k', 'i', 'j'] + [col for col in df.columns if col not in ['k', 'i', 'j']]]
 
-    df.to_csv(filename, sep='\t', header=False, index=False)
+    df.to_csv(filename, sep=' ', header=False, index=False)
 
 # plot layers
 import matplotlib.pyplot as plt

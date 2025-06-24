@@ -257,7 +257,7 @@ npf = fp.mf6.ModflowGwfnpf(model=gwf, #node property flow package
                         #    icelltype=icell_type, # cell type for each layer
                            icelltype=0, # 0 means constant saturated thickness
                         #    k = k_hor
-                           k=[os.path.basename(k_fn) + f'{ilay}.txt' for ilay in range(NLAY)], # horizontal k value
+                           k=k_hor, # horizontal k value
                           )
 
 ic = fp.mf6.ModflowGwfic(model=gwf, 
@@ -277,8 +277,8 @@ drn_riv = fp.mf6.ModflowGwfdrn(model=gwf, # add drain package to model gwf (crea
                             )
 
 chd_pw = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                            #   stress_period_data={0: chd_pw_df.values.tolist()},
-                            stress_period_data={0: {'filename': os.path.basename(chdpw_fn)}},
+                              stress_period_data={0: chd_pw_df[['index', 'head']].values.tolist()},
+                            # stress_period_data={0: {'filename': os.path.basename(chdpw_fn)}},
                             pname='chd_pw', # package name
                             save_flows=True, # save flows for this package 
                            )
@@ -291,17 +291,17 @@ chd_conf = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (creat
                            )
 
 wel = fp.mf6.ModflowGwfwel(model=gwf,
-                        #    stress_period_data={0: mbr_df.values.tolist()},
+                        #    stress_period_data={0: mbr_df[['index', 'flux']].values.tolist()},
                            stress_period_data={0: {'filename': os.path.basename(mbr_fn)}},
                            pname='mbr' # package name
                           )
 influx = fp.mf6.ModflowGwfwel(model=gwf,
-                            #   stress_period_data={0: influx_df.values.tolist()},
+                            #   stress_period_data={0: influx_df[['index', 'flux']].values.tolist()},
                            stress_period_data={0: {'filename': os.path.basename(influx_fn)}},
                            pname='influx' # package name
                           )
 outflux = fp.mf6.ModflowGwfwel(model=gwf,
-                            # stress_period_data={0: outflux_df.values.tolist()},
+                            # stress_period_data={0: outflux_df[['index', 'flux']].values.tolist()},
                            stress_period_data={0: {'filename': os.path.basename(outflux_fn)}},
                            pname='outflux' # package name
                           )

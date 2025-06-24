@@ -34,17 +34,15 @@ sr = pyemu.helpers.SpatialReference.from_namfile(
         os.path.join(PEST_DIR, f"{MODEL_NAME}.nam"),
         delr=gwf.dis.delr.array, delc=gwf.dis.delc.array)
 
-# specify a template directory (i.e. the PstFrom working folder)
-template_ws = os.path.join(f"{MODEL_NAME}_template")
 # instantiate PstFrom
 pf = pyemu.utils.PstFrom(original_d=PEST_DIR, # where the model is stored
-                            new_d=template_ws, # the PEST template folder
-                            remove_existing=True, # ensures a clean start
-                            longnames=True, # set False if using PEST/PEST_HP
-                            spatial_reference=sr, #the spatial reference we generated earlier
-                            zero_based=False, # does the MODEL use zero based indices? For example, MODFLOW does NOT
-                            # start_datetime=start_datetime, # required when specifying temporal correlation between parameters
-                            echo=False) # to stop PstFrom from writting lots of infromation to the notebook; experiment by setting it as True to see the difference; usefull for troubleshooting
+                         new_d=TEMP_DIR, # the PEST template folder
+                         remove_existing=True, # ensures a clean start
+                         longnames=True, # set False if using PEST/PEST_HP
+                         spatial_reference=sr, #the spatial reference we generated earlier
+                         zero_based=False, # does the MODEL use zero based indices? For example, MODFLOW does NOT
+                         # start_datetime=start_datetime, # required when specifying temporal correlation between parameters
+                         echo=False) # to stop PstFrom from writting lots of infromation to the notebook; experiment by setting it as True to see the difference; usefull for troubleshooting
 
 
 # PARAMETERIZATION --------------------------------------------------
@@ -64,56 +62,82 @@ grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log')
 # get the IIDOMAIN array; in our case we only have one layer
 ib = gwf.dis.idomain.array
 
-# set up pst file
-mult_array(pf, PEST_DIR,
-          tag='local1.npf_k_layer',
-          ib=ib,
-          grid_gs=grid_gs,
-          lb=0.2, ub=5.0, ulb=1e-4, uub=1e3,
-          add_coarse=True)
+# setup pilot points
+prefix_dict = {0:["hk"]} 
+df_pp = pyemu.pp_utils.setup_pilotpoints_grid(sr=sr,  # model spatial reference
+                                              ibound=ib[0], # to which cells to setup ppoints
+                                              prefix_dict=prefix_dict, #prefix to add to parameter names
+                                              pp_dir=TEMP_DIR, 
+                                              tpl_dir=TEMP_DIR, 
+                                              every_n_cell=5) # pilot point spacing
+pp_file = os.path.join(TEMP_DIR,"hkpp.dat")
 
-mult_array(pf, PEST_DIR,
-          tag='local1.rcha_recharge',
-          ib=ib,
-          grid_gs=grid_gs,
-          lb=0.2, ub=5.0, ulb=0, uub=1e-3,
-          add_coarse=True)
+# create OK object
+ok = pyemu.geostats.OrdinaryKrige(grid_gs, df_pp)
+# calculate factors for the pilot points
+ok_fn = os.path.join(TEMP_DIR, f"{MODEL_NAME}.var.ref")
+df = ok.calc_factors_grid(sr, var_filename=ok_fn, minpts_interp=1, maxpts_interp=10)
 
-wel(pf, PEST_DIR,
+ok.to_grid_factors_file(pp_file+".fac")
+
+par_pp = pf.add_parameters(pp_file+'.tpl')
+pst = pf.build_pst()
+pst.parameter_data.loc[par_pp.parnme, ['parval1','parlbnd','parubnd', 'pargp']] = 100, 1000, 0.1, 'hk1'
+# # set up pst file
+# define_mult_array(pf, TEMP_DIR,
+#           tag='local1.npf_k_layer',
+#           ib=ib,
+#           grid_gs=grid_gs,
+#           lb=0.2, ub=5.0, ulb=1e-4, uub=1e3,
+#           add_coarse=True)
+
+# define_mult_array(pf, TEMP_DIR,
+#           tag='local1.rcha_recharge',
+#           ib=ib,
+#           grid_gs=grid_gs,
+#           lb=0.2, ub=5.0, ulb=0, uub=1e-3,
+#           add_coarse=True)
+
+wel(pf, TEMP_DIR,
     name='mbr',
-    tag='local1.wel_stress_period_data',
+    tag='local1.wel_mbr_stress_period_data',
     grid_gs=grid_gs,
     q_bounds=[0.1, 10],
     q_ultbounds=[0.01, 10])
-wel(pf, PEST_DIR,
+
+wel(pf, TEMP_DIR,
     name='influx',
-    tag='local1_0.wel_stress_period_data',
+    tag='local1.wel_influx_stress_period_data.txt',
     grid_gs=grid_gs,
     q_bounds=[0.1, 10],
     q_ultbounds=[0.01, 10])
-wel(pf, PEST_DIR,
+
+wel(pf, TEMP_DIR,
     name='outflux',
-    tag='local1_1.wel_stress_period_data',
+    tag='local1.wel_outflux_stress_period_data.txt',
     grid_gs=grid_gs,
     q_bounds=[0.1, 10],
     q_ultbounds=[0.01, 10])
-drn(pf, PEST_DIR,
+
+drn(pf, TEMP_DIR,
     name='drn_riv',
-    tag='local1.drn_stress_period_data',
+    tag='local1.drn_riv_stress_period_data.txt',
     grid_gs=grid_gs,
     cond_bounds=[0.1, 10],
     cond_ultbounds=[0.01, 100],
     head_bounds=[-2, 2],
     head_ultbounds=[None, None])
-chd(pf, PEST_DIR,
+
+chd(pf, TEMP_DIR,
     name='chd_pw',
-    tag='local1.chd_stress_period_data',
+    tag='local1.chd_pw_stress_period_data.txt',
     grid_gs=None,
     head_bounds=[-2, 2],
     head_ultbounds=[None, None])
-chd(pf, PEST_DIR,
+
+chd(pf, TEMP_DIR,
     name='chd_conf',
-    tag='local1_0.chd_stress_period_data',
+    tag='local1.chd_conf_stress_period_data.txt',
     grid_gs=None,
     head_bounds=[-2, 2],
     head_ultbounds=[11, 15])
