@@ -1,0 +1,710 @@
+                                   MODFLOW 6
+                U.S. GEOLOGICAL SURVEY MODULAR HYDROLOGIC MODEL
+                          GROUNDWATER FLOW MODEL (GWF)
+                   VERSION 6.3.0 release candidate 02/06/2022
+                               ***DEVELOP MODE***
+
+   MODFLOW 6 compiled Feb 06 2022 02:35:51 with Intel(R) Fortran Intel(R) 64
+   Compiler Classic for applications running on Intel(R) 64, Version 2021.5.0
+                             Build 20211109_000000
+
+This software is preliminary or provisional and is subject to 
+revision. It is being provided to meet the need for timely best 
+science. The software has not received final approval by the U.S. 
+Geological Survey (USGS). No warranty, expressed or implied, is made 
+by the USGS or the U.S. Government as to the functionality of the 
+software and related material nor shall the fact of release 
+constitute any such warranty. The software is provided on the 
+condition that neither the USGS nor the U.S. Government shall be held 
+liable for any damages resulting from the authorized or unauthorized 
+use of the software.
+
+
+As a work of the United States Government, this USGS product is 
+in the public domain within the United States. You can copy, 
+modify, distribute, and perform the work, even for commercial 
+purposes, all without asking permission. Additionally, USGS 
+waives copyright and related rights in the work worldwide 
+through CC0 1.0 Universal Public Domain Dedication 
+(https://creativecommons.org/publicdomain/zero/1.0/).
+
+The following GNU Lesser General Public License (LGPL) libraries
+are used in this USGS product:
+
+    SPARSKIT version 2.0
+      ilut, luson, and qsplit 
+      (https://www-users.cse.umn.edu/~saad/software/SPARSKIT/)
+
+    RCM - Reverse Cuthill McKee Ordering
+      (https://people.math.sc.edu/Burkardt/f_src/rcm/rcm.html)
+
+    BLAS - Basic Linear Algebra Subprograms Level 1
+      (https://people.math.sc.edu/Burkardt/f_src/blas1_d/blas1_d.html)
+
+    SPARSEKIT - Sparse Matrix Utility Package
+      amux, dperm, dvperm, rperm, and cperm
+      (https://people.sc.fsu.edu/~jburkardt/f77_src/sparsekit/sparsekit.html)
+
+The following BSD-3 License libraries are used in this USGS product:
+
+    Modern Fortran DAG Library
+      Copyright (c) 2018, Jacob Williams
+      All rights reserved.
+      (https://github.com/jacobwilliams/daglib)
+
+MODFLOW 6 compiler options: /O2 /heap-arrays:0 /fpe:0 /traceback /nologo /fpp
+/c /module:.\mod_temp\ /object:.\obj_temp\
+
+System command used to initiate simulation:
+mf6.exe
+
+MODFLOW was compiled using uniform precision.
+
+Real Variables
+  KIND: 8
+  TINY (smallest non-zero value):    2.225074-308
+  HUGE (largest value):    1.797693+308
+  PRECISION: 15
+  BIT SIZE: 64
+
+Integer Variables
+  KIND: 4
+  HUGE (largest value): 2147483647
+  BIT SIZE: 32
+
+Long Integer Variables
+  KIND: 8
+  HUGE (largest value): 9223372036854775807
+  BIT SIZE: 64
+
+Logical Variables
+  KIND: 4
+  BIT SIZE: 32
+ 
+
+ OPENED local1.dis
+ FILE TYPE:DIS6                   UNIT 1005   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf
+ FILE TYPE:NPF6                   UNIT 1006   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.ic
+ FILE TYPE:IC6                    UNIT 1007   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.rcha
+ FILE TYPE:RCH6                   UNIT 1008   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.drn
+ FILE TYPE:DRN6                   UNIT 1009   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.chd
+ FILE TYPE:CHD6                   UNIT 1010   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_0.chd
+ FILE TYPE:CHD6                   UNIT 1011   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.wel
+ FILE TYPE:WEL6                   UNIT 1012   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_0.wel
+ FILE TYPE:WEL6                   UNIT 1013   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_1.wel
+ FILE TYPE:WEL6                   UNIT 1014   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.oc
+ FILE TYPE:OC6                    UNIT 1015   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+ NAMEFILE OPTIONS:
+    FLOWS WILL BE SAVED TO BUDGET FILE SPECIFIED IN OUTPUT CONTROL
+
+ DIS -- STRUCTURED GRID DISCRETIZATION PACKAGE, VERSION 2 : 3/27/2014 - INPUT READ FROM UNIT 1005
+
+
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+ PROCESSING DISCRETIZATION OPTIONS
+    MODEL LENGTH UNIT IS METERS
+    XORIGIN SPECIFIED AS     1924290.00000000    
+    YORIGIN SPECIFIED AS     5598620.00000000    
+ END OF DISCRETIZATION OPTIONS
+ PROCESSING DISCRETIZATION DIMENSIONS
+    NLAY =       8
+    NROW =     121
+    NCOL =     151
+ END OF DISCRETIZATION DIMENSIONS
+ PROCESSING GRIDDATA
+
+ OPENED local1.dis_delr.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1017   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_delc.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1018   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_top.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1019   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1020   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer2.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1021   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer3.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1022   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer4.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1023   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer5.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1024   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer6.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1025   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer7.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1026   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_botm_layer8.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1027   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1028   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer2.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1029   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer3.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1030   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer4.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1031   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer5.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1032   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer6.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1033   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer7.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1034   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.dis_idomain_layer8.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1035   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+ END PROCESSING GRIDDATA
+
+ THE SPECIFIED IDOMAIN RESULTS IN A REDUCED NUMBER OF CELLS.
+ NUMBER OF USER NODES: 146168
+ NUMBER OF NODES IN SOLUTION: 75177
+
+
+
+ NPF -- NODE PROPERTY FLOW PACKAGE, VERSION 1, 3/30/2015 INPUT READ FROM UNIT 1006
+
+
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+ PROCESSING NPF OPTIONS
+    SPECIFIC DISCHARGE WILL BE CALCULATED AT CELL CENTERS AND WRITTEN TO DATA-SPDIS IN BUDGET FILE WHEN REQUESTED.
+ END OF NPF OPTIONS
+
+ WEL   -- WEL PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1012
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING WEL OPTIONS
+ END OF WEL OPTIONS
+
+ PROCESSING WEL DIMENSIONS
+    MAXBOUND =    1061
+ END OF WEL DIMENSIONS
+
+ WEL   -- WEL PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1013
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING WEL OPTIONS
+ END OF WEL OPTIONS
+
+ PROCESSING WEL DIMENSIONS
+    MAXBOUND =     852
+ END OF WEL DIMENSIONS
+
+ WEL   -- WEL PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1014
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING WEL OPTIONS
+ END OF WEL OPTIONS
+
+ PROCESSING WEL DIMENSIONS
+    MAXBOUND =     684
+ END OF WEL DIMENSIONS
+
+ DRN   -- DRN PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1009
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING DRN OPTIONS
+ END OF DRN OPTIONS
+
+ PROCESSING DRN DIMENSIONS
+    MAXBOUND =     319
+ END OF DRN DIMENSIONS
+
+ RCH   -- RCH PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1008
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING RCH OPTIONS
+    RECHARGE INPUT WILL BE READ AS ARRAY(S).
+ END OF RCHA OPTIONS
+
+ CHD   -- CHD PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1010
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING CHD OPTIONS
+    FLOWS WILL BE SAVED TO BUDGET FILE SPECIFIED IN OUTPUT CONTROL
+ END OF CHD OPTIONS
+
+ PROCESSING CHD DIMENSIONS
+    MAXBOUND =      81
+ END OF CHD DIMENSIONS
+
+ CHD   -- CHD PACKAGE, VERSION 8, 2/22/2014 INPUT READ FROM UNIT 1011
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING CHD OPTIONS
+    FLOWS WILL BE SAVED TO BUDGET FILE SPECIFIED IN OUTPUT CONTROL
+ END OF CHD OPTIONS
+
+ PROCESSING CHD DIMENSIONS
+    MAXBOUND =    7562
+ END OF CHD DIMENSIONS
+
+ IC -- INITIAL CONDITIONS PACKAGE, VERSION 8, 3/28/2015 INPUT READ FROM UNIT 1007
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+ PROCESSING IC OPTIONS
+ END OF IC OPTIONS
+ PROCESSING GRIDDATA
+
+ OPENED local1.ic_strt.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1036   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+ END PROCESSING GRIDDATA
+ PROCESSING GRIDDATA
+
+ OPENED local1.npf_icelltype_layer1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1037   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer2.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1038   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer3.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1039   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer4.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1040   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer5.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1041   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer6.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1042   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer7.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1043   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_icelltype_layer8.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1044   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1045   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer2.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1046   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer3.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1047   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer4.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1048   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer5.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1049   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer6.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1050   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer7.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1051   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.npf_k_layer8.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1052   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+ K33 not provided.  Assuming K33 = K.
+ K22 not provided.  Assuming K22 = K.
+ END PROCESSING GRIDDATA
+    BINARY GRID INFORMATION WILL BE WRITTEN TO:
+      UNIT NUMBER: 1053
+      FILE NAME: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\manual_builds\models\local1\pest\local1\local1.dis.grb
+
+ OPENED C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\manual_builds\models\local1\pest\local1\local1.dis.grb
+ FILE TYPE:DATA(BINARY)   UNIT 1053   STATUS:REPLACE             
+ FORMAT:UNFORMATTED            ACCESS:STREAM              
+ ACTION:READWRITE           
+
+      THE LAST TIME STEP WILL BE PRINTED
+      THE LAST TIME STEP WILL BE PRINTED
+ # File generated by Flopy version 3.9.2 on 06/24/2025 at 12:29:54.
+
+ PROCESSING OC OPTIONS
+
+    BUDGET INFORMATION WILL BE WRITTEN TO:
+      UNIT NUMBER: 1054
+      FILE NAME: local1.cbc
+
+ OPENED local1.cbc
+ FILE TYPE:DATA(BINARY)   UNIT 1054   STATUS:REPLACE             
+ FORMAT:UNFORMATTED            ACCESS:STREAM              
+ ACTION:READWRITE           
+
+    HEAD INFORMATION WILL BE WRITTEN TO:
+      UNIT NUMBER: 1055
+      FILE NAME: local1.hds
+
+ OPENED local1.hds
+ FILE TYPE:DATA(BINARY)   UNIT 1055   STATUS:REPLACE             
+ FORMAT:UNFORMATTED            ACCESS:STREAM              
+ ACTION:READWRITE           
+
+ END OF OC OPTIONS
+
+start timestep kper="1" kstp="1" mode="normal"
+
+
+ BEGIN READING OUTPUT CONTROL FOR STRESS PERIOD 1
+      ALL TIME STEPS WILL BE SAVED
+      ALL TIME STEPS WILL BE SAVED
+
+ END READING OUTPUT CONTROL FOR STRESS PERIOD 1
+
+ OPENED local1.wel_stress_period_data_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1056   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_0.wel_stress_period_data_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1057   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_1.wel_stress_period_data_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1058   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.drn_stress_period_data_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1059   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.rcha_recharge_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1060   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1.chd_stress_period_data_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1061   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ OPENED local1_0.chd_stress_period_data_1.txt
+ FILE TYPE:OPEN/CLOSE   UNIT 1062   STATUS:OLD                 
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+ ACTION:READ                
+
+
+ SLN_1 INNER ITERATION SUMMARY
+ --------------------------------------------------------------------------------------------------------------------------------------
+      TOTAL      OUTER      INNER                                                            MAXIMUM                                   
+  ITERATION  ITERATION  ITERATION  MAXIMUM CHANGE      MAXIMUM CHANGE MODEL-(CELLID)        RESIDUAL    MAXIMUM RESIDUAL MODEL-(CELLID)
+ --------------------------------------------------------------------------------------------------------------------------------------
+          1          1          1       12.676210                   1_GWF-(3,42,128)      -7.3311446                   1_GWF-(1,95,101)
+          2          1          2      0.63419302                    1_GWF-(1,107,2)      -2.2753076                   1_GWF-(1,96,100)
+          3          1          3      0.55357478                    1_GWF-(1,107,2)      -1.4783144                   1_GWF-(1,100,97)
+          4          1          4      0.53491335                    1_GWF-(1,107,2)      -1.1243164                   1_GWF-(5,119,98)
+          5          1          5      0.47096345                    1_GWF-(1,107,2)     -0.98000245                   1_GWF-(5,119,98)
+          6          1          6      0.50080458                    1_GWF-(1,107,2)     -0.85036570                   1_GWF-(5,119,98)
+          7          1          7      0.45357905                    1_GWF-(1,107,2)     -0.75094186                   1_GWF-(5,119,98)
+          8          1          8      0.51928838                    1_GWF-(1,107,2)     -0.81727870                   1_GWF-(1,48,103)
+          9          1          9      0.57265331                    1_GWF-(1,107,2)     -0.55661908                   1_GWF-(5,119,98)
+         10          1         10      0.57707985                   1_GWF-(5,120,99)      -1.1568826                   1_GWF-(1,48,103)
+         11          1         11      0.70995262                   1_GWF-(5,120,99)     -0.44123564                  1_GWF-(5,104,100)
+         12          1         12       1.5788666                   1_GWF-(5,120,99)     -0.35989406                    1_GWF-(5,98,99)
+         13          1         13     -0.41295349                    1_GWF-(1,107,2)     -0.99133915                   1_GWF-(1,48,103)
+         14          1         14      0.21397531                  1_GWF-(4,120,100)     -0.32471677                   1_GWF-(5,100,98)
+         15          1         15      0.92757614                   1_GWF-(5,119,98)      0.48109008                   1_GWF-(1,46,104)
+         16          1         16     -0.31005342                   1_GWF-(5,120,98)     -0.28933395                  1_GWF-(5,106,100)
+         17          1         17       1.2869558                   1_GWF-(5,119,98)      0.56474262                   1_GWF-(4,48,148)
+         18          1         18      0.55680292                   1_GWF-(5,119,98)     -0.19935828                     1_GWF-(5,73,4)
+         19          1         19      0.56505546                    1_GWF-(4,107,2)     -0.18664266                     1_GWF-(5,76,4)
+         20          1         20  2.12423228E-02                     1_GWF-(4,72,4)     -0.21147985                     1_GWF-(5,74,4)
+         21          1         21      0.56034440                    1_GWF-(5,106,3)     -0.21233358                     1_GWF-(5,74,4)
+         22          1         22      0.43809028                    1_GWF-(5,105,3)     -0.18007080                     1_GWF-(5,73,4)
+         23          1         23 -2.77081746E-02                  1_GWF-(4,116,100)     -0.18465057                     1_GWF-(5,75,4)
+         24          1         24      0.21049211                    1_GWF-(7,102,3)     -0.14939974                     1_GWF-(5,72,4)
+         25          1         25      0.33685599                     1_GWF-(4,83,3)     -0.19483316                  1_GWF-(4,114,100)
+         26          1         26      0.31211463                    1_GWF-(7,100,3)     -0.12691984                     1_GWF-(5,74,4)
+         27          1         27      0.86666128                    1_GWF-(7,100,3)     -0.10628158                     1_GWF-(5,73,4)
+         28          1         28     -0.30068785                  1_GWF-(4,117,100)     -0.45527809                  1_GWF-(4,114,100)
+         29          1         29  9.70611471E-02                    1_GWF-(5,104,3)      0.18685569                  1_GWF-(4,115,100)
+         30          1         30      0.72934168                    1_GWF-(5,104,3) -9.31151842E-02                    1_GWF-(5,54,39)
+         31          1         31      0.37424806                    1_GWF-(5,55,12)     -0.34250535                  1_GWF-(4,113,100)
+         32          1         32     -0.53915276                    1_GWF-(5,107,2)       2.2952343                    1_GWF-(4,54,41)
+         33          1         33      0.89199191                    1_GWF-(5,107,2) -9.22154489E-02                    1_GWF-(5,54,39)
+         34          1         34 -3.23590462E-02                    1_GWF-(5,107,2) -7.82895929E-02                    1_GWF-(5,102,3)
+         35          2          1      -9.3602976                    1_GWF-(1,98,17)       40.894295                     1_GWF-(1,97,5)
+         36          2          2      -3.8623871                   1_GWF-(1,101,12)       12.793767                     1_GWF-(1,97,5)
+         37          2          3      -2.2634949                    1_GWF-(1,103,8)       7.6597279                    1_GWF-(1,104,3)
+         38          2          4      -2.7579652                    1_GWF-(1,107,2)       5.3150431                    1_GWF-(1,104,3)
+         39          2          5      -2.2568571                    1_GWF-(1,107,2)       2.4583264                    1_GWF-(1,104,3)
+         40          2          6      -1.5738532                    1_GWF-(1,107,2)       1.2410239                    1_GWF-(1,83,10)
+         41          2          7     -0.66739315                    1_GWF-(1,107,2)      0.96270342                     1_GWF-(1,81,9)
+         42          2          8     -0.54194308                     1_GWF-(1,83,7)     -0.74048484                    1_GWF-(1,104,3)
+         43          2          9      0.50495790                     1_GWF-(1,82,6)      0.94105502                     1_GWF-(1,81,6)
+         44          2         10      -1.7077428                     1_GWF-(1,80,5)      0.54819972                     1_GWF-(1,96,7)
+         45          2         11     -0.33340646                     1_GWF-(1,80,6)      0.36407118                    1_GWF-(1,102,3)
+         46          2         12     -0.33855474                     1_GWF-(1,79,6)      0.17061312                    1_GWF-(1,58,10)
+         47          2         13     -0.14223548                    1_GWF-(1,57,10)      0.40618726                   1_GWF-(1,48,103)
+         48          2         14     -0.18304450                     1_GWF-(1,71,5)      0.12777509                     1_GWF-(1,64,6)
+         49          2         15     -0.14833045                     1_GWF-(1,68,4)      0.10376561                    1_GWF-(5,102,3)
+         50          2         16     -0.15123670                     1_GWF-(1,66,5)     -0.13107413                   1_GWF-(1,48,103)
+         51          2         17     -0.13373077                     1_GWF-(1,66,5)  8.02379462E-02                    1_GWF-(5,102,3)
+         52          2         18     -0.12547925                    1_GWF-(7,102,3)  6.84471276E-02                    1_GWF-(5,102,3)
+         53          2         19 -6.92985844E-02                    1_GWF-(7,102,3)  6.22868012E-02                    1_GWF-(5,102,3)
+         54          3          1      -1.8720674                    1_GWF-(1,98,17)       8.1782257                     1_GWF-(1,97,5)
+         55          3          2     -0.77243807                   1_GWF-(1,101,12)       2.5548832                     1_GWF-(1,97,5)
+         56          3          3     -0.45379968                    1_GWF-(1,103,8)       1.5366585                    1_GWF-(1,104,3)
+         57          3          4     -0.55441715                    1_GWF-(1,107,2)       1.0677472                    1_GWF-(1,104,3)
+         58          3          5     -0.45922514                    1_GWF-(1,107,2)      0.48952988                    1_GWF-(1,104,3)
+         59          3          6     -0.32606168                    1_GWF-(1,107,2)      0.24829670                    1_GWF-(1,83,10)
+         60          3          7     -0.14450772                    1_GWF-(1,107,2)      0.19318079                     1_GWF-(1,81,9)
+         61          3          8     -0.12230982                     1_GWF-(1,83,7)     -0.17939965                    1_GWF-(1,104,3)
+         62          3          9      0.10833390                     1_GWF-(1,82,6)      0.18741022                     1_GWF-(1,81,6)
+         63          3         10     -0.36584592                     1_GWF-(1,79,6)  9.52272274E-02                     1_GWF-(1,96,7)
+         64          3         11 -9.75828496E-02                     1_GWF-(1,79,5)  6.79724863E-02                    1_GWF-(5,104,3)
+         65          4          1     -0.37417357                    1_GWF-(1,98,17)       1.6330415                     1_GWF-(1,97,5)
+         66          4          2     -0.15523062                   1_GWF-(1,101,12)      0.50266534                     1_GWF-(1,97,5)
+         67          4          3 -9.56977104E-02                    1_GWF-(1,103,8)      0.32047555                    1_GWF-(1,104,3)
+         68          4          4     -0.12581836                    1_GWF-(1,107,2)      0.21612626                    1_GWF-(1,104,3)
+         69          4          5     -0.12758602                    1_GWF-(1,107,2)  8.32490393E-02                    1_GWF-(1,85,12)
+         70          4          6     -0.10694032                    1_GWF-(1,107,2) -7.87241457E-02                    1_GWF-(1,104,3)
+         71          4          7 -6.30558636E-02                     1_GWF-(1,84,9)     -0.15052059                    1_GWF-(1,104,3)
+         72          4          8     -0.10452705                    1_GWF-(5,106,2)     -0.16540973                    1_GWF-(1,104,3)
+         73          4          9  2.51269620E-02                    1_GWF-(5,106,2)     -0.15841319                    1_GWF-(1,104,3)
+         74          4         10     -0.24822087                    1_GWF-(7,100,4)  6.05791546E-02                     1_GWF-(1,96,7)
+         75          4         11     -0.12626322                    1_GWF-(7,102,3) -3.86141575E-02                    1_GWF-(1,89,13)
+         76          4         12 -7.48342638E-02                    1_GWF-(7,102,3)  6.55205849E-02                    1_GWF-(4,82,38)
+         77          5          1 -7.46372683E-02                    1_GWF-(1,98,17)      0.31860111                     1_GWF-(1,97,5)
+         78          5          2 -2.84042774E-02                   1_GWF-(1,101,12)  9.17254119E-02                    1_GWF-(1,102,3)
+ --------------------------------------------------------------------------------------------------------------------------------------
+
+
+ UBDSV1 SAVING     FLOW-JA-FACE ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING       DATA-SPDIS IN MODEL LOCAL1           PACKAGE NPF             CONNECTED TO MODEL LOCAL1           PACKAGE NPF              ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              WEL IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE MBR              ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              WEL IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE INFLUX           ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              WEL IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE OUTFLUX          ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              DRN IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE DRN_R            ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING             RCHA IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE RCH              ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              CHD IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE CHD_PW           ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+ UBDSV06 SAVING              CHD IN MODEL LOCAL1           PACKAGE LOCAL1          CONNECTED TO MODEL LOCAL1           PACKAGE CHD_CONF         ON UNIT   1054 AT TIME STEP      1, STRESS PERIOD      1
+
+ HEAD WILL BE SAVED ON UNIT 1055 AT END OF TIME STEP    1, STRESS PERIOD    1
+
+
+  VOLUME BUDGET FOR ENTIRE MODEL AT END OF TIME STEP    1, STRESS PERIOD   1
+  ---------------------------------------------------------------------------------------------------
+
+     CUMULATIVE VOLUME      L**3       RATES FOR THIS TIME STEP      L**3/T          PACKAGE NAME    
+     ------------------                 ------------------------                     ----------------
+
+           IN:                                      IN:
+           ---                                      ---
+                 WEL =        2122.0000                   WEL =        2122.0000     MBR                              
+                 WEL =         852.0000                   WEL =         852.0000     INFLUX                           
+                 WEL =           0.0000                   WEL =           0.0000     OUTFLUX                          
+                 DRN =           0.0000                   DRN =           0.0000     DRN_R                            
+                RCHA =          97.4900                  RCHA =          97.4900     RCH                              
+                 CHD =         753.1967                   CHD =         753.1967     CHD_PW                           
+                 CHD =         247.1129                   CHD =         247.1129     CHD_CONF                         
+
+            TOTAL IN =        4071.7997              TOTAL IN =        4071.7997
+
+          OUT:                                     OUT:
+          ----                                     ----
+                 WEL =           0.0000                   WEL =           0.0000     MBR                              
+                 WEL =           0.0000                   WEL =           0.0000     INFLUX                           
+                 WEL =         684.0000                   WEL =         684.0000     OUTFLUX                          
+                 DRN =        2258.1357                   DRN =        2258.1357     DRN_R                            
+                RCHA =           0.0000                  RCHA =           0.0000     RCH                              
+                 CHD =        1079.1119                   CHD =        1079.1119     CHD_PW                           
+                 CHD =           5.1376                   CHD =           5.1376     CHD_CONF                         
+
+           TOTAL OUT =        4026.3852             TOTAL OUT =        4026.3852
+
+            IN - OUT =          45.4145              IN - OUT =          45.4145
+
+ PERCENT DISCREPANCY =           1.12     PERCENT DISCREPANCY =           1.12
+
+
+
+
+         TIME SUMMARY AT END OF TIME STEP    1 IN STRESS PERIOD    1
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
+ STRESS PERIOD TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+         TOTAL TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+
+
+end timestep
+

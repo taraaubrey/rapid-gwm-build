@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import os
+import shutil
 import gridit as gi
 import numpy as np
 import flopy as fp
@@ -14,6 +15,10 @@ from a_setup import *
 for d in [SPATIAL_DIR, FIG_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
+# if dir exists delete it
+if os.path.exists(MODEL_DIR):
+    shutil.rmtree(MODEL_DIR)
+os.makedirs(MODEL_DIR)  # create model directory
 
 grid = gi.Grid.from_vector(DOMAIN, RES)
 
@@ -86,7 +91,6 @@ b_arr = np.array(thicknesses)
 idomain[-2] = np.where(b_arr[-2] <= min_b, 0, idomain[-2])  # layer 7
 idomain[-1] = np.where(b_arr[-1] <= min_b, 0, idomain[-1])  # layer 8
 
-
 # drains
 drain_arr = grid.array_from_vector(DRAINS)
 drain_elev = grid.array_from_raster(TOP, resampling='min') * drain_arr.data * idomain[0]  # use the top elevation for drains, only where idomain is active
@@ -157,7 +161,7 @@ k_hor = np.array(all_k)  # horizontal hydraulic conductivity
 
 # --------------------------------------------------------------------------
 # other model parameters
-init_h = drain_input['elev'].mean()  # initial head, based on average drain elevation
+init_h = np.stack([top] * NLAY)  # initial head, based on average drain elevation
 
 #drn
 drain_input['cond'] = RES**2 * 1
@@ -187,19 +191,27 @@ recharge = np.ones_like(idomain.data[0]) * 0.0001 * idomain.data[0]
 icell_type = np.zeros((NLAY, nrow, ncol), dtype=int)  # cell type for each layer
 
 # SAVE MODEL PARAMETERS ---------------------------------------------
+k_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.npf_k_layer')
+rch_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge.txt')
+drn_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.drn_riv_stress_period_data.txt')
+chdpw_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.chd_pw_stress_period_data.txt')
+chdconf_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.chd_conf_stress_period_data.txt')
+mbr_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.wel_mbr_stress_period_data.txt')
+influx_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.wel_influx_stress_period_data.txt')
+outflux_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.wel_outflux_stress_period_data.txt')
+
 for i in range(NLAY):
     ilay = i + 1  # layer number starts from 1
-    np.savetxt(os.path.join(MODEL_DIR, f'{MODEL_NAME}.npf.k.lyr{ilay}.txt'), k_hor[i])
-    np.savetxt(os.path.join(MODEL_DIR, f'{MODEL_NAME}.npf.icelltype.lyr{ilay}.txt'), icell_type[i])  # save cell type for each layer
+    np.savetxt(k_fn + f'{ilay}.txt', k_hor[i])
+    # np.savetxt(os.path.join(MODEL_DIR, f'{MODEL_NAME}.npf_icelltype_layer{ilay}.txt'), icell_type[i])  # save cell type for each layer
 
-np.savetxt(os.path.join(MODEL_DIR, f'{MODEL_NAME}.rcha.rch.lyr1.txt'), recharge)  # save bottom elevation for each layer
-
-savedf2txt(drain_input, filename=f'{MODEL_NAME}.drn_riv.stressperioddata.txt', sim_ws=MODEL_DIR)
-savedf2txt(chd_pw_df, filename=f'{MODEL_NAME}.chd_pw.stressperioddata.txt', sim_ws=MODEL_DIR)
-savedf2txt(chd_conf_df, filename=f'{MODEL_NAME}.chd_conf.stressperioddata.txt', sim_ws=MODEL_DIR)
-savedf2txt(mbr_df, filename=f'{MODEL_NAME}.wel_mbr.stressperioddata.txt', sim_ws=MODEL_DIR)
-savedf2txt(influx_df, filename=f'{MODEL_NAME}.wel_influx.stressperioddata.txt', sim_ws=MODEL_DIR)
-savedf2txt(outflux_df, filename=f'{MODEL_NAME}.wel_outflux.stressperioddata.txt', sim_ws=MODEL_DIR)
+np.savetxt(rch_fn, recharge)  # save bottom elevation for each layer
+savedf2txt(drain_input, filename=drn_fn)
+savedf2txt(chd_pw_df, filename=chdpw_fn)
+savedf2txt(chd_conf_df, filename=chdconf_fn)
+savedf2txt(mbr_df, filename=mbr_fn)
+savedf2txt(influx_df, filename=influx_fn)
+savedf2txt(outflux_df, filename=outflux_fn)
 
 # 2 BUILD A MODEL -------------------------------------------------------
 
@@ -242,67 +254,58 @@ dis = fp.mf6.ModflowGwfdis(model=gwf, # add to groundwater flow model called gwf
 
 npf = fp.mf6.ModflowGwfnpf(model=gwf, #node property flow package
                            save_specific_discharge=True, # save the specific discharge for every cell
-                           icelltype=[f'{MODEL_NAME}.npf.icelltype.lyr{ilay}.txt' for ilay in range(NLAY)], # 0 means constant saturated thickness
-                           k=[f'{MODEL_NAME}.npf.k.lyr{ilay}.txt' for ilay in range(NLAY)], # horizontal k value
+                        #    icelltype=icell_type, # cell type for each layer
+                           icelltype=0, # 0 means constant saturated thickness
+                        #    k = k_hor
+                           k=[os.path.basename(k_fn) + f'{ilay}.txt' for ilay in range(NLAY)], # horizontal k value
                           )
 
 ic = fp.mf6.ModflowGwfic(model=gwf, 
                          strt=init_h, # initial head, only used for iterative solution in steady model (arbitrary)
                         )
 
-rch = fp.mf6.ModflowGwfrcha(model=gwf, 
-                            recharge={0: {'filename': f'{MODEL_NAME}.rcha.rch.lyr1.txt'}}, # recharge for each cell
+rch = fp.mf6.ModflowGwfrcha(model=gwf,
+                            # recharge=recharge, # recharge array for each cell
+                            recharge={0: {'filename': os.path.basename(rch_fn)}}, # recharge for each cell
                             pname='rch' # package name
                            )
 
 drn_riv = fp.mf6.ModflowGwfdrn(model=gwf, # add drain package to model gwf (created in previous code cell)
-                           stress_period_data={0: {'filename': f"{MODEL_NAME}.drn_riv.stressperioddata.txt"}},
+                            #    stress_period_data={0: drain_input.values.tolist()},
+                           stress_period_data={0: {'filename': os.path.basename(drn_fn)}},
                             pname='drn_r', # package name
                             )
 
 chd_pw = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                            stress_period_data={0: {'filename': f"{MODEL_NAME}.chd_pw.stressperioddata.txt"}},
+                            #   stress_period_data={0: chd_pw_df.values.tolist()},
+                            stress_period_data={0: {'filename': os.path.basename(chdpw_fn)}},
                             pname='chd_pw', # package name
                             save_flows=True, # save flows for this package 
                            )
 
 chd_conf = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                            stress_period_data={0: {'filename': f"{MODEL_NAME}.chd_conf.stressperioddata.txt"}},
+                            # stress_period_data={0: chd_conf_df.values.tolist()},
+                            stress_period_data={0: {'filename': os.path.basename(chdconf_fn)}},
                             pname='chd_conf', # package name
                             save_flows=True, # save flows for this package 
                            )
-# chd_conf_in = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-#                             stress_period_data={0: chd_conf_in.values.tolist()},
-#                             pname='chd_conf_in', # package name
-#                             save_flows=True, # save flows for this package 
-#                            )
-# chd_conf_out = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-#                             stress_period_data={0: chd_conf_out.values.tolist()},
-#                             pname='chd_conf_out', # package name
-#                             save_flows=True, # save flows for this package 
-#                            )
-# drn_top = fp.mf6.ModflowGwfdrn(model=gwf, # add drain package to model gwf (created in previous code cell)
-#                            stress_period_data={0: drn_top_input.values.tolist()},
-#                             pname='drn_t', # package name
-#                             )
 
-wel = fp.mf6.ModflowGwfwel(model=gwf, 
-                           stress_period_data={0: {'filename': f"{MODEL_NAME}.wel_mbr.stressperioddata.txt"}},
+wel = fp.mf6.ModflowGwfwel(model=gwf,
+                        #    stress_period_data={0: mbr_df.values.tolist()},
+                           stress_period_data={0: {'filename': os.path.basename(mbr_fn)}},
                            pname='mbr' # package name
                           )
-influx = fp.mf6.ModflowGwfwel(model=gwf, 
-                           stress_period_data={0: {'filename': f"{MODEL_NAME}.wel_influx.stressperioddata.txt"}},
+influx = fp.mf6.ModflowGwfwel(model=gwf,
+                            #   stress_period_data={0: influx_df.values.tolist()},
+                           stress_period_data={0: {'filename': os.path.basename(influx_fn)}},
                            pname='influx' # package name
                           )
-outflux = fp.mf6.ModflowGwfwel(model=gwf, 
-                           stress_period_data={0: {'filename': f"{MODEL_NAME}.wel_outflux.stressperioddata.txt"}},
+outflux = fp.mf6.ModflowGwfwel(model=gwf,
+                            # stress_period_data={0: outflux_df.values.tolist()},
+                           stress_period_data={0: {'filename': os.path.basename(outflux_fn)}},
                            pname='outflux' # package name
                           )
 
-# ghb = fp.mf6.ModflowGwfghb(model=gwf,
-#                            stress_period_data={0: ghb_df.values.tolist()},
-#                            pname='ghb' # package name
-#                           )
 
 oc = fp.mf6.ModflowGwfoc(model=gwf, # add output control to model gwf (created in previous code cell)
                          budget_filerecord=f"{MODEL_NAME}.cbc", # file name where all budget output is stored
@@ -332,7 +335,7 @@ plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_domain.png'), dpi=300, bbox_inc
 
 # --------------------------------------------------------
 print('Writing model files...')
-sim.set_all_data_external()
+# sim.set_all_data_external()
 sim.write_simulation()  # write all model files to disk
 print('Running model...')
 success, _ = sim.run_simulation()  # run the model

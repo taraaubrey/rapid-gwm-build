@@ -12,3 +12,5 @@ notes/
 
 # Virtual environments
 .venv
+
+*/models/

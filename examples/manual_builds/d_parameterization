@@ -6,7 +6,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 
 from a_setup import *
-
+from utils_pest import *
 
 if os.path.exists(PEST_DIR):
     shutil.rmtree(PEST_DIR)
@@ -28,10 +28,10 @@ gwf = sim.get_model()
 # run the model once to make sure it works
 pyemu.os_utils.run("mf6", cwd=PEST_DIR)
 # run modpath7
-pyemu.os_utils.run(f'mp7 {MODEL_DIR}.mpsim', cwd=PEST_DIR)
+pyemu.os_utils.run(f'mp7 {MODEL_NAME}.mpsim', cwd=PEST_DIR)
 
 sr = pyemu.helpers.SpatialReference.from_namfile(
-        os.path.join(PEST_DIR, "freyberg6.nam"),
+        os.path.join(PEST_DIR, f"{MODEL_NAME}.nam"),
         delr=gwf.dis.delr.array, delc=gwf.dis.delc.array)
 
 # specify a template directory (i.e. the PstFrom working folder)
@@ -56,7 +56,7 @@ v_space = pyemu.geostats.ExpVario(contribution=1.0, #sill
                                     )
 
 # geostatistical structure for spatially varying parameters
-grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log') 
+grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log')
 
 # plot the gs if you like:
 # _ = grid_gs.plot()
@@ -64,6 +64,70 @@ grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log')
 # get the IIDOMAIN array; in our case we only have one layer
 ib = gwf.dis.idomain.array
 
+# set up pst file
+mult_array(pf, PEST_DIR,
+          tag='local1.npf_k_layer',
+          ib=ib,
+          grid_gs=grid_gs,
+          lb=0.2, ub=5.0, ulb=1e-4, uub=1e3,
+          add_coarse=True)
+
+mult_array(pf, PEST_DIR,
+          tag='local1.rcha_recharge',
+          ib=ib,
+          grid_gs=grid_gs,
+          lb=0.2, ub=5.0, ulb=0, uub=1e-3,
+          add_coarse=True)
+
+wel(pf, PEST_DIR,
+    name='mbr',
+    tag='local1.wel_stress_period_data',
+    grid_gs=grid_gs,
+    q_bounds=[0.1, 10],
+    q_ultbounds=[0.01, 10])
+wel(pf, PEST_DIR,
+    name='influx',
+    tag='local1_0.wel_stress_period_data',
+    grid_gs=grid_gs,
+    q_bounds=[0.1, 10],
+    q_ultbounds=[0.01, 10])
+wel(pf, PEST_DIR,
+    name='outflux',
+    tag='local1_1.wel_stress_period_data',
+    grid_gs=grid_gs,
+    q_bounds=[0.1, 10],
+    q_ultbounds=[0.01, 10])
+drn(pf, PEST_DIR,
+    name='drn_riv',
+    tag='local1.drn_stress_period_data',
+    grid_gs=grid_gs,
+    cond_bounds=[0.1, 10],
+    cond_ultbounds=[0.01, 100],
+    head_bounds=[-2, 2],
+    head_ultbounds=[None, None])
+chd(pf, PEST_DIR,
+    name='chd_pw',
+    tag='local1.chd_stress_period_data',
+    grid_gs=None,
+    head_bounds=[-2, 2],
+    head_ultbounds=[None, None])
+chd(pf, PEST_DIR,
+    name='chd_conf',
+    tag='local1_0.chd_stress_period_data',
+    grid_gs=None,
+    head_bounds=[-2, 2],
+    head_ultbounds=[11, 15])
+
+# check
+# [f for f in os.listdir(template_ws) if f.endswith(".tpl")]
 
 # OBSERVATIONS ------------------------------------------------------
 
+
+
+
+# FORWARD RUN SCRIPT --------------------------------------------------
+pst = pf.build_pst()
+pf.mod_sys_cmds.append("mf6") #do this only once
+pst = pf.build_pst()
+pf.add_py_function("helpers.py","extract_hds_arrays_and_list_dfs()",is_pre_cmd=False)

@@ -109,7 +109,7 @@ def get_indices(arr, layer=None, value=False):
     return result
 
 
-def savedf2txt(df, filename, sim_ws):
+def savedf2txt(df, filename):
     """
     Save a DataFrame to a text file with specified separator.
     
@@ -125,7 +125,7 @@ def savedf2txt(df, filename, sim_ws):
     df = df.drop(columns=['index'])
     df = df[['k', 'i', 'j'] + [col for col in df.columns if col not in ['k', 'i', 'j']]]
 
-    df.to_csv(os.path.join(sim_ws, filename), sep='\t', header=False, index=False)
+    df.to_csv(filename, sep='\t', header=False, index=False)
 
 # plot layers
 import matplotlib.pyplot as plt
