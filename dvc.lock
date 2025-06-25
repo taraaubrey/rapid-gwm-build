@@ -1,0 +1,37 @@
+schema: '2.0'
+stages:
+  setup:
+    cmd: python examples\manual_builds\dvc_scripts\a_model_setup.py
+    deps:
+    - path: examples\manual_builds\dvc_scripts\a_model_setup.py
+      hash: md5
+      md5: f62d563206fa939977feaea2d1dbe7b4
+      size: 20040
+    - path: examples\manual_builds\dvc_scripts\setup.py
+      hash: md5
+      md5: 527d3c8388a7a182d0bf8a2c5b134635
+      size: 2566
+    outs:
+    - path: examples\manual_builds\models\local1\local1
+      hash: md5
+      md5: 82ea9beabda4ec5b3b4ddcc993c90b56.dir
+      size: 4743963
+      nfiles: 45
+  parameterization:
+    cmd: python examples\manual_builds\dvc_scripts\c_parameterization.py
+    deps:
+    - path: examples\manual_builds\dvc_scripts\c_parameterization.py
+      hash: md5
+      md5: 9be7773ab28fec7c9874b8b72702758b
+      size: 9343
+    - path: examples\manual_builds\models\local1\local1
+      hash: md5
+      md5: 82ea9beabda4ec5b3b4ddcc993c90b56.dir
+      size: 4743963
+      nfiles: 45
+    outs:
+    - path: examples\manual_builds\models\local1\pest
+      hash: md5
+      md5: a8787d9e60bab299539264c99b6281c3.dir
+      size: 141127424
+      nfiles: 294

@@ -35,6 +35,16 @@
                     "remoteRoot": "C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/pakipaki/dvc_stuff/scripts"
                 }
             ]
+        },
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "env": {"PYTHONPATH": "${workspaceRoot}",
+                    "PYDEVD_WARN_EVALUATION_TIMEOUT": "500"},
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
         }
     ]
 }

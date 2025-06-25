@@ -9,7 +9,8 @@ def define_mult_array(pf, ws,
           lb=0.2, ub=5.0,
           ulb=0.01, uub=100,
           add_coarse=True,
-          lays=[0, 1, 2, 3, 4]):
+          lays=[0, 1, 2, 3, 4],
+          pp_space=10):
     
     files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
     
@@ -21,16 +22,16 @@ def define_mult_array(pf, ws,
                 base = f[0].split(".")[1]
             
             # grid (fine) scale parameters
-            pf.add_parameters(
-                f,
-                zone_array=ib[i],
-                par_type="grid", #specify the type, these will be unique parameters for each cell
-                geostruct=grid_gs, # the gestatisical structure for spatial correlation 
-                par_name_base=base+"gr", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
-                pargp=base+"gr", #likewise for the parameter group name
-                lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
-                ult_ubound=uub, ult_lbound=ulb # The ultimate bounds for multiplied model input values. Here we are stating that, after accounting for all multipliers, Kh cannot exceed these values. Very important with multipliers
-                )
+            # pf.add_parameters(
+            #     f,
+            #     zone_array=ib[i],
+            #     par_type="grid", #specify the type, these will be unique parameters for each cell
+            #     geostruct=grid_gs, # the gestatisical structure for spatial correlation 
+            #     par_name_base=base+"gr", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
+            #     pargp=base+"gr", #likewise for the parameter group name
+            #     lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
+            #     ult_ubound=uub, ult_lbound=ulb # The ultimate bounds for multiplied model input values. Here we are stating that, after accounting for all multipliers, Kh cannot exceed these values. Very important with multipliers
+            #     )
                             
             # # pilot point (medium) scale parameters
             # pargp=base
@@ -52,9 +53,9 @@ def define_mult_array(pf, ws,
                 par_name_base=base+"pp", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
                 pargp=base+"pp", #likewise for the parameter group name
                 lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
-                ult_ubound=uub, ult_lbound=ulb
+                ult_ubound=uub, ult_lbound=ulb,
                 pp_options= {
-                    "pp_space": 10, # specify the spacing of the pilot points
+                    "pp_space": pp_space, # specify the spacing of the pilot points
                     }
                 )
 

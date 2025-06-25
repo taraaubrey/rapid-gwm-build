@@ -7,6 +7,8 @@ import flopy as fp
 import pandas as pd
 from scipy.ndimage import uniform_filter
 
+import helpers
+
 from utils import *
 from a_setup import *
 
@@ -93,7 +95,12 @@ idomain[-1] = np.where(b_arr[-1] <= min_b, 0, idomain[-1])  # layer 8
 
 # drains
 drain_arr = grid.array_from_vector(DRAINS)
-drain_elev = grid.array_from_raster(TOP, resampling='min') * drain_arr.data * idomain[0]  # use the top elevation for drains, only where idomain is active
+# grid_gpd['drn'] = drain_arr.data.flatten().tolist()
+# grid_gpd.to_file(os.path.join(SPATIAL_DIR, f'{MODEL_NAME}_drn.shp'), driver='ESRI Shapefile')
+
+spring_arr = grid.array_from_vector(SPRING)  # get the spring array
+drain_arr = np.where(spring_arr.data == 1, 1, drain_arr.data)  # convert to binary array
+drain_elev = grid.array_from_raster(TOP, resampling='min') * drain_arr * idomain[0]  # use the top elevation for drains, only where idomain is active
 drain_input = extract_value_with_indices(drain_elev, layer=0, val_col='elev', mask_value=0)  # extract non-NaN values from the drain elevation array
 
 # add top drains
@@ -314,7 +321,20 @@ oc = fp.mf6.ModflowGwfoc(model=gwf, # add output control to model gwf (created i
                         )
 
 # --------------------------------------------------------
-print('Double checking model...')
+
+print('Writing model files...')
+# sim.set_all_data_external()
+sim.write_simulation()  # write all model files to disk
+print('Running model...')
+success, _ = sim.run_simulation()  # run the model
+
+
+# TEST OBS ------------------------------------------------------------
+
+helpers.extract_heads_and_budget(ws=MODEL_DIR)  # extract heads and budget from model output
+helpers.extract_spring_obs(gwf=gwf, ws=MODEL_DIR)  # extract spring observations from model output
+
+# OUPUT PLOTS --------------------------------------------------------
 # visual check
 pmv = fp.plot.PlotMapView(model=gwf, layer=0) # create view of layer 0
 pmv.plot_array(top *idomain[0], masked_values=[1e30], alpha=0.5, cmap='viridis') # plot top elevation
@@ -332,62 +352,13 @@ pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
 # save to figures
 plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_domain.png'), dpi=300, bbox_inches='tight') # save figure
 
-
-# --------------------------------------------------------
-print('Writing model files...')
-# sim.set_all_data_external()
-sim.write_simulation()  # write all model files to disk
-print('Running model...')
-success, _ = sim.run_simulation()  # run the model
-
-
-# ------------------------------------------------------------
-print('lets look at some output...')
-
-hds = gwf.output.head() # get handle to binary head file
-head = hds.get_data() # get the head data from the file
-print('size of head array:', head.shape)
-print('minimum head in model: ', head.min())
-print('maximum head in model: ', head.max())
-
-
-# ----- WATER BUDGET -------------------------------------------
-# print('lets look at the budget...')
-
-# cbb = gwf.output.budget() # get handle to binary budget file
-# cbb.get_unique_record_names() # the record names stored in the file
-
-# for n in cbb.get_unique_record_names():
-#     if n == 'FLOW-JA-FACE':
-#         continue
-#     print(n) # print the record names
-#     Q = cbb.get_data(text=n) # get the data for each record
-#     if len(Q) > 0:  # check if there is data for this record
-#         print(f"{n} fluxes:", Q[0]['q'].sum()) # sum of all fluxes for this record
-# # get the data for each record
-
-# Q_mbr = cbb.get_data(text='WEL')[0] # item 0 in list
-# Q_ghb = cbb.get_data(text='CHD')[0] # item 0 in list
-# Q_drn = cbb.get_data(text='DRN')[0] # item 0 in list
-# Q_rch = cbb.get_data(text='RCHA')[0] # item 0 in list
-
-# print('mbr fluxes:', Q_mbr['q'].sum()) # sum of all mbr fluxes
-# print('ghb fluxes:', Q_ghb['q'].sum()) # sum of all ghb fluxes
-# print('drn fluxes:', Q_drn['q'].sum()) # sum of all drn fluxes
-# print('rch fluxes:', Q_rch['q'].sum()) # sum of all rch fluxes
-
-# Vin = Q_mbr['q'].sum() + Q_rch['q'].sum()
-# Vout = Q_drn['q'].sum() + Q_ghb['q'].sum()
-
-# print('Total volume in:', Vin) # total volume in
-# print('Total volume out:', Vout) # total volume out
-# print(f'Relative error {100 * (Vin + Vout) / Vin:.4f} %')
-# -----------------------------------------------------------
+# --------------------------------------------------------------
 
 # plot heads
 idom_plt = np.where(idomain[0] == 1, np.nan, idomain[0])  # create a mask for the active domain
-
+head = gwf.output.head().get_data()
 for i in range(NLAY):
+    
     pmv = fp.plot.PlotMapView(model=gwf, layer=i)
 
     pmv.plot_bc(name='chd_pw', color='purple') # add 'chd' cells
@@ -420,6 +391,7 @@ cb = plt.colorbar(strtArray, shrink=0.5) # add color bar
 # strtArray = crossview.plot_array(head, masked_values=[1e30], alpha = 0.5) # plot the array of heads in cross section
 plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
 plt.close()  # close the figure to avoid memory issues
+
 
 
 

@@ -2,11 +2,13 @@ import os
 import shutil
 import pyemu
 import flopy as fp
-import geopandas as gpd
+import pandas as pd
 import matplotlib.pyplot as plt
+
 
 from a_setup import *
 from utils_pest import *
+from helpers import *
 
 if os.path.exists(PEST_DIR):
     shutil.rmtree(PEST_DIR)
@@ -28,7 +30,9 @@ gwf = sim.get_model()
 # run the model once to make sure it works
 pyemu.os_utils.run("mf6", cwd=PEST_DIR)
 # run modpath7
-pyemu.os_utils.run(f'mp7 {MODEL_NAME}.mpsim', cwd=PEST_DIR)
+# pyemu.os_utils.run(f'mp7 {MODEL_NAME}.mpsim', cwd=PEST_DIR)
+
+# -----------------------------------------------------------------
 
 sr = pyemu.helpers.SpatialReference.from_namfile(
         os.path.join(PEST_DIR, f"{MODEL_NAME}.nam"),
@@ -59,81 +63,83 @@ grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log')
 # plot the gs if you like:
 # _ = grid_gs.plot()
 
-# get the IIDOMAIN array; in our case we only have one layer
+# get the IDOMAIN array
 ib = gwf.dis.idomain.array
 
 # setup pilot points
-prefix_dict = {0:["hk"]} 
-df_pp = pyemu.pp_utils.setup_pilotpoints_grid(sr=sr,  # model spatial reference
-                                              ibound=ib[0], # to which cells to setup ppoints
-                                              prefix_dict=prefix_dict, #prefix to add to parameter names
-                                              pp_dir=TEMP_DIR, 
-                                              tpl_dir=TEMP_DIR, 
-                                              every_n_cell=5) # pilot point spacing
-pp_file = os.path.join(TEMP_DIR,"hkpp.dat")
 
-# create OK object
-ok = pyemu.geostats.OrdinaryKrige(grid_gs, df_pp)
-# calculate factors for the pilot points
-ok_fn = os.path.join(TEMP_DIR, f"{MODEL_NAME}.var.ref")
-df = ok.calc_factors_grid(sr, var_filename=ok_fn, minpts_interp=1, maxpts_interp=10)
-
-ok.to_grid_factors_file(pp_file+".fac")
-
-par_pp = pf.add_parameters(pp_file+'.tpl')
-pst = pf.build_pst()
-pst.parameter_data.loc[par_pp.parnme, ['parval1','parlbnd','parubnd', 'pargp']] = 100, 1000, 0.1, 'hk1'
 # # set up pst file
-# define_mult_array(pf, TEMP_DIR,
-#           tag='local1.npf_k_layer',
-#           ib=ib,
-#           grid_gs=grid_gs,
-#           lb=0.2, ub=5.0, ulb=1e-4, uub=1e3,
-#           add_coarse=True)
+# K ----------------------------------------------
+pst = define_mult_array(pf, TEMP_DIR,
+          tag='local1.npf_k_layer',
+          sr=sr,
+          ib=ib,
+          grid_gs=grid_gs,
+          lb=0.01, ub=100, ulb=1e-4, uub=1e3,
+          add_coarse=True,
+          lays=[0, 1, 2, 3, 4, 5])
+pst = define_mult_array(pf, TEMP_DIR,
+          tag='local1.npf_k_layer',
+          sr=sr,
+          ib=ib,
+          grid_gs=grid_gs,
+          lb=0.01, ub=100, ulb=1e-6, uub=1e2,
+          add_coarse=True,
+          lays=[6])
+pst = define_mult_array(pf, TEMP_DIR,
+          tag='local1.npf_k_layer',
+          sr=sr,
+          ib=ib,
+          grid_gs=grid_gs,
+          lb=0.01, ub=100, ulb=1e2, uub=1e5,
+          add_coarse=True,
+          lays=[7])
 
-# define_mult_array(pf, TEMP_DIR,
-#           tag='local1.rcha_recharge',
-#           ib=ib,
-#           grid_gs=grid_gs,
-#           lb=0.2, ub=5.0, ulb=0, uub=1e-3,
-#           add_coarse=True)
+# RECHARGE ------------------------------------------------------
+define_mult_array(pf, TEMP_DIR,
+          tag='local1.rcha_recharge',
+          sr=sr,
+          ib=ib,
+          grid_gs=grid_gs,
+          lb=0.1, ub=10, ulb=0, uub=1e-1,
+          add_coarse=True)
 
 wel(pf, TEMP_DIR,
     name='mbr',
     tag='local1.wel_mbr_stress_period_data',
     grid_gs=grid_gs,
-    q_bounds=[0.1, 10],
+    q_bounds=[0.01, 100],
     q_ultbounds=[0.01, 10])
 
 wel(pf, TEMP_DIR,
     name='influx',
     tag='local1.wel_influx_stress_period_data.txt',
     grid_gs=grid_gs,
-    q_bounds=[0.1, 10],
+    q_bounds=[0.01, 100],
     q_ultbounds=[0.01, 10])
 
 wel(pf, TEMP_DIR,
     name='outflux',
     tag='local1.wel_outflux_stress_period_data.txt',
     grid_gs=grid_gs,
-    q_bounds=[0.1, 10],
+    q_bounds=[0.01, 100],
     q_ultbounds=[0.01, 10])
 
 drn(pf, TEMP_DIR,
     name='drn_riv',
     tag='local1.drn_riv_stress_period_data.txt',
     grid_gs=grid_gs,
-    cond_bounds=[0.1, 10],
-    cond_ultbounds=[0.01, 100],
+    cond_bounds=[0.01, 100],
+    cond_ultbounds=[0.01, 1000],
     head_bounds=[-2, 2],
-    head_ultbounds=[None, None])
+    head_ultbounds=[5, 15])
 
 chd(pf, TEMP_DIR,
     name='chd_pw',
     tag='local1.chd_pw_stress_period_data.txt',
     grid_gs=None,
     head_bounds=[-2, 2],
-    head_ultbounds=[None, None])
+    head_ultbounds=[5, 15])
 
 chd(pf, TEMP_DIR,
     name='chd_conf',
@@ -146,12 +152,100 @@ chd(pf, TEMP_DIR,
 # [f for f in os.listdir(template_ws) if f.endswith(".tpl")]
 
 # OBSERVATIONS ------------------------------------------------------
+# add the heads and budget observations
+# files = [f for f in os.listdir(TEMP_DIR) if f.startswith(f"{MODEL_NAME}_hdslay")]
+# for f in files:
+#     pf.add_observations(
+#         f,
+#         prefix=f.split(".")[0],
+#         obsgp=f.split(".")[0])
+for f in ["cum.csv"]:
+    df = pd.read_csv(os.path.join(TEMP_DIR, f), index_col=0)
+    pf.add_observations(
+        f,
+        index_cols=["totim"],
+        use_cols=list(df.columns.values),
+        prefix=f.split('.')[0],
+        obsgp=f.split(".")[0])
 
 
-
+spring_f = os.path.join(TEMP_DIR, 'obs_results.csv')
+spring_obs = pd.read_csv(spring_f)
+pf.add_observations(
+    'obs_results.csv',
+    index_cols=[list(spring_obs.columns.values)[0]],
+    use_cols=list(spring_obs.columns.values)[1:], # skip the index column
+    prefix='springobs',
+    obsgp='springobs',
+)
 
 # FORWARD RUN SCRIPT --------------------------------------------------
 pst = pf.build_pst()
 pf.mod_sys_cmds.append("mf6") #do this only once
+# pf.mod_sys_cmds.append(f"mp7 {MODEL_NAME}.mpsim") #do this only once
 pst = pf.build_pst()
-pf.add_py_function("helpers.py","extract_hds_arrays_and_list_dfs()",is_pre_cmd=False)
+
+# post-processing to get observations
+pf.add_py_function(
+    f"{SCRIPTS_DIR}helpers.py",
+    f"extract_heads_and_budget(model_name='{MODEL_NAME}')", is_pre_cmd=False)
+pf.add_py_function(
+    f"{SCRIPTS_DIR}helpers.py",
+    f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{SAMPLES}')", is_pre_cmd=False)
+
+pst = pf.build_pst()
+# pst_file = f'{MODEL_NAME}.pst'
+# pst.write(os.path.join(TEMP_DIR, pst_file),version=2)
+
+# UPDATE OBS -------------------------------------------------------
+# pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_file))
+
+# obs = pst.observation_data
+pst.observation_data.loc[:, 'weight'] = 0
+
+tspringdf = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results.csv'))
+tcumdf = pd.read_csv(os.path.join(TRUTH_DIR, 'cum.csv'), index_col=0)
+
+for col in tspringdf.columns[2:]:
+    pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{col}_kper:0','obsval'] = tspringdf[col].iloc[0]
+    pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{col}_kper:0','weight'] = tspringdf[col].iloc[2]
+
+for col in tcumdf.columns:
+    pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{col}_totim:1','obsval'] = tcumdf[col].iloc[0]
+    pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{col}_totim:1','weight'] = tcumdf[col].iloc[2]
+
+print("Updating observation weights...")
+
+# pst.write(os.path.join(TEMP_DIR, pst_file),version=2)
+
+# RUN PEST -------------------------------------------------------
+
+# pst.nnz_obs_groups
+# pst.nnz_obs_names
+pst_file = f'{MODEL_NAME}.pst'
+pst.write(os.path.join(TEMP_DIR, pst_file),version=2)
+
+            
+
+# RUN PESTPP-IES --------------------------------------------------
+
+pyemu.os_utils.run("pestpp-ies.exe {0}".format(pst_file), cwd=TEMP_DIR)
+
+# EVAL --------------------------------------------------------------------------
+
+# pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_file))
+# pst.phi
+# pst.phi_components
+
+# nnz_phi_components = {k:pst.phi_components[k] for k in pst.nnz_obs_groups} # that's a dictionary comprehension there y'all
+# nnz_phi_components
+
+# phicomp = pd.Series(nnz_phi_components)
+# plt.pie(phicomp, labels=phicomp.index.values);
+
+# print('Target phi:',pst.nnz_obs)
+# print('Current phi:', pst.phi)
+
+# figs = pst.plot(kind="1to1");
+# pst.res.loc[pst.nnz_obs_names,:]
+# plt.show()
