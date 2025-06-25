@@ -13,7 +13,7 @@ MBR = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data
 LIMESTONE_INACTIVE = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_limestone_inactive_bottom.shp"
 CONF_AREA_ACTIVE = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\confining_area.shp"
 
-SPRING = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\spring.shp"
+SPRING = r"examples\manual_builds\data\data\spring.shp"
 
 
 POUKAWA_BOUNDARY = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\model2_chd.shp"
@@ -31,4 +31,4 @@ TEMP_DIR = f'examples/manual_builds/models/{MODEL_NAME}/pest/{MODEL_NAME}_templa
 TRUTH_DIR = r'examples\manual_builds\truth'
 
 # Particle locations
-SAMPLES = r"C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data\b_derived\mod_model_files\pakipaki\shp\sample_locations.shp"
+SAMPLES = r"examples\manual_builds\data\data\sample_locations.shp"
