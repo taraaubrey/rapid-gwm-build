@@ -24,6 +24,18 @@ stages:
       hash: md5
       md5: 9be7773ab28fec7c9874b8b72702758b
       size: 9343
+    - path: examples\manual_builds\dvc_scripts\helpers.py
+      hash: md5
+      md5: 78034fb9947c8bdfacc5ab52746c5cdb
+      size: 4152
+    - path: examples\manual_builds\dvc_scripts\setup.py
+      hash: md5
+      md5: 527d3c8388a7a182d0bf8a2c5b134635
+      size: 2566
+    - path: examples\manual_builds\dvc_scripts\utils_pest.py
+      hash: md5
+      md5: d11b577da9bb6384782edae7d6e66859
+      size: 9972
     - path: examples\manual_builds\models\local1\local1
       hash: md5
       md5: 82ea9beabda4ec5b3b4ddcc993c90b56.dir
@@ -32,6 +44,17 @@ stages:
     outs:
     - path: examples\manual_builds\models\local1\pest
       hash: md5
-      md5: a8787d9e60bab299539264c99b6281c3.dir
-      size: 141127424
-      nfiles: 294
+      md5: 34c560bfbd66593436ad36250cbd2173.dir
+      size: 130692732
+      nfiles: 267
+  pest_local_sen:
+    cmd: python examples\manual_builds\dvc_scripts\d_pest_local_sen.py
+    deps:
+    - path: examples\manual_builds\dvc_scripts\d_pest_local_sen.py
+      hash: md5
+      md5: acd50f6939609466e7e39e8e8ca51d8d
+      size: 1012
+    - path: examples\manual_builds\dvc_scripts\setup.py
+      hash: md5
+      md5: 527d3c8388a7a182d0bf8a2c5b134635
+      size: 2566
