@@ -186,14 +186,14 @@ def main():
     pf.mod_sys_cmds.append("mf6") #do this only once
     # pf.mod_sys_cmds.append(f"mp7 {MODEL_NAME}.mpsim") #do this only once
     # pst = pf.build_pst()
-
+    sample_path = os.path.relpath(SAMPLES, TEMP_DIR)
     # post-processing to get observations
     pf.add_py_function(
         f"{SCRIPTS_DIR}helpers.py",
         f"extract_heads_and_budget(model_name='{MODEL_NAME}')", is_pre_cmd=False)
     pf.add_py_function(
         f"{SCRIPTS_DIR}helpers.py",
-        f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{SAMPLES}')", is_pre_cmd=False)
+        f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{sample_path}')", is_pre_cmd=False)
 
     pst = pf.build_pst()
     # pst_file = f'{MODEL_NAME}.pst'

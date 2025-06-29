@@ -14,6 +14,7 @@ dependencies = [
     "flopy==3.9.2", #TODO: remove hardcoded version (user only needs if using flopy)
     "gridit>=0.7",
     "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
     "modflow-setup>=0.6.1", #HACK: hardcoded for now (eventually will remove)
     "netcdf4>=1.7.2", #HACK: hardcoded for now (remove)
     "networkx>=3.4.2",

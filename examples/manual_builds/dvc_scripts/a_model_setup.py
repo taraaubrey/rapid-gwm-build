@@ -389,8 +389,9 @@ def main():
 
     # TEST OBS ------------------------------------------------------------
     os.chdir(MODEL_DIR)  # change directory to model directory
+    sample_path = os.path.relpath(SAMPLES, MODEL_DIR)
     helpers.extract_heads_and_budget(model_name=f'{MODEL_NAME}')  # extract heads and budget from model output
-    helpers.extract_spring_obs(gwf=None, model_name=f'{MODEL_NAME}', samples_path=f'{SAMPLES}')  # extract spring observations from model output
+    helpers.extract_spring_obs(gwf=None, model_name=f'{MODEL_NAME}', samples_path=f'{sample_path}')  # extract spring observations from model output
 
 if __name__ == "__main__":
     main()  # run the main function to build the model and extract observations

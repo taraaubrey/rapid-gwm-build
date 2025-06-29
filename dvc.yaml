@@ -1,6 +1,4 @@
-vars:
-  - model:
-      name: "local1"
+
 
 stages:
   setup:
@@ -9,7 +7,7 @@ stages:
       - examples\manual_builds\dvc_scripts\a_model_setup.py
       - examples\manual_builds\dvc_scripts\setup.py
     outs:
-      - examples\manual_builds\models\local1\local1
+      - examples\manual_builds\models\local2\local2
   parameterization:
     cmd: python examples\manual_builds\dvc_scripts\c_parameterization.py
     deps:
@@ -17,9 +15,9 @@ stages:
       - examples\manual_builds\dvc_scripts\utils_pest.py
       - examples\manual_builds\dvc_scripts\helpers.py
       - examples\manual_builds\dvc_scripts\setup.py
-      - examples\manual_builds\models\local1\local1
+      - examples\manual_builds\models\local2\local2
     outs:
-       - examples\manual_builds\models\local1\pest
+       - examples\manual_builds\models\local2\pest
   pest_local_sen:
     cmd: python examples\manual_builds\dvc_scripts\d_pest_local_sen.py
     deps:
