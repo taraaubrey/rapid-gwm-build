@@ -8,7 +8,7 @@
             "name": "Pakipaki/client_code",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/examples/pakipaki/client_code.py",
+            "program": "${workspaceFolder}/examples/pakipaki02/client_code.py",
             "console": "integratedTerminal",
             "justMyCode": false
         },

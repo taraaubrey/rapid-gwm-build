@@ -91,7 +91,7 @@ class ConfigParser:
         return {n.id: n for n in node_manager.nodes}
     
     @classmethod
-    def parse(cls, config_filepath, dvc=True):
+    def parse(cls, config_filepath):
         """Parse the user config and return a normalized structure."""
         config = cls.load_yaml(config_filepath) # First, substitute variables (like ${data_dir})
         config = cls.substitute_config(config)
@@ -106,8 +106,6 @@ class ConfigParser:
                 "ws": sim_cfg["ws"],  # Working directory
                 "nodes": node_cfgs  # Extracted nodes (modules + inputs)
             }
-
-            #if dvc -> save 
 
         return all_sims
     

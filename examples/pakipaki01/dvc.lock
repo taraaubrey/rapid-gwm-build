@@ -1,0 +1,21 @@
+schema: '2.0'
+stages:
+  setup-build:
+    cmd: python -m debugpy --listen 5678 --wait-for-client  
+      C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/pakipaki/dvc_stuff/scripts/setup_build.py
+      --config pakipaki_v0.yaml --out_dir output --graph_name output_graph0.txt
+    deps:
+    - path: dvc_stuff/scripts/setup_build.py
+      hash: md5
+      md5: d26894b727aa3eed18c8651b0bdd4635
+      size: 753
+    - path: pakipaki_v0.yaml
+      hash: md5
+      md5: 8868a1e5c37013a648c09458136ee8c4
+      size: 1811
+    outs:
+    - path: output
+      hash: md5
+      md5: b0fc7379a808e89755583cac9f56027d.dir
+      size: 12374
+      nfiles: 42

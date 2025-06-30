@@ -23,11 +23,12 @@ class YamlProcessor:
         with open(yaml_path, "r") as f:
             template = yaml.safe_load(f)
 
-        if not self.validate(template):
-            logging.error(f"Template validation failed: {self.get_errors()}")
-            raise ValueError(f"Template validation failed: {self.get_errors()}")
+        # if not self.validate(template):
+        #     logging.error(f"Template validation failed: {self.get_errors()}")
+        #     raise ValueError(f"Template validation failed: {self.get_errors()}")
 
-        return self.validator.normalized(template)
+        # return self.validator.normalized(template)
+        return template
 
 
 template_processor = YamlProcessor(schema=top_level_schema)

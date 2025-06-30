@@ -130,26 +130,26 @@ module_templates:
     drn: 
         build_dependencies: 
             model: '@module.gwf'
-            # stressperioddata:
-            #     pipeline:
-            #         - processor: to_stress_period_data
-            #           cond: '@drn.src.cond'
-            #           elev: '@drn.src.elev'
-            #           mask: '@mesh.active_domain'
-            #           cols: ['cond', 'elev']
-            #           format: 'some_format'
-            # cond: 
-            #     pipeline:
-            #         - processor: discretize_2D
-            #           input: '@drn.src.cond'
-            #           mesh: '@mesh.grid'
-            # elev:
-            #     pipeline:
-            #         - processor: discretize_2D
-            #           input: '@drn.src.elev' #TODO eventually this should be automatic
-            #           mesh: '@mesh.grid'
+            stressperioddata: '@self.output'
         func: flopy.mf6.ModflowGwfdrn
         duplicates_allowed: True
+        output:
+            func: 'data2table'
+            kwargs:
+                type: table
+                col_names: ['k', 'i', 'j', 'cond', 'elev']
+        parameterization:
+            index_cols: [0,1,2]
+            param:
+                elev:
+                    use_cols: [3]
+                    par_style: 'a' # addative
+                    lb: -2
+                    ub: 2
+                cond:
+                    use_cols: [4]
+                    lb: 0.01
+                    ub: 100
 
 
     ghb:
