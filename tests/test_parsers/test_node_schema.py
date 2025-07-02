@@ -72,3 +72,16 @@ class TestNodeSchemas:
             print(f'Validating key: {key}, value: {val}')
             is_valid, error_msg = NodeSchemas.validate_config('input', val)
             assert is_valid is False
+    
+    def test_validate_config(self):
+        data_config = {
+            'mesh': 'mesh.tif',
+            'cond': 'cond.tif',
+            'elev': 'elev.tif',
+        }
+        
+        is_valid, error_msg = NodeSchemas.validate_config('module_data', data_config, all_fields=['mesh', 'cond', 'elev'])
+        assert is_valid is True
+        
+        is_valid, error_msg = NodeSchemas.validate_config('module_data', data_config, all_fields=['mesh', 'flux'])
+        assert is_valid is False

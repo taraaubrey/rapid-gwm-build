@@ -35,12 +35,49 @@ simulation:
           top_only: True
   
   modules:
-    default_build:
-      - sim
-      - gwf
-      - dis
+    # default_build:
+    #   - sim
+    #   - gwf
+    #   - dis
+    sim:
+      cmd:
+        sim_name: \pakipaki
+        version: 'mf6'
+        exe_name: ${vars.mf6_exe}
+        sim_ws: ${vars.ws}/models/pakipaki-v01
     
-    drn:
+    tdis:
+      cmd:
+        time_units: DAYS
+        nper: 1
+        perioddata:
+          - [1., 1, 1.] # perlen, nstp, tsmult
+    
+    ims:
+      cmd:
+        complexity: COMPLEX
+        print_option: ALL
+    
+    gwf:
+      cmd:
+        modelname: pakipaki
+        model_nam_file: pakipaki.nam
+        save_flows: True
+
+    dis:
+      cmd:
+        length_units: METERS
+    
+    npf:
+      cmd:
+        save_specific_discharge: True
+        icelltype: 0
+    
+    ic:
+      cmd:
+        strt: '@mesh.top'
+    
+    drn-riv:
       data:
         mask: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_drains.shp
         elev:
@@ -64,8 +101,8 @@ simulation:
     rcha:
       data:
         recharge:
-          mask: '@mesh.grid_2d'
           input: 0.00025
+        mask: '@mesh.'
     
     wel-mbr:
       data:
@@ -74,7 +111,7 @@ simulation:
           pipeline:
             - processor: np.logical_and
               x2: '@mesh.interior_boundary'
-            - processor: exclude_zones
+            - processor: exclude
               zones:
                 - '@module.chd.data.mask'
         flux: 2

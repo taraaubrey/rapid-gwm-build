@@ -1,9 +1,8 @@
-# %% create a template modules (this would normally be done based on a template file)
+import networkx as nx
+from typing import List, Dict, Any
 import logging
 
-from rapid_gwm_build import create_simulation
-from rapid_gwm_build.parsers.config_parser import ConfigParser
-
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,  # Set the minimum logging level
@@ -16,7 +15,61 @@ logging.basicConfig(
 
 from rapid_gwm_build.parsers.config_parser import ConfigParser
 from rapid_gwm_build.parsers.node_parser import NodeParser
-from rapid_gwm_build.simulation import Simulation
+
+
+def create_dependency_graph(all_nodes: List[Dict[str, Any]]) -> nx.DiGraph:
+    """
+    Create a NetworkX directed graph representing node dependencies.
+    
+    Args:
+        all_nodes: List of node dictionaries from parser
+        
+    Returns:
+        NetworkX DiGraph with nodes and dependency edges
+    """
+    G = nx.DiGraph()
+    
+    # First pass: Add all nodes
+    node_ids = set()
+    for node in all_nodes:
+        node_id = node['id']
+        node_ids.add(node_id)
+        
+        # Add node with comprehensive attributes
+        G.add_node(
+            node_id,
+            type=node['type'],
+            context_path='.'.join(node.get('context_path', [])),
+            config_summary=str(node.get('config', {}))[:100] + "..." if len(str(node.get('config', {}))) > 100 else str(node.get('config', {})),
+            schema_validated=node.get('schema_validated', False),
+            parsed_at=node.get('parser_metadata', {}).get('parsed_at', 'unknown'),
+            **{k: v for k, v in node.get('parser_metadata', {}).items() 
+               if k not in ['parsed_at'] and isinstance(v, (str, int, float, bool))}
+        )
+    
+    # Second pass: Add edges with validation
+    missing_dependencies = []
+    for node in all_nodes:
+        node_id = node['id']
+        dependencies = node.get('dependencies', [])
+        
+        for dep_id in dependencies:
+            if dep_id in node_ids:
+                # Add edge from dependency to dependent node
+                G.add_edge(dep_id, node_id, 
+                          relationship='depends_on',
+                          created_by='parser')
+            else:
+                missing_dependencies.append((node_id, dep_id))
+    
+    # Report missing dependencies
+    if missing_dependencies:
+        print(f"Warning: Found {len(missing_dependencies)} missing dependencies:")
+        for node_id, missing_dep in missing_dependencies[:5]:  # Show first 5
+            print(f"  {node_id} depends on missing {missing_dep}")
+    
+    return G
+
 
 def main():
 
@@ -53,49 +106,35 @@ def main():
         
     # Collect all created nodes for this simulation
     all_nodes = parser.get_all_nodes()
-    sim_nodes = {node.ref_id: node for node in all_nodes}
     
-    print(f"  Total nodes created for {sim_name}: {len(sim_nodes)}")
+    print(f"  Total nodes created: {len(all_nodes)}")
+
+    # CREATE THE GRAPH
+    print("Creating dependency graph...")
+    G = create_dependency_graph(all_nodes)
     
-    # Store simulation configuration
-    all_sims[sim_name] = {
-        "sim_type": sim_cfg["sim_type"],  # e.g., 'mf6'
-        "ws": sim_cfg["ws"],  # Working directory
-        "nodes": sim_nodes  # All created nodes with dependencies
-    }
+    print(f"Graph created with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges")
     
-    # Clear parser for next simulation
-    parser.clear_all_nodes()
-
-
-        #     if node_type == 'mesh':
-        #         NodeParser.parse_mesh(type_cfg)
-        #     elif node_type == 'modules':
-        #         NodeParser.parse_modules(type_cfg)
-        #     elif node_type == 'pipes':
-        #         NodeParser.parse_pipe(**type_cfg)
-
-        # return {n.id: n for n in node_manager.nodes}
-
-
-        
-    #     # Flatten modules and input nodes
-    #     node_cfgs = cls._get_node_cfg(sim_cfg)
-    #     all_sims[sim_name] = {
-    #         "sim_type": sim_cfg["sim_type"],  # e.g., 'mf6'
-    #         "ws": sim_cfg["ws"],  # Working directory
-    #         "nodes": node_cfgs  # Extracted nodes (modules + inputs)
-    #     }
-    # # for sim_name, sim_cfg in parsed.items():
-    #     # set working directory
-    #     ref_dir = Path(sim_cfg['ws']) / 'ref_data'
-    #     derived_dir = Path(sim_cfg['ws']).parent /'derived_data'
-    #     # create the dir
-    #     ref_dir.mkdir(parents=True, exist_ok=True)
-    #     derived_dir.mkdir(parents=True, exist_ok=True)
-
-    #     sim = Simulation.from_config(sim_name, sim_cfg, ref_dir=ref_dir, derived_dir=derived_dir) #TODO: for each 
-
+    # Graph analysis
+    print("\nGraph Analysis:")
+    print(f"  - Nodes: {G.number_of_nodes()}")
+    print(f"  - Edges: {G.number_of_edges()}")
+    print(f"  - Is DAG: {nx.is_directed_acyclic_graph(G)}")
+    
+    # Find root nodes (no dependencies)
+    root_nodes = [n for n in G.nodes() if G.in_degree(n) == 0]
+    print(f"  - Root nodes: {len(root_nodes)}")
+    
+    # Find leaf nodes (nothing depends on them)
+    leaf_nodes = [n for n in G.nodes() if G.out_degree(n) == 0]
+    print(f"  - Leaf nodes: {len(leaf_nodes)}")
+    
+    # Topological sort (if it's a DAG)
+    if nx.is_directed_acyclic_graph(G):
+        build_order = list(nx.topological_sort(G))
+        print(f"  - Build order determined: {len(build_order)} steps")
+    
+    return G, all_nodes
 
 
     # # sim.graph.plot()

@@ -86,6 +86,8 @@ modules:
                 builtin:
                     - array_to_file:
                         by_layer: True
+            xorigin: '@mesh.xorigin'
+            yorigin: '@mesh.yorigin'
         func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
         default_build: True
@@ -93,6 +95,7 @@ modules:
     ic: 
         build_dependencies: 
             model: '@modules.gwf'
+            strt: '@mesh.top'
         func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 
@@ -110,18 +113,27 @@ modules:
         func: 'flopy.mf6.ModflowGwfwel'
         duplicates_allowed: True
 
-
-    drn: 
+    
+    drn:
         build_dependencies: 
             model: '@modules.gwf'
-            stressperioddata: '@self.output'
+            stress_period_data:
+                input:
+                    src:
+                        cond: '@modules.drn.data.cond'
+                        elev: '@modules.drn.data.elev'
+                pipeline:
+                    - processor: check_dims_andor_add_tdis
+                      tdis: '@modules.tdis.nper'
+                    - processor: array_to_table
+                      by_stress_period: True
+                      mask: '@modules.drn.data.mask'
+                      col_names: ['k', 'i', 'j', 'elev', 'cond']
+        data:
+            - mask
+            - cond
+            - elev
         func: flopy.mf6.ModflowGwfdrn
-        duplicates_allowed: True
-        output:
-            func: 'data2table'
-            kwargs:
-                type: table
-                col_names: ['k', 'i', 'j', 'cond', 'elev']
         parameterization:
             index_cols: [0,1,2]
             param:
@@ -145,8 +157,19 @@ modules:
     rcha:
         build_dependencies: 
             model: '@modules.gwf'
+            recharge:
+                input: '@modules.rcha.data.recharge'
+                pipeline:
+                    - processor: check_dims_add_tdis
+                      tdis: '@modules.tdis.nper'
+                    - processor: array_to_file
+                      by_stress_period: True
+                      mask: '@cmd.dis.top'
+        data:
+            - recharge
+            - mask
         func: 'flopy.mf6.ModflowGwfrcha'
-        duplicates_allowed: True
+
     
     rch:
         build_dependencies: 

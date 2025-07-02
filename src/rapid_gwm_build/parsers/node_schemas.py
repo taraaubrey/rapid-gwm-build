@@ -12,16 +12,42 @@ class NodeSchema:
     """Base schema for all node types."""
     node_type: str
     required_fields: List[str] = None
+    optional_fields: List[str] = None  # Only keys allowed in this node
     value_types: List[Union[type, str]] = None  # Types that can be used in this node
     validation_rules: Dict[str, Any] = None
     
     def __post_init__(self):
         if self.required_fields is None:
             self.required_fields = []
+        if self.optional_fields is None:
+            self.optional_fields = None
         if self.value_types is None:
             self.value_types = None
         if self.validation_rules is None:
             self.validation_rules = {}
+    
+    # create a copy of the schema with updated attributes
+    def copy(self):
+        """Create a copy of the schema with updated attributes."""
+        return NodeSchema(
+            node_type=self.node_type,
+            required_fields=self.required_fields.copy(),
+            optional_fields=self.optional_fields.copy() if self.optional_fields else None,
+            value_types=self.value_types.copy() if self.value_types else None,
+            validation_rules=self.validation_rules.copy()
+        )
+    
+    
+    def update(self, **kwargs):
+        updated_schema = self.copy()
+        
+        """Update schema with new attributes."""
+        for key, value in kwargs.items():
+            if hasattr(updated_schema, key):
+                setattr(updated_schema, key, value)
+            else:
+                raise ValueError(f"Invalid attribute '{key}' for NodeSchema")
+        return updated_schema
 
 
 class NodeSchemas:
@@ -96,10 +122,10 @@ class NodeSchemas:
     MODULE_SCHEMA = NodeSchema(
         node_type='module',
         required_fields=[],
+        optional_fields=['data', 'cmd', 'template'],
         validation_rules={
             'data': dict,
             'cmd': dict,
-            'only_keys': ['data', 'cmd', 'template'],
             'nested_validation': {
                 'data': {
                     'nest_type': 'dict',
@@ -107,6 +133,30 @@ class NodeSchemas:
                 },
             },
         }
+    )
+
+    MODULE_DATA_SCHEMA = NodeSchema(
+        node_type='module_data',
+        validation_rules={
+            'nested_validation': {
+                '_': {
+                    'nest_type': 'dict',
+                    'schema': 'input'
+                },
+            },
+        },
+    )
+
+    TEMPLATE_BUILD_DEPENDENCIES = NodeSchema(
+        node_type='template_build_dependencies',
+        validation_rules={
+            'nested_validation': {
+                '_': {
+                    'nest_type': 'dict',
+                    'schema': 'input'
+                },
+            },
+        },
     )
     
     # Mesh Node Schema
@@ -164,23 +214,31 @@ class NodeSchemas:
             'mesh_config': cls.MESH_CONFIG_SCHEMA,
             'mesh_data': cls.MESH_DATA_SCHEMA,
             'module': cls.MODULE_SCHEMA,
+            'module_data': cls.MODULE_DATA_SCHEMA,
+            'template_build_dependencies': cls.TEMPLATE_BUILD_DEPENDENCIES,
             # 'template': cls.TEMPLATE_SCHEMA
         }
         return schema_map.get(node_type)
     
     @classmethod
-    def validate_config_strict(cls, node_type: str, config: Any, context: str = None) -> None:
+    def validate_config_strict(cls, node_type: str, config: Any, context: str = None, **kwargs) -> None:
+
         """Validate configuration and raise ValueError if invalid."""
-        is_valid, error_msg = cls.validate_config(node_type, config)
+        is_valid, error_msg = cls.validate_config(node_type, config, **kwargs)
         if not is_valid:
             context_str = f" for {context}" if context else ""
             # logging.error(f"{node_type.title()} validation failed{context_str}: {error_msg}")
             raise ValueError(f"Invalid {node_type} configuration {context_str}: {error_msg}")
     
     @classmethod
-    def validate_config(cls, node_type: str, config: Dict[str, Any]) -> tuple[bool, str]:
+    def validate_config(cls, node_type: str, config: Dict[str, Any], **kwargs) -> tuple[bool, str]:
         """Validate a configuration against its schema."""
-        schema = cls.get_schema(node_type)
+        base_schema = cls.get_schema(node_type)
+        
+        # Create a temporary schema with overrides
+        schema = cls._create_schema_with_overrides(base_schema, **kwargs)
+    
+        
         if not schema:
             return False, f"Unknown node type: {node_type}"
     
@@ -200,6 +258,11 @@ class NodeSchemas:
         # Check value types
         if schema.value_types and type(config) not in schema.value_types:
             return False, f"Invalid value type for {node_type} node. Expected one of: {schema.value_types}, got {type(config)}"
+        
+        if schema.optional_fields and isinstance(config, dict):
+            for key in config.keys():
+                if key not in schema.optional_fields:
+                    return False, f"Unexpected key '{key}' in {node_type} node. Allowed keys: {schema.optional_fields}"
 
         # Check for excluded fields first (before other validation)
         validation_rules = schema.validation_rules
@@ -295,49 +358,23 @@ class NodeSchemas:
         
         return True, ""
     
-    # @classmethod
-    # def get_dependencies(cls, node_type: str, config: Dict[str, Any]) -> List[str]:
-    #     """Extract dependencies from a node configuration."""
-    #     schema = cls.get_schema(node_type)
-    #     if not schema:
-    #         return []
+    @classmethod
+    def _create_schema_with_overrides(cls, base_schema: NodeSchema, **kwargs) -> NodeSchema:
+        """Create a temporary schema with overridden attributes."""
+        # from dataclasses import fields
+
+        return base_schema.update(**kwargs)
+
+        # # Get valid NodeSchema attributes
+        # valid_attrs = {field.name for field in fields(NodeSchema) if field.name != 'node_type'}
         
-    #     dependencies = []
+        # # Filter kwargs to only include valid NodeSchema attributes
+        # overrides = {k: v for k, v in kwargs.items() if k in valid_attrs}
         
-    #     # Check for reference dependencies (strings starting with '@')
-    #     for key, value in config.items():
-    #         if isinstance(value, str) and value.startswith('@'):
-    #             dependencies.append(value[1:])  # Remove '@' prefix
-    #         elif isinstance(value, dict):
-    #             # Recursively check nested dictionaries
-    #             nested_deps = cls._extract_nested_dependencies(value)
-    #             dependencies.extend(nested_deps)
-    #         elif isinstance(value, list):
-    #             # Check list items for references
-    #             for item in value:
-    #                 if isinstance(item, str) and item.startswith('@'):
-    #                     dependencies.append(item[1:])
-    #                 elif isinstance(item, dict):
-    #                     nested_deps = cls._extract_nested_dependencies(item)
-    #                     dependencies.extend(nested_deps)
-        
-    #     return list(set(dependencies))  # Remove duplicates
-    
-    # @classmethod
-    # def _extract_nested_dependencies(cls, data: Dict[str, Any]) -> List[str]:
-    #     """Recursively extract dependencies from nested dictionaries."""
-    #     dependencies = []
-        
-    #     for key, value in data.items():
-    #         if isinstance(value, str) and value.startswith('@'):
-    #             dependencies.append(value[1:])
-    #         elif isinstance(value, dict):
-    #             dependencies.extend(cls._extract_nested_dependencies(value))
-    #         elif isinstance(value, list):
-    #             for item in value:
-    #                 if isinstance(item, str) and item.startswith('@'):
-    #                     dependencies.append(item[1:])
-    #                 elif isinstance(item, dict):
-    #                     dependencies.extend(cls._extract_nested_dependencies(item))
-        
-    #     return dependencies
+        # # Create new schema with overrides
+        # return NodeSchema(
+        #     node_type=base_schema.node_type,
+        #     required_fields=overrides.get('required_fields', base_schema.required_fields),
+        #     value_types=overrides.get('value_types', base_schema.value_types),
+        #     validation_rules=overrides.get('validation_rules', base_schema.validation_rules)
+        # )

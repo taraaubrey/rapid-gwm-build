@@ -68,41 +68,11 @@ class NodeParser:
         # Each specialized parser handles its own validation and dependency extraction
         if node_type == 'mesh':
             self._parse_mesh(config, context_path)
-        elif node_type == 'pipeline':
-            return self._parse_pipeline_data_mode(config, context_path)
         elif node_type == 'modules':
             return self._parse_modules(config, context_path, **kwargs)
-        elif node_type == 'input':
-            return self._parse_input(config, context_path)
         else:
             raise ValueError(f'Unsupported node type: {node_type}. Supported types are: mesh, pipeline, modules, input.')
-            # For generic node types, validate and extract dependencies here
-            # if not self._validate_config(node_type, config):
-            #     return None
-            
-            # dependencies = self._extract_dependencies(config, context_path)
-            # node_id = self._generate_node_id(node_type, context_path)
-            
-            # # Return generic structured dict data for other types
-            # node_data = {
-            #     'id': node_id,
-            #     'type': node_type,
-            #     'config': deepcopy(config),
-            #     'context_path': context_path.copy(),
-            #     'dependencies': dependencies,
-            #     'schema_validated': True,
-            #     'parser_metadata': {
-            #         'parsed_at': datetime.now().isoformat(),
-            #         'parser_version': '2.0',
-            #         'context_path': context_path
-            #     }
-            # }
-            
-            # # Add any type-specific metadata
-            # node_data.update(self._get_type_specific_metadata(node_type, config, kwargs))
-            
-            # self.node_data.append(node_data)
-            # return node_data
+
     
     def _parse_modules(self, modules_config: Dict[str, Any], 
                      context_path: List[str] = None):
@@ -135,34 +105,129 @@ class NodeParser:
         """
         context_path = context_path or ['modules', module_key]
 
-        # get template data
-        module_config['template'] = self.sim_template.get('modules', {}).get(module_key, {})
-        
-        # validate the module configuration
-        NodeSchemas.validate_config_strict('module', module_config, context_path)
-        
-        # is_valid, error_msg = NodeSchemas.validate_config('module', module_config)
-        # if not is_valid:
-        #     logging.error(f"Mesh validation failed: {error_msg}")
-        #     raise ValueError(f"Invalid mesh configuration: {error_msg}")
+        # module key split
+        cmd_key = module_key.split('-')[0] if '-' in module_key else module_key
 
-        src_config = module_config.get('src', {})
-        cmd_config = module_config.get('cmd', {})
+        # validate the overall module configuration
+        NodeSchemas.validate_config_strict('module', module_config, context_path)
+
+        # data collection
+        data_config = module_config.get('data')
+        template_config = self.sim_template.get('modules', {}).get(cmd_key, {})
         
-        dependencies = self._extract_dependencies(module_config, context_path)
+        if data_config:
+            # get valid data fields
+            data_required_fields = template_config.get('data', [])
+            # validate with allowed fields from template
+            NodeSchemas.validate_config_strict('module_data', data_config, context_path, required_fields=data_required_fields)
+            # add nodes
+            data_context = context_path + ['data']
+            data_nodes, data_dependencies = self._parse_data_collection(data_config, data_context)
+
+        # Validate template
+        if not template_config:
+            raise ValueError(f"Module '{module_key}' is missing a valid 'template' configuration.")
+        if cmd_key != module_key:
+            template_config = self._replace_template_references(template_config, old_ref=cmd_key, new_ref=module_key)
         
+        # cmd validation
+        func_path = template_config.get('func')
+        param_data = self._extract_function_parameters(func_path)
+        param_names = [i for i in param_data.keys() if i != 'kwargs']
+
+        # Validate command section of user input if present
+        if 'cmd' in module_config:
+            cmd_config = module_config['cmd']
+            
+            if func_path:
+                # validate user input kwargs
+                for key in cmd_config.keys():
+                    if key not in param_names:
+                        raise ValueError(f"Invalid command argument '{key}' for function '{func_path}'. Valid parameters are: {param_names}")
+            else:
+                raise ValueError(f"Module '{module_key}' is missing a valid 'func' in its template configuration.")
+
+        default_config = {k: v['default'] for k, v in param_data.items() if ('default' in v) and (v['default'] is not None)}
+
+        # combine dict -> order of importane default_config < template < cmd
+        cmd_config = {
+            **default_config,
+            **template_config.get('build_dependencies', {}),
+            **module_config.get('cmd', {})}
+
+        # validate cmd schema
+        NodeSchemas.validate_config_strict(
+            'template_build_dependencies',
+            cmd_config,
+            context_path,
+            optional_fields=param_names)
+        
+        # add nodes
+        cmd_nodes, cmd_dependencies = self._parse_data_collection(cmd_config, context_path)
+        
+        # don't need to include defualts
+        module_dependencies = [i['id'] for i in cmd_nodes if i['context_path'][-1] not in default_config.keys()]
         module_node = self._create_node(
             node_type='module',
             node_id='.'.join(context_path),
-            config=module_config,
+            config=cmd_config,
             context_path=context_path,
-            dependencies=dependencies,
+            dependencies=module_dependencies,
             # Metadata specific to module nodes
-            src_config=src_config,
-            cmd_config=cmd_config
+            template_config=template_config,
+            module_config=module_config
         )
 
+        self.node_data.append(module_node)
+
+    def _replace_template_references(self, template_data, old_ref, new_ref):
+        """Replace all node references in template data."""
+        import re
+        
+        def replace_refs(obj):
+            if isinstance(obj, str) and obj.startswith('@'):
+                # Use regex for precise matching of module references
+                pattern = rf'@modules\.{re.escape(old_ref)}.'
+                return re.sub(pattern, f'@modules.{new_ref}.', obj)
+            elif isinstance(obj, dict):
+                return {k: replace_refs(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [replace_refs(item) for item in obj]
+            return obj
+        
+        return replace_refs(template_data)
     
+    
+    #TODO utils?
+    def _extract_function_parameters(self, func_path: str) -> dict:
+        """Extract all parameters from a function given its module path."""
+        import inspect
+
+        # Import the function dynamically
+        module_parts = func_path.split('.')
+        module_name = '.'.join(module_parts[:-1])
+        func_name = module_parts[-1]
+        
+        module = __import__(module_name, fromlist=[func_name])
+        func = getattr(module, func_name)
+        
+        # Get function signature
+        sig = inspect.signature(func)
+        
+        # Extract parameter information
+        parameters = {}
+        for name, param in sig.parameters.items():
+            param_info = {
+                'name': name,
+                'kind': param.kind.name,
+                'default': param.default if param.default != inspect.Parameter.empty else None,
+                'annotation': param.annotation if param.annotation != inspect.Parameter.empty else None
+            }
+            parameters[name] = param_info
+        
+        return parameters
+
+
     def _parse_mesh(self, mesh_config: Dict[str, Any], 
                 context_path: List[str] = None):
         """
@@ -229,25 +294,27 @@ class NodeParser:
 
         self.node_data.append(mesh_config_node)
         
-        # Parse mesh data arrays (each can be Input or Pipeline)
-        mesh_data_nodes = []
-        array_dependencies = []
         
-        for array_key, array_value in mesh_data.items():
-            array_context = context_path + [array_key]
+        mesh_data_nodes, array_dependencies = self._parse_data_collection(mesh_data, context_path)
+        # # Parse mesh data arrays (each can be Input or Pipeline)
+        # mesh_data_nodes = []
+        # array_dependencies = []
+        
+        # for array_key, array_value in mesh_data.items():
+        #     array_context = context_path + [array_key]
 
-            if self._is_node_type('pipeline', array_value):
-                # Parse as pipeline node
-                pipeline_node = self._parse_pipeline(array_value, array_context, array_key)
-                mesh_data_nodes.append(pipeline_node)
-                array_dependencies.extend(pipeline_node['dependencies'])
-                array_dependencies.append(pipeline_node['id'])
+        #     if self._is_node_type('pipeline', array_value):
+        #         # Parse as pipeline node
+        #         pipeline_node = self._parse_pipeline(array_value, array_context, array_key)
+        #         mesh_data_nodes.append(pipeline_node)
+        #         array_dependencies.extend(pipeline_node['dependencies'])
+        #         array_dependencies.append(pipeline_node['id'])
             
-            else:
-                # Parse as input node
-                input_node = self._parse_input(array_value, array_context, array_key)
-                mesh_data_nodes.append(input_node)
-                array_dependencies.append(input_node['id'])
+        #     else:
+        #         # Parse as input node
+        #         input_node = self._parse_input(array_value, array_context, array_key)
+        #         mesh_data_nodes.append(input_node)
+        #         array_dependencies.append(input_node['id'])
         
         # Create main mesh data node that references all arrays
         mesh_data_node = self._create_node(
@@ -267,7 +334,7 @@ class NodeParser:
         self.node_data.append(mesh_data_node)
         
         # Add all array nodes to our data
-        self.node_data.extend(mesh_data_nodes)
+        # self.node_data.extend(mesh_data_nodes)
         
         # Create composite mesh node that references both config and data
         main_mesh_node = self._create_node(
@@ -300,6 +367,30 @@ class NodeParser:
         return is_valid
     
 
+    def _parse_data_collection(self, data: Dict[str, Any], 
+                              context_path: List[str]) -> List[Dict[str, Any]]:
+                # Parse mesh data arrays (each can be Input or Pipeline)
+        data_nodes = []
+        dependencies = []
+        
+        for d_key, d_value in data.items():
+            d_context = context_path + [d_key]
+
+            if self._is_node_type('pipeline', d_value):
+                # Parse as pipeline node
+                pipeline_node = self._parse_pipeline(d_value, d_context, d_key)
+                data_nodes.append(pipeline_node)
+                # dependencies.extend(pipeline_node['dependencies'])
+                dependencies.append(pipeline_node['id'])
+            
+            else:
+                # Parse as input node
+                input_node = self._parse_input(d_value, d_context, d_key)
+                data_nodes.append(input_node)
+                dependencies.append(input_node['id'])
+        
+        return data_nodes, dependencies
+    
     
     def _parse_input(self, input_config: Any, context_path: List[str], array_type: str = None):
 
@@ -332,6 +423,8 @@ class NodeParser:
             array_type=array_type,
             src=src
         )
+
+        self.node_data.append(input_node)
         
         return input_node
 
@@ -357,6 +450,8 @@ class NodeParser:
             # Metadata specific to input nodes
             processor=processor,
         )
+
+        self.node_data.append(node)
         
         return node
 
@@ -390,7 +485,6 @@ class NodeParser:
         if input_part:
             input_context = context_path + ['input']
             input_node = self._parse_input(input_part, input_context, f"{array_type}_input")
-            self.node_data.append(input_node)
             input_dependencies.append(input_node['id'])
         
         # Extract dependencies from pipeline steps
@@ -398,7 +492,6 @@ class NodeParser:
         for i, pipe in enumerate(pipeline_part):
             pipe_context = context_path + [f'pipe{i}']
             pipe_node = self._parse_pipe(pipe, pipe_context, f"{array_type}_pipe{i}")
-            self.node_data.append(pipe_node)
             pipeline_dependencies.append(pipe_node['id'])
         
         # Combine all dependencies
@@ -421,95 +514,12 @@ class NodeParser:
                 'processors': [step.get('processor') for step in pipeline_part if isinstance(step, dict) and 'processor' in step]
             }
         }
+
+        self.node_data.append(pipeline_node)
         
         return pipeline_node
+
     
-    def _parse_value(self, key: str, value: Any, 
-                     context_path: List[str]):
-        """
-        Parse a single value from a configuration dictionary.
-        
-        Args:
-            key: Configuration key
-            value: Configuration value
-            context_path: Current parsing context path
-            
-        Returns:
-            Parsed value or node reference
-        """
-        # Handle node references (strings starting with '@')
-        if isinstance(value, str) and value.startswith('@'):
-            return value
-        
-        # Handle pipeline configurations
-        if isinstance(value, dict) and 'pipeline' in value:
-            pipeline_src = value.get('pipeline')
-            return self.parse_pipeline(
-                pipeline_config=pipeline_src, 
-                context_path=context_path
-            )
-        
-        # Handle mesh-specific configurations (context-aware)
-        if self._is_mesh_context(context_path) and key in ['top', 'bottoms']:
-            return self._parse_mesh_component(key, value, context_path)
-        
-        # Handle nested dictionaries
-        if isinstance(value, dict):
-            if key == 'src':
-                return self.parse_dict(
-                    cfg_dict=value, 
-                    context_path=context_path
-                )
-            else:
-                # Parse as input by default
-                return self.parse_input(
-                    config=value, 
-                    context_path=context_path
-                )
-        
-        # Return primitive values as-is
-        return value
-    
-    def _is_mesh_context(self, context_path: List[str]) -> bool:
-        """Check if we're in a mesh parsing context."""
-        return len(context_path) > 0 and context_path[0] == 'mesh'
-    
-    def _parse_mesh_component(self, component: str, value: Any, 
-                             context_path: List[str]):
-        """Parse mesh component (top/bottoms) with special handling."""
-        component_context = context_path + [component]
-        
-        # Create mesh component node
-        mesh_component = self.node_factory.build_node(
-            node_type='mesh',
-            attr=component_context,
-            src=value,
-            param=component
-        )
-        
-        # Handle pipeline in mesh component
-        if isinstance(value, dict) and 'pipeline' in value:
-            pipeline_src = value.get('pipeline')
-            ref_id = self.parse_pipeline(
-                pipeline_config=pipeline_src,
-                context_path=component_context
-            )
-            mesh_component.src = ref_id
-        
-        self.nodes.append(mesh_component)
-        return mesh_component.ref_id
-    
-    def _validate_config(self, node_type: str, config: Dict[str, Any]) -> bool:
-        """Validate configuration against schema."""
-        try:
-            is_valid, error_msg = NodeSchemas.validate_config(node_type, config)
-            if not is_valid:
-                logging.error(f"Configuration validation failed for {node_type}: {error_msg}")
-                return False
-            return True
-        except Exception as e:
-            logging.error(f"Schema validation error for {node_type}: {e}")
-            return False
     
     def _extract_dependencies(self, config: Dict[str, Any], context_path: List[str]) -> List[str]:
         """Extract dependencies from configuration."""
@@ -540,64 +550,11 @@ class NodeParser:
         #         dependencies.append(parent_id)
         
         return dependencies
-    
-    def _generate_node_id(self, node_type: str, context_path: List[str]) -> str:
-        """Generate a unique node ID from context path."""
-        if len(context_path) == 1:
-            return context_path[0]
-        else:
-            return '.'.join(context_path)
-    
-    def _get_type_specific_metadata(self, node_type: str, config: Dict[str, Any], kwargs: Dict[str, Any]) -> Dict[str, Any]:
-        """Get type-specific metadata for different node types."""
-        metadata = {}
-        
-        if node_type == 'module':
-            metadata['module_key'] = kwargs.get('module_key') or config.get('module_key')
-        elif node_type == 'pipe':
-            metadata['processor'] = config.get('processor') or kwargs.get('processor')
-            metadata['input_id'] = kwargs.get('input_id')
-        elif node_type == 'mesh':
-            metadata['param'] = kwargs.get('param')
-        elif node_type == 'pipeline':
-            metadata['pipeline_type'] = 'custom' if 'pipeline' in config else 'builtin'
-        
-        return metadata
 
-    def get_all_node_data(self) -> List[Dict[str, Any]]:
+    def get_all_nodes(self) -> List[Dict[str, Any]]:
         """Get all parsed node data (data mode only)."""
         return self.node_data.copy()
     
     def clear_all_node_data(self):
         """Clear all parsed node data."""
         self.node_data.clear()
-    
-    def get_dependencies_graph(self) -> Dict[str, List[str]]:
-        """Get a dependency graph from all parsed nodes."""
-        graph = {}
-        for node_data in self.node_data:
-            graph[node_data['id']] = node_data['dependencies']
-        return graph
-
-    def get_all_nodes(self) -> List:
-        """Get all created nodes."""
-        all_nodes = self.node_data.copy()
-        return all_nodes
-    
-    def clear_all_nodes(self):
-        """Clear all created nodes."""
-        self.nodes.clear()
-        self.parser_registry.clear_all_nodes()
-        self.pipeline_parser.clear_nodes()
-    
-    def get_dependencies_for_config(self, node_type: str, config: Dict[str, Any]) -> List[str]:
-        """Get dependencies for a given configuration."""
-        return NodeSchemas.get_dependencies(node_type, config)
-    
-    def validate_config(self, node_type: str, config: Dict[str, Any]) -> bool:
-        """Validate a configuration against its schema."""
-        is_valid, error_msg = NodeSchemas.validate_config(node_type, config)
-        if not is_valid:
-            logging.error(f"Configuration validation failed: {error_msg}")
-            return False
-        return True
