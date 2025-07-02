@@ -319,9 +319,11 @@ class InputNode(NodeCFG):
     """
     Class to represent a node ID in the GWM file.
     """
-    def __init__(self, src_arg=True, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__('input',  **kwargs)
-        self.src_arg = src_arg #flag to specify if the input data is args
+        # Default to auto-detect input type (src_arg=False)
+        # Commands are now handled through 'cmd' key structure
+        self.src_arg = False
         self._input = None
 
     @property

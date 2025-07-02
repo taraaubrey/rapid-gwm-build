@@ -1,0 +1,10 @@
+crs: 2193
+nlay:
+  input: 5
+resolution:
+  input:
+    src: 25
+top:
+  input:
+    src: test_dem.tif
+    resampling: 'min'

@@ -4,81 +4,78 @@ vars:
   data_dir: C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data
   scripts: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\pakipaki\scripts
   top: ${vars.data_dir}/b_derived/dem_elevation_derivatives/dem_clipped.tif
-  res_data: ${vars.data_dir}/a_source\skytem_skytem\Heretaunga_skytem_3Dmodels\Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
+  res_src: ${vars.data_dir}/a_source\skytem_skytem\Heretaunga_skytem_3Dmodels\Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
 
-simulations:
-  pakipaki:
+simulation:
+  setup:
     sim_type: mf6 # required
     ws: ${vars.ws}/models/pakipaki-v01 # these get created
+    sim_name: pakipaki # required
+  
+  mesh:
+    crs: 2193
+    nlay: 6
+    resolution: 25
+    active_domain:
+      input: active_domain.shp
+      pipeline:
+        - processor: ${vars.scripts}/pkpk_functions.make_bottom_inactive
+          bottoms: '@mesh.bottoms'
+          inactive_dims: [-2, -1]
+    top: ${vars.top}
+    bottoms:
+      input: examples\pakipaki01\models\derived_data\basement_z.tif
+      pipeline:
+        - processor: ${vars.scripts}/utils.make_layers
+          confined_elev: -10
+          gravel_elev: -20
+          min_thickness: 1
+          top: '@mesh.top'
+        - processor: top_only
+          top_only: True
+  
+  modules:
+    default_build:
+      - sim
+      - gwf
+      - dis
     
-    mesh:
-      crs: 2193
-      nlay: 6
-      resolution: 25
-      active_domain:
-        input: active_domain.shp
-        pipeline:
-          - processor: ${vars.scripts}/pkpk_functions.make_bottom_inactive
-            bottoms: '@mesh.bottoms'
-            inactive_dims: [-2, -1]
-      top:
-        input: ${vars.top}
-      bottoms:
-        input: examples\pakipaki01\models\derived_data\basement_z.tif
-        pipeline:
-          - processor: ${vars.scripts}/utils.make_layers
-            confined_elev: -10
-            gravel_elev: -20
-            min_thickness: 1
-            top: '@mesh.top'
+    drn:
+      data:
+        mask: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_drains.shp
+        elev:
+          input:
+            src: ${vars.top}
+            resampling: min
+          metadata:
+            lb: 0.01
+            ub: 100
+        cond:
+          input: 1
+          metadata:
+            lb: 0.01
+            ub: 100
+          pipeline:
+            - processor: calc_from_res
+              resolution: '@mesh.res'
+      cmd:
+        pname: drn-riv
     
-    modules:
-      sim:
-        sim_name: pkpk
-        sim_ws: ${simulations.pakipaki.ws}
-        exe_name: ${vars.mf6_exe}
-      
-      gwf:
-        modelname: pkpk
-      
-      dis:
-        delr: '@mesh.delr'
-        delc: '@mesh.delc'
-        nrow: '@mesh.nrow'
-        ncol: '@mesh.ncol'
-        nlay: '@mesh.nlay'
-        top: '@mesh.top'
-        botm: '@mesh.bottoms'
-        idomain: '@mesh.active_domain'
-      
-      drn:
-        data:
-          mask: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_drains.shp
-          elev:
-            input: ${vars.top}
-            opening_kwargs:
-              resampling: min
-          cond:
-            input: 1
-            pipeline:
-              - processor: calc_from_res
-                resolution: '@mesh.res'
-      
-      rcha:
-        data:
-          recharge:
-            mask: '@mesh.grid_2d'
-            input: 0.00025
-      
-      wel-mbr:
-        data:
-          mask:
-            input: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_mbr.shp
-            pipeline:
-              - processor: np.logical_and
-                x2: '@mesh.interior_boundary'
-              - processor: exclude_zones
-                zones:
-                  - '@module.chd.data.mask'
-          flux: 2
+    rcha:
+      data:
+        recharge:
+          mask: '@mesh.grid_2d'
+          input: 0.00025
+    
+    wel-mbr:
+      data:
+        mask:
+          input: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_mbr.shp
+          pipeline:
+            - processor: np.logical_and
+              x2: '@mesh.interior_boundary'
+            - processor: exclude_zones
+              zones:
+                - '@module.chd.data.mask'
+        flux: 2
 

@@ -1,0 +1,10 @@
+crs: # invalid src
+  src: 2193
+nlay: # pipeline node
+  input: 5
+  pipeline:
+    - processor: calc_from_res
+      resolution: '@resolution.input.src'
+top: # invalid extra param
+  input: test_dem.tif
+  resampling: 'min'

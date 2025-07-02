@@ -1,16 +1,17 @@
 import os
 import re
-import hashlib
+from pathlib import Path
 import yaml
 from copy import deepcopy
 
-from rapid_gwm_build.ss.node_builder import NodeBuilder
-from rapid_gwm_build.parsers.node_parser import NodeParser
 
-import logging
 class ConfigParser:
     # Regular expression to match variables like ${variable_name}
     VAR_PATTERN = re.compile(r"\$\{(\w+)\}")
+
+    templates = {
+        'mf6': r'mf6_template.yaml',
+    }
 
     @classmethod
     def load_yaml(cls, filepath):
@@ -57,7 +58,6 @@ class ConfigParser:
             return cls.resolve_placeholder(obj, context)
 
 
-
     @classmethod
     def substitute_vars(cls, config):
         """Substitute variables in the config using the 'vars' block."""
@@ -74,55 +74,54 @@ class ConfigParser:
             return value
         
         return replace(deepcopy(config))  # Deepcopy to avoid mutating the original config
-
-
-    @classmethod
-    def _get_node_cfg(cls, sim_cfg):
-        node_manager = NodeParser()
-
-        for node_type, type_cfg in sim_cfg.items():
-            if node_type == 'mesh':
-                node_manager.parse_mesh(type_cfg)
-            elif node_type == 'modules':
-                node_manager.parse_modules(type_cfg)
-            elif node_type == 'pipes':
-                node_manager.parse_pipe(**type_cfg)
-
-        return {n.id: n for n in node_manager.nodes}
     
     @classmethod
     def parse(cls, config_filepath):
         """Parse the user config and return a normalized structure."""
         config = cls.load_yaml(config_filepath) # First, substitute variables (like ${data_dir})
         config = cls.substitute_config(config)
-        all_sims = {}
 
-        # Process each simulation block
-        for sim_name, sim_cfg in config.get("simulations", {}).items():
-            # Flatten modules and input nodes
-            node_cfgs = cls._get_node_cfg(sim_cfg)
-            all_sims[sim_name] = {
-                "sim_type": sim_cfg["sim_type"],  # e.g., 'mf6'
-                "ws": sim_cfg["ws"],  # Working directory
-                "nodes": node_cfgs  # Extracted nodes (modules + inputs)
-            }
+        sim_type = config.get('simulation', {}).get('setup', {}).get('sim_type', None)
+        if not sim_type:
+            raise ValueError("Simulation type 'sim_type' is required in the 'simulation.setup' block.")
+        
+        config['template'] = cls.load_template(sim_type)
+        # this is where multiple yamls would be open and merged
+        
+        return config
 
-        return all_sims
-    
-    
     @classmethod
-    def get_template_nodes(cls, config):
-        node_manager = NodeParser()
-        for k, v in config.items():
-            if k == 'module_templates':
-                for module, module_cfg in v.items():
-                    # parse build_dependency keys
-                    if 'build_dependencies' in module_cfg.keys():
-                        template_cfg = module_cfg['build_dependencies']
-                        if template_cfg:
-                            for k, val in template_cfg.items():
-                                if isinstance(val, dict):
-                                    template_node = node_manager.parse_template(module_key=module, attr=k, cfg=val)
-                                    config['module_templates'][module]['build_dependencies'][k] = template_node.ref_id
+    def load_template(cls, sim_type):
+        
+        template_filename = cls.templates.get(sim_type)
 
-        return {n.id: n for n in node_manager.nodes}
+        script_dir = Path(__file__).parent
+    
+        # Join with the filepath
+        full_path = script_dir / template_filename
+
+        return cls.load_yaml(full_path)
+                       
+        # if filename:
+        #     with importlib.resources.path('rapid_gwm_build.templates', filename) as filepath:
+        #         return template_processor.load_and_validate(str(filepath))
+        # else:
+        #     logging.debug("No sim template file.")
+        #     return None
+    
+    # @classmethod
+    # def get_template_nodes(cls, config):
+    #     node_manager = NodeParser()
+    #     for k, v in config.items():
+    #         if k == 'module_templates':
+    #             for module, module_cfg in v.items():
+    #                 # parse build_dependency keys
+    #                 if 'build_dependencies' in module_cfg.keys():
+    #                     template_cfg = module_cfg['build_dependencies']
+    #                     if template_cfg:
+    #                         for k, val in template_cfg.items():
+    #                             if isinstance(val, dict):
+    #                                 template_node = node_manager.parse_template(module_key=module, attr=k, cfg=val)
+    #                                 config['module_templates'][module]['build_dependencies'][k] = template_node.ref_id
+
+    #     return {n.id: n for n in node_manager.nodes}

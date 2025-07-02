@@ -1,0 +1,4 @@
+mesh:
+  crs: 2193
+  # Missing required nlay and resolution
+  top: test_dem.tif
