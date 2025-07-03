@@ -87,12 +87,6 @@ simulation:
           metadata:
             lb: 0.01
             ub: 100
-          hierarchy:
-            input:
-              - input: regional_dem.tif
-              - input: national_dem.tif
-            pipeline:
-              - processor: scikit.learn.smooth
         cond:
           input: 1
           metadata:

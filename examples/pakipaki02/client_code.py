@@ -82,6 +82,7 @@ def main():
     Path("preprocessing").mkdir(parents=True, exist_ok=True)
     Path("preprocessing/node_data").mkdir(parents=True, exist_ok=True)
 
+    
     config = ConfigParser.parse(input_yaml)
     all_sims = {}
     
@@ -94,14 +95,11 @@ def main():
 
     print(f"Processing simulation...")
     
-    # Dictionary to store all nodes for this simulation
-    sim_nodes = {}
-    
     # loop through simulation block and create node_cfgs
     for key, val in sim_cfg.items():
         print(f"  Parsing {key} configuration...")
         
-        # Use the refactored parser - much cleaner!
+        # Parse config into nodes
         parser.parse_node(node_type=key, config=val)
         
     # Collect all created nodes for this simulation
