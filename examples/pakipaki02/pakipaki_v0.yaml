@@ -16,8 +16,9 @@ simulation:
     crs: 2193
     nlay: 6
     resolution: 25
+    domain: examples\manual_builds\data\model2_domain.shp
     active_domain:
-      input: active_domain.shp
+      input: examples\manual_builds\data\model2_domain.shp
       pipeline:
         - processor: ${vars.scripts}/pkpk_functions.make_bottom_inactive
           bottoms: '@mesh.bottoms'
@@ -87,10 +88,10 @@ simulation:
           metadata:
             lb: 0.01
             ub: 100
-          hierarchy:
+          levels:
             input:
-              - input: regional_dem.tif
-              - input: national_dem.tif
+              - regional_dem.tif
+              - national_dem.tif
             pipeline:
               - processor: scikit.learn.smooth
         cond:
@@ -100,7 +101,8 @@ simulation:
             ub: 100
           pipeline:
             - processor: calc_from_res
-              resolution: '@mesh.res'
+              delr: '@modules.dis.delr'
+              delc: '@modules.dis.delc'
       cmd:
         pname: drn-riv
     
@@ -108,6 +110,8 @@ simulation:
       data:
         recharge:
           input: 0.00025
+          builtin:
+            top_only: True
         mask: '@mesh.'
     
     wel-mbr:
@@ -115,10 +119,12 @@ simulation:
         mask:
           input: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_mbr.shp
           pipeline:
+            - processor: get_interior_boundary
+              active_domain: '@mesh.active_domain'
             - processor: np.logical_and
-              x2: '@mesh.interior_boundary'
-            - processor: exclude
-              zones:
-                - '@module.chd.data.mask'
+              x2: '@modules.wel-mbr.data.mask.input'
+            # - processor: exclude
+            #   zones:
+            #     - '@module.chd.data.mask'
         flux: 2
 

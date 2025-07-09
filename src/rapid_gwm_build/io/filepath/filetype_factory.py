@@ -1,44 +1,57 @@
-from typing import Dict, Union
-from .file_openers import (
-    FileOpener,
-    YamlOpener,
-    RasterOpener,
-    ShapefileOpener,
-    NetCDFOpener,
-    CSVOpener,
-    ArrayOpener
-)
+from pathlib import Path
+from typing import Dict, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .file_openers import FileOpener
 
 class FileTypeFactory:
     def __init__(self):
-        self._registery: Dict[str, FileOpener] = {}
+        self.registry: Dict[str, 'FileOpener'] = {}
     
-    def register(self, ext: str, definition: FileOpener):
-        # TODO: error checking
-        self._registery[ext] = definition
+
+    def register(self, ext: str):
+        """Decorator to register file openers."""
+        def decorator(opener_class):
+            self.registry[ext] = opener_class()  # Create instance
+            return opener_class
+        return decorator
     
-    def get(self, ext: str) -> Union[FileOpener, None]:
-        try :
-            return self._registery[ext]
+    def register_multiple(self, extensions: list):
+        """Decorator to register one opener for multiple extensions."""
+        def decorator(opener_class):
+            instance = opener_class()
+            for ext in extensions:
+                self.registry[ext] = instance
+            return opener_class
+        return decorator
+    
+    def get(self, ext: str) -> 'FileOpener':
+        try:
+            return self.registry[ext]
         except KeyError:
-            return ValueError(f"Extension {ext} not found in registry.")
-
-    def list_types(self) -> Dict[str, FileOpener]:
-        return self._registery
+            raise ValueError(f"Extension '{ext}' not found in registry.")
     
-    def open(self, filepath, opener_kwargs={}):
-        ext = filepath.split(".")[-1]
-        opener = self.get(ext)
-        return opener.open(filepath, opener_kwargs)
+    def get_file_opener(self, filepath):
+        if not isinstance(filepath, Path):
+            filepath = Path(filepath)  # Convert string to Path
+        
+        self._validate(filepath)  # Ensure the filepath is valid
+        return self._get_opener(filepath)  # Get the appropriate opener
     
+    def _validate(self, filepath: Path):
+        """Ensure the filepath is valid."""
+        if not filepath.exists():
+            raise FileNotFoundError(f"File '{filepath}' does not exist.")
+        if not filepath.is_file():
+            raise ValueError(f"Path '{filepath}' is not a file.")
 
-filetype_factory = FileTypeFactory()  
+    def _get_opener(self, filepath: Path):
+        """Get the appropriate file opener based on the file extension."""
+        ext = filepath.suffix.lstrip('.').lower()
+        if ext not in self.registry:
+            raise ValueError(f"No opener registered for extension '{ext}'")
+        
+        return self.registry[ext]
 
-# Register valid types of inputs in the yaml file
-filetype_factory.register("yaml", YamlOpener)
-filetype_factory.register("tif", RasterOpener)
-filetype_factory.register("asc", RasterOpener)
-filetype_factory.register("shp", ShapefileOpener)
-filetype_factory.register("cdf", NetCDFOpener)
-filetype_factory.register("csv", CSVOpener)
-filetype_factory.register("arr", ArrayOpener)
+# Global instance
+filetype_factory = FileTypeFactory()

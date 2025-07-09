@@ -2,9 +2,9 @@ import numpy as np
 import logging 
 
 from rapid_gwm_build import utils
-from rapid_gwm_build.io.input_types import InputValueSpec
+from rapid_gwm_build.io.input_specs import InputValueSpec
 from rapid_gwm_build.nodes.node_base import NodeCFG
-from rapid_gwm_build.io.user_input_factory import user_input_factory
+from rapid_gwm_build.io.input_classifier import user_input_factory
 from rapid_gwm_build.pipes.pipe_registry import pipe_registry
 from rapid_gwm_build.mesh import Mesh
 

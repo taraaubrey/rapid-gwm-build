@@ -61,16 +61,27 @@ modules:
     dis:
         build_dependencies: 
             model: '@modules.gwf'
-            nlay: '@mesh.nlay'
-            nrow: '@mesh.nrow'
-            ncol: '@mesh.ncol'
-            delr: 
-                input: '@mesh.delr'
+            nrow:
+                input: '@mesh.config'
                 builtin:
+                    - from_mesh:
+                        value: 'nrow'
+            ncol:
+                input: '@mesh.config'
+                builtin:
+                    - from_mesh:
+                        value: 'ncol'
+            delr: 
+                input: '@mesh.config'
+                builtin:
+                    - from_mesh:
+                        value: 'delr'
                     - array_to_file
             delc:
-                input: '@mesh.delc'
+                input: '@mesh.config'
                 builtin:
+                    - from_mesh:
+                        value: 'delc'
                     - array_to_file
             top:                     
                 input: '@mesh.top'
@@ -86,8 +97,16 @@ modules:
                 builtin:
                     - array_to_file:
                         by_layer: True
-            xorigin: '@mesh.xorigin'
-            yorigin: '@mesh.yorigin'
+            xorigin:
+                input: '@mesh.config'
+                builtin:
+                    - from_mesh:
+                        value: 'xorigin'
+            yorigin: 
+                input: '@mesh.config'
+                builtin:
+                    - from_mesh:
+                        value: 'xorigin'
         func: 'flopy.mf6.ModflowGwfdis'
         duplicates_allowed: False
         default_build: True
@@ -164,7 +183,6 @@ modules:
                       tdis: '@modules.tdis.nper'
                     - processor: array_to_file
                       by_stress_period: True
-                      mask: '@cmd.dis.top'
         data:
             - recharge
             - mask
