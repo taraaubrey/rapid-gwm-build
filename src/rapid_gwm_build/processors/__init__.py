@@ -1,14 +1,19 @@
 """Processors package for data processing operations."""
-
+# Import base class first
 from .base import BaseProcessor
-from .processor_registry import BUILTIN_PROCESSORS, create_processor
 
-# Import all processor categories
-from . import io
+# Import subpackages explicitly
+from . import io, mf6, data, mesh
 
+# Import main classes for convenience
+from .processor_engine import ProcessorEngine
+
+# Export what users should access
 __all__ = [
     "BaseProcessor",
-    "BUILTIN_PROCESSORS", 
-    "create_processor",
+    "ProcessorEngine", 
     "io",
+    "mf6",
+    "data",
+    "mesh"
 ]

@@ -1,12 +1,18 @@
-
+from typing import Set
+from .nodes.node_data import NodeData
 import networkx as nx
 
 class GraphBuilder:
-    def __init__(self, node_list):
+    def __init__(self, node_data: Set[NodeData]):
         """Initialize the NetworkRegistry with an empty directed graph."""
-        self.node_list = node_list
+        self.node_data = node_data
         self.graph = nx.DiGraph()
-
+   
+    @property
+    def node_ids(self):
+        """Get a list of node IDs in the graph."""
+        return [node.id for node in self.node_data]
+    
     def plot(self, subgraph=False, **kwargs):
         from matplotlib import pyplot as plt
         if subgraph:
@@ -54,34 +60,37 @@ class GraphBuilder:
         return self.graph
     
     def _add_nodes(self):
-        for node in self.node_list:
+        for node in self.node_data:
             self._add_node(node)
     
-    def _add_node(self, node=None, node_id=None, ntype=None):
-        if node_id and ntype and not node:
-            self.graph.add_node(node_id)
-        elif not node:
-            raise ValueError("Either 'node' or 'node_id' must be provided.")
-        else:
-            node_id = node.get("id")
-            node_type = node.get("type")
+    def _add_node(self, node=None):
+        if not isinstance(node, NodeData):
+            raise TypeError("Node must be an instance of NodeData.")
 
-            if self.graph.has_node(node_id):
-                raise ValueError(f"Node with id '{node_id}' already exists in the graph.")
-            
-            self.graph.add_node(node_id, parsed_node=node, ntype=node_type)
+        node_id = node.get("id")
+        node_type = node.get("node_type")
+
+        if self.graph.has_node(node.id):
+            raise ValueError(f"Node with id '{node_id}' already exists in the graph.")
+        if not node_id:
+            raise ValueError(f"Node '{node_id}' is missing required fields: 'id'.")
+        if not node_type:
+            raise ValueError(f"Node '{node_id}' is missing required fields: 'node_type'.")
         
+        self.graph.add_node(node_id, node_data=node, ntype=node_type)
+        
+    
     def _add_edges(self):
-        for node in self.node_list:
+        for node in self.node_data:
             dependencies = node.get("dependencies", [])
             for dep_id in dependencies:
-                if dep_id not in [node['id'] for node in self.node_list]:
-                    raise ValueError(f"Missing dependency '{dep_id}' for node '{node['id']}'")
-                self.graph.add_edge(dep_id, node['id'])
+                if dep_id not in self.node_ids:
+                    raise ValueError(f"Missing dependency '{dep_id}' for node '{node.id}'")
+                self.graph.add_edge(dep_id, node.id)
 
     def _validate(self):
         if not nx.is_directed_acyclic_graph(self.graph):
-            raise ValueError("Graph contains cycles.")
+            raise ValueError(f"Graph contains cycles:\n{list(nx.simple_cycles(self.graph))}")
 
 
     def __repr__(self):
@@ -90,7 +99,7 @@ class GraphBuilder:
     def get_subgraph(self, ntype='module'):
         # get all module type nodes
         module_ids = [
-            node_id for node_id, data in self.graph.nodes(data=True) if (data.get("parsed_node")) and (data.get('ntype') == ntype)
+            node_id for node_id, data in self.graph.nodes(data=True) if (data.get("node_data")) and (data.get('ntype') == ntype)
             ]
         
         ancestor_ids = set()

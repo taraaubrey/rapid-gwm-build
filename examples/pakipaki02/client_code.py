@@ -4,6 +4,8 @@ import logging
 
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 logging.getLogger('rasterio').setLevel(logging.WARNING)
+logging.getLogger('fiona').setLevel(logging.WARNING)
+logging.getLogger('gridit').setLevel(logging.WARNING)
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,  # Set the minimum logging level
@@ -15,13 +17,13 @@ logging.basicConfig(
 )
 
 from rapid_gwm_build.parsers.config_parser import ConfigParser
-from rapid_gwm_build.parsers.node_parser import NodeParser
+from rapid_gwm_build.nodes.parse.node_parser import NodeParser
 from rapid_gwm_build.graph_builder import GraphBuilder
 from rapid_gwm_build.node_engine import NodeBuildEngine
 from rapid_gwm_build.rmb_runner import RMBRunner
 
-from rapid_gwm_build.node_builders import discover_builders
-from rapid_gwm_build.registry import BUILDER_REGISTRY
+from rapid_gwm_build.nodes.builders import discover_builders
+from rapid_gwm_build.registries import BUILDER_REGISTRY
 
 def main():
 

@@ -14,10 +14,10 @@ class InputClassifier:
         self.spatial_extensions = VECTOR_EXTENSIONS | RASTER_EXTENSIONS
 
     
-    def classify(self, value, opening_kwargs=None, value_type='deferred') -> InputValueSpec:
+    def classify(self, value, opening_kwargs=None, resolution_mode='auto') -> InputValueSpec:
         """Classify a raw value into an appropriate input type."""
 
-        if value_type == 'deferred' and self._is_filelike_string(value):
+        if resolution_mode == 'auto' and self._is_filelike_string(value):
             # Determine if this file requires mesh context
             requires_mesh = self._requires_mesh_context(value)
 

@@ -41,7 +41,7 @@ class FileTypeFactory:
     def _validate(self, filepath: Path):
         """Ensure the filepath is valid."""
         if not filepath.exists():
-            raise FileNotFoundError(f"File '{filepath}' does not exist.")
+            raise FileNotFoundError(f"File '{filepath}' does not exist. Did you forget to put the @modules. prefix?")
         if not filepath.is_file():
             raise ValueError(f"Path '{filepath}' is not a file.")
 

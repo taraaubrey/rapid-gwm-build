@@ -25,7 +25,7 @@ class YamlOpener(FileOpener):
 class RasterOpener(FileOpener):
     def get_data(self, filepath, opening_kwargs={}, mesh_context=None):
         if mesh_context:
-            self._with_mesh(filepath, opening_kwargs, mesh_context)
+            return self._with_mesh(filepath, opening_kwargs, mesh_context)
         
         else:
             import rasterio
@@ -37,7 +37,7 @@ class RasterOpener(FileOpener):
         from gridit import Grid
 
         if isinstance(mesh_context, Grid):
-            return mesh_context.array_from_raster(fname=filepath, **opening_kwargs)
+            return mesh_context.array_from_raster(fname=filepath, **opening_kwargs).data
         else:
             raise NotImplementedError(
                 "Mesh context must be a Grid object for vector files."
@@ -49,7 +49,7 @@ class ShapefileOpener(FileOpener):
     def get_data(self, filepath, opening_kwargs={}, mesh_context=None):
         
         if mesh_context:
-            self._with_mesh(filepath, opening_kwargs, mesh_context)
+            return self._with_mesh(filepath, opening_kwargs, mesh_context)
 
         else:
             import geopandas as gpd
@@ -59,7 +59,7 @@ class ShapefileOpener(FileOpener):
         from gridit import Grid
 
         if isinstance(mesh_context, Grid):
-            return mesh_context.array_from_vector(fname=filepath, **opening_kwargs)
+            return mesh_context.array_from_vector(fname=filepath, **opening_kwargs).data
         else:
             raise NotImplementedError(
                 "Mesh context must be a Grid object for vector files."

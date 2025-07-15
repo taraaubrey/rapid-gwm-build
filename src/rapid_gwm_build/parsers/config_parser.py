@@ -10,7 +10,7 @@ class ConfigParser:
     VAR_PATTERN = re.compile(r"\$\{(\w+)\}")
 
     templates = {
-        'mf6': r'mf6_template.yaml',
+        'mf6': r'../templates/mf6_template.yaml',
     }
 
     @classmethod

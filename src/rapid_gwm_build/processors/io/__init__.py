@@ -1,11 +1,12 @@
-"""I/O processors for file operations."""
+import importlib
+import pkgutil
+import sys
 
-from .array_to_txtfile import ArrayToFileProcessor
-# from .file_to_array import FileToArrayProcessor
-# from .from_mesh import FromMeshProcessor
+def discover_processors():
+    package = sys.modules[__name__]  # This module (builders)
+    for _, modname, _ in pkgutil.iter_modules(package.__path__):
+        if modname != 'base':  # Skip base module to avoid double import
+            importlib.import_module(f"{__name__}.{modname}")
 
-__all__ = [
-    "ArrayToTxtProcessor",
-    # "FileToArrayProcessor", 
-    # "FromMeshProcessor",
-]
+# Automatically discover all builders on import
+discover_processors()

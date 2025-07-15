@@ -3,7 +3,7 @@ from copy import deepcopy
 from typing import List
 
 from rapid_gwm_build.nodes.node_base import NodeCFG
-from rapid_gwm_build.nodes.node_types import MeshNode, InputNode, ModuleNode, PipeNode, PipelineNode, TemplateNode, PlaceholderNode
+from rapid_gwm_build.nodes.ss_node_types import MeshNode, InputNode, ModuleNode, PipeNode, PipelineNode, TemplateNode, PlaceholderNode
 
 class NodeFactory:
     node_type = {

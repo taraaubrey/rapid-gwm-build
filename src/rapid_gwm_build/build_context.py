@@ -1,9 +1,27 @@
 from typing import Any, Dict, Optional
+import threading
 
 class BuildContext:
-    """Context for managin build-time dependencies and state."""
-
+    """Singleton build context for managing mesh and global build state."""
+    
+    _instance = None
+    _lock = threading.Lock()
+    
+    def __new__(cls):
+        if cls._instance is None:
+            with cls._lock:
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
+                    cls._instance._initialized = False
+        return cls._instance
+    
     def __init__(self):
+        # Only initialize once
+        if not getattr(self, '_initialized', False):
+            self._mesh_registry = {}
+            self._global_state = {}
+            self._initialized = True
+
         self.built_components = {}
         self.mesh_grid = None
         self.mesh_id = None
@@ -22,10 +40,20 @@ class BuildContext:
         """Get the current mesh context for spatial file operations."""
         return self.mesh_grid
     
-    def register_component(self, component_id: str, component: Any):
-        """Register any built component."""
-        self.built_components[component_id] = component
+    def set_global_state(self, key: str, value: Any):
+        """Set global state value."""
+        with self._lock:
+            self._global_state[key] = value
     
-    def get_component(self, component_id: str) -> Optional[Any]:
-        """Get a previously built component."""
-        return self.built_components.get(component_id)
+    def get_global_state(self, key: str, default: Any = None) -> Any:
+        """Get global state value."""
+        return self._global_state.get(key, default)
+    
+    def clear_context(self):
+        """Clear all context data."""
+        with self._lock:
+            self._mesh_registry.clear()
+            self._global_state.clear()
+
+# Global singleton instance
+build_context = BuildContext()

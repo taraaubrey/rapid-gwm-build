@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 from copy import deepcopy
 
 # Import your classes - adjust the import path based on your actual structure
-from rapid_gwm_build.parsers.node_schemas import NodeSchemas
+from rapid_gwm_build.nodes.parse.node_schemas import NodeSchemas
 
 class TestNodeSchemas:
     """Test suite for NodeSchemas functionality."""
