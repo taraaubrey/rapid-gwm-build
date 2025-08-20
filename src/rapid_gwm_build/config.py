@@ -2,7 +2,7 @@ import os
 import json
 
 DEFAULT_CONFIG = {
-    "cache_enabled": True,
+    "cache_enabled": False,
     "cache_dir": ".rmb_cache",
     "cache_processors": True,
     "cache_nodes": True,

@@ -27,7 +27,11 @@ from rapid_gwm_build.registries import BUILDER_REGISTRY
 
 def main():
 
-    input_yaml = r"examples\pakipaki02\pakipaki_v0.yaml"
+    from rapid_gwm_build.config import CONFIG
+    # set cache enabled to False
+    CONFIG['cache_enabled'] = False
+
+    input_yaml = r"examples\pakipaki02\pakipaki02.yaml"
 
     # create directory structure
     from pathlib import Path

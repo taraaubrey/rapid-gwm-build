@@ -1,4 +1,6 @@
+from typing import Callable
 import networkx as nx
+
 
 from .config import CONFIG
 from .cache import memory
@@ -7,7 +9,7 @@ from .build_registry import build_registry
 from .build_context import build_context
 
 @memory.cache
-def build(builder: callable, node: dict) -> dict:
+def execute_node_build(builder: Callable, node: dict) -> dict:
     return builder.build(node)
 
 class RMBRunner:
@@ -52,7 +54,7 @@ class RMBRunner:
 
             if CONFIG.get('cache_nodes', True):
                 # Use caching if enabled
-                result = build(builder, node)
+                result = execute_node_build(builder, node)
             else:
                 # Execute without caching
                 result = builder.build(node)

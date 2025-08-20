@@ -8,7 +8,7 @@ class BaseNodeBuilder(ABC):
     
     @abstractmethod
     def build(self, node_data: NodeData, 
-              dependencies: Dict[str, Any] = None,
+              dependencies: Dict[str, Any] = {},
               build_context = None) -> BuildResult:
         """Build the node with access to dependencies and build context."""
         pass

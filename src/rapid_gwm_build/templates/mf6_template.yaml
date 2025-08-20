@@ -59,12 +59,13 @@ modules:
                     - check_data_dims_tdis:
                         expected_dims: 3
                     - array_to_file:
+                        output_type: 'array'
                         by_layer: True
                         by_stress_period: False
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}_layer{ilay}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
+                        return_arg:
                             filename: '{filename}'
         func: 'flopy.mf6.ModflowGwfnpf'
         duplicates_allowed: True
@@ -94,7 +95,7 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
+                        return_arg:
                             filename: '{filename}'
             delc:
                 input: 'delc'
@@ -107,7 +108,7 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
+                        return_arg:
                             filename: '{filename}'
             top:                     
                 input: '@mesh.top'
@@ -121,7 +122,7 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
+                        return_arg:
                             filename: '{filename}'
             botm:
                 input: '@mesh.bottoms'
@@ -135,7 +136,7 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}_layer{ilay}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
+                        return_arg:
                             filename: '{filename}'
             idomain:
                 input: '@mesh.active_domain'
@@ -149,8 +150,6 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}_layer{ilay}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
-                            filename: '{filename}'
             xorigin:
                 input: 'xorigin'
                 builtin:
@@ -178,8 +177,6 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}_layer{ilay}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
-                            filename: '{filename}'
         func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 
@@ -196,21 +193,18 @@ modules:
             model: '@modules.gwf'
             stress_period_data:
                 input:
-                    src: '@modules.wel.data.flux'
+                    flux: '@modules.wel.data.flux'
+                    mask: '@modules.wel.data.mask'
                 builtin:
                     - check_data_dims_tdis:
                         expected_dims: 4
                     - array_to_file:
                         output_type: 'table'
                         by_stress_period: True
-                        mask: '@modules.wel.data.mask'
                         col_names: ['k', 'i', 'j', 'flux']
                         filename_format: 
                             src: '{modelname}.{pkg_type_name}_{paramname}_{kper}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
-                            '{kper}':
-                                filename: '{filename}'
         func: 'flopy.mf6.ModflowGwfwel'
         data:
             - mask
@@ -222,26 +216,20 @@ modules:
         build_dependencies: 
             model: '@modules.gwf'
             stress_period_data:
-                input: null
-                    # src:
-                    #     cond: '@modules.drn.data.cond'
-                    #     elev: '@modules.drn.data.elev'
+                input:
+                    cond: '@modules.drn.data.cond'
+                    elev: '@modules.drn.data.elev'
+                    mask: '@modules.drn.data.mask'
                 builtin:
-                    # - check_data_dims_tdis:
-                    #     expected_dims: 4
+                    - check_data_dims_tdis:
+                        expected_dims: 4 
                     - array_to_file:
-                        x1: '@modules.drn.data.cond'
-                        x2: '@modules.drn.data.elev'
                         output_type: 'table'
                         by_stress_period: True
-                        mask: '@modules.drn.data.mask'
                         col_names: ['k', 'i', 'j', 'elev', 'cond']
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}_{kper}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
-                            '{kper}':
-                                filename: '{filename}'
         data:
             - mask
             - cond
@@ -265,21 +253,21 @@ modules:
         build_dependencies: 
             model: '@modules.gwf'
             stress_period_data:
-                input: null
+                input:
+                    head: '@modules.ghb.data.head'
+                    cond: '@modules.ghb.data.cond'
+                    mask: '@modules.ghb.data.mask'
                 builtin:
-                    # - check_data_dims_tdis:
-                    #     expected_dims: 4
+                    - check_data_dims_tdis:
+                        expected_dims: 4 # kper, k, i, j
                     - array_to_file:
-                        x1: '@modules.ghb.data.cond'
-                        x2: '@modules.ghb.data.head'
                         output_type: 'table'
                         by_stress_period: True
-                        mask: '@modules.ghb.data.mask'
                         col_names: ['k', 'i', 'j', 'head', 'cond']
                         filename_format: 
                             src: '{modelname}.{pkg_type_name}_{paramname}_{kper}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
+                        return_arg:
                             '{kper}':
                                 filename: '{filename}'
         data:
@@ -296,17 +284,16 @@ modules:
                 input: '@modules.rcha.data.recharge'
                 builtin:
                     - check_data_dims_tdis:
-                        expected_dims: 4
+                        expected_dims: 3 # kper, i, j
                     - array_to_file:
                         output_type: 'array'
                         by_stress_period: True
-                        mask: '@modules.rcha.data.mask'
                         filename_format: 
                             src: '{modelname}.{pkg_type_name}_{paramname}_{kper}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
-                            '{kper}':
-                                filename: '{filename}'
+                        # return_arg:
+                        #     '{kper}':
+                        #         filename: '{filename}'
         data:
             - recharge
             - mask
@@ -317,21 +304,22 @@ modules:
         build_dependencies: 
             model: '@modules.gwf'
             stress_period_data:
-                input: '@modules.chd.data.head'
+                input:
+                    head: '@modules.chd.data.head'
+                    mask: '@modules.chd.data.mask'
                 builtin:
                     - check_data_dims_tdis:
                         expected_dims: 4
                     - array_to_file:
                         output_type: 'table'
                         by_stress_period: True
-                        mask: '@modules.chd.data.mask'
                         col_names: ['k', 'i', 'j', 'head']
                         filename_format: 
                             src: '{modelname}.{pkg_type_name}_{paramname}_{kper}.txt'
                             resolution_mode: 'literal'
-                        cmdarg_template:
-                            '{kper}':
-                                filename: '{filename}'
+                        # return_arg:
+                        #     '{kper}':
+                        #         filename: '{filename}'
         data:
             - mask
             - head

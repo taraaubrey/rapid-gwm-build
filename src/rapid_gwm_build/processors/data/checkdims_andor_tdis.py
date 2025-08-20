@@ -1,4 +1,3 @@
-from ..base import BaseProcessor
 from ...registries import register_processor
 
 @register_processor(
@@ -7,7 +6,19 @@ from ...registries import register_processor
                         'nper': '@modules.tdis.nper',
                         'idomain': '@mesh.active_domain',
                         })
-def check_dims_andor_add_tdis(data, nper, idomain, expected_dims, *kwargs):
+def check_data_dims_tdis(data, nper, idomain, expected_dims, *kwargs):
+    import numpy as np
+
+    if isinstance(data, dict):
+        for key, val in data.items():
+            data[key] = _data_to_array(val, idomain, nper, expected_dims)
+    else:
+        data = _data_to_array(data, idomain, nper, expected_dims)
+    return data
+
+
+
+def _data_to_array(data, idomain, nper, expected_dims):
     import numpy as np
 
     if isinstance(data, int | float):
@@ -19,8 +30,11 @@ def check_dims_andor_add_tdis(data, nper, idomain, expected_dims, *kwargs):
             return data
         else:
             if nper == 1:
-                # add a dim for stress period
-                _add_tdis(data, nper)
+                # if shape if 2D fill to idomain shape with np.nan as fill value
+                new_data = np.zeros(idomain.shape, dtype=data.dtype)
+                new_data[0] = data
+
+                data = _add_tdis(new_data, nper)
                 _check_dims(data, nper, idomain)
             else:
                 raise ValueError(
@@ -69,6 +83,6 @@ def _check_dims(data, nper, idomain):
 def _add_tdis(data, nper):
     import numpy as np
     if nper == 1:
-        data = data.reshape((nper, *data.shape))
+        return data.reshape((nper, *data.shape))
     else:
-        data = np.stack([data] * nper, axis=0)
+        return np.stack([data] * nper, axis=0)

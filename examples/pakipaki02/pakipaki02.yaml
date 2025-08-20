@@ -1,0 +1,174 @@
+vars:
+  ws: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/models # path to the data files
+  mf6_exe: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/bin/mf6.exe # path to the mf6 executable
+  data_dir: examples/data
+  scripts: examples/pakipaki02/scripts/
+  top: ${vars.data_dir}/model2_dem.tif
+  res_src: ${vars.data_dir}/a_source/skytem_skytem/Heretaunga_skytem_3Dmodels/Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
+
+simulation:
+  setup:
+    sim_type: mf6 # required
+    ws: ${vars.ws}/pakipaki02 # these get created
+    sim_name: pakipaki # required
+  
+  mesh:
+    crs: 2193
+    nlay: 8
+    resolution: 25
+    domain: ${vars.data_dir}/model2_domain.shp
+    active_domain:
+      input: ${vars.data_dir}/model2_domain.shp
+      pipeline:
+        - processor: tile_to_nlay
+        - processor: ${vars.scripts}/pkpk_functions.make_bottom_inactive
+          mask: ${vars.data_dir}/confining_area.shp
+          inactive_indices: [-2, -1]
+    top: ${vars.top}
+    bottoms:
+      input: ${vars.data_dir}/basement_z.tif
+      pipeline:
+        - processor: ${vars.scripts}build_bottoms.build_bottoms
+          top: '@mesh.top'
+          nlay: '@mesh.nlay'
+          group_nlay: [6, 1, 1]
+          group_bottoms: [0, -10, -20]
+          min_thickness: 1
+  
+  modules:
+    # default_build:
+    #   - sim
+    #   - gwf
+    #   - dis
+    sim:
+      cmd:
+        sim_name: pakipaki02
+        version: 'mf6'
+        exe_name: ${vars.mf6_exe}
+        sim_ws: ${vars.ws}/pakipaki02
+    
+    tdis-mytdis:
+      cmd:
+        time_units: DAYS
+        nper: 1
+        perioddata:
+          - [1., 1, 1.] # perlen, nstp, tsmult
+    
+    ims:
+      cmd:
+        complexity: COMPLEX
+        print_option: ALL
+    
+    gwf:
+      cmd:
+        modelname: pakipaki
+        model_nam_file: pakipaki.nam
+        save_flows: True
+
+    dis:
+      cmd:
+        length_units: METERS
+    
+    npf:
+      data:
+        k:
+          input: 1.0
+          pipeline:
+            - processor: ${vars.scripts}/pkpk_functions.k_layers
+              nlay: '@mesh.nlay'
+              nrow: '@modules.dis.nrow'
+              ncol: '@modules.dis.ncol'
+              layer_mapping:
+                0: 1000
+                1: 0.01
+                2: 0.01
+                3: 1000
+                4: 1000
+                5: 1000
+                6: 0.01
+                7: 10000
+      cmd:
+        save_specific_discharge: True
+        icelltype: 0
+    
+    ic:
+      cmd:
+        strt: '@mesh.top'
+    
+    drn-riv:
+      data:
+        mask: ${vars.data_dir}/model2_drains.shp
+        elev:
+          input:
+            src: ${vars.top}
+            resampling: min
+          metadata:
+            lb: 0.01
+            ub: 100
+          # levels:
+          #   input:
+          #     - regional_dem.tif
+          #   pipeline:
+          #     - processor: scikit.learn.smooth
+        cond:
+          input: 1
+          metadata:
+            lb: 0.01
+            ub: 100
+          pipeline:
+            - processor: simple_math
+              expression: "x**2 * y"
+              variables: ['x', 'y']
+              y: '@mesh.resolution'
+      cmd:
+        pname: drn-riv
+    
+    rcha-rf:
+      data:
+        mask:
+          input: '@mesh.active_domain'
+          builtin:
+            top_only: True
+        recharge: 0.00025
+    
+    wel-mbr:
+      data:
+        mask:
+          input: ${vars.data_dir}/model2_mbr.shp
+          pipeline:
+            - processor: domain_boundary
+            - processor: make_inactive
+              layers: [-2, -1]
+        flux: 2
+    
+    wel-influx:
+      data:
+        mask:
+          input: ${vars.data_dir}/model2_influx.shp
+          pipeline:
+            - processor: domain_boundary
+            - processor: make_inactive
+              layers: [-2, -1]
+        flux: 10
+
+    wel-outflux:
+      data:
+        mask:
+          input: ${vars.data_dir}/model2_outflux.shp
+          pipeline:
+            - processor: domain_boundary
+            - processor: make_inactive
+              layers: [-2, -1]
+        flux: -10
+   
+    chd-poukawa:
+      data:
+        mask:
+          input: ${vars.data_dir}/model2_chd.shp
+          pipeline:
+            - processor: ${vars.scripts}/pkpk_functions.chd_area
+              idomain: '@mesh.active_domain'
+        head:
+            input:
+              src: ${vars.top}
+              resampling: min

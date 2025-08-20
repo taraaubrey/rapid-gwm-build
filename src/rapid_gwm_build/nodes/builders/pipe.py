@@ -1,3 +1,4 @@
+from typing import Any
 from ...registries import register_builder
 from ...result import BuildResult
 from ...processors.processor_engine import processor_engine
@@ -25,20 +26,19 @@ class PipeBuilder(BaseNodeBuilder):
             data=result,
         )
     
-    @staticmethod
-    def _extract_config_data(node_data: NodeData) -> tuple:
+    @classmethod
+    def _extract_config_data(cls, node_data: NodeData) -> tuple:
         # Extract configuration from node_data
         processor_name = node_data.get("processor")
 
         if processor_name =='top_only':
             pass
         
-        input_id = node_data.get('input')
-        pipe_input = build_registry.result_from_id(input_id).data
+        pipe_input = cls.fetch_data(node_data)
         
         processor_args_cfg = node_data.get('processor_args', {})
         
-        if 'context_path' in processor_args_cfg:
+        if isinstance(processor_args_cfg, dict) and 'context_path' in processor_args_cfg:
             context_path = processor_args_cfg.pop('context_path')
         else:
             context_path = None
@@ -46,3 +46,17 @@ class PipeBuilder(BaseNodeBuilder):
         processor_args = {k: build_registry.result_from_id(v).data for k, v in processor_args_cfg.items()}
         
         return processor_name, pipe_input, processor_args, context_path
+    
+
+    @staticmethod
+    def fetch_data(node_data: NodeData) -> Any:
+
+        pipe_input = node_data.get('input')
+        if isinstance(pipe_input, dict):
+            # If input is a dictionary, recursively fetch data for each key
+            return {key: build_registry.result_from_id(value).data for key, value in pipe_input.items()}
+        elif pipe_input:
+            # If input is a single value, fetch it directly
+            return build_registry.result_from_id(pipe_input).data
+        else:
+            raise ValueError("Pipe input is not defined or is empty.")

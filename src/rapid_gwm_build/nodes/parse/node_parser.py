@@ -410,12 +410,14 @@ class NodeParser:
 
             # get type of node
             if isinstance(d_value, dict) and 'levels' in d_value.keys() and 'input' in d_value.keys():              
-                # parse levels
                 node_id = self._parse_levels(d_value, d_context)
             elif isinstance(d_value, dict) and ('pipeline' in d_value or 'builtin' in d_value) and 'input' in d_value:
                 node_id = self._parse_pipeline(d_value, d_context)
+            # elif isinstance(d_value, dict) and 'input' in d_value:
+            #     if isinstance(d_value['input'], dict) and 'src' not in d_value['input']:
+            #         pass
+            #     node_id = self._parse_value(d_value, d_context)
             else:
-                # dict as input value
                 node_id = self._parse_value(d_value, d_context)
             
             if node_id:
@@ -433,6 +435,9 @@ class NodeParser:
         hier_input = {f'level{i+1}': input for i, input in enumerate(level_input)}
         pipeline = [
             {'processor': 'hierarchical_levels',
+             'options': {
+                 'resolution_mode': 'literal',
+             },
              **hier_input
              }
         ]
@@ -449,7 +454,7 @@ class NodeParser:
 
         return self._parse_pipeline(
             pipeline_config, 
-            context_path, 
+            context_path,
         )
         
     
@@ -496,6 +501,9 @@ class NodeParser:
             'use_mesh_build_context': use_mesh_build_context,
         }
 
+        if context_path == ['modules','drn-riv','stress_period_data','input']:
+                pass
+
         input_node = NodeData(
             node_type='input',
             config=config,
@@ -518,6 +526,7 @@ class NodeParser:
         if isinstance(pipe_config, dict):
             pipe_input = pipe_config.pop('input', None) # this is a node_id
             processor = pipe_config.pop('processor')
+            options = pipe_config.pop('options', {})
         else:
             raise ValueError(f"Invalid pipe configuration: {pipe_config}. Expected dict format.")
         
@@ -537,16 +546,28 @@ class NodeParser:
                 else:
                     resolved_builtin_dependencies[k] = v[1:]
         
+        resolution_mode = options.get('resolution_mode', 'auto')
         # parse args
         node_ids = []
         for key, value in pipe_config.items():
             if isinstance(value, str) and value.startswith('@modules.'):
                 value = self._replace_module_reference(value, self.modules)
-            node_id = self._parse_value(value, context_path + [key], use_mesh_build_context=False)
+            
+            node_id = self._parse_value(
+                value, 
+                context_path + [key],
+                resolution_mode=resolution_mode,
+                use_mesh_build_context=False)
+            
             node_ids.append(node_id)
             pipe_config[key] = node_id
         
-        dependencies = [pipe_input] + list(pipe_config.values()) + list(resolved_builtin_dependencies.values())
+        if isinstance(pipe_input, dict):
+            pipe_input_dependencies = list(pipe_input.values())
+        else:
+            pipe_input_dependencies = [pipe_input]
+        
+        dependencies = pipe_input_dependencies + list(pipe_config.values()) + list(resolved_builtin_dependencies.values())
         
         context = {'context_path': context_path} if context_required else {}
         
@@ -611,7 +632,11 @@ class NodeParser:
         input_part = pipeline_config.get('input')
         if input_part:
             input_context = context_path + ['input']
-            input_node_id = self._parse_value(input_part, input_context)
+            if isinstance(input_part, dict):
+                # Handle dict input format
+                input_node_id = self._parse_input_collection(input_part, input_context)
+            else:
+                input_node_id = self._parse_value(input_part, input_context)
         
         # Extract dependencies from pipeline steps
         pipe_ids = []
