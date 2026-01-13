@@ -31,7 +31,7 @@ def main():
     # set cache enabled to False
     CONFIG['cache_enabled'] = False
 
-    input_yaml = r"examples\pakipaki02\pakipaki02.yaml"
+    input_yaml = r'examples/pakipaki02/pakipaki02.yaml'
 
     # create directory structure
     from pathlib import Path
