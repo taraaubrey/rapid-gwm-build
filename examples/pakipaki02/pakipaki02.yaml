@@ -21,7 +21,7 @@ simulation:
       input: ${vars.data_dir}/model2_domain.shp
       pipeline:
         - processor: tile_to_nlay
-        - processor: ${vars.scripts}/pkpk_functions.make_bottom_inactive
+        - processor: ${vars.scripts}pkpk_functions.make_bottom_inactive
           mask: ${vars.data_dir}/confining_area.shp
           inactive_indices: [-2, -1]
     top: ${vars.top}
@@ -74,7 +74,7 @@ simulation:
         k:
           input: 1.0
           pipeline:
-            - processor: ${vars.scripts}/pkpk_functions.k_layers
+            - processor: ${vars.scripts}pkpk_functions.k_layers
               nlay: '@mesh.nlay'
               nrow: '@modules.dis.nrow'
               ncol: '@modules.dis.ncol'
@@ -166,7 +166,7 @@ simulation:
         mask:
           input: ${vars.data_dir}/model2_chd.shp
           pipeline:
-            - processor: ${vars.scripts}/pkpk_functions.chd_area
+            - processor: ${vars.scripts}pkpk_functions.chd_area
               idomain: '@mesh.active_domain'
         head:
             input:
