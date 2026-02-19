@@ -15,7 +15,6 @@ def make_inactive(mask, layers=None, rows=None, cols=None):
     Returns:
         numpy array: Updated data mask with specified layers, rows, or columns set to inactive.
     """
-    import numpy as np
 
     if layers is None and rows is None and cols is None:
         raise ValueError("At least one of layers, rows, or cols must be specified.")

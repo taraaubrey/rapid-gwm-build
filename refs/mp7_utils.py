@@ -2,7 +2,6 @@ import os
 import numpy as np
 import flopy
 import pandas as pd
-import pyemu
 #import geopandas as gpd
 from nzmf6.build.src import utils
 
@@ -319,7 +318,7 @@ def samples_to_mp7(gwf, par, mpsim_name, model_ws='.',
 def zones_to_mp7(model_name, porosity_files, zone_files, model_ws='.',
                  skip_lays=[], zone=1, ndiv=10, mpsim_name=False, tdis_name=False):
     '''issue with MODPATH, more particles than expected causing access violation'''
-    assert len(porosity_files) == len(zone_files), f'pososity files not equal to zone files'
+    assert len(porosity_files) == len(zone_files), 'pososity files not equal to zone files'
     nrow, ncol = np.loadtxt(os.path.join(model_ws,zone_files[0])).shape
     if not mpsim_name:
         mpsim_name = 'cellage_{}.backward'.format(zone)
@@ -827,10 +826,10 @@ def mp_to_age(mpsim_name, model_name=None, sim_ws='.', gclass_dict={},
         for site in mdf.index:
             mpsim.loc[site,['mrtsim']].hist(bins=100)
             plt.title(f"age for site {site}\n,"
-                      f"min = {mdf.loc[site, f'mrtsim_min']},\n"
-                      f"mean = {mdf.loc[site, f'mrtsim_mean']},\n"
-                      f"max = {mdf.loc[site, f'mrtsim_max']},\n"
-                      f"mean bcage = {mdf.loc[site, f'bcage_mean']}")
+                      f"min = {mdf.loc[site, 'mrtsim_min']},\n"
+                      f"mean = {mdf.loc[site, 'mrtsim_mean']},\n"
+                      f"max = {mdf.loc[site, 'mrtsim_max']},\n"
+                      f"mean bcage = {mdf.loc[site, 'bcage_mean']}")
             if not os.path.exists(os.path.join(sim_ws, '..', 'figures')):
                 os.mkdir(os.path.join(sim_ws, '..', 'figures'))
             plt.savefig(os.path.join(sim_ws, '..', 'figures', f'{site}.png'))
@@ -843,7 +842,6 @@ def mp_to_tracer(mpsim_name, model_name=None, sim_ws='.',
                  tracer_input_file=None,
                  obs_type=None, outname=None,
                  make_figs=False):
-    import matplotlib.pyplot as plt
     # assumes simulation results are in days
     if model_name is None:
         with open(os.path.join(sim_ws,'mfsim.nam'), 'r') as f:

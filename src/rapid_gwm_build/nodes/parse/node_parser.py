@@ -283,8 +283,6 @@ class NodeParser:
         Raises:
             ValueError: If no matches found or multiple similar matches found
         """
-        import re
-        from difflib import SequenceMatcher
         
         # Extract the module part from the reference
         # 'modules.tdis.nper' -> 'tdis'
@@ -621,7 +619,7 @@ class NodeParser:
                     pipe.update(kwargs)
                 
                 else:
-                    raise ValueError(f'Builtin pipeline in the wrong format. Expect either processor as type(str) or processor: kwargs as type(dict).')
+                    raise ValueError('Builtin pipeline in the wrong format. Expect either processor as type(str) or processor: kwargs as type(dict).')
                 
                 pipelines.append(pipe)
         

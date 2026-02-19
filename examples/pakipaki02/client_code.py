@@ -1,5 +1,3 @@
-import networkx as nx
-from typing import List, Dict, Any
 import logging
 
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
@@ -22,7 +20,6 @@ from rapid_gwm_build.graph_builder import GraphBuilder
 from rapid_gwm_build.node_engine import NodeBuildEngine
 from rapid_gwm_build.rmb_runner import RMBRunner
 
-from rapid_gwm_build.nodes.builders import discover_builders
 from rapid_gwm_build.registries import BUILDER_REGISTRY
 
 def main():
@@ -49,7 +46,7 @@ def main():
     sim_cfg = config.get("simulation", {})
     setup = sim_cfg.pop('setup', {})
 
-    print(f"\tPrepping: Processing simulation...")
+    print("\tPrepping: Processing simulation...")
     
     # loop through simulation block and create node_cfgs
     for key, val in sim_cfg.items():
@@ -69,7 +66,7 @@ def main():
     sG = graphbuilder.get_subgraph(ntype='module')
     cG = graphbuilder.get_subgraph(ntype='mesh_config')
     
-    print(f"\tBuild stage 2: Creating model files...")
+    print("\tBuild stage 2: Creating model files...")
     # the registry on how to build out each node
     engine = NodeBuildEngine(registry=BUILDER_REGISTRY)
     # handles orchestration of the build

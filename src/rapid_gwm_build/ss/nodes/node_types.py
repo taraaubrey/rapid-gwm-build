@@ -1,4 +1,3 @@
-import numpy as np
 import logging 
 
 from rapid_gwm_build import utils

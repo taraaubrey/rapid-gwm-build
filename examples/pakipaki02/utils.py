@@ -1,5 +1,4 @@
 def mbr(idomain, mbr_arr, layers):
-    import pandas as pd
     import numpy as np
 
     mbr_list = []
@@ -11,7 +10,6 @@ def mbr(idomain, mbr_arr, layers):
 
 
 def get_interior_indices(arr, layer=None):
-    import numpy as np
     from scipy.ndimage import binary_erosion
     """
     Extract boundary indices of an active domain (where values == 1).

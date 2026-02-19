@@ -1,6 +1,6 @@
 from __future__ import annotations
 from copy import deepcopy
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 class NodeCFG:
     """
@@ -214,7 +214,6 @@ class NodeCFG:
         This method can be overridden in subclasses to save additional metadata.
         """
         # pickle node
-        import pickle
         from pathlib import Path
         
         path = Path(path)

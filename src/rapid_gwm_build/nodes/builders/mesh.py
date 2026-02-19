@@ -28,7 +28,6 @@ class MeshConfigBuilder(BaseNodeBuilder):
         """
         Create a Grid object based on the mesh parameters.
         """
-        from geopandas import GeoDataFrame
 
         config = parsed_node.get('config', {})
         

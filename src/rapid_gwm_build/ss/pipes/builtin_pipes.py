@@ -3,12 +3,12 @@ from pandas import DataFrame
 
 # Define some example functions
 def read_data(data, **kwargs):
-    logging.debug(f"@ the read_data function")
+    logging.debug("@ the read_data function")
     return data
 
 
 def to_mf6_txt(data: DataFrame, map=None, cols=None, outdir=None, node_id=None, **kwargs):
-    logging.debug(f"@ the to_mf6_txt function")
+    logging.debug("@ the to_mf6_txt function")
 
     pkg = node_id.split('.')[1] if node_id else None
 

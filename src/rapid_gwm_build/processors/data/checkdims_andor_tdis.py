@@ -7,7 +7,6 @@ from ...registries import register_processor
                         'idomain': '@mesh.active_domain',
                         })
 def check_data_dims_tdis(data, nper, idomain, expected_dims, *kwargs):
-    import numpy as np
 
     if isinstance(data, dict):
         for key, val in data.items():
@@ -60,7 +59,6 @@ def _number_to_array(data, idomain, nper, expected_dims):
         raise ValueError(f"Expected dimensions must be 2, 3, or 4. Current: {expected_dims}")
 
 def _check_dims(data, nper, idomain):
-    import numpy as np
     nlay, nrow, ncol = idomain.shape
     if data.ndim == 4:
         if data.shape != (nper, nlay, nrow, ncol):

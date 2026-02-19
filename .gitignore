@@ -10,8 +10,10 @@ wheels/
 #other folders
 notes/
 
-# Virtual environments
+# locals
 .venv
 
+*/ss/*
 */models/
 */data/
+C:/*

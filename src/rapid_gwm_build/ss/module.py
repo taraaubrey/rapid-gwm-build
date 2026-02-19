@@ -4,7 +4,6 @@ import networkx as nx
 
 from rapid_gwm_build.utils import inspect_class_defaults
 from rapid_gwm_build.pipes.pipe_registry import pipe_registry
-from rapid_gwm_build.pipes.pipeline_node import GraphPipeline
 
 class Module:
     def __init__(

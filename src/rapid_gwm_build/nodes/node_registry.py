@@ -1,6 +1,6 @@
 """Global registry for parsed nodes (pre-build DAG)."""
 
-from typing import Dict, Optional, List, Any
+from typing import Optional, List, Any
 import threading
 
 class NodeRegistry:

@@ -2,7 +2,6 @@
 import numpy as np
 import pandas as pd
 
-from ...config import CONFIG
 from ...registries import register_processor
 
 @register_processor("array_to_file", 

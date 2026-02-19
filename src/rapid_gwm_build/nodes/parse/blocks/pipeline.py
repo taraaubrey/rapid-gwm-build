@@ -1,5 +1,4 @@
 # from .named_inputs import parse_named_inputs
-from ..config import LEVEL_KEYS
 
 def parse_pipeline(block_config: dict, context_path: list = None) -> None:
     """

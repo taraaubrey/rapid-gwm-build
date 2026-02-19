@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 from rapid_gwm_build import utils
 class NodeBase:
