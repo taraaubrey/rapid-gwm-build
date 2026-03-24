@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-03-25 — Restructure Program of Work (Phase 3+)
+
+**What:** Restructured Phase 3+ from category-focused (test coverage, template expansion) to feature-focused (one sub-phase per processor). Created a reusable feature context template for future Claude sessions.
+
+**Why:** Phases 1-2 are complete. The next priority is fixing, testing, and documenting individual processors — the foundation for usable documentation and reliable builds.
+
+**Changes:**
+- Rewrote Phase 3 into 7 sub-phases (3.0–3.6), each targeting a specific processor or group:
+  - 3.0: Test infrastructure & shared fixtures
+  - 3.1: `check_data_dims_tdis` — data validation for MF6 packages
+  - 3.2: `simple_math` — expression evaluator (eval() security concern)
+  - 3.3: `hierarchical_levels` — layer interpolation (audit needed)
+  - 3.4: `top_only` / `specific_layer` — layer selection
+  - 3.5: Mesh processors (`from_structured_mesh`, `domain_boundary`, `tile_to_nlay`, `make_inactive`)
+  - 3.6: `array_to_file` — MF6 output writer
+- Phases 4-6 retained but marked as deferred
+- Created `.claude/feature_context_template.md` — reusable template for describing a feature to Claude
+- Created `.claude/features/` directory for per-processor context docs
+
+**Files modified:** `.claude/program_of_work.md`
+**Files created:** `.claude/feature_context_template.md`, `.claude/features/` (directory)
+
+---
+
 ## 2026-03-25 — Bugfix: Empty processor/builder registries
 
 **What:** Fixed `BUILTIN_PROCESSORS` and `BUILDER_REGISTRY` being empty at runtime, causing `ValueError: Processor 'from_structured_mesh' is not registered`.

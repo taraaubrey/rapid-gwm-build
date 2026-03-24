@@ -8,12 +8,17 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "affine>=2.4.0",
+    "fiona>=1.10.1",
     "flopy>=3.9.2",
     "gridit>=0.7",
     "joblib>=1.5.1",
     "matplotlib>=3.10.1",
     "networkx>=3.4.2",
     "pyyaml>=6.0.2",
+    "rasterio>=1.5.0",
+    "scipy>=1.17.1",
+    "shapely>=2.1.2",
 ]
 
 [project.scripts]

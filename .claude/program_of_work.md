@@ -14,10 +14,16 @@
 |---|---|---|---|---|
 | 1 | Foundation & Cleanup | Stabilization | **Complete** | 2026-03-25 |
 | 2 | Public API & CLI | Feature | **Complete** | 2026-03-25 |
-| 3 | Test Coverage | Stabilization | Not started | Week 3-4 |
-| 4 | Template & Module Expansion | Feature | Not started | Week 4-5 |
-| 5 | Demo Preparation | Polish | Not started | Week 5-7 |
-| 6 | Parameter Filling (Design) | Feature/Design | Not started | Week 7-8 |
+| 3.0 | Test Infrastructure & Core Fixes | Stabilization | Not started | — |
+| 3.1 | `check_data_dims_tdis` processor | Feature | Not started | — |
+| 3.2 | `simple_math` processor | Feature | Not started | — |
+| 3.3 | `hierarchical_levels` processor | Feature | Not started | — |
+| 3.4 | `top_only` / `specific_layer` processors | Feature | Not started | — |
+| 3.5 | Mesh processors (4 processors) | Feature | Not started | — |
+| 3.6 | `array_to_file` processor | Feature | Not started | — |
+| 4 | Template & Module Expansion | Feature | Deferred | — |
+| 5 | Demo Preparation | Polish | Deferred | — |
+| 6 | Parameter Filling (Design) | Feature/Design | Deferred | — |
 
 ---
 
@@ -90,36 +96,77 @@ Phase 1.X: [description]
 
 ---
 
-## Phase 3 — Test Coverage
+## Phase 3 — Processor Test Infrastructure & Core Fixes
 
-**Goal:** Get tests running and cover the critical path.
+**Goal:** Get tests running, set up shared fixtures, and fix known cross-cutting bugs so that per-processor phases can proceed cleanly.
 
-### Phase 3.1 — Fix Test Infrastructure
-- [ ] Fix `ModuleNotFoundError` — ensure package is importable in test environment
+### Phase 3.0 — Test Infrastructure
+- [ ] Fix `ModuleNotFoundError` — ensure package is importable in test environment (`uv sync --group dev`)
 - [ ] Re-enable commented-out tests in `test_node_parser.py` and `test_node_schema.py`
+- [ ] Create shared test fixtures in `tests/conftest.py`:
+  - Mock `idomain` (2D and 3D numpy arrays)
+  - Mock mesh config dict (nlay, nrow, ncol, resolution, crs)
+  - Mock `sim_ws` temp directory
+  - Mock `tdis` perioddata list
 - [ ] Verify all existing test scaffolding passes
-
-### Phase 3.2 — Core Pipeline Tests
-- [ ] Unit tests for `ConfigParser` (variable substitution, edge cases)
-- [ ] Unit tests for `NodeParser` (each node type parsing)
-- [ ] Unit tests for `GraphBuilder` (DAG construction, cycle detection, subgraphs)
-- [ ] Unit tests for `NodeBuildEngine` (builder dispatch)
 - [ ] Unit tests for `ProcessorEngine` (built-in, file-based, package-based resolution)
 
-### Phase 3.3 — Integration Tests
-- [ ] End-to-end test using `simple_freyburg` example YAML
-- [ ] End-to-end test using `pakipaki02` example YAML
-- [ ] Test the new `rmb.build()` API end-to-end
-- [ ] Mark integration tests with `@pytest.mark.integration`
+### Phase 3.1 — `check_data_dims_tdis` (data validation)
+> **File:** `processors/data/checkdims_andor_tdis.py`
+> **Registry:** `check_data_dims_tdis`, dependency_args: `{idomain: @mesh.active_domain, tdis: @modules.tdis.perioddata}`
 
-### Phase 3.4 — Processor Tests
-- [ ] Test each of the 11 built-in processors individually
-- [ ] Test processor pipeline chains
-- [ ] Test custom processor loading (from file path)
+- [ ] Fix/complete processor (audit current implementation)
+- [ ] Unit tests: scalar→array expansion, shape validation against idomain, tdis wrapping, dict input handling, error cases
+- [ ] Create feature context doc (`.claude/features/check_data_dims_tdis.md`)
+
+### Phase 3.2 — `simple_math` (expression evaluator)
+> **File:** `processors/data/simple_math.py`
+> **Registry:** `simple_math`, no dependency_args
+
+- [ ] Address `eval()` security concern — restrict to safe math operations
+- [ ] Unit tests: expression parsing, variable substitution, numpy array inputs, error on invalid expressions
+- [ ] Create feature context doc
+
+### Phase 3.3 — `hierarchical_levels` (layer interpolation)
+> **File:** `processors/data/hierarchical_levels.py`
+> **Registry:** `hierarchical_levels`, dependency_args (TBD — check implementation)
+
+- [ ] Audit current state — determine if placeholder or functional
+- [ ] Implement or document intended behavior
+- [ ] Unit tests
+- [ ] Create feature context doc
+
+### Phase 3.4 — `top_only` / `specific_layer` (layer selection)
+> **File:** `processors/data/specific_layer_selection.py`
+> **Registry:** `top_only` (no deps), `specific_layer` (no deps)
+
+- [ ] Clean up dead code paths
+- [ ] Unit tests: 3D input extraction, keep_dims parameter, scalar passthrough, out-of-bounds index
+- [ ] Create feature context doc
+
+### Phase 3.5 — Mesh Processors
+> **Files:** `processors/mesh/from_structured_mesh.py`, `get_domain_boundary.py`, `to_3d.py`, `make_inactive.py`
+> **Registry:** `from_structured_mesh` (dep: `@mesh.config`), `domain_boundary` (dep: `@mesh.active_domain`), `tile_to_nlay` (dep: `@mesh.nlay`), `make_inactive` (no deps)
+
+- [ ] Fix unreachable code in `domain_boundary`
+- [ ] Fix in-place mutation in `make_inactive` (should return new array)
+- [ ] Unit tests for `from_structured_mesh`: mesh config → structured grid
+- [ ] Unit tests for `domain_boundary`: active domain → boundary cells
+- [ ] Unit tests for `tile_to_nlay`: 2D array → 3D tiled to nlay
+- [ ] Unit tests for `make_inactive`: mask modification by layer/row/col
+- [ ] Create feature context docs (one per processor or combined)
+
+### Phase 3.6 — `array_to_file` (MF6 output writer)
+> **File:** `processors/mf6/array_to_txtfile.py`
+> **Registry:** `array_to_file`, dependency_args: `{sim_ws: @modules.sim.sim_ws, idomain: @mesh.active_domain}`
+
+- [ ] Clean up dead code paths
+- [ ] Unit tests: array format output, table format output, by_layer, by_stress_period, file path construction
+- [ ] Create feature context doc
 
 ---
 
-## Phase 4 — Template & Module Expansion
+## Phase 4 — Template & Module Expansion *(deferred)*
 
 **Goal:** Broaden MODFLOW 6 support and demonstrate extensibility.
 
@@ -145,7 +192,7 @@ Phase 1.X: [description]
 
 ---
 
-## Phase 5 — Demo Preparation
+## Phase 5 — Demo Preparation *(deferred)*
 
 **Goal:** Polish for architecture & extensibility demo (~May 2026).
 
@@ -171,7 +218,7 @@ Phase 1.X: [description]
 
 ---
 
-## Phase 6 — Parameter Filling (Design Phase)
+## Phase 6 — Parameter Filling (Design Phase) *(deferred)*
 
 **Goal:** Design the parameter filling feature (PRD §7.2) — implementation in a later program.
 
