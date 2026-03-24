@@ -1,12 +1,15 @@
+import logging
 from typing import Callable
+
 import networkx as nx
 
-
-from .config import CONFIG
-from .cache import memory
-from .node_engine import NodeBuildEngine
-from .build_registry import build_registry
 from .build_context import build_context
+from .build_registry import build_registry
+from .cache import memory
+from .config import CONFIG
+from .node_engine import NodeBuildEngine
+
+logger = logging.getLogger(__name__)
 
 @memory.cache
 def execute_node_build(builder: Callable, node: dict) -> dict:
@@ -64,4 +67,4 @@ class RMBRunner:
             
             # graph.nodes[node_id]["build_result"] = result
 
-            print('\t\tBuilt node:', node_id, 'with result:', result.success)
+            logger.info("Built node: %s (success: %s)", node_id, result.success)

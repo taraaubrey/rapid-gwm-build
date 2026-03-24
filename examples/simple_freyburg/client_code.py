@@ -1,28 +1,17 @@
-# %% create a template modules (this would normally be done based on a template file)
-import logging
+"""Example: Build the simple Freyburg model using the rmb Python API.
+
+NOTE: This example YAML uses the old 'simulations:' format and needs
+updating to the canonical 'simulation:' + 'setup:' format before it will
+work with the current API. See pakipaki02/pakipaki02.yaml for the
+current format.
+"""
 
 from rapid_gwm_build import create_simulation
 
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum logging level
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(),  # Handler for console output
-        logging.FileHandler("my_log.log"),  # Handler for file output
-    ],
-)
-
-
-input_yaml = r"examples\simple_freyburg\freyburg_1lyr_stress.yaml"
+input_yaml = "examples/simple_freyburg/freyburg_1lyr_stress.yaml"
 
 sim = create_simulation(input_yaml)
-
-# sim.graph.plot()
-
-# print(here)
 sim.build()
-
 sim.write()
 
-print('done')
+print("Done.")

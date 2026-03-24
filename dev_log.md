@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-03-25 — Phase 2: Public API & CLI (Complete)
+
+**What:** Added a clean Python API, CLI entrypoint, debug runner, and rewrote the README.
+
+### Phase 2.1 — High-Level Python API
+- Created `Simulation` class (`simulation.py`) — encapsulates the full pipeline (parse → graph → build → write)
+- Created `api.py` with convenience functions: `build()`, `validate()`, `create_simulation()`
+- Created `SimulationResult` dataclass (`simulation_result.py`) — returned after builds
+- Created custom exceptions (`errors.py`): `RMBError`, `ConfigError`, `BuildError`, `ValidationError`
+- Updated `__init__.py` to export public API: `from rapid_gwm_build import build, create_simulation, validate`
+- Fixed `BuildContext.reset()` — existing `clear_context()` missed `mesh_grid`/`mesh_id`
+- Replaced `print()` with `logging` in `rmb_runner.py`
+
+### Phase 2.2 — CLI Entrypoint
+- Created `cli.py` with argparse: `rmb build model.yaml` and `rmb validate model.yaml`
+- Supports: `--ws`, `--no-cache`, `--verbose`, `--input`, `--input-ext`, `--dry-run`, `--graph`
+- Registered console script in `pyproject.toml`: `rmb = "rapid_gwm_build.cli:main"`
+
+### Phase 2.3 — Error Messages & UX
+- User-friendly error wrapping in `Simulation.build()` with custom exceptions
+- `--dry-run` flag: parse + build graph without executing
+- `--graph` flag: visualize DAG and exit
+- Progress logging throughout pipeline stages
+
+### Phase 2.4 — Cleanup & Documentation
+- Replaced 30-line manual pipeline in `examples/pakipaki02/client_code.py` with 3-line API call
+- Created `examples/pakipaki02/debug_run.py` — step-through debug runner with VS Code launch.json snippet
+- Updated `examples/simple_freyburg/client_code.py` with new API (note: YAML still needs format update)
+- Rewrote `README.md` — installation, CLI reference, Python API, debugging, architecture overview
+
+**Files created:** `api.py`, `simulation.py`, `simulation_result.py`, `errors.py`, `cli.py`, `debug_run.py`
+**Files modified:** `__init__.py`, `build_context.py`, `rmb_runner.py`, `pyproject.toml`, `README.md`, `client_code.py` (both examples), `program_of_work.md`
+
+---
+
 ## 2026-03-25 — Phase 1: Foundation & Cleanup (Complete)
 
 **What:** Removed dead code, cleaned dependencies, fixed bugs, and added CI.

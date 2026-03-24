@@ -1,71 +1,163 @@
-**Still under major development:** At the moment many placeholders, and very basic functionality (proof of concept).
+# rmb — Rapid Groundwater Model Builder
 
-# Overview/Goals of rmb
-`rmb` (rapid model builder) is a Python package designed to streamline the creation and manipulation of groundwater model input files. It does this by leveraging a user-defined YAML input file and a set of backend templates.
+A Python package for building groundwater model input files from YAML configuration. Currently supports MODFLOW 6 via [flopy](https://github.com/modflowpy/flopy).
 
-- Generic to any model software (provided a template file exists)
-- Rapid model framework: YAML input file
-- Visualize and capture pre-processing pipelines through to model file creation in a single place
-- Uses network graph models as backend to solve for dependancy (similar to snakemake)
-- Hopefully future integration with data versioning CICD (ie. DVC)
+**Status:** Under active development.
 
-## Core Functionality
-**Model Template Selection**: The input file specifies a model_type, which rmb uses to pull the appropriate backend templates.
+## Installation
 
-**Graph-Based Execution**: Using the input and backend dependencies, rmb constructs a directed graph where nodes represent processing modules (e.g. creating arrays, applying spatial data) and edges represent dependencies between them.
-
-**Model Building**: Traversing this graph, rmb generates the required model input files for engines like MODFLOW or SWAT.
-
-**Simulation Object (sim)**: Allows investigation of intermediate or gridded data. Supports plotting and diagnostics.
-
-**Enables modular edits**: if a node is changed (e.g. a boundary condition or array), only downstream dependent nodes are recomputed.
-
-![Example_model_graph.png](/docs/Example_model_graph.png)
-Zoom in showing the pipeline nodes for ghb build.
-![Example_model_graph_subset.png](/docs/Example_model_graph_subset.png)
-
-# Usage
-
-```python
-input_yaml = r"examples\simple_freyburg\freyburg_1lyr_stress.yaml"
-
-sim = create_simulation(input_yaml)
-
-#visualize model
-sim.graph.plot() # all nodes in the model (including template, pipeline, default nodes)
-sim.graph.plot(subgraph=True) # this is only the nodes which are built (ie. upstream of the module nodes)
-
-sim.build() # resolves all the data for the nodes upstream of module nodes (ie. runs the pipelines)
-
-#view module data
-dis = sim.nodes['module.dis'].data
-dis.top # view top input data for flopy
-
-#view pipeline/pipe specific data
-sim.nodes['pipeline.ghb.stress_period_data'].data
-
-sim.write() # writes the simulation files
-
-sim.nodes['module.sim'].data.run_simulation() # you can run the model
-
+```bash
+# Clone and install in development mode
+git clone https://github.com/taraaubrey/rapid-gwm-build.git
+cd rapid-gwm-build
+uv sync                    # install dependencies
+uv sync --group dev        # with dev tools (ruff)
 ```
 
+After installation, the `rmb` CLI command is available.
 
-# Nodes
-## Types of nodes/Edges
+## Quick Start
 
-- **Input nodes**:
-  - **User input**: from the user config file (ie. yamls)
-  - **Template**: Specific to the template model files (ie. mf6, swat). related to module nodes. This is also the 'output' of rmb, but the input to the model.
-- **Module nodes**: Derived based on core inputs in user input file and backend model type template files (ie. generic, mf6, swat). 
-- **Mesh nodes**: Derived based on core inputs in user input file. Represents spatial discretization.
-- **Pipeline nodes**: Represents operational processes. Will have input and output nodes. Maybe this is a type of edge?
+### CLI
 
-## Node Naming Convention
-| Node Type     | Description           | Suggested Naming Prefix   | Example ID                            |
-| -----         | --------              | ---------                 | --------------                        |
-| `input`    | From frontend YAML; scope is the dict path    | `input.<usr_key_path>.<param>.<hash>`        | `input.mesh.resolution` `input.module.gwf.modelname`  |
-| `template` | Specific to backend model template; cmd kwargs in module inputs | `template.<mtype>.<module>.<param>` | `template.mf6.drn.stress_period_data` |
-| `module` | Logical building block from templates |` module.<kind>.<usrname> `| `module.sfr.mysfr` |
-| `mesh` | Spatial discretization | `mesh.<dimension/element>` | `mesh.grid` |
-| `pipeline` | Operation/process node | `pipeline.<name>` | `pipeline.interpolate_rainfall` |
+```bash
+# Build a model from a YAML config
+rmb build examples/pakipaki02/pakipaki02.yaml
+
+# Build with verbose output
+rmb build examples/pakipaki02/pakipaki02.yaml --verbose
+
+# Validate config without building
+rmb validate examples/pakipaki02/pakipaki02.yaml
+
+# Dry run — parse and build the DAG without executing
+rmb build examples/pakipaki02/pakipaki02.yaml --dry-run
+
+# Visualize the dependency graph
+rmb build examples/pakipaki02/pakipaki02.yaml --graph
+```
+
+### Python API
+
+```python
+from rapid_gwm_build import build
+
+result = build("examples/pakipaki02/pakipaki02.yaml")
+print(result)
+```
+
+For interactive use (notebooks, debugging):
+
+```python
+from rapid_gwm_build import create_simulation
+
+sim = create_simulation("examples/pakipaki02/pakipaki02.yaml")
+sim.build()
+sim.write()
+
+# Inspect results
+print(sim.result)
+```
+
+## CLI Reference
+
+```
+rmb build <yaml_path> [options]    Build model from YAML config
+rmb validate <yaml_path> [options] Validate config without building
+```
+
+### `rmb build` options
+
+| Flag | Description |
+|---|---|
+| `--ws DIR` | Override workspace (output) directory |
+| `--no-cache` | Disable node caching |
+| `--verbose, -v` | Enable verbose/debug output |
+| `--input FILE` | Additional YAML file(s) to merge (repeatable) |
+| `--input-ext EXT` | Load all files with this extension from config directory |
+| `--dry-run` | Parse and build graph without executing |
+| `--graph` | Visualize the dependency graph and exit |
+
+### `rmb validate` options
+
+| Flag | Description |
+|---|---|
+| `--verbose, -v` | Enable verbose output |
+
+## YAML Config Format
+
+User configs follow this structure (see `examples/pakipaki02/pakipaki02.yaml`):
+
+```yaml
+vars:
+  ws: examples/models
+  data_dir: examples/data
+
+simulation:
+  setup:
+    sim_type: mf6           # required — selects backend template
+    ws: ${vars.ws}/my_model  # output directory
+    sim_name: my_sim         # simulation name
+
+  mesh:
+    crs: 2193
+    nlay: 8
+    resolution: 25
+    domain: ${vars.data_dir}/domain.shp
+    top: ${vars.data_dir}/dem.tif
+    bottoms:
+      input: ${vars.data_dir}/basement.tif
+      pipeline:
+        - processor: tile_to_nlay
+
+  modules:
+    sim:
+      sim_name: my_sim
+      exe_name: mf6
+    gwf:
+      modelname: my_model
+    dis:
+      length_units: meters
+    # ... additional modules (tdis, ims, npf, etc.)
+```
+
+Key concepts:
+- **`${vars.key}`** — Variable substitution from the `vars:` block
+- **`@node.id`** — Cross-references between nodes
+- **`pipeline`** — Data processing chains with registered processors
+- **Module keys** — Can be `type` (e.g., `dis`) or `type-name` (e.g., `dis-mydis`)
+
+## Debugging
+
+For development/debugging, use the debug runner which exposes each pipeline stage:
+
+```bash
+# Step through with debugpy (VS Code)
+uv run python -m debugpy --listen 5678 --wait-for-client examples/pakipaki02/debug_run.py
+
+# Or run directly with print output at each stage
+uv run python examples/pakipaki02/debug_run.py
+```
+
+See `examples/pakipaki02/debug_run.py` for the VS Code `launch.json` snippet.
+
+## Architecture
+
+The core pipeline: **YAML config → NodeParser → DAG → RMBRunner → model files**
+
+- **Nodes** — typed data units (input, pipe, pipeline, mesh_config, mesh_data, module)
+- **Processors** — registered data-transformation functions (`@register_processor`)
+- **Builders** — one per node type, registered with `@register_builder`
+- **Templates** — define which flopy functions to call for each module type
+
+See `.claude/CLAUDE.md` for detailed architecture documentation.
+
+## Development
+
+```bash
+uv sync --group dev               # install dev dependencies
+uv run ruff check .               # lint
+uv run ruff check . --fix         # lint and auto-fix
+uv run pytest                     # run tests
+uv run pytest -m unit             # run unit tests only
+```

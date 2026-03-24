@@ -49,11 +49,18 @@ class BuildContext:
         """Get global state value."""
         return self._global_state.get(key, default)
     
-    def clear_context(self):
-        """Clear all context data."""
+    def reset(self):
+        """Reset all context for a new build run."""
         with self._lock:
             self._mesh_registry.clear()
             self._global_state.clear()
+            self.built_components = {}
+            self.mesh_grid = None
+            self.mesh_id = None
+
+    def clear_context(self):
+        """Clear all context data."""
+        self.reset()
 
 # Global singleton instance
 build_context = BuildContext()

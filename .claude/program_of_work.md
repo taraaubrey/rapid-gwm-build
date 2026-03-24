@@ -13,7 +13,7 @@
 | Phase | Focus | Type | Status | Target |
 |---|---|---|---|---|
 | 1 | Foundation & Cleanup | Stabilization | **Complete** | 2026-03-25 |
-| 2 | Public API & CLI | Feature | Not started | Week 2-3 |
+| 2 | Public API & CLI | Feature | **Complete** | 2026-03-25 |
 | 3 | Test Coverage | Stabilization | Not started | Week 3-4 |
 | 4 | Template & Module Expansion | Feature | Not started | Week 4-5 |
 | 5 | Demo Preparation | Polish | Not started | Week 5-7 |
@@ -65,22 +65,28 @@ Phase 1.X: [description]
 **Goal:** Replace manual client code with a clean, demonstrable entry point.
 
 ### Phase 2.1 — High-Level Python API
-- [ ] Create `rmb.build(yaml_path)` function (or similar)
-- [ ] Encapsulate the current client code pattern (ConfigParser → NodeParser → GraphBuilder → RMBRunner)
-- [ ] Handle `Path.mkdir` and workspace setup internally
-- [ ] Return a meaningful result object (built modules, output paths, etc.)
+- [x] Create `rmb.build(yaml_path)` function — `api.py:build()`
+- [x] Encapsulate the current client code pattern — `simulation.py:Simulation` class
+- [x] Handle `Path.mkdir` and workspace setup internally
+- [x] Return a meaningful result object — `SimulationResult` dataclass
 - [ ] Update PRD.md §8.2 — mark API design as resolved
 
 ### Phase 2.2 — CLI Entrypoint
-- [ ] Add CLI via `click` or `argparse`: `rmb build model.yaml`
-- [ ] Register as console script in `pyproject.toml`
-- [ ] Support key options: `--ws` override, `--no-cache`, `--verbose`
-- [ ] Add `rmb validate model.yaml` command (parse + build graph, but don't execute)
+- [x] Add CLI via `argparse`: `rmb build model.yaml` — `cli.py`
+- [x] Register as console script in `pyproject.toml`
+- [x] Support key options: `--ws` override, `--no-cache`, `--verbose`, `--input`, `--input_ext`
+- [x] Add `rmb validate model.yaml` command
 
 ### Phase 2.3 — Error Messages & User Experience
-- [ ] Add user-friendly error messages for common config mistakes
-- [ ] Add progress output during build (which node is being built)
-- [ ] Add `--dry-run` / `--graph` flag to visualize the DAG without building
+- [x] Add user-friendly error messages — custom exceptions in `errors.py`
+- [x] Add progress output during build — logging in `rmb_runner.py` and `simulation.py`
+- [x] Add `--dry-run` / `--graph` flags to CLI
+
+### Phase 2.4 — Cleanup & Documentation
+- [x] Replace manual client code with new API (`examples/pakipaki02/client_code.py`)
+- [x] Add debug runner (`examples/pakipaki02/debug_run.py`)
+- [x] Rewrite README.md with CLI reference and Python API usage
+- [x] Fix `build_context.reset()` bug (clear_context missed mesh_grid/mesh_id)
 
 ---
 
@@ -197,9 +203,9 @@ These items need input before the relevant phase can proceed. They are also flag
 
 | # | Question | Blocking | Status |
 |---|---|---|---|
-| U1 | What does `modflow-setup` dependency provide? | Phase 1.2 | **Resolved** — zero imports found, removed |
-| U2 | What reads NetCDF in the pipeline? | Phase 1.2 | **Resolved** — zero imports found, removed |
-| U3 | Does codebase use flopy APIs that changed after 3.9.2? | Phase 1.2 | **Resolved** — dynamic loading, pin widened to >=3.9.2 |
+| U1 | What does `modflow-setup` dependency provide? Audit imports before removing | Phase 1.2 | Open |
+| U2 | What reads NetCDF in the pipeline? | Phase 1.2 | Open |
+| U3 | Does codebase use flopy APIs that changed after 3.9.2? | Phase 1.2 | Open |
 | U4 | What level of SFR complexity to support initially? | Phase 4.1 | Open |
 | U5 | How should transient BCs be specified in YAML? | Phase 4.2 | Open |
 
@@ -214,4 +220,4 @@ These items need input before the relevant phase can proceed. They are also flag
 
 ---
 
-*Last updated: 2026-03-25 (Phase 1 completed)*
+*Last updated: 2026-03-25*
