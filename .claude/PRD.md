@@ -297,17 +297,17 @@ modules:
 - [ ] How should custom (non-standard) flopy packages be handled?
 
 ### 8.5 `ss/` Directory
-- [ ] Is `ss/` (older implementation) being deprecated? Should it be removed or kept as reference?
-- [ ] Is any logic in `ss/` still needed by the active path?
+> **[2026-03-25] Resolved:** Removed in Phase 1.1. No active code depended on `ss/`. The entire `src/rapid_gwm_build/ss/` directory, `nodes/ss_node_types.py`, and `examples/ss/` were deleted.
 
 ### 8.6 Dependency Management
-- [ ] `modflow-setup` is a HACK dependency — what does it provide that needs to be replaced?
-- [ ] `netcdf4` is a HACK — what reads NetCDF and should it be optional?
-- [ ] `flopy` is hardcoded to 3.9.2 — should it be a soft dependency (optional install)?
+> **[2026-03-25] Partially resolved in Phase 1.2:**
+> - `modflow-setup`, `netcdf4`, `cerberus`, `pyemu`, `pyshp`, `scikit-learn`, `setuptools` removed (zero imports found)
+> - `debugpy`, `dvc`, `ipykernel` moved to optional dependency groups
+> - `flopy` pin widened from `==3.9.2` to `>=3.9.2`
 - [ ] Should simulator-specific deps (flopy) be optional extras (`rmb[mf6]`)?
 
 ### 8.7 Testing
-- [ ] What is the `slow` pytest marker for (referenced in CLAUDE.md but not in pyproject.toml)?
+> **[2026-03-25] Partially resolved:** `slow` marker added to pyproject.toml in Phase 1.3.
 - [ ] What level of integration test coverage exists? What's the target?
 - [ ] Should examples (`pakipaki02`) be runnable as integration tests?
 
@@ -317,13 +317,6 @@ modules:
 
 | Item | Location | Notes |
 |---|---|---|
-| `modflow-setup` dependency | `pyproject.toml:19` | Marked HACK, should be removed |
-| `netcdf4` dependency | `pyproject.toml:21` | Marked HACK, should be removed or made optional |
-| flopy version pinned to 3.9.2 | `pyproject.toml:14` | Should be unpinned or made optional |
-| `ss/` legacy code | `src/rapid_gwm_build/ss/` | Older implementation, unclear if active |
-| `yorigin` has wrong source `xorigin` | `mf6_template.yaml:158` | Likely copy-paste bug |
-| `slow` marker missing from pyproject | `pyproject.toml` | Mentioned in CLAUDE.md markers |
-| Windows paths in example YAML | `pakipaki02.yaml:2-3` | Hardcoded `C:/` paths — not portable |
 | Manual `Path.mkdir` in client code | `client_code.py:40-41` | Should be handled by rmb internals |
 
 ---

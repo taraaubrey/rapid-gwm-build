@@ -8,22 +8,12 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "cerberus>=1.3.7",
-    "debugpy>=1.8.14",
-    "dvc>=3.59.2",
-    "flopy==3.9.2", #TODO: remove hardcoded version (user only needs if using flopy)
+    "flopy>=3.9.2",
     "gridit>=0.7",
-    "ipykernel>=6.29.5",
     "joblib>=1.5.1",
     "matplotlib>=3.10.1",
-    "modflow-setup>=0.6.1", #HACK: hardcoded for now (eventually will remove)
-    "netcdf4>=1.7.2", #HACK: hardcoded for now (remove)
     "networkx>=3.4.2",
-    "pyemu>=1.3.8",
-    "pyshp>=2.3.1",
     "pyyaml>=6.0.2",
-    "scikit-learn>=1.7.1",
-    "setuptools>=78.1.0", #HACK remove when remove modflow-setup
 ]
 
 [build-system]
@@ -34,8 +24,6 @@ build-backend = "setuptools.build_meta"
 dev = [
     "ruff>=0.11.6",
 ]
-
-# Add to your existing pyproject.toml or create it
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -51,12 +39,21 @@ markers = [
     "unit: Unit tests",
     "integration: Integration tests",
     "mesh: Mesh parsing tests",
+    "slow: Slow-running tests",
 ]
 
-# Add test dependencies
 [project.optional-dependencies]
 test = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "pytest-mock>=3.0",
+]
+debug = [
+    "debugpy>=1.8.14",
+]
+data = [
+    "dvc>=3.59.2",
+]
+notebook = [
+    "ipykernel>=6.29.5",
 ]

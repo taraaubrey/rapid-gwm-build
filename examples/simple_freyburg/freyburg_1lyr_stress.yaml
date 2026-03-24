@@ -1,7 +1,7 @@
 vars:
-  ws: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/simple_freyburg # path to the data files
-  input_dir: ${vars.ws}/data/input # path to the data files
-  mf6_exe: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/bin/mf6.exe # path to the mf6 executable
+  ws: examples/simple_freyburg
+  input_dir: ${vars.ws}/data/input
+  mf6_exe: mf6
 
 simulations:
   freyburg_simple: # user specified simulation name
@@ -33,7 +33,7 @@ simulations:
           # head: ${vars.input_dir}/freyberg6.ghb_head_layer1.txt
           stress_period_data:
             pipeline:
-              input: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\simple_freyburg\data\ghb.csv
+              input: ${vars.ws}/data/ghb.csv
               pipes:
                 - processor: to_mf6_txt
                   type: table

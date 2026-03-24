@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+See PRD.md for full product requirements, feature roadmap, and open design questions.
+See `.claude/program_of_work.md` for the phased development roadmap and task tracking.
+
 ## Project Overview
 
 `rmb` (rapid model builder) is a Python package (`rapid-gwm-build`) for building groundwater model input files. It parses a user-defined YAML config, constructs a directed acyclic graph (DAG) of processing nodes, and executes them in topological order to generate model files (currently MODFLOW 6 via flopy).
@@ -89,8 +92,12 @@ simulations:
 
 Module keys can be `type` (e.g., `dis`) or `type-name` (e.g., `dis-mydis`) to allow multiple instances.
 
-### `ss/` Directory
-
-The `src/rapid_gwm_build/ss/` subdirectory contains an older/alternative implementation (`Simulation`, `SimBuilder`, etc.). The active code path goes through `NodeParser` → `GraphBuilder` → `RMBRunner`.
 
 
+# Instructions
+- always display edits for review
+- always update dev_log.md after any work on this project
+- work in plan mode prior to any work completed
+- always create a phase document which highlights changes
+- create a git commit message after every phase completion for user to input manually
+- unless explicitly asked, always load and assess entire datasets

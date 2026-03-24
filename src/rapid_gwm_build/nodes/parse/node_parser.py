@@ -238,7 +238,6 @@ class NodeParser:
         return replace_refs(template_data)
     
     
-    #TODO utils?
     def _extract_function_parameters(self, func_path: str) -> dict:
         """Extract all parameters from a function given its module path."""
         import inspect

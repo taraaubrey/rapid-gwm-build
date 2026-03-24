@@ -376,7 +376,6 @@ class NodeSchemas:
                             return False, f"\nError input config:\n\n{config}\n\nInvalid '{field_name}' in {node_type}: {error_msg}"
                 
         
-        # Validate builtin pipelines #TODO
         if node_type == 'pipeline' and 'builtin' in config:
             builtin_name = config['builtin']
             valid_builtins = validation_rules.get('builtin', [])

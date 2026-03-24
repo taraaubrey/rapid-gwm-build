@@ -1,10 +1,10 @@
 vars:
-  ws: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/pakipaki # path to the data files
-  mf6_exe: C:/Users/tfo46/e_Python/a_rbm/rapid-gwm-build/examples/bin/mf6.exe # path to the mf6 executable
-  data_dir: C:\Users\tfo46\OneDrive - University of Canterbury\Tara_PhD\c_PhD\c_Data
-  scripts: C:\Users\tfo46\e_Python\a_rbm\rapid-gwm-build\examples\pakipaki\scripts
+  ws: examples/pakipaki
+  mf6_exe: mf6
+  data_dir: examples/pakipaki/data
+  scripts: examples/pakipaki/scripts
   top: ${vars.data_dir}/b_derived/dem_elevation_derivatives/dem_clipped.tif
-  res_src: ${vars.data_dir}/a_source\skytem_skytem\Heretaunga_skytem_3Dmodels\Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
+  res_src: ${vars.data_dir}/a_source/skytem_skytem/Heretaunga_skytem_3Dmodels/Heretaunga_SkyTEM_3Dmodels_V1_2023.csv
 
 simulation:
   setup:
@@ -24,7 +24,7 @@ simulation:
           inactive_dims: [-2, -1]
     top: ${vars.top}
     bottoms:
-      input: examples\pakipaki01\models\derived_data\basement_z.tif
+      input: examples/pakipaki01/models/derived_data/basement_z.tif
       pipeline:
         - processor: ${vars.scripts}/utils.make_layers
           confined_elev: -10
@@ -79,7 +79,7 @@ simulation:
     
     drn-riv:
       data:
-        mask: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_drains.shp
+        mask: ${vars.data_dir}/b_derived/mod_model_files/pakipaki/shp/model2_drains.shp
         elev:
           input:
             src: ${vars.top}
@@ -107,7 +107,7 @@ simulation:
     wel-mbr:
       data:
         mask:
-          input: ${vars.data_dir}\b_derived\mod_model_files\pakipaki\shp\model2_mbr.shp
+          input: ${vars.data_dir}/b_derived/mod_model_files/pakipaki/shp/model2_mbr.shp
           pipeline:
             - processor: np.logical_and
               x2: '@mesh.interior_boundary'
