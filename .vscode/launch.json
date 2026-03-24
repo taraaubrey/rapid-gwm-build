@@ -37,6 +37,15 @@
             ]
         },
         {
+            "name": "Debug pakipaki02",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/pakipaki02/debug_run.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
             "name": "Python: Current File",
             "type": "debugpy",
             "request": "launch",
@@ -44,7 +53,8 @@
             "env": {"PYTHONPATH": "${workspaceRoot}",
                     "PYDEVD_WARN_EVALUATION_TIMEOUT": "500"},
             "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }

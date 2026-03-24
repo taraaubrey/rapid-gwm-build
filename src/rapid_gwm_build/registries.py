@@ -66,3 +66,10 @@ def get_all_registries() -> Dict[str, Dict[str, Any]]:
         "builders": BUILDER_REGISTRY.copy(),
         "processors": BUILTIN_PROCESSORS.copy(),
     }
+
+
+# =============================================================================
+# Auto-discovery: import packages so @register_* decorators populate registries
+# =============================================================================
+import rapid_gwm_build.nodes.builders  # noqa: E402, F401
+import rapid_gwm_build.processors      # noqa: E402, F401

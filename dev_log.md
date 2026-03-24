@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-03-25 — Bugfix: Empty processor/builder registries
+
+**What:** Fixed `BUILTIN_PROCESSORS` and `BUILDER_REGISTRY` being empty at runtime, causing `ValueError: Processor 'from_structured_mesh' is not registered`.
+
+**Root cause:** The `@register_processor` and `@register_builder` decorators only fire when their modules are imported. Nothing in the import chain triggered the auto-discovery in `processors/__init__.py` and `nodes/builders/__init__.py`, so the registries stayed empty.
+
+**Fix:** Added auto-discovery imports at the bottom of `registries.py`:
+```python
+import rapid_gwm_build.nodes.builders  # populates BUILDER_REGISTRY
+import rapid_gwm_build.processors      # populates BUILTIN_PROCESSORS
+```
+
+This ensures any code that imports from `registries` gets pre-populated registries.
+
+**Files modified:** `src/rapid_gwm_build/registries.py`
+
+---
+
 ## 2026-03-25 — Phase 2: Public API & CLI (Complete)
 
 **What:** Added a clean Python API, CLI entrypoint, debug runner, and rewrote the README.
