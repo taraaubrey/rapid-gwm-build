@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-03-25 — Phase 3.1.1: Document & Improve PipeBuilder
+
+**What:** Added docstrings and minor quality improvements to `PipeBuilder` (`nodes/builders/pipe.py`).
+
+**Changes:**
+1. **Docstrings** — Added class-level, `build()`, `_extract_config_data()`, and `fetch_data()` docstrings
+2. **Removed dead code** — `if processor_name == 'top_only': pass` no-op block (was lines 34-35)
+3. **Fixed mutation side effect** — `processor_args_cfg` was mutated via `.pop('context_path')` on `node_data`'s internal dict. Now copies with `dict()` before popping
+4. **Simplified context_path handling** — Replaced if/else branching with conditional dict insertion + single `execute()` call
+5. **Explicit None check** — Changed `elif pipe_input` to `elif pipe_input is not None` in `fetch_data`
+
+**Files modified:** `src/rapid_gwm_build/nodes/builders/pipe.py`
+
+**Verification:** 28/28 processor tests pass, no regressions (2 pre-existing failures in `test_node_schema.py` unrelated).
+
+---
+
 ## 2026-03-25 — Phase 3.1: Fix & Complete `check_data_dims_tdis` Processor
 
 **What:** Rewrote the `check_data_dims_tdis` processor to fix 6 bugs and implement the full dimension transformation matrix.
