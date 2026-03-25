@@ -36,7 +36,7 @@ def _parse_levels(level_config: dict | list, initial_input) -> None:
     ordered_input = _resolve_ordered_input(initial_input, level_input)
     steps = _resolve_level_steps(level_config, ordered_input)
     options = _resolve_level_options(level_config)
-    return linput, steps, options
+    return level_input, steps, options
 
 
 def _resolve_level_input(level_config: list | dict) -> dict:

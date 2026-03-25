@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-03-25 — Fix CI Ruff Lint Failures
+
+**What:** CI failed on `uv run ruff check .` with 22 errors across three files after push.
+
+**Root cause:** Two issues:
+1. `pipeline.py:39` referenced undefined variable `linput` instead of `level_input`
+2. `notebooks/` and `refs/` directories (reference/scratch files) were being linted unnecessarily
+
+**Fix:**
+1. Fixed `linput` → `level_input` in `src/rapid_gwm_build/nodes/parse/blocks/pipeline.py:39`
+2. Added `[tool.ruff] exclude = ["notebooks", "refs"]` to `pyproject.toml`
+
+**Verification:** `uv run ruff check .` returns 0 errors.
+
+**Files modified:** `src/rapid_gwm_build/nodes/parse/blocks/pipeline.py`, `pyproject.toml`
+
+---
+
 ## 2026-03-25 — Fix: IC strt External File Writing & Add Load Validation
 
 **What:** Fixed the IC package's `strt` data being written incorrectly, causing `flopy.mf6.MFSimulation.load()` to fail with "Expected data size 24400 but only found 0".
