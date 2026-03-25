@@ -6,6 +6,7 @@ import tempfile
 import shutil
 import os
 from pathlib import Path
+import numpy as np
 
 @pytest.fixture(scope="session")
 def temp_workspace():
@@ -46,3 +47,9 @@ def sample_mesh_files(temp_workspace):
         file_paths[filename] = str(filepath)
     
     return file_paths
+
+
+@pytest.fixture
+def idomain_3d():
+    """Standard 3D idomain array: 2 layers, 5 rows, 10 cols."""
+    return np.ones((2, 5, 10), dtype=int)

@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-03-25 — Phase 3.1: Fix & Complete `check_data_dims_tdis` Processor
+
+**What:** Rewrote the `check_data_dims_tdis` processor to fix 6 bugs and implement the full dimension transformation matrix.
+
+**Bugs fixed:**
+1. **Broken dimension promotion logic** — `else` branch always created 3D→4D regardless of `expected_dims`. Replaced with explicit `(ndim, expected_dims)` routing.
+2. **`dtype=int` in `_number_to_array`** — scalar floats (k=1e-5) were expanded with int dtype. Now uses `type(value)` to preserve int/float.
+3. **`*kwargs` → `**kwargs`** — was capturing positional args as tuple; extra keyword args caused TypeError.
+4. **No list→ndarray conversion** — list inputs hit TypeError. Now converts via `np.asarray()`.
+5. **numpy imported inside every helper** — moved to module-level import.
+6. **`_add_tdis` on 2D data produced 3D not 4D** — `reshape((1, *data.shape))` on 2D `(nrow,ncol)` → 3D. Replaced with `np.newaxis` slicing on properly promoted 3D data.
+
+**Architecture:** No changes to registration/plumbing. Kept `nper` dependency (not `perioddata`).
+
+**Files modified:**
+- `src/rapid_gwm_build/processors/data/checkdims_andor_tdis.py` — full rewrite
+- `tests/conftest.py` — added `idomain_3d` shared fixture
+- `.claude/features/check_data_dims_tdis.md` — updated status
+
+**Files created:**
+- `tests/test_processors/__init__.py`
+- `tests/test_processors/test_check_data_dims_tdis.py` — 28 tests (all passing)
+
+**Verification:** 28/28 tests pass, ruff clean, no regressions (2 pre-existing failures in `test_node_schema.py` unrelated).
+
+---
+
 ## 2026-03-25 — Restructure Program of Work (Phase 3+)
 
 **What:** Restructured Phase 3+ from category-focused (test coverage, template expansion) to feature-focused (one sub-phase per processor). Created a reusable feature context template for future Claude sessions.
