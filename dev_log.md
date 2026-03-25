@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-03-25 — Fix CI: pytest not installed in test job
+
+**What:** CI test job failed with `Failed to spawn: pytest` because `uv sync` was run without the `test` extra.
+
+**Root cause:** `pytest` is declared in `[project.optional-dependencies] test`, not in core dependencies. The CI test job ran bare `uv sync` which only installs core deps.
+
+**Fix:** Changed `uv sync` → `uv sync --extra test` in `.github/workflows/ci.yml` (line 33).
+
+**Files modified:** `.github/workflows/ci.yml`
+
+---
+
 ## 2026-03-25 — Fix CI Ruff Lint Failures
 
 **What:** CI failed on `uv run ruff check .` with 22 errors across three files after push.
