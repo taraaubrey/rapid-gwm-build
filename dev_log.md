@@ -2,6 +2,21 @@
 
 ---
 
+## 2026-03-25 — Phase 3.2: Lightweight Node Context for Processor Debugging
+
+**What:** Added pre-build logging and error wrapping in `RMBRunner` so that processor failures always identify which DAG node triggered them.
+
+**Changes:**
+1. **Pre-build log line** — `logger.info("Building node: %s [%s]", node_id, ntype)` before each build call, so the last log entry before a crash identifies the node
+2. **Error wrapping** — try/except around builder execution re-raises with `[node_id]` prefix, preserving original exception type and traceback chain
+
+**Files modified:** `src/rapid_gwm_build/rmb_runner.py`
+**Files created:** `.claude/phase3_node_debug_context.md`
+
+**Verification:** 28/28 tests pass, ruff clean, no regressions (2 pre-existing failures in `test_node_schema.py` unrelated).
+
+---
+
 ## 2026-03-25 — Phase 3.1.1: Document & Improve PipeBuilder
 
 **What:** Added docstrings and minor quality improvements to `PipeBuilder` (`nodes/builders/pipe.py`).

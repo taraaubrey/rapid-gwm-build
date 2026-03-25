@@ -55,12 +55,15 @@ class RMBRunner:
             
             builder = self.engine.get_builder(ntype)
 
-            if CONFIG.get('cache_nodes', True):
-                # Use caching if enabled
-                result = execute_node_build(builder, node)
-            else:
-                # Execute without caching
-                result = builder.build(node)
+            logger.info("Building node: %s [%s]", node_id, ntype)
+
+            try:
+                if CONFIG.get('cache_nodes', True):
+                    result = execute_node_build(builder, node)
+                else:
+                    result = builder.build(node)
+            except Exception as exc:
+                raise type(exc)(f"[{node_id}] {exc}") from exc
             
             # save to build_registry (important for local fetching in other functions)
             build_registry.register_built_node(node_id, result)
