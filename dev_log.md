@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-03-25 — Fix: IC strt External File Writing & Add Load Validation
+
+**What:** Fixed the IC package's `strt` data being written incorrectly, causing `flopy.mf6.MFSimulation.load()` to fail with "Expected data size 24400 but only found 0".
+
+**Root cause:** In `pakipaki02.yaml`, `strt: '@mesh.top'` was specified in the IC `cmd` section. The node parser excludes template `build_dependency` entries that match user `cmd` keys, so the template's `strt` pipeline (`check_data_dims_tdis` → `array_to_file`) was completely bypassed. Flopy received a raw 2D array instead of 3D data with external file references.
+
+**Fix:**
+1. Removed `cmd.strt` override from `pakipaki02.yaml` — the template already defines the full pipeline with `input: '@mesh.top'`
+2. Added `return_arg` to IC strt's `array_to_file` in `mf6_template.yaml` for consistency with DIS botm and NPF k
+3. Updated `client_code.py` to validate the build via `MFSimulation.load()` using `result.workspace`
+
+**Verification:** 8 external `strt` files created, `pakipaki.ic` uses `OPEN/CLOSE` references, load succeeds. 28/28 tests pass.
+
+**Files modified:** `examples/pakipaki02/pakipaki02.yaml`, `src/rapid_gwm_build/templates/mf6_template.yaml`, `examples/pakipaki02/client_code.py`
+**Files created:** `.claude/fix_ic_strt_external_files.md`
+
+---
+
 ## 2026-03-25 — Fix: idomain saved as floats causes flopy MFDataException
 
 **What:** Fixed `_save_array` in `array_to_txtfile.py` writing integer arrays (e.g. `idomain`) in scientific notation (`0.000000000000000000e+00`), causing flopy to fail with `MFDataException` when parsing the external text file as integers.

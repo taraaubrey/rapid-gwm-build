@@ -175,6 +175,8 @@ modules:
                         filename_format:
                             src: '{modelname}.{pkg_type_name}_{paramname}_layer{ilay}.txt'
                             resolution_mode: 'literal'
+                        return_arg:
+                            filename: '{filename}'
         func: 'flopy.mf6.ModflowGwfic'
         duplicates_allowed: False
 

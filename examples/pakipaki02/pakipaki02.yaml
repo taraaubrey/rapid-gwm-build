@@ -91,9 +91,7 @@ simulation:
         save_specific_discharge: True
         icelltype: 0
     
-    ic:
-      cmd:
-        strt: '@mesh.top'
+    ic: {}
     
     drn-riv:
       data:
