@@ -55,7 +55,6 @@ class Simulation:
     def from_yaml(
         cls,
         yaml_path: str | Path,
-        extra_inputs: list[str | Path] | None = None,
         ws: str | Path | None = None,
         cache: bool = True,
     ) -> "Simulation":
@@ -72,7 +71,7 @@ class Simulation:
             raise ConfigError(f"Config file not found: {yaml_path}")
 
         try:
-            config = ConfigParser.parse(str(yaml_path), extra_configs=extra_inputs)
+            config = ConfigParser.parse(str(yaml_path))
         except (ValueError, KeyError, FileNotFoundError) as exc:
             raise ConfigError(str(exc)) from exc
 

@@ -14,7 +14,6 @@ def build(
     ws: str | Path | None = None,
     cache: bool = True,
     verbose: bool = False,
-    extra_inputs: list[str | Path] | None = None,
 ) -> SimulationResult:
     """One-shot build: parse YAML, build all nodes, write output files.
 
@@ -31,7 +30,7 @@ def build(
     if verbose:
         logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 
-    sim = create_simulation(yaml_path, ws=ws, cache=cache, extra_inputs=extra_inputs)
+    sim = create_simulation(yaml_path, ws=ws, cache=cache)
     sim.build()
     sim.write()
     return sim.result
@@ -45,7 +44,7 @@ def validate(
 
     Returns a dict with validation info (node_count, edge_count, node_types).
     """
-    sim = create_simulation(yaml_path, extra_inputs=extra_inputs)
+    sim = create_simulation(yaml_path)
     return sim.validate()
 
 
@@ -70,5 +69,4 @@ def create_simulation(
         yaml_path=yaml_path,
         ws=ws,
         cache=cache,
-        extra_inputs=extra_inputs,
     )
