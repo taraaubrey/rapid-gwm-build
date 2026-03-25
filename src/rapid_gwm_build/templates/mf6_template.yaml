@@ -142,6 +142,7 @@ modules:
                         expected_dims: 3
                     - array_to_file:
                         output_type: 'array'
+                        dtype: int
                         by_layer: True
                         by_stress_period: False
                         filename_format:

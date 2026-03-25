@@ -21,11 +21,13 @@ def array_to_file(data, output_type, sim_ws, **kwargs):
         return _to_table(data, sim_ws, **kwargs)
     
 
-def _to_array(data, sim_ws, context_path, modelname, idomain, nper, 
-                  by_layer=False, by_stress_period=False, 
+def _to_array(data, sim_ws, context_path, modelname, idomain, nper,
+                  by_layer=False, by_stress_period=False, dtype='float',
                   filename_format='{modelname}.{pkg_type_name}_{paramname}.txt',
                   **kwargs):
-    
+
+    fmt = '%d' if dtype == 'int' else '%.18e'
+
     if by_layer:
         filenames = []
         for ilay in range(idomain.shape[0]):
@@ -34,7 +36,7 @@ def _to_array(data, sim_ws, context_path, modelname, idomain, nper,
                     pkg_type_name=context_path[1],
                     paramname=context_path[2],
                     ilay=ilay)
-            _save_array(sim_ws, data[ilay], filename)
+            _save_array(sim_ws, data[ilay], filename, fmt=fmt)
             filenames.append({'filename': filename})
         return filenames
     elif by_stress_period:
@@ -45,7 +47,7 @@ def _to_array(data, sim_ws, context_path, modelname, idomain, nper,
                     pkg_type_name=context_path[1],
                     paramname=context_path[2],
                     kper=kper)
-            _save_array(sim_ws, data[kper], filename)
+            _save_array(sim_ws, data[kper], filename, fmt=fmt)
             output[kper] = {'filename': filename}
         return output
     else:
@@ -53,15 +55,15 @@ def _to_array(data, sim_ws, context_path, modelname, idomain, nper,
                 modelname=modelname,
                 pkg_type_name=context_path[1],
                 paramname=context_path[2])
-        
-        _save_array(sim_ws, data, filename)
+
+        _save_array(sim_ws, data, filename, fmt=fmt)
         return {'filename': filename}
 
-def _save_array(sim_ws, data, filename):
+def _save_array(sim_ws, data, filename, fmt='%.18e'):
     from pathlib import Path
     abs_path = Path(sim_ws) / Path(filename)
-    abs_path.parent.mkdir(parents=True, exist_ok=True) # Ensure the directory exists
-    np.savetxt(abs_path, data)
+    abs_path.parent.mkdir(parents=True, exist_ok=True)
+    np.savetxt(abs_path, data, fmt=fmt)
 
 
 def _to_table(data, sim_ws, idomain, nper, col_names, filename_format, modelname, context_path, by_stress_period=True, **kwargs):

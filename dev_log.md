@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-03-25 — Fix: idomain saved as floats causes flopy MFDataException
+
+**What:** Fixed `_save_array` in `array_to_txtfile.py` writing integer arrays (e.g. `idomain`) in scientific notation (`0.000000000000000000e+00`), causing flopy to fail with `MFDataException` when parsing the external text file as integers.
+
+**Root cause:** `np.savetxt` defaults to `fmt='%.18e'`, so integer arrays like `idomain` (values 0, 1) were written as floats. When flopy later read the file expecting integers, it raised a `ValueError`.
+
+**Fix:** Template-driven dtype control. Added `dtype: int` to the `idomain` entry in `mf6_template.yaml`. The `array_to_file` processor now accepts a `dtype` param (default `'float'`) which determines the `fmt` string passed to `_save_array`. This keeps the dtype knowledge in the template where module schemas are defined, rather than relying on runtime detection.
+
+**Files modified:**
+- `src/rapid_gwm_build/processors/mf6/array_to_txtfile.py` — `_to_array` accepts `dtype` param, resolves to `fmt`, passes to `_save_array`
+- `src/rapid_gwm_build/templates/mf6_template.yaml` — `idomain.array_to_file` entry gets `dtype: int`
+
+**Files created:** `.claude/fix_idomain_float_fmt.md`
+
+---
+
 ## 2026-03-25 — Phase 3.2: Lightweight Node Context for Processor Debugging
 
 **What:** Added pre-build logging and error wrapping in `RMBRunner` so that processor failures always identify which DAG node triggered them.
