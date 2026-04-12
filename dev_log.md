@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-04-02 — YAML Schema Design and Documentation
+
+**What:** Designed and documented the canonical YAML schema for the user-editable config file.
+
+**Design decisions:**
+- `src` is always a plain string (path, scalar, `@ref`) — never a dict
+- `load:` holds load-time options (e.g. resampling) alongside `src:` at the field level
+- `metadata:` holds parameterisation bounds (`lb`, `ub`)
+- `pipeline:` is an ordered list of processors applied after loading
+- `data:` block enables named multi-source inputs, each with their own `src`/`load`/`pipeline`; the block can have its own combining `pipeline:` — fully recursive
+- Flat form is preferred over a single-entry `data:` block
+- Shorthand (`field: value`) collapses the flat form for simple scalars, paths, and `@ref`s
+
+**Files created:** `docs/yaml_schema.md`
+
+---
+
 ## 2026-03-25 — Fix CI: pytest not installed in test job
 
 **What:** CI test job failed with `Failed to spawn: pytest` because `uv sync` was run without the `test` extra.
