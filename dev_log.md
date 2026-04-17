@@ -2,6 +2,45 @@
 
 ---
 
+## 2026-04-17 — GitBook Setup
+
+**What:** Set up GitBook documentation site structure for the project, with Git sync support.
+
+**Changes made:**
+
+- **`.gitbook.yaml`** (new): Root config pointing GitBook to `docs/` as the content root with `SUMMARY.md` as the TOC.
+- **`docs/README.md`** (new): GitBook landing page — brief overview of `rmb` and a link to the YAML Schema reference.
+- **`docs/SUMMARY.md`** (new): GitBook table of contents — home page and YAML Schema reference entry.
+- **`docs/yaml_schema.md`**: No changes — already in the right location, now referenced via `SUMMARY.md`.
+
+**Next step (manual):** Connect the repo to GitBook.com via GitHub integration (New Space → Import from GitHub → select `docs/` as root).
+
+**Files created:**
+- `.gitbook.yaml`
+- `docs/README.md`
+- `docs/SUMMARY.md`
+
+---
+
+## 2026-04-17 — Schema Doc: Clarify `data` vs `inputs` keywords
+
+**What:** Updated `docs/yaml_schema.md` to make the distinction between `data:` and `inputs:` explicit throughout the document.
+
+**Changes made:**
+
+- **Top-level structure**: Updated inline comment on `data:` to flag it as a module-only keyword.
+- **New section — Module Block Structure**: Added dedicated section explaining that `data:` is only valid as a direct child of a module block (not in `mesh:` or field definitions), and that `cmd:` holds scalar flopy kwargs. Includes a worked example.
+- **Form 2 renamed**: "Data block (named multi-source)" → "Multi-source field (inputs form)" to remove the misleading `data` label from the `inputs:` form.
+- **Form 2 rules**: Added explicit statement that multiple `inputs:` entries **require** a block-level `pipeline:`.
+- **Rules table**: Added two new rows — `data:` is module-only, and multiple `inputs:` require a pipeline.
+- **Examples 10–13 retitled**: Example 10 now reads "Module `data:` block — independent named field entries"; examples 11–13 use "Multi-source field" prefix and include the pipeline-required note.
+- **Schema Summary split**: Separated into "Module block structure" and "Field forms" subsections, with `REQUIRED` annotation on the pipeline in Form 2.
+
+**Files modified:**
+- `docs/yaml_schema.md`
+
+---
+
 ## 2026-04-17 — Schema & Config Design Improvements
 
 **What:** Review and hardening of the schema, config validation, and defaults system across the library.

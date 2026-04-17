@@ -13,8 +13,32 @@ simulation:
   mesh:        # spatial discretisation config
   modules:     # model packages
     <module_type>[-<name>]:
-      data:    # spatial/array inputs for this module
+      data:    # module-only keyword — container for field definitions passed to flopy
       cmd:     # scalar kwargs passed directly to the flopy function
+```
+
+---
+
+## Module Block Structure
+
+A module block has two reserved keywords:
+
+- **`data:`** — contains named field definitions, each of which becomes an argument to the flopy function. `data:` is **only valid as a direct child of a module block** — it is not valid inside `mesh:` or within field definitions.
+- **`cmd:`** — scalar keyword arguments passed directly to the flopy constructor.
+
+Fields placed directly under the module (not under `data:`) must be plain scalars, file paths, or `@ref` values — no pipeline or load options. Use `data:` when a field requires pipeline processing, load options, or multiple source inputs.
+
+```yaml
+modules:
+  npf:
+    data:                    # module-only keyword
+      k:                     # field name — becomes a flopy argument
+        src: 1.0
+        pipeline:
+          - processor: k_layers
+    cmd:                     # scalar kwargs — passed directly to flopy
+      icelltype: 0
+      save_specific_discharge: True
 ```
 
 ---
@@ -41,21 +65,26 @@ field:
 field: value         # equivalent to src: value with no other keys
 ```
 
-### Form 2 — Data block (named multi-source)
+### Form 2 — Multi-source field (inputs form)
+
+Used when a single field requires multiple source files fed into a combining pipeline.
 
 ```yaml
 field:
-  data:
-    <name>:          # named data entry — follows Form 1 schema
+  inputs:
+    <name>:          # named source entry — follows Form 1 schema
       src: ...
       load: {...}
       pipeline: [...]
     <name>: ...
-  pipeline: [...]    # block-level pipeline — receives named entry outputs
+  pipeline: [...]    # block-level pipeline — receives named entry outputs as a single combined result
   metadata: {...}    # optional parameterisation bounds on the combined output
 ```
 
-`data:` entries are **recursive** — each named entry follows the same schema, including the ability to have its own `data:` block.
+**Rules:**
+- When `inputs:` contains **more than one entry**, a block-level `pipeline:` is **required** to combine them into a single output.
+- A single-entry `inputs:` block with no pipeline should be written as a flat `src:` form instead.
+- `inputs:` entries are **recursive** — each named entry follows the same schema, including the ability to have its own `inputs:` block.
 
 ---
 
@@ -63,9 +92,11 @@ field:
 
 | Rule | Detail |
 |---|---|
+| `data:` is module-only | The `data:` keyword is only valid as a direct child of a module block. Not valid inside `mesh:` or within field definitions. |
+| Multiple `inputs:` require a pipeline | If `inputs:` has more than one entry, a block-level `pipeline:` must be present to combine them into a single output. |
 | `src` is always a plain string | path, scalar value, or `@ref` — never a dict |
 | `load:` only with file-path `src` | not valid for scalars or `@ref` |
-| Flat form preferred | a single-entry `data:` block with no combining pipeline should be written as flat `src:` form instead |
+| Flat form preferred | a single-entry `inputs:` block with no combining pipeline should be written as flat `src:` form instead |
 | `@ref` syntax | `'@node.id'` references another node's output — dot-separated context path |
 | `${vars.key}` syntax | variable substitution resolved before parsing |
 | Processors are strings | built-in name, `path/to/file.function`, or `module.function` |
@@ -215,9 +246,9 @@ mask:
 
 ---
 
-### 10. data block — independent named entries
+### 10. Module `data:` block — independent named field entries
 
-Each named entry is a separate parameter passed to the module. No block-level combining pipeline — entries are independent.
+Each key under `data:` is a separate argument passed independently to the flopy function. There is no combining pipeline — entries are not merged; each becomes its own flopy kwarg.
 
 ```yaml
 drn-riv:
@@ -246,13 +277,13 @@ drn-riv:
 
 ---
 
-### 11. data block — multi-input with block-level combining pipeline
+### 11. Multi-source field — multiple `inputs:` with required combining pipeline
 
-Named entries each load independently. The block-level `pipeline:` receives them as named inputs and combines into a single output.
+Named entries each load independently. Because there is more than one entry, a block-level `pipeline:` is required to combine them into a single output.
 
 ```yaml
 bottoms:
-  data:
+  inputs:
     basement:
       src: ${vars.data_dir}/basement_z.tif
       load:
@@ -273,13 +304,13 @@ bottoms:
 
 ---
 
-### 12. data block — entries with individual pipelines feeding the block pipeline
+### 12. Multi-source field — entries with individual pipelines feeding the combining pipeline
 
-Each named entry runs its own pipeline first. The block-level pipeline then receives the processed outputs.
+Each named entry runs its own pipeline first. Because there is more than one entry, a block-level `pipeline:` is required to receive the processed outputs and combine them into a single result.
 
 ```yaml
 combined_k:
-  data:
+  inputs:
     marine:
       src: ${vars.data_dir}/marine_k.tif
       load:
@@ -304,15 +335,15 @@ combined_k:
 
 ---
 
-### 13. Nested data blocks
+### 13. Nested multi-source fields
 
-A named entry inside `data:` can itself contain a `data:` block. The schema is fully recursive.
+A named entry inside `inputs:` can itself contain an `inputs:` block. The schema is fully recursive. Each level with multiple entries requires its own combining `pipeline:`.
 
 ```yaml
 hydraulic_params:
-  data:
+  inputs:
     k_layers:
-      data:
+      inputs:
         k_shallow:
           src: ${vars.data_dir}/k_shallow.tif
           load:
@@ -375,7 +406,7 @@ mesh:
   domain: ${vars.data_dir}/model2_domain.shp        # path shorthand
   top: ${vars.data_dir}/model2_dem.tif              # path shorthand
   bottoms:
-    data:
+    inputs:
       basement:
         src: ${vars.data_dir}/basement_z.tif
         load:
@@ -401,6 +432,24 @@ mesh:
 
 ## Schema Summary
 
+### Module block structure
+
+`data:` is **module-only** — only valid as a direct child of a module block.
+
+```
+<module_type>[-<name>]:
+  data:                           # module-only — container for field definitions
+    <field>: <value>              # shorthand field
+    <field>:                      # full field definition (Form 1 or Form 2)
+      ...
+  cmd:                            # scalar kwargs passed directly to flopy
+    <kwarg>: <value>
+```
+
+### Field forms
+
+**Form 1 — Flat (single source)**
+
 ```
 field: <value>                    # shorthand — scalar, path, or @ref
 
@@ -416,16 +465,22 @@ field:
     - processor: <name>
       <arg>: <value>
       <arg>: '@node.id'           # cross-node reference as processor arg
+```
 
+**Form 2 — Multi-source (inputs form)**
+
+Required when a field is built from multiple sources. A combining `pipeline:` is **required** when `inputs:` has more than one entry.
+
+```
 field:
-  data:                           # named multi-source entries
+  inputs:                         # named source entries — each follows Form 1 schema
     <name>: <value>               # shorthand entry
     <name>:
       src: <string>
       load: {...}
       pipeline: [...]
-      data: {...}                 # recursive — entries can have their own data block
-  pipeline:                       # block-level combining pipeline
+      inputs: {...}               # recursive — entries can have their own inputs block
+  pipeline:                       # REQUIRED when inputs has >1 entry — combines into single output
     - processor: <name>
       <name>: '@field.data.<name>'
   metadata: {...}
