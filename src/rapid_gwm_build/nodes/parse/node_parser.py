@@ -491,6 +491,9 @@ class NodeParser:
             # input_node = self.node_data.get(value[1:])
             # input_node.context_path = context_path  # Update context path
 
+        # TODO: file existence pre-check — if value is a string path (not an @ref or scalar),
+        # optionally verify the file exists here before creating the node. Gate behind a
+        # `validate_files: true` flag in CONFIG so it doesn't slow down every parse.
         meta = {
             'value': value,
             'resolution_mode': resolution_mode,
@@ -527,10 +530,21 @@ class NodeParser:
         else:
             raise ValueError(f"Invalid pipe configuration: {pipe_config}. Expected dict format.")
         
-        # check if processor is in the built-in registry
+        # Validate processor name at parse time
+        context_str = '.'.join(context_path)
         if built_in:
             if processor not in BUILTIN_PROCESSORS:
-                raise ValueError(f"Processor '{processor}' is not registered in the built-in processors registry. Available processors: {list(BUILTIN_PROCESSORS.keys())}")
+                raise ValueError(
+                    f"Unknown built-in processor '{processor}' at '{context_str}'. "
+                    f"Available built-in processors: {list(BUILTIN_PROCESSORS.keys())}"
+                )
+        elif processor not in BUILTIN_PROCESSORS and '.' not in processor:
+            # Custom processors must use 'module.function' dot-notation format
+            raise ValueError(
+                f"Invalid processor name '{processor}' at '{context_str}'. "
+                f"Must be a registered built-in name or use 'module.function' dot-notation. "
+                f"Available built-in processors: {list(BUILTIN_PROCESSORS.keys())}"
+            )
         if processor in BUILTIN_PROCESSORS:
             # get built-in dependencies
             built_in_depargs = BUILTIN_PROCESSORS[processor].get('dependency_args', {})

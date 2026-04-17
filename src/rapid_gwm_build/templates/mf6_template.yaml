@@ -234,7 +234,7 @@ modules:
             - mask
             - cond
             - elev
-        func: flopy.mf6.ModflowGwfdrn
+        func: 'flopy.mf6.ModflowGwfdrn'
         parameterization:
             index_cols: [0,1,2]
             param:

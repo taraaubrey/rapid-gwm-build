@@ -82,6 +82,10 @@ class Simulation:
         if ws is not None:
             config.setdefault("simulation", {}).setdefault("setup", {})["ws"] = str(ws)
 
+        # TODO: sim_ws auto-wiring — users must specify the workspace path twice:
+        # once in simulation.setup.ws (rmb) and again in modules.sim.cmd.sim_ws (flopy).
+        # Auto-populate modules.sim.cmd.sim_ws from setup.ws here if not already set,
+        # so users only need to set it once.
         return cls(config=config, yaml_path=yaml_path)
 
     # ------------------------------------------------------------------
@@ -230,6 +234,74 @@ class Simulation:
             "node_types": _count_node_types(graph),
             "workspace": str(self.workspace) if self.workspace else None,
         }
+
+    # ------------------------------------------------------------------
+    # Config inspection
+    # ------------------------------------------------------------------
+
+    def show_resolved_config(self) -> dict[str, Any]:
+        """Return the fully-resolved config that would be used at build time.
+
+        This merges function-signature defaults, template ``build_dependencies``,
+        and user-supplied ``cmd`` values — in that priority order — so you can see
+        exactly what parameters will be passed to each flopy function without
+        running the build.
+
+        Priority (lowest → highest): function defaults < template < user cmd
+
+        Returns a dict keyed by module name with the effective ``cmd`` config.
+        Does not modify any simulation state.
+        """
+        import inspect
+
+        template_modules = self._template.get("modules", {})
+        sim_modules = self._config.get("simulation", {}).get("modules", {})
+
+        resolved: dict[str, Any] = {}
+
+        for module_key, module_cfg in sim_modules.items():
+            cmd_module_name = module_key.split("-")[0] if "-" in module_key else module_key
+            tmpl = template_modules.get(cmd_module_name, {})
+            func_path = tmpl.get("func")
+
+            # 1. Function-signature defaults
+            func_defaults: dict[str, Any] = {}
+            if func_path:
+                try:
+                    parts = func_path.split(".")
+                    mod = __import__(".".join(parts[:-1]), fromlist=[parts[-1]])
+                    func = getattr(mod, parts[-1])
+                    for name, param in inspect.signature(func).parameters.items():
+                        if param.default is not inspect.Parameter.empty and param.default is not None:
+                            func_defaults[name] = param.default
+                except Exception:
+                    pass  # skip if import fails (e.g. flopy not installed)
+
+            # 2. Template build_dependencies (scalar values only)
+            tmpl_deps: dict[str, Any] = {
+                k: v
+                for k, v in tmpl.get("build_dependencies", {}).items()
+                if not isinstance(v, dict)  # skip complex dependency specs
+            }
+
+            # 3. User cmd overrides
+            user_cmd = module_cfg.get("cmd", {}) if isinstance(module_cfg, dict) else {}
+
+            effective = {**func_defaults, **tmpl_deps, **user_cmd}
+            resolved[module_key] = {
+                "func": func_path,
+                "effective_cmd": effective,
+                "sources": {
+                    k: (
+                        "user_cmd" if k in user_cmd
+                        else "template" if k in tmpl_deps
+                        else "func_default"
+                    )
+                    for k in effective
+                },
+            }
+
+        return resolved
 
     # ------------------------------------------------------------------
     # Visualization

@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-04-17 — Schema & Config Design Improvements
+
+**What:** Review and hardening of the schema, config validation, and defaults system across the library.
+
+**Changes made:**
+
+- **[A] Template consistency** (`mf6_template.yaml`): Added quotes to the `drn` module's `func` value (`flopy.mf6.ModflowGwfdrn`) — all other modules were already quoted, this was the lone unquoted outlier.
+
+- **[B1] Falsy-value default bug** (`nodes/node_data.py`): Fixed `_apply_type_schema` to use `if self.get(key) is None` instead of `if not self.get(key)`. The old check would incorrectly overwrite falsy-but-valid values like `False`, `0`, or `[]` with defaults.
+
+- **[B2] Processor name validation** (`nodes/parse/node_parser.py`): Processor names are now validated at parse time in `_parse_pipe`. Built-in processors must be registered in `BUILTIN_PROCESSORS`; custom processors must use `module.function` dot-notation. Previously, an invalid name would only surface as a cryptic runtime error deep in the build.
+
+- **[B3] Error path dot-notation** (`nodes/parse/node_schemas.py`): `validate_config_strict` now normalises list-style context paths (e.g. `['modules', 'dis', 'top']`) to YAML-style dot-notation (`'modules.dis.top'`) in all error messages. Previously the raw Python list was shown.
+
+- **[C] Scalar type checking** (`nodes/parse/node_schemas.py`): Added a `field_types` rule to `MESH_SCHEMA` and wired it into `validate_config`. Catches type errors on scalar mesh fields (`nlay: int`, `resolution: int|float`, `crs: int|str`, `nrow/ncol: int`) at parse time instead of silently producing wrong results at runtime.
+
+- **[D] Config inspection** (`simulation.py`): Added `Simulation.show_resolved_config()`. Returns a dict keyed by module name showing the effective `cmd` parameters that would be used at build time, with a `sources` map indicating whether each value came from the user `cmd`, template `build_dependencies`, or function-signature defaults.
+
+**Tests:** 28 passing, 2 pre-existing failures in `test_node_schema.py` (not introduced by this work — nested `input` dict validation and `all_fields` kwarg not yet implemented).
+
+**Pre-existing test notes:**
+- `test_validate_config_input`: expects `{'input': {'data': 25, 'resampling': 'min'}}` to fail; nested input-dict content validation is not yet implemented.
+- `test_validate_config`: passes `all_fields` kwarg to `validate_config` which is not a recognised `NodeSchema` attribute.
+
+**Files modified:**
+- `src/rapid_gwm_build/templates/mf6_template.yaml`
+- `src/rapid_gwm_build/nodes/node_data.py`
+- `src/rapid_gwm_build/nodes/parse/node_parser.py`
+- `src/rapid_gwm_build/nodes/parse/node_schemas.py`
+- `src/rapid_gwm_build/simulation.py`
+
+---
+
 ## 2026-04-02 — YAML Schema Design and Documentation
 
 **What:** Designed and documented the canonical YAML schema for the user-editable config file.

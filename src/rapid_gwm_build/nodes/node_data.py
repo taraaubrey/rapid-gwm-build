@@ -5,6 +5,9 @@ from typing import Set, Dict, Any, List
 
 from ..build_registry import build_registry
 
+# TODO: two required-field registries — required/defaults defined here AND in NodeSchemas
+# (node_schemas.py) can drift out of sync. Consolidate into a single source of truth:
+# keep node-runtime defaults here, move parse-time required/optional into NodeSchemas only.
 NODE_TYPE_SCHEMAS = {
     'input': {
         'required': ['value'],
@@ -96,9 +99,9 @@ class NodeData:
         
         schema = NODE_TYPE_SCHEMAS[self.node_type]
         
-        # Apply defaults
+        # Apply defaults — use `is None` so falsy-but-valid values (False, 0, []) are not overwritten
         for key, default_value in schema.get('defaults', {}).items():
-            if not self.get(key):
+            if self.get(key) is None:
                 self.metadata.update({key: default_value})
         
         # Validate required fields

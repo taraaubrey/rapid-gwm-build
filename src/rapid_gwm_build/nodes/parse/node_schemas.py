@@ -62,11 +62,14 @@ class NodeSchemas:
             'either_or': [
                 ['input'],                    # Just input key
                 ['pipeline', 'input'],        # Pipeline + input
-                ['builtin', 'input'],         # Builtin + input  
+                ['builtin', 'input'],         # Builtin + input
                 ['levels', 'input'],          # Levels + input
                 ['metadata', 'input']         # Metadata + input
             ],
             'nested_validation': {
+                # TODO: nested input-dict validation — when `input` value is a dict,
+                # validate that it contains `src` key. Without this, {'input': {'data': 25}}
+                # (missing src) silently passes and produces wrong results.
                 # 'input': {
                 #     'nest_type': 'str',
                 #     'schema': 'value'
@@ -216,6 +219,16 @@ class NodeSchemas:
                 ['domain'],  # Has active_domain
                 ['xorigin', 'yorigin'],  # OR has both origin coordinates
             ],
+            'field_types': {
+                # Scalar fields only — data array fields (top, bottoms, active_domain) are paths/dicts
+                'nlay': (int,),
+                'resolution': (int, float),
+                'crs': (int, str),
+                'nrow': (int,),
+                'ncol': (int,),
+                # TODO: range validation — add a `field_constraints` rule (e.g. nlay > 0,
+                # resolution > 0) so invalid values like nlay: -1 are rejected at parse time.
+            },
             'nested_validation': {
                 '_': {
                     'nest_type': 'dict',
@@ -252,9 +265,14 @@ class NodeSchemas:
         """Validate configuration and raise ValueError if invalid."""
         is_valid, error_msg = cls.validate_config(node_type, config, **kwargs)
         if not is_valid:
-            context_str = f"for {context}" if context else ""
-            # logging.error(f"{node_type.title()} validation failed{context_str}: {error_msg}")
-            raise ValueError(f"Invalid {node_type} configuration {context_str}: \n{error_msg}")
+            # Normalise context to dot-notation regardless of whether a list or string was passed
+            if isinstance(context, (list, tuple)):
+                context_str = f"at '{'.'.join(str(p) for p in context)}'"
+            elif context:
+                context_str = f"at '{context}'"
+            else:
+                context_str = ""
+            raise ValueError(f"Invalid {node_type} configuration {context_str}:\n{error_msg}")
     
     @classmethod
     def validate_config(cls, node_type: str, config: Dict[str, Any], **kwargs) -> tuple[bool, str]:
@@ -300,6 +318,18 @@ class NodeSchemas:
                 if key not in allowed_keys:
                     return False, f"\nError input config:\n\n{config}\n\nDictionary values for {node_type} can only contain keys: {allowed_keys}, got '{key}'"
         
+        # Check scalar field types (field_types rule)
+        if isinstance(config, dict) and validation_rules.get('field_types'):
+            for field_name, expected_types in validation_rules['field_types'].items():
+                if field_name in config:
+                    val = config[field_name]
+                    if not isinstance(val, expected_types):
+                        type_names = ', '.join(t.__name__ for t in expected_types)
+                        return False, (
+                            f"Field '{field_name}' must be of type ({type_names}), "
+                            f"got {type(val).__name__} ({val!r})"
+                        )
+
         # Special validation
         if isinstance(config, dict) and validation_rules.get('dict_required_keys', False):
             for key in validation_rules['dict_required_keys']:
