@@ -17,10 +17,13 @@ class TestMeshParser:
     def valid_mesh_config(self):
         """Valid mesh configuration for testing."""
         return {
+            'mesh_type': 'structured',
             'crs': 2193,
             'nlay': 6,
+            'nrow': 40,
+            'ncol': 20,
             'resolution': 25,
-            'active_domain': {
+            'domain': {
                 'input': 'active_domain.shp',
                 'pipeline': [
                     {

@@ -7,7 +7,7 @@ from ...registries import register_processor
     "check_data_dims_tdis",
     dependency_args={
         "nper": "@modules.tdis.nper",
-        "idomain": "@mesh.active_domain",
+        "idomain": "@mesh.domain",
     },
 )
 def check_data_dims_tdis(data, nper, idomain, expected_dims, **kwargs):

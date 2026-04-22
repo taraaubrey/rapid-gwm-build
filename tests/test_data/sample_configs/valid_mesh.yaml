@@ -1,8 +1,9 @@
 mesh:
+  mesh_type: structured
   crs: 2193
   nlay: 3
   resolution: 25
   top: test_dem.tif
   bottoms: test_basement.tif
-  active_domain:
+  domain:
     input: test_active_domain.shp

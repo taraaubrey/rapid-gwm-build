@@ -11,7 +11,7 @@ class MeshConfigBuilder(BaseNodeBuilder):
 
     @classmethod
     def build(cls, parsed_node=None, build_context=None) -> BuildResult:
-        mesh_type = parsed_node.get('mesh_type', 'structured')
+        mesh_type = parsed_node.get('mesh_type')
         
         if mesh_type == 'structured':
             data = cls.build_structured(parsed_node, build_context)
@@ -30,19 +30,19 @@ class MeshConfigBuilder(BaseNodeBuilder):
         """
 
         config = parsed_node.get('config', {})
-        
-        if 'domain' in config and 'resolution' in config:
-            domain_fn = cls._get_data('domain', parsed_node)
+
+        if 'extent' in config and 'resolution' in config:
+            extent_fn = cls._get_data('extent', parsed_node)
             res = cls._get_data('resolution', parsed_node)
 
-            file_type = get_file_type(domain_fn)
-            
+            file_type = get_file_type(extent_fn)
+
             if file_type == 'vector':
-                return Grid.from_vector(fname=domain_fn, resolution=res)
+                return Grid.from_vector(fname=extent_fn, resolution=res)
             if file_type == 'raster':
-                return Grid.from_raster(fname=domain_fn, resolution=res)
+                return Grid.from_raster(fname=extent_fn, resolution=res)
             else:
-                raise ValueError(f"Unsupported file extension for domain:\n{domain_fn}\n\nSupported extensions: {VECTOR_EXTENSIONS + RASTER_EXTENSIONS}")
+                raise ValueError(f"Unsupported file extension for extent:\n{extent_fn}\n\nSupported extensions: {VECTOR_EXTENSIONS + RASTER_EXTENSIONS}")
 
 
         elif 'ncol' in config and 'nrow' in config and 'xorigin' in config and 'yorigin'in config and 'resolution' in config:
@@ -65,9 +65,9 @@ class MeshConfigBuilder(BaseNodeBuilder):
                 top_left=(xorigin, yorigin),
                 projection=projection,
             )
-        
+
         else:
-            raise ValueError("Insufficient parameters to create a Grid object. Provide either domain or ncol, nrow, xorigin, and yorigin.")
+            raise ValueError("Insufficient parameters to create a Grid object. Provide either extent or ncol, nrow, xorigin, and yorigin.")
         
     
     @staticmethod

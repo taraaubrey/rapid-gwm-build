@@ -13,11 +13,12 @@ simulation:
     sim_name: pakipaki # required
   
   mesh:
+    mesh_type: structured
     crs: 2193
     nlay: 8
     resolution: 25
-    domain: ${vars.data_dir}/model2_domain.shp
-    active_domain:
+    extent: ${vars.data_dir}/model2_domain.shp
+    domain:
       input: ${vars.data_dir}/model2_domain.shp
       pipeline:
         - processor: tile_to_nlay
@@ -122,7 +123,7 @@ simulation:
     rcha-rf:
       data:
         mask:
-          input: '@mesh.active_domain'
+          input: '@mesh.domain'
           builtin:
             top_only: True
         recharge: 0.00025
@@ -163,7 +164,7 @@ simulation:
           input: ${vars.data_dir}/model2_chd.shp
           pipeline:
             - processor: ${vars.scripts}pkpk_functions.chd_area
-              idomain: '@mesh.active_domain'
+              idomain: '@mesh.domain'
         head:
             input:
               src: ${vars.top}

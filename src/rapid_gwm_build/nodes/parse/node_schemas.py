@@ -210,22 +210,56 @@ class NodeSchemas:
     #     }
     # )
 
-    # Updated Mesh Schema (composite)
-    MESH_SCHEMA = NodeSchema(
+    # --- Mesh schemas ----------------------------------------------------
+    # MESH_SCHEMA is a thin dispatcher: it requires `mesh_type` and delegates
+    # full validation to the per-type schema in MESH_TYPE_SCHEMAS below.
+    # Adding a new mesh type = define its schema and register it in the map.
+
+    STRUCTURED_MESH_SCHEMA = NodeSchema(
         node_type='mesh',
-        required_fields=['nlay', 'resolution', 'top', 'bottoms'],
+        required_fields=['mesh_type', 'nlay', 'top', 'bottoms'],
         validation_rules={
-            'either_or': [
-                ['domain'],  # Has active_domain
-                ['xorigin', 'yorigin'],  # OR has both origin coordinates
+            # Exactly-one-of, two independent groups (extent source + spacing source).
+            'either_or': {
+                'extent_source': [
+                    ['extent'],              # vector/raster file → gridit derives shape
+                    ['nrow', 'ncol'],        # explicit shape
+                    ['x_length', 'y_length'],# length-based; shape derived from spacing
+                ],
+                'spacing_source': [
+                    ['resolution'],          # uniform, both axes
+                    ['dx', 'dy'],            # uniform, per-axis
+                    ['delr', 'delc'],        # per-cell arrays (requires explicit nrow/ncol)
+                ],
+            },
+            # Pairs that cannot co-exist (cross-rule guards).
+            'mutually_exclusive': [
+                # delr/delc only valid with explicit nrow+ncol
+                ['delr', 'extent'], ['delr', 'x_length'], ['delr', 'y_length'],
+                ['delc', 'extent'], ['delc', 'x_length'], ['delc', 'y_length'],
+                # extent implies shape derivation — cannot combine with explicit shape/length
+                ['extent', 'nrow'], ['extent', 'ncol'],
+                ['extent', 'x_length'], ['extent', 'y_length'],
             ],
+            # Friendly error for legacy field names (pre-rename).
+            'renamed_fields': {
+                'active_domain': 'domain',
+                'kind': 'mesh_type',
+            },
             'field_types': {
-                # Scalar fields only — data array fields (top, bottoms, active_domain) are paths/dicts
+                'mesh_type': (str,),
                 'nlay': (int,),
                 'resolution': (int, float),
                 'crs': (int, str),
                 'nrow': (int,),
                 'ncol': (int,),
+                'xorigin': (int, float),
+                'yorigin': (int, float),
+                'angrot': (int, float),
+                'x_length': (int, float),
+                'y_length': (int, float),
+                'dx': (int, float),
+                'dy': (int, float),
                 # TODO: range validation — add a `field_constraints` rule (e.g. nlay > 0,
                 # resolution > 0) so invalid values like nlay: -1 are rejected at parse time.
             },
@@ -238,7 +272,38 @@ class NodeSchemas:
         }
     )
 
-    
+    # Placeholders for future mesh types — register them in MESH_TYPE_SCHEMAS
+    # once their validation requirements are defined.
+    # UNSTRUCTURED_MESH_SCHEMA = NodeSchema(...)
+    # ELEMENT_MESH_SCHEMA = NodeSchema(...)
+    # AREA_MESH_SCHEMA = NodeSchema(...)
+
+    MESH_TYPE_SCHEMAS = {
+        'structured': STRUCTURED_MESH_SCHEMA,
+        # 'unstructured': UNSTRUCTURED_MESH_SCHEMA,
+        # 'elements': ELEMENT_MESH_SCHEMA,
+        # 'areas': AREA_MESH_SCHEMA,
+    }
+
+    # Thin dispatcher: requires `mesh_type`, then delegates to the concrete
+    # per-type schema. Keep required_fields minimal here so the per-type schema
+    # owns the full set of rules.
+    MESH_SCHEMA = NodeSchema(
+        node_type='mesh',
+        required_fields=['mesh_type'],
+        validation_rules={
+            'renamed_fields': {
+                'active_domain': 'domain',
+                'kind': 'mesh_type',
+            },
+            'dispatch_on': {
+                'field': 'mesh_type',
+                'map': MESH_TYPE_SCHEMAS,
+            },
+        }
+    )
+
+
     
     @classmethod
     def get_schema(cls, node_type: str) -> Optional[NodeSchema]:
@@ -278,46 +343,58 @@ class NodeSchemas:
     def validate_config(cls, node_type: str, config: Dict[str, Any], **kwargs) -> tuple[bool, str]:
         """Validate a configuration against its schema."""
         base_schema = cls.get_schema(node_type)
-        
+
+        if not base_schema:
+            return False, f"Unknown node type: {node_type}"
+
         # Create a temporary schema with overrides
         schema = cls._create_schema_with_overrides(base_schema, **kwargs)
-    
-        
-        if not schema:
-            return False, f"Unknown node type: {node_type}"
-    
 
-        # if 'excluded_fields' in validation_rules:
-        #     excluded_fields = validation_rules['excluded_fields']
-        #     for excluded_field in excluded_fields:
-        #         if isinstance(config, dict) and excluded_field in config:
-        #             return False, f"Field '{excluded_field}' is not allowed in {node_type} nodes"
-    
-        
+        return cls._validate_against_schema(schema, config, node_type)
+
+    @classmethod
+    def _validate_against_schema(
+        cls, schema: NodeSchema, config: Any, node_type: str
+    ) -> tuple[bool, str]:
+        """Core rule engine. Applies schema rules to config.
+
+        Split out from `validate_config` so the `dispatch_on` rule can recurse
+        into a sub-schema without re-entering the node-type lookup path.
+        """
+        # Friendly error for renamed fields — run before required-field checks
+        # so the user gets "rename X to Y" instead of "missing Y".
+        if isinstance(config, dict):
+            renamed = schema.validation_rules.get('renamed_fields') or {}
+            for old_name, new_name in renamed.items():
+                if old_name in config:
+                    return False, (
+                        f"Field '{old_name}' has been renamed to '{new_name}' "
+                        f"in {node_type} configuration. Update your YAML."
+                    )
+
         # Check required fields
         for field in schema.required_fields:
             if isinstance(config, dict) and field not in config:
                 return False, f"Missing required field '{field}' for {node_type} node"
-            
+
         # Check value types
         if schema.value_types and type(config) not in schema.value_types:
             return False, f"\nError input config:\n\n{config}\n\nInvalid value type for {node_type} node. Expected one of: {schema.value_types}, got {type(config)}"
-        
+
         if schema.optional_fields and isinstance(config, dict):
             for key in config.keys():
                 if key not in schema.optional_fields:
                     return False, f"\nError input config:\n\n{config}\n\nUnexpected key '{key}' in {node_type} node. Allowed keys: {schema.optional_fields}"
 
-        # Check for excluded fields first (before other validation)
         validation_rules = schema.validation_rules
-        
+
         if isinstance(config, dict) and validation_rules.get('only_keys', False):
             # Check if config contains only allowed keys
             allowed_keys = validation_rules['only_keys']
             for key in config.keys():
                 if key not in allowed_keys:
                     return False, f"\nError input config:\n\n{config}\n\nDictionary values for {node_type} can only contain keys: {allowed_keys}, got '{key}'"
-        
+
         # Check scalar field types (field_types rule)
         if isinstance(config, dict) and validation_rules.get('field_types'):
             for field_name, expected_types in validation_rules['field_types'].items():
@@ -335,32 +412,81 @@ class NodeSchemas:
             for key in validation_rules['dict_required_keys']:
                 if key not in config:
                     return False, f"\nError input config:\n\n{config}\n\nDictionary values must contain a '{key}' key"
-        
+
         if isinstance(config, dict) and validation_rules.get('only_keys', False):
             for key in config:
                 if key not in validation_rules.get('only_keys'):
                     return False, f"\nError input config:\n\n{config}\n\nInvalid '{key}' key for {node_type} node. Allowed keys: {validation_rules.get('only_keys')}. If you are trying to set opening kwargs, use: \ninput:\n    src: <file.tif> \n     **kwargs"
 
-        # Handle either_or validation
+        # Mutually exclusive pairs — fields that cannot co-exist.
+        if isinstance(config, dict) and 'mutually_exclusive' in validation_rules:
+            for pair in validation_rules['mutually_exclusive']:
+                present = [f for f in pair if f in config]
+                if len(present) > 1:
+                    return False, (
+                        f"Mutually exclusive fields in {node_type}: {present} "
+                        f"cannot be specified together."
+                    )
+
+        # Handle either_or validation. Supports two forms:
+        #   - list: legacy form, at-least-one match across all rules.
+        #   - dict: named groups, each group must have exactly-one match.
         if isinstance(config, dict) and 'either_or' in validation_rules:
             either_or_rules = validation_rules['either_or']
-            valid_combination = False
-            
-            for rule in either_or_rules:
-                if isinstance(rule, list):
-                    # Check if all fields in this combination are present
-                    if all(field in config for field in rule):
-                        valid_combination = True
-                        break
-                else:
-                    # Single field check
-                    if isinstance(config, dict) and rule in config:
-                        valid_combination = True
-                        break
-            
-            if not valid_combination:
-                return False, f"\nError input config:\n\n{config}\n\nInvalid field combination for {node_type}. Must have one of: {either_or_rules}"
-        
+
+            if isinstance(either_or_rules, dict):
+                for group_name, group_rules in either_or_rules.items():
+                    matches = []
+                    for rule in group_rules:
+                        if isinstance(rule, list):
+                            if all(f in config for f in rule):
+                                matches.append(rule)
+                        elif rule in config:
+                            matches.append([rule])
+                    if len(matches) == 0:
+                        return False, (
+                            f"\nError input config:\n\n{config}\n\n"
+                            f"Missing required field combination for group "
+                            f"'{group_name}' in {node_type}. Must have exactly one of: {group_rules}"
+                        )
+                    if len(matches) > 1:
+                        return False, (
+                            f"\nError input config:\n\n{config}\n\n"
+                            f"Conflicting field combinations for group "
+                            f"'{group_name}' in {node_type}. Only one of {group_rules} "
+                            f"is allowed, got multiple: {matches}"
+                        )
+            else:
+                valid_combination = False
+                for rule in either_or_rules:
+                    if isinstance(rule, list):
+                        if all(field in config for field in rule):
+                            valid_combination = True
+                            break
+                    else:
+                        if rule in config:
+                            valid_combination = True
+                            break
+
+                if not valid_combination:
+                    return False, f"\nError input config:\n\n{config}\n\nInvalid field combination for {node_type}. Must have one of: {either_or_rules}"
+
+        # Dispatcher — delegate full validation to a per-type sub-schema.
+        # Runs after basic shape checks so required discriminator & renames
+        # produce friendly errors before dispatch.
+        if isinstance(config, dict) and 'dispatch_on' in validation_rules:
+            disp = validation_rules['dispatch_on']
+            field_name = disp['field']
+            schema_map = disp['map']
+            value = config.get(field_name)
+            if value not in schema_map:
+                return False, (
+                    f"Unknown {field_name} '{value}' for {node_type}. "
+                    f"Valid values: {list(schema_map.keys())}"
+                )
+            sub_schema = schema_map[value]
+            return cls._validate_against_schema(sub_schema, config, node_type)
+
         # Validate nested schemas
         if isinstance(config, dict) and 'nested_validation' in validation_rules:
             nested_rules = validation_rules.get('nested_validation', {})
@@ -369,10 +495,10 @@ class NodeSchemas:
                 nest_type = nest_meta.get('nest_type')
                 nest_schema = nest_meta.get('schema')
 
-            
+
                 if field_name == '_':
                     assert nest_type == 'dict', f"{node_type}: {nest_type} must be 'dict'"
-                else: 
+                else:
                     field_value = config.get(field_name)
 
                 if nest_type == 'key':
@@ -381,7 +507,7 @@ class NodeSchemas:
                         is_valid, error_msg = cls.validate_config(nest_schema, field_value)
                         if not is_valid:
                             return False, f"\nError input config:\n\n{config}\n\nInvalid '{field_name}' in {node_type}: {error_msg}"
-                
+
                 elif nest_type == 'list':
                     if field_value:
                         # Validate each item in the list against its schema
@@ -389,12 +515,12 @@ class NodeSchemas:
                             is_valid, error_msg = cls.validate_config(nest_schema, item)
                             if not is_valid:
                                 return False, f"\nError input config:\n\n{config}\n\nInvalid item in '{field_name}' list in {node_type}: {error_msg}"
-                
+
                 elif nest_type == 'str':
                     is_valid, error_msg = cls.validate_config(nest_schema, field_value)
                     if not is_valid:
                         return False, f"\nError input config:\n\n{config}\n\nInvalid item in '{field_name}' list in {node_type}: {error_msg}"
-                
+
                 elif nest_type == 'dict':
                     if field_name == '_':
                         field_config = config.copy()
@@ -404,14 +530,14 @@ class NodeSchemas:
                         is_valid, error_msg = cls.validate_config(nest_schema, field_value)
                         if not is_valid:
                             return False, f"\nError input config:\n\n{config}\n\nInvalid '{field_name}' in {node_type}: {error_msg}"
-                
-        
-        if node_type == 'pipeline' and 'builtin' in config:
+
+
+        if node_type == 'pipeline' and isinstance(config, dict) and 'builtin' in config:
             builtin_name = config['builtin']
             valid_builtins = validation_rules.get('builtin', [])
             if builtin_name not in valid_builtins:
                 return False, f"Unknown builtin pipeline: {builtin_name}. Valid options: {valid_builtins}"
-        
+
         return True, ""
     
     @classmethod

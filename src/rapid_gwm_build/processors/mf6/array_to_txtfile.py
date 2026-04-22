@@ -9,7 +9,7 @@ from ...registries import register_processor
                         'sim_ws': '@modules.sim.sim_ws',
                         'modelname': '@modules.gwf.modelname',
                         'nper': '@modules.tdis.nper', 
-                        'idomain': '@mesh.active_domain',
+                        'idomain': '@mesh.domain',
                         }, 
                     context_required=True)
 def array_to_file(data, output_type, sim_ws, **kwargs):

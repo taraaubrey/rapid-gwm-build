@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-04-22 — Mesh Schema Redesign (Type-Dispatched Validation)
+
+**What:** Replaced the flat `MESH_SCHEMA` with a type-dispatched design. `MESH_SCHEMA` is now a thin router that requires `mesh_type` and delegates full validation to a per-type schema via a `MESH_TYPE_SCHEMAS` map. Added `STRUCTURED_MESH_SCHEMA` as the first concrete sub-schema with named `either_or` groups (`extent_source`, `spacing_source`), `mutually_exclusive` cross-rules, and `renamed_fields` for friendly rename errors.
+
+**Field renames:**
+- `active_domain` → `domain` (now the idomain data array)
+- `domain` → `extent` (now strictly the geometry source file)
+- `kind` → `mesh_type` (canonical YAML discriminator — freyburg previously silently dropped the user's declaration)
+
+**Changes made:**
+
+- **`src/rapid_gwm_build/nodes/parse/node_schemas.py`**: Added `STRUCTURED_MESH_SCHEMA`, `MESH_TYPE_SCHEMAS` registry, rewrote `MESH_SCHEMA` as dispatcher. Split `validate_config` into `_validate_against_schema` so the dispatcher can recurse. Added four new rule handlers: `dispatch_on`, named-group `either_or` (dict form, exactly-one-of per group — list form preserved for legacy), `mutually_exclusive`, `renamed_fields`. Extended `field_types` with `xorigin`, `yorigin`, `angrot`, `x_length`, `y_length`, `dx`, `dy`, `mesh_type`.
+- **`src/rapid_gwm_build/nodes/parse/node_parser.py`**: `_parse_mesh` `config_keys` now includes `extent`, `angrot`, `x_length`, `y_length`, `dx`, `dy` (removed `domain`); `data_keys` renamed to `{'domain', 'top', 'bottoms'}`.
+- **`src/rapid_gwm_build/nodes/parse/config.py`**: `MESH_CONFIG_KEYS` / `MESH_DATA_KEYS` mirrored to the same sets.
+- **`src/rapid_gwm_build/nodes/builders/mesh.py`**: Rename-only — `'domain' in config` / `_get_data('domain', ...)` / error messages → `'extent'`. Builder logic unchanged; new mesh-config paths (length-based, `dx/dy`, `delr/delc`, `angrot` defaults) remain deferred.
+- **`src/rapid_gwm_build/templates/mf6_template.yaml`**: `@mesh.active_domain` → `@mesh.domain`.
+- **Processor idomain references updated** in `processors/data/checkdims_andor_tdis.py`, `processors/data/hierarchical_levels.py`, `processors/mf6/array_to_txtfile.py`, `processors/mesh/get_domain_boundary.py`.
+- **Example YAMLs migrated**: `examples/ss/simple_freyburg/freyburg_1lyr_stress.yaml`, `examples/pakipaki02/pakipaki02.yaml` (includes `domain` → `extent` rename for the geometry shapefile), `examples/pakipaki02/national_test.yaml`, `tests/test_data/sample_configs/valid_mesh.yaml`.
+- **`tests/test_parsers/test_node_parser.py`**: fixture updated with `mesh_type`, `nrow`, `ncol`, renamed `active_domain` → `domain`.
+- **`tests/test_parsers/test_mesh_schema.py`** (new): 16 negative/positive tests covering the dispatcher, missing/unknown `mesh_type`, friendly rename errors, named-group validation, mutually-exclusive cross-rules, and scalar type checks.
+
+**Verification:** `ruff check .` clean. `pytest` 44 passed; 2 pre-existing failures in `test_node_schema.py` are unrelated to this work (confirmed via stash). Parser round-trip on `pakipaki02.yaml` produces the expected node set under the new schema.
+
+**Deferred to follow-up phase:** builder defaults for `xorigin`/`yorigin`/`angrot` (plan says these must reach the builder with `0` defaults); builder implementations for length-based, `dx/dy`, and `delr/delc` paths; top-level YAML key rename `mesh:` → `domain:`; concrete schemas for `unstructured`/`elements`/`areas`.
+
+**Phase doc:** `.claude/phase_mesh_schema_redesign.md` (includes ready-to-paste git commit message).
+
+---
+
 ## 2026-04-17 — GitBook Setup
 
 **What:** Set up GitBook documentation site structure for the project, with Git sync support.

@@ -331,9 +331,20 @@ class NodeParser:
         
         
         # 1. Prepping ------------------------------------------------
-        # Define what constitutes mesh config vs mesh data
-        config_keys = {'crs', 'nrow', 'ncol', 'nlay', 'resolution', 'delr', 'delc', 'xorigin', 'yorigin', 'domain'}
-        data_keys = {'active_domain', 'top', 'bottoms'}
+        # Define what constitutes mesh config vs mesh data.
+        # - Scalar/geometry config: extent source, spacing source, origin, rotation, etc.
+        # - Data arrays (file/pipeline-backed): top, bottoms, domain (idomain).
+        config_keys = {
+            'crs',
+            'nrow', 'ncol',
+            'nlay', 'resolution',
+            'delr', 'delc',
+            'dx', 'dy',
+            'x_length', 'y_length',
+            'xorigin', 'yorigin', 'angrot',
+            'extent',
+        }
+        data_keys = {'domain', 'top', 'bottoms'}
         
         # Separate config from data
         mesh_cfg = {k: v for k, v in mesh_config.items() if k in config_keys}

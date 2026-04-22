@@ -1,6 +1,6 @@
 from ...registries import register_processor
 
-@register_processor("domain_boundary", dependency_args={'active_domain': '@mesh.active_domain'})
+@register_processor("domain_boundary", dependency_args={'active_domain': '@mesh.domain'})
 def domain_boundary(data, active_domain):
     import numpy as np
     boundary_mask = get_interior_mask(active_domain)

@@ -136,7 +136,7 @@ modules:
                         return_arg:
                             filename: '{filename}'
             idomain:
-                input: '@mesh.active_domain'
+                input: '@mesh.domain'
                 builtin:
                     - check_data_dims_tdis:
                         expected_dims: 3

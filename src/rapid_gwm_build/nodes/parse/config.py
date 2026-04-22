@@ -7,8 +7,17 @@ SIMULATION_BLOCK_KEYS = {
     }
 NODE_BLOCK_KEYS = {'mesh', 'modules'}
 
-MESH_CONFIG_KEYS = {'crs', 'nrow', 'ncol', 'nlay', 'resolution', 'delr', 'delc', 'xorigin', 'yorigin', 'domain'}
-MESH_DATA_KEYS = {'active_domain', 'top', 'bottoms'}
+MESH_CONFIG_KEYS = {
+    'crs',
+    'nrow', 'ncol',
+    'nlay', 'resolution',
+    'delr', 'delc',
+    'dx', 'dy',
+    'x_length', 'y_length',
+    'xorigin', 'yorigin', 'angrot',
+    'extent',
+}
+MESH_DATA_KEYS = {'domain', 'top', 'bottoms'}
 
 VALUE_KEYS = {'src', 'resolution_mode', 'use_mesh_build_context', 'load_options'}
 

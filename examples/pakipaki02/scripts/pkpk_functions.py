@@ -14,6 +14,7 @@ def make_bottom_inactive(idomain, mask, inactive_indices):
     
     return idomain
 
+
 def k_layers(k, nlay, nrow, ncol, layer_mapping):
     import numpy as np
 

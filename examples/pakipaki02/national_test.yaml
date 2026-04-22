@@ -13,10 +13,11 @@ simulation:
     sim_name: pakipaki # required
   
   mesh:
+    mesh_type: structured
     crs: 2193
     nlay: 6
     resolution: 25
-    active_domain:
+    domain:
       input: active_domain.shp
       pipeline:
         - processor: ${vars.scripts}/pkpk_functions.make_bottom_inactive
